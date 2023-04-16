@@ -1,0 +1,129 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Saiba Mais {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/core/saiba-mais/index.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a class="  texto-azul" href="/">Home</a>
+                <span class="texto-azul">&gt;</span>
+
+                <span class="  texto-azul">Saiba Mais</span>
+            </nav>
+
+            <h1 class="titulo-pagina">Saiba Mais</h1>
+
+            <div class="container-surface container-atena">
+                <img class="atena__imagem" src="{% static 'assets/img/saiba-mais/atena.jpg' %}" alt="atena">
+
+                <div class="container-detalhes">
+                    <h2 class="texto-medio texto-azul">Atena</h2>
+                    <p class="texto-preto atena__texto">Na mitologia Grega, Atena é a deusa da civilização, da sabedoria, estrategista da batalha, das artes, das habilidades e da justiça. Protetora das cidades, dos arquitetos e dos tecelões, ela é conhecida também como uma das principais divindades gregas, assim como, um dos doze Deuses Olímpicos. Cultada e endeusada, Atena é representada como uma jovem bela e austera que sempre protegeu varios heróis e figuras místicas, estando presente em diversos episódios da mitologia.</p>
+                    <p class="texto-preto atena__texto">Uma figura que simboliza força, coragem e inteligência, sendo uma ótima estrategista em batalhas, ficou conhecida por ser uma defensora das cidades gregas. Até os dias de hoje, ela segue sendo reconhecida por sua inteligência, força e estratégias.</p>
+                </div>
+            </div>
+
+            <h2 class="titulo-pagina">EQUIPE DE DESENVOLVIMENTO</h2>
+
+            <div class="container-equipe">
+
+                <div class="equipe__container">
+                    <img class="equipe__imagem" src="{% static 'assets/img/saiba-mais/erick.jpeg' %}" alt="Érick Fernandes">
+                    <h3 class="texto-negrito texto-preto">Érick Fernandes</h3>
+                    <span class="texto-preto texto--12">2021 - Atualmente</span>
+                    <span class="texto-preto">Front End</span>
+                    <span class="texto-preto">UI Design</span>
+                </div>
+
+                <div class="equipe__container">
+                    <img class="equipe__imagem" src="{% static 'assets/img/saiba-mais/felipe.jpg' %}" alt="Felipe Zeri">
+                    <h3 class="texto-negrito texto-preto">Felipe Zeri</h3>
+                    <span class="texto-preto texto--12">2022 - Atualmente</span>
+                    <span class="texto-preto">Estagiário</span>
+                </div>
+
+                <div class="equipe__container">
+                    <img class="equipe__imagem" src="{% static 'assets/img/saiba-mais/franklares.jpg' %}" alt="Franklin Rodrigues">
+                    <h3 class="texto-negrito texto-preto">Franklin Farias</h3>
+                    <span class="texto-preto texto--12">2022 - Atualmente</span>
+                    <span class="texto-preto">Back End</span>
+                </div>
+
+                <div class="equipe__container">
+                    <img class="equipe__imagem" src="{% static 'assets/img/saiba-mais/gus.jpeg' %}" alt="Gustavo Nascimento">
+                    <h3 class="texto-negrito texto-preto">Gustavo Nascimento</h3>
+                    <span class="texto-preto texto--12">2022 - Atualmente</span>
+                    <span class="texto-preto">Back End</span>
+                </div>
+
+                <div class="equipe__container">
+                    <img class="equipe__imagem" src="{% static 'assets/img/saiba-mais/jp.jpeg' %}" alt="João Pedro">
+                    <h3 class="texto-negrito texto-preto">João Pedro Soares</h3>
+                    <span class="texto-preto texto--12">2022 - Atualmente</span>
+                    <span class="texto-preto">Back End</span>
+                </div>
+
+
+                <div class="equipe__container">
+                    <img class="equipe__imagem" src="{% static 'assets/img/saiba-mais/jao.jpg' %}" alt="Fabio Moreira">
+                    <h3 class="texto-negrito texto-preto">João Teixeira</h3>
+                    <span class="texto-preto texto--12">2021 - 2022</span>
+                    <span class="texto-preto">Full Stack</span>
+                </div>
+
+                <div class="equipe__container">
+                    <img class="equipe__imagem" src="{% static 'assets/img/saiba-mais/rute.jpeg' %}" alt="Rute Borges">
+                    <h3 class="texto-negrito texto-preto">Rute Borges</h3>
+                    <span class="texto-preto texto--12">2022 - Atualmente</span>
+                    <span class="texto-preto">Suporte</span>
+                </div>
+
+                <div class="equipe__container">
+                    <img class="equipe__imagem" src="{% static 'assets/img/saiba-mais/xvitos.jpeg' %}" alt="Fabio Moreira">
+                    <h3 class="texto-negrito texto-preto">Vitor Daniel</h3>
+                    <span class="texto-preto texto--12">2023 - Atualmente</span>
+                    <span class="texto-preto">Back End</span>
+                </div>
+
+            </div>
+
+            <h2 class="titulo-pagina">Equipe Gestora</h2>
+
+            <div class="container-equipe">
+                <div class="equipe__container">
+                    <img class="equipe__imagem" src="{% static 'assets/img/saiba-mais/neto.jpg' %}" alt="Neto">
+                    <h3 class="texto-negrito texto-preto">José Carlos Neto</h3>
+                    <span class="texto-preto">Chefe de Divisão</span>
+                </div>
+
+                <div class="equipe__container">
+                    <img class="equipe__imagem" src="{% static 'assets/img/saiba-mais/ana.jpg' %}" alt="ana">
+                    <h3 class="texto-negrito texto-preto">Ana Marina</h3>
+                    <span class="texto-preto">Assessoria Tecnica</span>
+                </div>
+
+                <div class="equipe__container">
+                    <img class="equipe__imagem" src="{% static 'assets/img/saiba-mais/fabio.jpeg' %}" alt="Fabio Moreira">
+                    <h3 class="texto-negrito texto-preto">Fábio Moreira</h3>
+                    <span class="texto-preto">Chefe de Departamento</span>
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% load static %}
+
+{% block charts-js %}
+    {% include 'partials/_charts-js.html' %}
+{% endblock %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/dashboard/index.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Dashboard</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Dashboard</h1>
+
+            <div class="container-cards-dashboard">
+                <div class="card-quantitativo" data-dashboard-botao="escolas" selecionado>
+                    <h2 class="quantitativo-titulo">Escolas</h2>
+                    <span class="quantitativo-valor texto-preto">{{ total_escolas }}</span>
+                </div>
+
+                <div class="card-quantitativo" data-dashboard-botao="alunos" >
+                    <h2 class="quantitativo-titulo">Alunos</h2>
+                    <span class="quantitativo-valor texto-preto">{{ total_alunos }}</span>
+                </div>
+
+                {% comment %}
+
+                    <div class="card-quantitativo" data-dashboard-botao="professores">
+                        <h2 class="quantitativo-titulo">Professores</h2>
+                        <span class="quantitativo-valor texto-preto">{{ total_professores }}</span>
+                    </div>
+                {% endcomment %}
+            </div>
+
+            {% include 'dashboard/partials/_container-escolas.html' %}
+            {% include 'dashboard/partials/_container-alunos.html' %}
+
+            {% comment %}
+                {% include 'dashboard/partials/_container-professores.html' %}
+            {% endcomment %}
+
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/graficos.js' %}"></script>
+
+    <script src="{% static 'assets/js/layout/dashboard/index/controlaExibicao.js' %}"></script>
+
+    {% endblock %}

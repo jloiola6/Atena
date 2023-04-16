@@ -1,0 +1,26 @@
+@media screen and (max-width: 900px){
+    .tabela-pre-cadastrados, .tabela-pre-cadastrados-smartphone{
+        display: none;
+    }
+
+    .tabela-pre-cadastrados-tablet{
+        display: block;
+    }
+
+    .tabela-pre-cadastrados-tablet th{
+        width: 1%;
+    }
+}
+@media screen and (max-width: 900px){
+    .tabela-pre-cadastrados, .tabela-pre-cadastrados-tablet{
+        display: none;
+    }
+
+    .tabela-pre-cadastrados-smartphone{
+        display: block;
+    }
+
+    .tabela-pre-cadastrados-smartphone th{
+        width: 1%;
+    }
+}

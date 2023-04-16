@@ -1,0 +1,9 @@
+/* Estilização para o ambiente de desenvolvimento */
+
+.cabecalho{
+    background-color: var(--cor-verde);
+}
+
+body.modo-escuro .cabecalho{
+    border-bottom: 1px solid var(--cor-verde);
+}

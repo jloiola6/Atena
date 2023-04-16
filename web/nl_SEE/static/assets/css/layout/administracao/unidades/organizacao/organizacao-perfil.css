@@ -1,0 +1,20 @@
+/* Estilização da página de organização escolar de uma escola */
+
+.container-surface-organizacao-detalhes{
+    margin-top: 24px;
+}
+
+.container-surface-organizacao-detalhes .container-botoes{
+    margin-top: 8px;
+}
+
+.container-organizacao-detalhes{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.container-organizacao-detalhe{
+    margin-top: 8px;
+}

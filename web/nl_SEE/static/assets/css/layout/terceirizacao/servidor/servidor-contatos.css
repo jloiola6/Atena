@@ -1,0 +1,14 @@
+/* Estilização da página de cadastro de contratos de um servidor */
+
+.formulario-servidor-contatos{
+    margin-top: 16px;
+}
+
+.formulario-servidor-contatos .container-botoes{
+    margin-top: 16px;
+}
+
+.container-contato-edicao{
+    display: flex;
+    gap: 8px;
+}

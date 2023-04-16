@@ -1,0 +1,159 @@
+<!-- ADICIONAR REQUIRED -->
+
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+    Cadastro de Aditivo
+{% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block css_layout %}
+    <!-- <link rel="stylesheet" href="{% static 'assets/css/layout/terceirizacao/contrato/contrato-aditivo-formulario.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'assets/css/layout/partials/contrato/_contrato-aditivo-formulario.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao ">
+                <a href="{% url 'core:index' %}" class="texto-azul">Home</a>
+                <span class="texto-azul">&gt;</span>
+
+                <a class="  texto-azul" href="{% url 'terceirizacao:index' %}">Terceirizacao</a>
+                <span class="texto-azul">&gt;</span>
+
+                <a class="  texto-azul" href="{% url 'terceirizacao:contratos' %}">Contratos</a>
+                <span class="texto-azul">&gt;</span>
+
+                <a class="  texto-azul" href="{% url 'terceirizacao:contrato-perfil' %}?id_contrato={{ contrato.id }}">Contrato n° {{ contrato.numero_contrato }}</a>
+                <span class="texto-azul">&gt;</span>
+
+                <span class="  texto-azul">Cadastro de Contrato Aditivo</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Cadastro de Contrato Aditivo</h1>
+
+            <p class="descricao  texto-preto">Insira os dados do contrato</p>
+
+            {% include 'partials/contrato/_contrato-aditivo-formulario.html' %}
+
+            {% comment %}
+
+            <form class="container-surface container-formulario-contrato-aditivo" method="POST">
+                {% csrf_token %}
+
+                <h2 class="texto-medio texto-azul">Data e itens do contrato</h2>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-inicio-vigencia">Data final do contrato</label>
+                    <input class="campo-texto campo-medio" type="date" value="{{ data_final }}" name="data_termino" id="campo-inicio-vigencia" min="{{ data_termino }}" max="{{ data_final }}" required data-final-contrato>
+                </div>
+
+                {% for item in itens %}
+                    <div class="formulario-grupo oculto">
+                        <label class="texto-azul label-campo" for="campo-numero_item">Id</label>
+                        <input class="campo-texto campo-item-numero" type="text" value="{{ item.id }}" name="id{{ item.id }}" id="campo-numero_item" autocomplete="off" readonly>
+                    </div>
+
+                    <div class="contrato-item-grupo-campos" data-grupo-ativo="true">
+                        <div class="formulario-grupo">
+                            <label class="texto-azul label-campo" for="campo-numero_item">N° do item</label>
+                            <input class="campo-texto campo-item-numero" type="text" value="{{ item.numero_item }}" name="numero_item{{ item.id }}" id="campo-numero_item" maxlength="3" autocomplete="off" readonly>
+                        </div>
+
+                        <div class="formulario-grupo">
+                            <label class="texto-azul label-campo" for="campo-numero_lote">N° do Lote</label>
+                            <input class="campo-texto campo-item-numero" type="text" value="{{ item.numero_lote }}" name="numero_lote{{ item.id }}" id="campo-numero_lote" maxlength="3" autocomplete="off" readonly>
+                        </div>
+
+                        <div class="formulario-grupo">
+                            <label class="texto-azul label-campo" for="campo-descricao">Descrição</label>
+                            <input class="campo-texto campo-aditivo-item-descricao" type="text" value="{{ item.descricao }}" name="descricao{{ item.id }}" id="campo-descricao" maxlength="300" autocomplete="off" readonly>
+                        </div>
+
+
+                        <div class="formulario-grupo">
+                            <label class="texto-azul label-campo" for="campo-quantidade">Quantidade</label>
+                            <input class="campo-texto campo-item-numero" type="text" value="{{ item.quantidade }}" name="quantidade{{ item.id }}" id="campo-quantidade" maxlength="9" autocomplete="off" data-mascara="numero" data-qtd-item>
+                        </div>
+
+                        <div class="formulario-grupo">
+                            <label class="texto-azul label-campo" for="campo-valor_unitario">Valor unitário</label>
+                            <input class="campo-texto campo-item-valor" type="text" value="{{ item.valor_unitario }}" name="valor_unitario{{ item.id }}" id="campo-valor_unitario" maxlength="30" autocomplete="off" data-mascara="moeda" data-unitario-item>
+                        </div>
+
+                        <div class="formulario-grupo">
+                            <label class="texto-azul label-campo" for="campo-valor_total">Valor total</label>
+                            <input class="campo-texto campo-item-valor" type="text" value="{{ item.valor_total }}" name="valor_total{{ item.id }}" id="campo-valor_total" maxlength="30" autocomplete="off" readonly data-mascara="moeda" data-total-item>
+                        </div>
+
+                        {% if 'Postos de trabalho' in contrato.tipo_contrato %}
+                            <div class="formulario-grupo">
+                                <label class="texto-azul label-campo" for="campo-remuneracao">Remuneração</label>
+                                <input class="campo-texto campo-item-valor" type="text" value="{{ item.remuneracao }}" name="remuneracao{{ item.id }}" id="campo-remuneracao" maxlength="30" autocomplete="off" data-mascara="moeda">
+                            </div>
+                        {% endif %}
+
+                        <div class="formulario-grupo">
+                            <label class="texto-azul label-campo" for="campo-valor_total">Situação</label>
+
+                            <fieldset id="fieldset-item-ativo{{ item.numero_item }}" class="fieldset-item">
+                                <input type="radio" name="fieldset-item-ativo{{ item.numero_item }}" value="1" id="item-ativo{{ item.numero_item }}" data-radio-ativo checked>
+                                <label for="item-ativo{{ item.numero_item }}" data-label-ativo>Ativo</label>
+
+                                {% if item.qtd_vagas|stringformat:"i" == item.quantidade %}
+                                    <input type="radio" name="fieldset-item-ativo{{ item.numero_item }}" value="0" id="item-inativo{{ item.numero_item }}" data-inativar-item>
+                                    <label for="item-inativo{{ item.numero_item }}">Inativo</label>
+                                {% endif %}
+
+                                {% if 'Postos de trabalho' not in contrato.tipo_contrato %}
+                                    <input type="radio" name="fieldset-item-ativo{{ item.numero_item }}" value="0" id="item-inativo{{ item.numero_item }}" data-inativar-item>
+                                    <label for="item-inativo{{ item.numero_item }}">Inativo</label>
+                                {% endif %}
+                            </fieldset>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <div class="formulario-grupo">
+                    <label for="campo-valor-total" class="label-campo texto-azul">Valor global</label>
+                    <input id="campo-valor-total" name="valor_total" type="text" class="campo-texto campo-item-valor" required data-mascara="moeda" data-valor-global readonly>
+                </div>
+
+                <input type="text" readonly name="meses_vigencia" class="oculto" data-contrato-vigencia>
+
+                <div class="container-botoes">
+                    <button class="botao botao--azul" data-modal-abrir="confirmar">Cadastrar</button>
+                </div>
+
+                <div class="modal oculto" data-modal="confirmar">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                        <p class="texto-preto descricao">Tem certeza que deseja cadastrar o Aditivo de contrato?</p>
+
+                        <div class="container-botoes">
+                            <button class="botao--verde botao" type="submit">Salvar</button>
+                            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            {% endcomment %}
+        </div>
+    </main>
+
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+
+    <script src="{% static 'assets/js/layout/partials/contrato/contrato-aditivo-formulario/controlaCampos.js' %}" type="module"></script>
+    <!-- <script src="{% static 'assets/js/layout/terceirizacao/contrato-formulario-aditivo/controlaCampos.js' %}"></script> -->
+
+{% endblock %}

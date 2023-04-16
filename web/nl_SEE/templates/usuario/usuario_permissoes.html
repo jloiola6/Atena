@@ -1,0 +1,165 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Permissoes de Usuário {% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/usuario/usuario-permissoes.css' %}">
+{% endblock %}
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a  class="  texto-azul" href="{% url 'usuario:index' %}">Usuários</a>
+                <span class="texto-azul">&#62;</span>
+
+                {% if not pendente %}
+                    <a  class="  texto-azul" href="{% url 'usuario:usuario-perfil' %}?id_usuario={{ usuario.id }}">{{ usuario.nome }}</a>
+                    <span class="texto-azul">&#62;</span>
+
+                    <span class="  texto-azul">Cadastro de Permissão</span>
+                {% else %}
+                    <a  class="  texto-azul" href="{% url 'usuario:pre-cadastrados' %}">Pré cadastrados</a>
+                    <span class="texto-azul">&#62;</span>
+
+                    <span class="  texto-azul">Pré cadastro de usuário</span>
+                {% endif %}
+
+
+            </nav>
+
+            {% if nova_permissao %}
+                <div class="container-aviso">
+                    <h2 class="texto-grande texto-azul" data-pagina-cadastro="false">Este usuário ja contem todas as permissões.</h2>
+                </div>
+            {% else %}
+
+                {% if not pendente %}
+                    <h1 class="titulo-pagina texto-azul" data-pagina-cadastro="true">Cadastro de Permissão</h1>
+                {% else %}
+                    <h1 class="titulo-pagina texto-azul" data-pagina-cadastro="true">Pré cadastro de usuário</h1>
+                {% endif %}
+
+                <p class="descricao texto-preto">Defina permissões do usuário</p>
+
+                <form class="container-surface container-formulario-permissoes" method="POST">
+                    {% csrf_token %}
+
+                    <h2 class="texto-medio texto-azul">Seleção de Permissão</h2>
+
+                    <div class="formulario-grupo">
+                        {% if pendente %}
+                            <label class="texto-azul label-campo" for="campo-email">Email Institucional</label>
+                            <input class="campo-texto campo-grande" type="email" name="email" id="campo-email" required placeholder="Ex: servidor@ac.gov.br">
+                        {% else %}
+                            <label class="texto-azul label-campo" for="campo-usuario">Usuário</label>
+                            <input class="campo-texto campo-grande" type="text" value="{{ usuario.nome }}" name="usuario" id="campo-usuario" readonly>
+                        {% endif %}
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label for="campo-aplicacao" class="texto-azul label-campo">Aplicação</label>
+                        <select class="campo-texto campo-pequeno" name="aplicacao" id="campo-aplicacao" data-selecao-aplicacao>
+                            {% for aplicacao in aplicacoes %}
+                                <option value="{{ aplicacao.id }}">{{ aplicacao.nome }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label for="campo-servico" class="texto-azul label-campo">Serviço</label>
+                        <select class="campo-texto campo-medio" name="servico" id="campo-servico" data-selecao-servico>
+                            {% for servico in servicos %}
+                                <option value="{{ servico.id }}" data-opcao-servico="{{ servico.aplicacao.id }}">{{ servico.nome }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- <div class="formulario-grupo oculto" data-campo-inep>
+                        <label class="texto-azul label-campo" for="campo-inep">INEP</label>
+                        <input class="campo-texto campo-pequeno" type="number" name="inep" id="campo-inep" required>
+                    </div> -->
+
+                    <div class="formulario-grupo oculto" data-campo-inep>
+                        <label class="texto-azul label-campo"  for="campo-unidade">Unidade</label>
+
+                        <select id="campo-unidade" name="inep" data-selecao2 class="campo-grande campo-texto">
+                            {% for unidade in unidades %}
+                                {% if unidade.cod_inep == gestor.inep %}
+                                    <option value="{{ unidade.cod_inep }}" checked>{{ unidade.cod_inep }} - {{ unidade.nome_escola }}</option>
+                                {% else %}
+                                    <option value="{{ unidade.cod_inep }}">{{ unidade.cod_inep }} - {{ unidade.nome_escola }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo">Consultar</label>
+                        <fieldset id="fieldset-consultar">
+                            <input type="radio" name="fieldset-consultar" value="1" id="radio-cosultar-sim" checked>
+                            <label class="texto-preto" for="radio-cosultar-sim">Sim</label>
+
+                            <input type="radio" name="fieldset-consultar" value="0" id="radio-cosultar-nao">
+                            <label class="texto-preto" for="radio-cosultar-nao">Não</label>
+                        </fieldset>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo">Editar</label>
+                        <fieldset id="fieldset-editar">
+                            <input type="radio" name="fieldset-editar" value="1" id="radio-editar-sim" checked>
+                            <label class="texto-preto" for="radio-editar-sim">Sim</label>
+
+                            <input type="radio" name="fieldset-editar" value="0" id="radio-editar-nao">
+                            <label class="texto-preto" for="radio-editar-nao">Não</label>
+                        </fieldset>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo">Imprimir</label>
+                        <fieldset id="fieldset-imprimir">
+                            <input type="radio" name="fieldset-imprimir" value="1" id="radio-imprimir-sim" checked>
+                            <label class="texto-preto" for="radio-imprimir-sim">Sim</label>
+
+                            <input type="radio" name="fieldset-imprimir" value="0" id="radio-imprimir-nao">
+                            <label class="texto-preto" for="radio-imprimir-nao">Não</label>
+                        </fieldset>
+                    </div>
+
+                    <div class="container-botoes">
+                        <button class="botao botao--azul" data-modal-abrir="confirmar">Salvar</button>
+                    </div>
+
+                    <div class="modal oculto" data-modal="confirmar">
+                        <div class="modal-conteudo modal-confirmacao">
+                            <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                            <p class="texto-preto descricao">Tem certeza que deseja salvar a permissão?</p>
+
+                            <div class="container-botoes">
+                                <button class="botao--verde botao" type="submit">Salvar</button>
+                                <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            {% endif %}
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static '/assets/js/module/select2.js' %}"></script>
+    <script src="{% static '/assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static '/assets/js/layout/usuario/usuario-permissoes/controlaServicos.js' %}"></script>
+{% endblock %}

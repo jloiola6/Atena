@@ -1,0 +1,110 @@
+{% load static %}
+
+<div class="aditivo-itens" data-nav-container="itens">
+    {% for item in itens %}
+        {% if item.numero_lote != '' %}
+            <h4 class="texto-medio texto-azul">Lote {{ item.numero_lote }} - Item n° {{ item.numero_item }}</h4>
+        {% else %}
+            <h4 class="texto-medio texto-azul">Item N° {{ item.numero_item }}</h4>
+        {% endif %}
+        <table class="tabela tabela-aditivo-itens">
+            <thead>
+                <tr>
+                    <th class="">Status</th>
+                    <!-- <th class="">Item</th>
+                    <th class="">Lote</th>
+                    <th class="">Descrição</th> -->
+                    <th class="coluna-centralizada">Quantidade</th>
+                    <th class="coluna-centralizada">Valor unitário</th>
+                    <th class="coluna-direita">Valor total</th>
+                </tr>
+            </thead>
+            {% if item.quantidade_novo != None %}
+                {% if item.status_novo == 0 %}
+                    <tbody>
+                        <tr class="linha-desabilitada">
+                            <td class="texto-azul texto-negrito" >Item inativado</td>
+                            <td class="coluna-centralizada">{{ item.quantidade_antigo }}</td>
+                            <td class="coluna-centralizada">{{ item.valor_unitario_antigo }}</td>
+                            <td class="coluna-direita">{{ item.valor_total_antigo }}</td>
+                        </tr>
+                    </tbody>
+                {% else %}
+                    <tbody>
+                        <tr class="linha-desabilitada">
+                            <td class="texto-azul texto-negrito" >ANTES</td>
+                            <!-- <td>{{ item.descricao }}</td> -->
+                            <td class="coluna-centralizada">{{ item.quantidade_antigo }}</td>
+                            <td class="coluna-centralizada">{{ item.valor_unitario_antigo }}</td>
+                            <td class="coluna-direita">{{ item.valor_total_antigo }}</td>
+                        </tr>
+                        <tr class="linha-desabilitada">
+                            <td class="texto-azul texto-negrito" >DEPOIS</td>
+                            <!-- <td>{{ item.descricao }}</td> -->
+                            <td class="coluna-centralizada">{{ item.quantidade_novo }}</td>
+                            <td class="coluna-centralizada">{{ item.valor_unitario_novo }}</td>
+                            <td class="coluna-direita">{{ item.valor_total_novo }}</td>
+                        </tr>
+                    </tbody>
+                {% endif %}
+            {% else %}
+                <tbody>
+                    <tr class="linha-desabilitada">
+                        <td class="texto-azul texto-negrito" >Sem alteração</td>
+                        <td class="coluna-centralizada">{{ item.quantidade_antigo }}</td>
+                        <td class="coluna-centralizada">{{ item.valor_unitario_antigo }}</td>
+                        <td class="coluna-direita">{{ item.valor_total_antigo }}</td>
+                    </tr>
+            </tbody>
+            {% endif %}
+        </table>
+
+        <table class="tabela tabela-aditivo-itens-smartphone">
+            <thead>
+                <tr>
+                    <th class="">Status</th>
+                    <!-- <th class="">Descrição</th> -->
+                    <th class="coluna-centralizada">QTD</th>
+                    <th class="coluna-centralizada">Valor unitário</th>
+                </tr>
+            </thead>
+            
+            {% if item.quantidade_novo != None %}
+                {% if item.status_novo == 0 %}
+                    <tbody>
+                        <tr class="linha-desabilitada">
+                            <td class="texto-azul texto-negrito" >Item inativado</td>
+                            <td class="coluna-centralizada">{{ item.quantidade_antigo }}</td>
+                            <td class="coluna-centralizada">{{ item.valor_unitario_antigo }}</td>
+                            <td class="coluna-direita">{{ item.valor_total_antigo }}</td>
+                        </tr>
+                    </tbody>
+                {% else %}
+                    <tbody>
+                        <tr class="linha-desabilitada">
+                            <td class="texto-azul texto-negrito" >ANTES</td>
+                            <!-- <td>{{ item.descricao }}</td> -->
+                            <td class="coluna-centralizada">{{ item.quantidade_antigo }}</td>
+                            <td class="coluna-centralizada">{{ item.valor_unitario_antigo }}</td>
+                        </tr>
+                        <tr class="linha-desabilitada">
+                            <td class="texto-azul texto-negrito" >DEPOIS</td>
+                            <!-- <td>{{ item.descricao }}</td> -->
+                            <td class="coluna-centralizada">{{ item.quantidade_novo }}</td>
+                            <td class="coluna-centralizada">{{ item.valor_unitario_novo }}</td>
+                        </tr>
+                    </tbody>
+                {% endif %}
+            {% else %}
+                <tbody>
+                    <tr class="linha-desabilitada">
+                        <td class="texto-azul texto-negrito" >Sem alteração</td>
+                        <td class="coluna-centralizada">{{ item.quantidade_antigo }}</td>
+                        <td class="coluna-centralizada">{{ item.valor_unitario_antigo }}</td>
+                        <td class="coluna-direita">{{ item.valor_total_antigo }}</td>
+                    </tr>
+                </tbody>
+            {% endif %}
+        </table>
+    {% endfor %}
+</div>

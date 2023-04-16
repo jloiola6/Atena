@@ -1,0 +1,5 @@
+/* Estilização da partial de formulario de documento de um contrato */
+
+.formulario-documento, .formulario-documento .container-botoes{
+    margin-top: 16px;
+}

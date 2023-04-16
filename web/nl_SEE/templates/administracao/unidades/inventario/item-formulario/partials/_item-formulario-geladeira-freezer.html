@@ -1,0 +1,43 @@
+<form class="container-surface" method="POST">
+    {% csrf_token %}
+
+    <nav class="container-navegacao-surface">
+        <ul class="navegacao-surface-lista">
+            <li class="navegacao-surface-item navegacao-surface-item-ativo">
+                <span class="texto-azul">Geladeira / Freezer</span>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="formulario-grupo">
+        <label for="campo-patrimonio">Patrimônio</label>
+        <input class="campo-texto campo-medio" type="text" id="campo-patrimonio" name="patrimonio" maxlength="30" required>
+    </div>
+
+    <div class="formulario-grupo">
+        <label for="campo-cor">Cor</label>
+        <input class="campo-texto campo-medio" type="text" id="campo-cor" name="cor" maxlength="100" required>
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul " for="campo-capacidade">Capacidade (Litros)</label>
+        <input class="campo-texto campo-medio" type="number" min="1" name="capacidade" id="campo-capacidade" required>
+    </div>
+
+    <div class="formulario-grupo">
+        <label for="campos-voltagem">Voltagem</label>
+
+        <fieldset id="campos-voltagem">
+            <input type="radio" id="voltagem-110" name="voltagem" value="110V" checked>
+            <label for="voltagem-110" class="texto-preto">110V</label>
+
+            <input type="radio" id="voltagem-220" name="voltagem" value="220V">
+            <label for="voltagem-220" class="texto-preto">220V</label>
+
+            <input type="radio" id="voltagem-bi" name="voltagem" value="Bivolt">
+            <label for="voltagem-bi" class="texto-preto">Bivolt</label>
+        </fieldset>
+    </div>
+
+    {% include 'administracao/unidades/inventario/item-formulario/partials/_modal-confirmacao.html' %}
+</form>

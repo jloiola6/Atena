@@ -1,0 +1,7 @@
+/* Estilização da página de perfil de um aluno */
+
+.container-aluno__titulo{
+    align-items: center;
+    display:flex;
+    gap: .5rem;
+}

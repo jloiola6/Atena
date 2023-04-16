@@ -1,0 +1,114 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+    Atuaizar Dados Bancários
+{% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/terceirizacao/servidor/servidor-formulario.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'terceirizacao:index' %}">Terceirização</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'terceirizacao:servidores' %}">Terceirizados</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'terceirizacao:servidor-perfil' %}?id={{ servidor.id }}">{{ servidor }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Atualizar Dados Bancários</span>
+
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Cadastrar dados Bancários</h1>
+
+            <p class="descricao  texto-preto">Insira os dados bancários do terceirizado</p>
+
+            <form class="container-surface container-formulario-servidor" method="POST">
+                {% csrf_token %}
+                <nav class="container-navegacao-surface">
+                    <ul class="navegacao-surface-lista">
+                        <li class="navegacao-surface-item" data-form-aba="dados-bancarios">
+                            <span class="texto-azul ">Dados bancários</span>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="formulario-servidor-financeiro" data-form-container="dados-bancarios" >
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-instituicao">Instituição financeira</label>
+                        <select name="instituicao" id="campo-instituicao" class="campo-texto campo-medio">
+                            {% for instituicao in instituicoes %}
+                                {% if instituicao == servidor_banco.instituicao %}
+                                    <option value="{{ instituicao }}" selected >{{ instituicao }}</option>
+                                {% else %}
+                                    <option value="{{ instituicao }}">{{ instituicao }}</option>
+                                {% endif %}
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-tipo-conta">Tipo de conta</label>
+                        <select name="tipo-conta" id="campo-tipo-conta" class="campo-texto campo-pequeno">
+                            {% for tipo_conta in tipos %}
+                                {% if tipo_conta == servidor_banco.tipo_conta %}
+                                    <option value="{{ tipo_conta }}" selected >{{ tipo_conta }}</option>
+                                {% else %}
+                                    <option value="{{ tipo_conta }}">{{ tipo_conta }}</option>
+                                {% endif %}
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-agencia">Agência</label>
+                        <input class="campo-texto campo-pequeno" type="text" value="{{ servidor_banco.agencia }}" name="agencia" id="campo-agencia" placeholder="Ex: 1234" autocomplete="off" data-mascara="numero">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-conta">Conta (com dígito)</label>
+                        <input class="campo-texto campo-pequeno" type="text" value="{{ servidor_banco.conta }}" name="conta" id="campo-conta" placeholder="Ex: 12345-4" autocomplete="off" data-mascara="cc">
+                    </div>
+                    <div class="container-botoes">
+                        <button class="botao botao--azul" data-modal-abrir="confirmar">Cadastrar</button>
+                    </div>
+                </div>
+                <div class="modal oculto" data-modal="confirmar">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                            <p class="texto-preto descricao">Tem certeza que deseja atualizar as informações bancárias?</p>
+
+                            <div class="container-botoes">
+                                <button class="botao--verde botao" type="submit">Cadastrar</button>
+                                <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                            </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+
+{% endblock %}

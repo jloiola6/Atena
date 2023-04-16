@@ -1,0 +1,99 @@
+{% load static %}
+<div class="servidor-contratos oculto" data-nav-container="contratos">
+
+    {% if servidor_contrato_terceirizado %}
+        <h2 class="texto-medio texto-azul titulo-contratos-terceirizados">Contratos Terceirizados</h2>
+        <div class="container-cards-simples">
+            {% for contrato in contrato_lotacao %}
+                <div class="card-simples ">
+                    <h4 class="card-simples__titulo texto-azul">N° {{ contrato.item__contrato__numero_contrato }}</h4>
+                    <div class="card-simples__descricao">
+                        <p class=" texto-azul texto-negrito">Item do contrato: <span class="texto-preto texto-normal">{{ contrato.item__numero_item }}</span></p>
+                        <p class=" texto-azul texto-negrito paragrafo">Descrição: <span class="texto-preto texto-normal">{{ contrato.item__descricao|upper }}</span></p>
+                        {% comment %} <p class=" texto-azul texto-negrito">Valor unitário: <span class="texto-preto texto-normal">{{ contrato.item__valor_unitario }}</span></p> {% endcomment %}
+                        {% if contrato.status == 1 %}
+                            <p class=" texto-azul texto-negrito">Situação: <span class="texto-preto texto-normal">Ativo</span></p>
+                        {% else %}
+                            <p class=" texto-azul texto-negrito">Situação: <span class="texto-preto texto-normal">Inativo</span></p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <br>
+    {% endif %}
+
+    {% if contratos_lotus or servidor_contrato %}
+        <h2 class="texto-medio texto-azul titulo-contratos-terceirizados">Contratos da SEE</h2>
+        {% if contratos_lotus %}
+            <div class="container-cards-simples">
+                {% for contrato in contratos_lotus %}
+                    {% if permissao %}
+                        <a href="{% url 'lotacao:contrato-perfil' %}?id_contrato_lotus={{ contrato.id }}">
+                    {% else %}
+                        <a href="#">
+                    {% endif %}
+                        <div class="card-simples card-lotacao">
+                            <div class="card-titulo-imagem">
+                                <h4 class="card-simples__titulo texto-azul">Dígito {{ contrato.digito }}</h4>
+                                <img src="{% static 'assets/img/lotus.png' %}">
+                            </div>
+
+                            <div class="card-simples__descricao">
+                                <p class=" texto-azul texto-negrito">Cargo: <span class="texto-preto texto-normal">{{ contrato.cargo }}</span></p>
+                                <p class=" texto-azul texto-negrito">Tipo: <span class="texto-preto texto-normal">{{ contrato.tipo }}</span></p>
+                                <p class=" texto-azul texto-negrito">Situação: <span class="texto-preto texto-normal">{{ contrato.situacao }}</span></p>
+                            </div>
+
+                            <p class="descricao texto-cinza texto-negrito">Dados importados via Lotus</p>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if servidor_contrato %}
+            <div class="container-cards-simples">
+                {% for contrato in servidor_contrato %}
+                    <div class="card-simples ">
+                        {% if contrato.tipo_contrato != 'ESTAGIÁRIO'%}
+                            {% if contrato.tipo_contrato != 'PERMUTA'%}
+                                <h4 class="card-simples__titulo texto-azul">Dígito {{ contrato.digito }}</h4>
+                            {% else %}
+                                <h4 class="card-simples__titulo texto-azul">Contrato de Permuta</h4>
+                            {% endif %}
+
+                            <div class="card-simples__descricao">
+                                <p class=" texto-azul texto-negrito">Tipo de Contrato: <span class="texto-preto texto-normal">{{ contrato.tipo_contrato }}</span></p>
+                                <p class=" texto-azul texto-negrito">Cargo: <span class="texto-preto texto-normal">{{ contrato.cargo }}</span></p>
+                                {% if contrato.cargo.classe %}
+                                    <p class=" texto-azul texto-negrito">Classe: <span class="texto-preto texto-normal">{{ contrato.cargo.classe }}</span></p>
+                                {% endif %}
+                                <p class=" texto-azul texto-negrito">Carga horária: <span class="texto-preto texto-normal">{{ contrato.cargo.carga_horaria }}H</span></p>
+                                <p class=" texto-azul texto-negrito">Situação: <span class="texto-preto texto-normal">{{ contrato.situacao }}</span></p>
+                            </div>
+                        {% else %}
+                            <div class="card-simples__descricao">
+                                <h4 class="card-simples__titulo texto-azul">{{ servidor.nome }}</h4>
+                                <p class=" texto-azul texto-negrito">Tipo de Contrato: <span class="texto-preto texto-normal">{{ contrato.tipo_contrato }}</span></p>
+                                <p class=" texto-azul texto-negrito">Data de Início: <span class="texto-preto texto-normal">{{ contrato.data_inicio }}</span></p>
+                                <p class=" texto-azul texto-negrito">Situação: <span class="texto-preto texto-normal">{{ contrato.situacao }}</span></p>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endif %}
+
+    {% if not contratos_lotus and not servidor_contrato and not servidor_contrato_terceirizado %}
+        <p class="texto-preto texto-normal descricao">Este servidor não possui contratos cadastrados</p>
+    {% endif %}
+
+    {% if permissao_contrato %}
+        <div class="container-botoes">
+            <button class="botao botao--azul" data-modal-abrir="adicionar-contrato">Adicionar</button>
+        </div>
+    {% endif %}
+</div>

@@ -1,0 +1,19 @@
+/* Estilização da página de perfil de uma fonte */
+
+.surface-fonte{
+    margin-top: 24px;
+}
+
+.surface-fonte .container-botoes{
+    margin-top: 16px;
+}
+
+.fonte-dados{
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+}
+
+.container-empenho{
+    margin-top: 16px;
+}

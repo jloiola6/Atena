@@ -1,0 +1,43 @@
+{% comment %}
+    Esta partial contém um container com o formulário de fonte de um contrato
+    Feita para evitar a repetição código em perfis de contrato nos módulos de ADMINISTRAÇÃO, TECNOLOGIA e TERCEIRIZAÇÃO -->
+{% endcomment %}
+
+<form class="container-surface formulario-fonte" method="POST">
+    {% csrf_token %}
+
+    <nav class="container-navegacao-surface">
+        <ul class="navegacao-surface-lista">
+            <li class="navegacao-surface-item navegacao-surface-item-ativo" data-form-aba="fonte">
+                <span class="texto-azul">Fonte</span>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="formulario-contrato" data-form-container="Fonte">
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-fonte">Fonte</label>
+            <select name="fonte_recurso" id="campo-fonte" class="campo-texto campo-medio">
+                {% for fonte in fontes %}
+                    <option value="{{ fonte }}">{{ fonte }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="container-botoes">
+            <button class="botao botao--azul" data-modal-abrir="confirmar">Salvar</button>
+        </div>
+    </div>
+
+    <div class="modal oculto" data-modal="confirmar">
+        <div class="modal-conteudo modal-confirmacao">
+            <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+            <p class="texto-preto descricao">Tem certeza que deseja a fonte?</p>
+
+            <div class="container-botoes">
+                <button class="botao--verde botao" type="submit">Salvar</button>
+                <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+            </div>
+        </div>
+    </div>
+</form>

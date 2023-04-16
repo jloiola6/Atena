@@ -1,0 +1,93 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Editar Contatos {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/core/servidor/servidor-contatos.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'core:perfil' %}">{{ servidor.nome }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Editar Contatos</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Editar Contatos</h1>
+
+            <p class="descricao  texto-preto">Gerencie os contatos do servidor</p>
+
+            <form class="container-surface container-formulario-servidor-contatos" method="POST">
+                {% csrf_token %}
+                <h2 class="texto-medio texto-azul">Contatos do Servidor ({{ qtd_contatos }})</h2>
+
+                <div class="formulario-grupo">
+                    <h3 class="texto-medio texto-azul">Celular</h3>
+                    {% for contato in contatos %}
+                        {% if contato.tipo_contato == 'C' %}
+                            <div class="container-contato-edicao">
+                                <input class="campo-texto campo-medio" type="tel" name="celular_id{{contato.id}}" placeholder='Ex: 68 99999-1234' autocomplete="off" value="{{ contato.contato }}" data-mascara="telefone">
+                                <button class="botao botao--vermelho" data-botao-excluir>Excluir</button>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                    <div>
+                        <button class="botao botao--azul" data-botao-adicionar="celular">Adicionar</button>
+                    </div>
+                </div>
+
+                <div class="formulario-grupo">
+                    <h3 class="texto-medio texto-azul">E-mail</h3>
+                    {% for contato in contatos %}
+                        {% if contato.tipo_contato == 'E' %}
+                            <div class="container-contato-edicao">
+                                <input class="campo-texto campo-medio" type="email" name="email_id{{contato.id}}" placeholder='Ex: servidor@servidor.com' autocomplete="off" value="{{ contato.contato }}">
+                                <button class="botao botao--vermelho" data-botao-excluir>Excluir</button>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                    <div>
+                        <button class="botao botao--azul" data-botao-adicionar="email">Adicionar</button>
+                    </div>
+                </div>
+
+                <div class="formulario-grupo">
+                    <h3 class="texto-medio texto-azul">Telefone</h3>
+                    {% for contato in contatos %}
+                        {% if contato.tipo_contato == 'T' %}
+                            <div class="container-contato-edicao">
+                                <input class="campo-texto campo-medio" type="tel" name="telefone_id{{contato.id}}" placeholder='Ex: 68 3123-1234' autocomplete="off" value="{{ contato.contato }}" data-mascara="telefone">
+                                <button class="botao botao--vermelho" data-botao-excluir>Excluir</button>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                    <div>
+                        <button class="botao botao--azul" data-botao-adicionar="telefone">Adicionar</button>
+                    </div>
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao botao--verde" type="submit">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+    <script src="{% static 'assets/js/layout/core/servidor-contatos/controlaCampos.js' %}" type="module"></script>
+{% endblock %}

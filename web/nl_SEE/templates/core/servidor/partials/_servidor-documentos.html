@@ -1,0 +1,35 @@
+{% load static %}
+
+<div class="oculto" data-nav-container="documentos">
+    {% if documentos %}
+        <div class="container-cards-simples contrato-lotacoes">
+            {% for documento in documentos %}
+                    <div class="card-simples card-documento">
+                        <h4 class="card-simples__titulo texto-azul">{{ documento.categoria }}</h4>
+
+                        <div class="card-simples__descricao" >
+                            <p title="{{documento.descricao}}" class=" texto-azul texto-negritos">Descrição: <span class="texto-preto texto-normal">{{ documento.descricao }}</span></p>
+                            <p title="{{documento.descricao}}" class=" texto-azul texto-negritos">Formato: <span class="texto-preto texto-normal">{{ documento.formato }}</span></p>
+                        </div>
+
+                        <a class="link" href="{% url 'core:index' %}{{documento.caminho}}" target="_blank">Abrir</a>
+                    </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <h3 class="texto-medio texto-preto">Sem documentos adicionados.</h3>
+    {% endif %}
+
+
+
+    <div class="container-botoes">
+        {% if qtd_documentos > 3 %}
+            <a class="link" href="{% url 'core:servidor-galeria' %}?id={{servidor.id}}">Ver todos os documentos</a>
+        {% else %}
+            <div class="container-botoes">
+                <a href="{% url 'core:servidor-documento' %}?id={{servidor.id}}"><button class="botao botao--azul">Adicionar</button></a>
+            </div>
+        {% endif %}
+    </div>
+
+</div>

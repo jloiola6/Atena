@@ -1,0 +1,65 @@
+/* Estilos da página de perfil de um link */
+
+.contrato-dados{
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+}
+    .contrato-objeto{
+        line-height: 20px;
+        text-align: justify;
+        width: 60%;
+    }
+
+.container-link-dados{
+    display: flex; 
+    flex-direction: column; 
+    margin-top: 16px; 
+    row-gap: 8px;
+}
+
+    .link-contrato{
+        line-height: 1.25;
+        width: 60%;
+    }
+
+    .container-link-dados .container-botoes{
+        margin-top: 8px;
+    }
+
+.container-unidade-mapa iframe{
+    height: 400px;
+    width: 100%;
+}
+
+    .lista-instrucoes-mapa{
+        list-style-type: disc;
+        margin-left: 24px;
+        margin-top: 16px;
+    }
+
+.container-surface-departamento{
+    margin-top: 24px;
+}
+
+    .container-unidade-dados{
+        display: flex;
+        flex-direction: column;
+        margin-top: 8px;
+        row-gap: 8px;
+    }
+
+    .titulo-endereco-departamento{
+        margin-top: 16px;
+    }
+
+    .container-endereco-departamento{
+        display: flex;
+        flex-basis: 50%;
+        flex-direction: column;
+        margin-top: 16px;
+        row-gap: 8px;
+    }
+
+
+

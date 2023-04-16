@@ -1,0 +1,59 @@
+/* Estilização da página de agendamentos */
+
+.agendamento{
+    aspect-ratio: 1;
+    border-radius: 100vmax;
+    display: block;
+    margin: auto;
+    width: 1rem;
+}
+
+    .agendamento--pendente{
+        background-color: var(--cor-amarelo);
+    }
+
+    .agendamento--concluido{
+        background-color: var(--cor-verde);
+    }
+
+    .agendamento--cancelado{
+        background-color: var(--cor-vermelho);
+    }
+
+    .agendamento--ausente{
+        background-color: var(--cor-laranja);
+    }
+
+    .tabela-agendamento--tablet, .tabela-agendamento--tablet2, .tabela-agendamento--smartphone{
+        display: none;
+    }
+
+    @media screen and (max-width: 835px) {
+        .tabela-agendamento--tablet{
+            display: block;
+        }
+
+        .tabela-agendamento{
+            display: none;
+        }
+    }
+
+    @media screen and (max-width: 628px) {
+        .tabela-agendamento--tablet2{
+            display: block;
+        }
+
+        .tabela-agendamento--tablet{
+            display: none;
+        }
+    }
+
+    @media screen and (max-width: 532px) {
+        .tabela-agendamento--smartphone{
+            display: block;
+        }
+
+        .tabela-agendamento--tablet2{
+            display: none;
+        }
+    }

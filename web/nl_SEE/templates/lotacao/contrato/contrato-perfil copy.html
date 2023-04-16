@@ -1,0 +1,288 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} {{ servidor.nome }} {% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/lotacao/contrato/contrato-perfil.css' %}">
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/lotacao/contrato/responsivo/contrato-perfil-responsivo.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:index' %}">Gestão de Pessoas</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:contratos' %}">Contratos</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:servidor-perfil' %}?id={{ servidor.id }}">{{ servidor.nome }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                {% if contrato.tipo_contrato == 'ESTAGIÁRIO' %}
+                    <span class="  texto-azul">Estagiário</span>
+                {% else %}
+                    {% if contrato.digito == None or contrato.digito == '' or contrato.digito == 'Sem dígito' %}
+                        <span class="  texto-azul">Contrato sem dígito</span>
+                    {% elif contrato.digito == 'Pendente' %}
+                        <span class="  texto-azul">Contrato com dígito pendente</span>
+                    {% else %}
+                        <span class="  texto-azul">Digíto N° {{ contrato.digito }}</span>
+                    {% endif %}
+                {% endif %}
+            </nav>
+
+            {% if id_contrato %}
+                <div class="container-surface-contrato-lotacao container-surface">
+                    <div class="container-contrato-lotacao-servidor">
+                        <h1 class="texto-medio texto-azul">{{ servidor.nome }}</h1>
+                        <a href="{% url 'lotacao:servidor-perfil' %}?id={{ servidor.id }}" class="link">Abrir página do servidor</a>
+                    </div>
+
+                    <div class="container-detalhes">
+
+                        {% if contrato.tipo_contrato != 'ESTAGIÁRIO' %}
+
+                            {% if contrato.tipo_contrato != 'PERMUTA' and contrato.tipo_contrato != 'CEDIDO' %}
+                                <p class=" texto-azul texto-negrito">Dígito: <span class="texto-preto texto-normal">{{ contrato.digito }}</span></p>
+                            {% endif %}
+
+                            {% if referencia != None %}
+                                <p class=" texto-azul texto-negrito">Cargo: <span class="texto-preto texto-normal">{{ contrato.cargo }} - {{ referencia }}</span></p>
+                            {% else %}
+                                <p class=" texto-azul texto-negrito">Cargo: <span class="texto-preto texto-normal">{{ contrato.cargo }}</span></p>
+                            {% endif %}
+
+                            {% if contrato.diario_homologacao %}
+                                <p class="texto-azul texto-negrito">N° do Diário de Homologação: <span class="texto-normal texto-preto">{{ contrato.diario_homologacao }}</span></p>
+                            {% endif %}
+
+                            {% if contrato.disciplina_convocacao %}
+                                <p class="texto-azul texto-negrito">Disciplina de Convocação: <span class="texto-normal texto-preto">{{ contrato.disciplina_convocacao }}</span></p>
+                            {% endif %}
+
+                            {% if id_contrato %}
+                                <p class=" texto-azul texto-negrito">Carga Horária: <span class="texto-preto texto-normal">{{ contrato.cargo.carga_horaria }}H</span></p>
+                            {% endif %}
+
+                            {% if contrato.tipo_contrato != 'PERMUTA' and contrato.tipo_contrato != 'CEDIDO' %}
+                                {% if contrato.doe %}
+                                    <p class=" texto-azul texto-negrito">DOE: <span class="texto-preto texto-normal">{{ contrato.doe }}</span></p>
+                                {% elif contrato.parecer %}
+                                    <p class=" texto-azul texto-negrito">Parecer: <span class="texto-preto texto-normal">{{ contrato.parecer }}</span></p>
+                                {% else %}
+                                    <p class=" texto-azul texto-negrito">DOE: <span class="texto-preto texto-normal">Não Informado</span></p>
+                                    <p class=" texto-azul texto-negrito">Parecer: <span class="texto-preto texto-normal">Não Informado</span></p>
+                                {% endif %}
+
+                                {% if contrato.data_convocacao != None %}
+                                    <p class=" texto-azul texto-negrito">Data de Convocação: <span class="texto-preto texto-normal">{{ contrato.data_convocacao }}</span></p>
+                                {% else %}
+                                    <p class=" texto-azul texto-negrito">Data de Convocação: <span class="texto-preto texto-normal">Não Informado</span></p>
+                                {% endif %}
+
+                                {% if contrato.data_contrato != None %}
+                                    <p class=" texto-azul texto-negrito">Data de Contratação: <span class="texto-preto texto-normal">{{ contrato.data_contrato }}</span></p>
+                                {% else %}
+                                    <p class=" texto-azul texto-negrito">Data de Contratação: <span class="texto-preto texto-normal">Não Informado</span></p>
+                                {% endif %}
+                            {% endif %}
+
+                            {% if id_contrato %}
+                                <p class=" texto-azul texto-negrito">Tipo de Contrato: <span class="texto-preto texto-normal">{{ contrato.tipo_contrato }}</span></p>
+                            {% endif %}
+
+                            <p class=" texto-azul texto-negrito">Data de Início: <span class="texto-preto texto-normal">{{ contrato.data_inicio }}</span></p>
+                            {% if ultimo_aditivo.data_termino %}
+                                <p class=" texto-azul texto-negrito">Data de Término Aditivo: <span class="texto-preto texto-normal">{{ ultimo_aditivo.data_termino }}</span></p>
+                            {% endif %}
+
+                            {% if contrato.data_termino %}
+                                <p class=" texto-azul texto-negrito">Data de Término: <span class="texto-preto texto-normal">{{ contrato.data_termino }}</span></p>
+                            {% endif %}
+                            
+                            <p class=" texto-azul texto-negrito">Município: <span class="texto-preto texto-normal">{{ contrato.municipio }}</span></p>
+                            <p class=" texto-azul texto-negrito">Situação: <span class="texto-preto texto-normal">{{ contrato.situacao }}</span></p>
+                        {% else %}
+                            <p class=" texto-azul texto-negrito">Tipo de Contrato: <span class="texto-preto texto-normal">{{ contrato.tipo_contrato }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ contrato.data_inicio }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ contrato.data_termino }}</span></p>
+                            <p class=" texto-azul texto-negrito">Situação: <span class="texto-preto texto-normal">{{ contrato.situacao }}</span></p>
+                        {% endif %}
+
+                        <!-- {% if documentos %}
+                            {% for documento in documentos %}
+                                <div class="card-simples card-lotacao">
+                                    <h4 class="card-simples__titulo texto-azul">Termo de Cancelamento</h4>
+                                    <p title="{{documento.descricao}}" class=" texto-azul texto-negritos">Formato: <span class="texto-preto texto-normal">{{ documento.formato }}</span></p>
+                                    <a class="link" href="{% url 'core:index' %}{{documento.caminho}}" target="_blank">Abrir</a>
+                                </div>
+                            {% endfor %}
+                        {% endif %} -->
+                    </div>
+                    {% if documentos %}
+                        {% for documento in documentos %}
+                            <a class="link" href="{% url 'core:index' %}{{documento.caminho}}" target="_blank">Abrir Termo de Cancelamento do Contrato</a>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if permissao.editar == 1  and id_contrato %}
+                        <div class="container-botoes">
+                            {%  if contrato.situacao == 'EXONERADO' or contrato.situacao == 'EXONERADO/RESCISO' %}
+                                {% if user not in usuarios_excluir %}
+                                    <button class="botao botao--azul" disabled>Editar</button>
+                                {% else %}
+                                    <button class="botao botao--azul" data-modal-abrir="editar-contrato">Editar</button>
+                                {% endif %}
+                            {% else %}
+                                <button class="botao botao--azul" data-modal-abrir="editar-contrato">Editar</button>
+                            {% endif %}
+                            
+                            {% if permissao.imprimir == 1 %}
+                                {% if servidor_endereco %}
+                                    <form method= 'POST'>
+                                        {% csrf_token %}
+                                        <!-- <button class="botao botao--azul" type='submit' name='btn-exportar' value= 'exportar-contrato'>Exportar</button> -->
+                                        <button class="botao botao--azul" data-modal-abrir="exportar">Exportar</button>
+                                    </form>
+                                {% else %}
+                                    <p class="texto-normal texto-preto">Para exportar é necessário cadastrar o endereço do servidor.</p>
+                                {% endif %}
+                            {% endif %}
+
+                            {% if not documentos %}
+                                <button class="botao botao--azul" data-modal-abrir="termo">Anexar Termo de Cancelamento</button>
+                            {% endif %}
+
+                            {% if not lotacao and not aditivos and user in usuarios_excluir %}
+                                <form method= 'POST'>
+                                    {% csrf_token %}
+                                    <button class="botao botao--vermelho" type='submit' name='btn-excluir-contrato' value='excluir-contrato'>Excluir Contrato</button>
+                                </form>
+                            {% endif %}
+
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            {% if id_contrato_lotus %}
+                <div class="container-surface-contrato-lotacao container-surface">
+                    <div class="container-contrato-lotacao-servidor">
+                        <h1 class="texto-medio texto-azul">{{ servidor.nome }}</h1>
+                        <a href="{% url 'lotacao:servidor-perfil' %}?id={{ servidor.id }}" class="link">Abrir página do servidor</a>
+                    </div>
+
+                    <div class="container-detalhes">
+
+                        {% if contrato.tipo != 'ESTAGIÁRIO' %}
+                            <p class=" texto-azul texto-negrito">Digito: <span class="texto-preto texto-normal">{{ contrato.digito }}</span></p>
+                            {% if not id_contrato_lotus %}
+                                <p class=" texto-azul texto-negrito">Cargo: <span class="texto-preto texto-normal">{{ contrato.cargo }}</span></p>
+                            {% endif %}
+                            <!-- {% if id_contrato_lotus %}
+                                <p class=" texto-azul texto-negrito">Carga Horária: <span class="texto-preto texto-normal">{{ contrato.cargo.carga_horaria }}H</span></p>
+                            {% endif %} -->
+
+                            {% if contrato.doe %}
+                                <p class=" texto-azul texto-negrito">DOE: <span class="texto-preto texto-normal">{{ contrato.doe }}</span></p>
+                            {% elif contrato.parecer %}
+                                <p class=" texto-azul texto-negrito">Parecer: <span class="texto-preto texto-normal">{{ contrato.parecer }}</span></p>
+                            {% else %}
+                                <p class=" texto-azul texto-negrito">DOE: <span class="texto-preto texto-normal">Não Informado</span></p>
+                                <p class=" texto-azul texto-negrito">Parecer: <span class="texto-preto texto-normal">Não Informado</span></p>
+                            {% endif %}
+
+                            <p class=" texto-azul texto-negrito">Data de Convocação: <span class="texto-preto texto-normal">{{ contrato.data_convocacao }}</span></p>
+
+                            {% if id_contrato_lotus %}
+                                <p class=" texto-azul texto-negrito">Tipo de Contrato: <span class="texto-preto texto-normal">{{ contrato.tipo }}</span></p>
+                            {% endif %}
+
+                            <p class=" texto-azul texto-negrito">Data de Início: <span class="texto-preto texto-normal">{{ contrato.data_inicio }}</span></p>
+
+                            {% if ultimo_aditivo.data_termino %}
+                                <p class=" texto-azul texto-negrito">Data de Término Aditivo: <span class="texto-preto texto-normal">{{ ultimo_aditivo.data_termino }}</span></p>
+                            {% endif %}
+
+                            {% if contrato.data_termino %}
+                                <p class=" texto-azul texto-negrito">Data de Término: <span class="texto-preto texto-normal">{{ contrato.data_termino }}</span></p>
+                            {% endif %}
+
+                            <p class=" texto-azul texto-negrito">Município: <span class="texto-preto texto-normal">{{ contrato.municipio }}</span></p>
+                            <p class=" texto-azul texto-negrito">Situacao: <span class="texto-preto texto-normal">{{ contrato.situacao }}</span></p>
+                        {% else %}
+                            <p class=" texto-azul texto-negrito">Tipo de Contrato: <span class="texto-preto texto-normal">{{ contrato.tipo_contrato }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ contrato.data_inicio }}</span></p>
+                            <p class=" texto-azul texto-negrito">Situacao: <span class="texto-preto texto-normal">{{ contrato.situacao }}</span></p>
+                        {% endif %}
+
+                        <div class="container-botoes">
+                            {% if permissao.imprimir == 1 %}
+                                <form method= 'POST'>
+                                    {% csrf_token %}
+                                    <button class="botao botao--azul" type='submit' name='btn-exportar' value= 'Lotus-contrato'>Exportar</button>
+                                </form>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="container-surface">
+                <nav class="container-navegacao-surface">
+                    <ul class="navegacao-surface-lista">
+                        <li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul navegacao-surface-item-ativo" data-nav-aba="lotacoes">Lotações</li>
+                        <li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul" data-nav-aba="ocorrencia">Ocorrência funcional</li>
+                        {% comment  %}<li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul" data-nav-aba="complemento_hora">Hora complementar</li>{% endcomment %}
+                        <li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul" data-nav-aba="gratificacao">Gratificação</li>
+
+                        {% if contrato.tipo_contrato != 'EFETIVO' %}
+                        <li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul" data-nav-aba="aditivo">Aditivar contrato</li>
+                        {% endif %}
+
+                        <li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul" data-nav-aba="vdp">V.D.P</li>
+                    </ul>
+                </nav>
+
+                {% include 'lotacao/contrato/partials/_contrato-lotacoes copy.html' %}
+                {% include 'lotacao/contrato/partials/_contrato-ocorrencia.html' %}
+                {% comment  %}{% include 'lotacao/contrato/partials/_contrato-complemento-hora.html' %} {% endcomment %}
+                {% include 'lotacao/contrato/partials/_contrato-gratificacao.html' %}
+                {% include 'lotacao/contrato/partials/_contrato-aditivo.html' %}
+                {% include 'lotacao/contrato/partials/_contrato-vdp.html' %}
+
+            </div>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    {% include 'lotacao/contrato/partials/_modal-contrato-exportar.html' %}
+    {% include 'lotacao/contrato/partials/_modal-adicionar-lotacao.html' %}
+    {% include 'lotacao/contrato/partials/_modal-cancelamento-contrato.html' %}
+
+    {% if permissao.editar == 1  and id_contrato %}
+        {% include 'lotacao/contrato/partials/_modal-editar-contrato.html' %}
+    {% endif %}
+
+    <script src="{% static 'assets/js/module/controlaNavegacaoSurface.js' %}"></script>
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/module/select2.js' %}"></script>
+
+    <script src="{% static 'assets/js/layout/lotacao/contrato-perfil/modalFormularioLotacao.js' %}"></script>
+    <script src="{% static 'assets/js/layout/lotacao/contrato-perfil/modalFormularioContrato.js' %}"></script>
+{% endblock %}

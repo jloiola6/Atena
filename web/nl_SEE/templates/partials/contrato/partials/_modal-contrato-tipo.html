@@ -1,0 +1,22 @@
+<div class="modal oculto" data-modal="adicionar">
+    <div id="modal-conteudo" class="modal-conteudo">
+        <h2 class="texto-grande texto-negrito texto-azul">Adicionar contrato</h2>
+        <p class="descricao texto-preto ">Selecione o tipo de aditivo</p>
+
+        <div class="formulario-grupo">
+            <label for="selecao-tipo" class="texto-azul label-campo">Tipo de contrato</label>
+
+            <select id="selecao-tipo" class="campo-texto campo-medio" data-selecao-tipo-contrato="{{ aplicacao }}">
+                <option value="Aditivo&id_contrato={{ id_contrato }}">Aditivo</option>
+                <option value="Supressao&id_contrato={{ id_contrato }}">Supressão</option>
+                <option value="Readequacao&id_contrato={{ id_contrato }}">Readequação</option>
+            </select>
+        </div>
+
+        <div class="container-botoes">
+            <a href="#" data-link-form-contrato>
+                <button class="botao botao--azul">Abrir formulário</button>
+            </a>
+        </div>
+    </div>
+</div>

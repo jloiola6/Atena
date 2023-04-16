@@ -1,0 +1,66 @@
+{% extends 'partials/_base.html' %}
+
+{% load static %}
+
+{% block title %} Atualizar Senha {% endblock %}
+
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+
+            <h1 class="titulo-pagina texto-azul">Atualizar senha</h1>
+
+            <form class="container-surface" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+
+                <h2 class="texto-medio texto-azul">Dados cadastrais</h2>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-senha-atual">Senha atual</label>
+                    <input class="campo-texto campo-pequeno" type="password" name="senha-atual" id="campo-senha-atual"  maxlength="15" data-senha-atual="{{ usuario.senha }}">
+                    <span class=" texto-vermelho oculto" data-senha-incorreta>Senha incorreta</span>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-nova-senha">Nova senha</label>
+                    <input class="campo-texto campo-pequeno" type="password" name="nova-senha" id="campo-nova-senha" data-nova-senha maxlength="15">
+                    <span class=" texto-preto oculto" data-validacao1>A senha deve conter de 8 a 15 caracteres</span>
+                    <span class=" texto-preto oculto" data-validacao2>A senha deve conter pelo menos uma letra maiúscula</span>
+                    <span class=" texto-preto oculto" data-validacao3>A senha deve conter pelo menos um número</span>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-confirmar-senha">Confirmar senha</label>
+                    <input class="campo-texto campo-pequeno" type="password" name="confirmar-senha" id="campo-confirmar-senha" data-confirma-senha maxlength="15">
+                    <span class=" texto-vermelho oculto" data-confirmacao>Senha incorreta</span>
+                </div>
+
+                <div class="container-botoes oculto">
+                    <button class="botao botao--azul" data-modal-abrir="confirmar" data-botao-cadastrar>Atualizar</button>
+                </div>
+
+                <div class="modal oculto" data-modal="confirmar">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                        <p class="texto-preto descricao">Tem certeza que deseja alterar os dados cadastrais ?</p>
+
+                        <div class="container-botoes">
+                            <button class="botao--verde botao" type="submit">Salvar</button>
+                            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.min.js" integrity="sha512-8pbzenDolL1l5OPSsoURCx9TEdMFTaeFipASVrMYKhuYtly+k3tcsQYliOEKTmuB1t7yuzAiVo+yd7SJz+ijFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{% static 'assets/js/layout/core/dados-cadastrais/alterar-senha/controlaCampos.js' %}"></script>
+
+{% endblock %}

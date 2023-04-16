@@ -1,0 +1,78 @@
+{% comment %}
+    Esta partial contém um container com os dados dos gestores de um contrato
+    Feita para evitar a repetição código em perfis de contrato nos módulos de ADMINISTRAÇÃO, TECNOLOGIA e TERCEIRIZAÇÃO
+{% endcomment %}
+
+<div class="contrato-gestores oculto" data-nav-container="gestores">
+    {% if gestores %}
+        <table class="tabela">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Atribuição</th>
+                    <th>Portaria</th>
+                    <th>Situação</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>{{ gestores.gestor_titular }}</td>
+                    <td>{{ gestores.atribuicao_gestor_titular }}</td>
+                    <td>{{ gestores.portaria_gestor_titular }}</td>
+                    <td>{{ gestores.situacao }}</td>
+                </tr>
+                <tr>
+                    <td>{{ gestores.gestor_substituto }}</td>
+                    <td>{{ gestores.atribuicao_gestor_substituto }}</td>
+                    <td>{{ gestores.portaria_gestor_substituto }}</td>
+                    <td>{{ gestores.situacao }}</td>
+                </tr>
+                <tr>
+                    <td>{{ gestores.fiscal_titular }}</td>
+                    <td>{{ gestores.atribuicao_fiscal_titular }}</td>
+                    <td>{{ gestores.portaria_fiscal_titular }}</td>
+                    <td>{{ gestores.situacao }}</td>
+                </tr>
+                <tr>
+                    <td>{{ gestores.fiscal_substituto }}</td>
+                    <td>{{ gestores.atribuicao_fiscal_substituto }}</td>
+                    <td>{{ gestores.portaria_fiscal_substituto }}</td>
+                    <td>{{ gestores.situacao }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="container-botoes">
+            {% if aplicacao == 'Administração' %}
+                <a href="{% url 'administracao:fiscais-formulario' %}?id_contrato={{ contrato.id }}">
+            {% elif aplicacao == 'Tecnologia' %}
+                <a href="{% url 'tecnologia:fiscais-formulario' %}?id_contrato={{ contrato.id }}">
+            {% elif aplicacao == 'Terceirização' %}
+                <a href="{% url 'terceirizacao:fiscais-formulario' %}?id_contrato={{ contrato.id }}">
+            {% endif %}
+
+            {% if not gestores %}
+                <button class="botao botao--azul">Adicionar Fiscais</button>
+            {% endif %}
+            </a>
+        </div>
+    {% else %}
+        <h2 class="texto-medio texto-preto">Este contrato não contém gestores.</h2>
+
+        {% if permissao.editar == 1 %}
+            <div class="container-botoes">
+                {% if aplicacao == 'Administração' %}
+                    <a href="{% url 'administracao:gestores-formulario' %}?id_contrato={{ contrato.id }}">
+                {% elif aplicacao == 'Tecnologia' %}
+                    <a href="{% url 'tecnologia:gestores-formulario' %}?id_contrato={{ contrato.id }}">
+                {% elif aplicacao == 'Terceirização' %}
+                    <a href="{% url 'terceirizacao:gestores-formulario' %}?id_contrato={{ contrato.id }}">
+                {% endif %}
+
+                    <button class="botao botao--azul">Adicionar</button>
+                </a>
+            </div>
+        {% endif %}
+    {% endif %}
+</div>

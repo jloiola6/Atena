@@ -1,0 +1,71 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="adicionar-denuncia">
+
+    <div class="modal-conteudo">
+        <div class="formulario-grupo">
+            <label class="label-campo texto-azul" for="fieldset-tipo-notificacao">Tipo de Notificação</label>
+            <fieldset id="fieldset-tipo-notificacao">
+                <input type="radio" name="tipo" value="individual" id="radio-individual" checked>
+                <label class="texto-preto" for="radio-individual">Individual</label>
+
+                <input type="radio" name="tipo" value="coletiva" id="radio-coletiva">
+                <label class="texto-preto" for="radio-coletiva">Coletiva</label>
+            </fieldset>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-envolvidos">Quantidade de Envolvidos</label>
+            <input class="campo-texto campo-pequeno" type="number" name="envolvidos" id="campo-envolvidos">
+        </div>
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-nome-escola">Nome da Escola</label>
+            <input class="campo-texto campo-grande" type="text" value="{{ escola.nome_escola }}" name="nome-escola" id="campo-nome-escola" readonly>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-inep">Código INEP</label>
+            <input class="campo-texto campo-grande" type="text" value="{{ escola.cod_inep }}" name="inep" id="campo-inep" readonly>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-uf">UF</label>
+            <input class="campo-texto campo-grande" type="text" value="Acre" name="uf" id="campo-uf" readonly>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-data-notificacao">Data de notificação</label>
+            <input class="campo-texto campo-grande" type="date" name="data-notificacao" id="campo-data-notificacao">
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-data-ocorrencia">Data da ocorrência</label>
+            <input class="campo-texto campo-grande" type="date" name="data-ocorrencia" id="campo-data-ocorrencia">
+        </div>
+
+
+        <div data-selecao-etapas class="formulario-grupo">
+            <label class="texto-azul label-campo"  for="campo-ocorrencia">Ocorrência</label>
+
+            <select id="campo-ocorrencia" name="ocorrencia" class="campo-texto campo-medio" >
+                {% for ocorrencia in ocorrencias  %}
+                    <option value="{{ ocorrencia}}">{{ ocorrencia }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div data-selecao-etapas class="formulario-grupo">
+            <label class="texto-azul label-campo"  for="campo-municipio">Município de Notificação</label>
+
+            <select id="campo-municipio" name="municipio" class="campo-texto campo-medio" >
+                {% for municipio in municipios  %}
+                    <option value="{{ municipio.id }}">{{ municipio.nome }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="container-botoes">
+            <button class="botao botao--azul" name="btn-formulario-denuncia">Abrir Formulário</button>
+        </div>
+    </div>
+
+</div>

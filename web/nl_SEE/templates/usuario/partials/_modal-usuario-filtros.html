@@ -1,0 +1,25 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="filtros">
+    <form id="modal-conteudo" class="modal-conteudo modal-filtro-usuarios" method="GET">
+        <h2 class="texto-grande texto-azul">Filtros</h2>
+        <p class="descricao  texto-preto">Insira os filtros que deseja aplicar</p>
+
+        <div class="formulario-grupo">
+            <h3 class="texto-medio texto-azul">Situação</h3>
+
+            <fieldset id="fieldset-filtro-usuario">
+                <input type="radio" value= 'Ativo' name="fieldset-filtro-usuario" id="filtro-usuario-ativo" checked>
+                <label for="filtro-usuario-ativo">Ativo</label>
+
+                <input type="radio" value= 'Inativo' name="fieldset-filtro-usuario" id="filtro-usuario-inativo">
+                <label for="filtro-usuario-inativo">Inativo</label>
+            </fieldset>
+        </div>
+
+        <div class="container-botoes">
+            <button type="" class="botao botao--verde">Filtrar</button>
+        </div>
+
+    </form>
+</div>

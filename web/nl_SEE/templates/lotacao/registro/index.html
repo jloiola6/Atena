@@ -1,0 +1,47 @@
+{% extends 'partials/_base.html' %}
+
+{% load static %}
+
+{% block title %}Registro{% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'lotacao:index' %}" class=" texto-azul">Gestão de Pessoas</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Registro</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Registro</h1>
+
+            <div class="container-cards">
+                <a href="{% url 'lotacao:registro-contratos' %}">
+                    <div class="card-menu">
+                        {% include 'partials/icones-cards/lotacao/registro/contratos.svg' %}
+
+                        <h2 class="card-titulo">Contratos</h2>
+                    </div>
+                </a>
+
+                <a href="{% url 'lotacao:registro-lotacoes' %}">
+                    <div class="card-menu">
+                        {% include 'partials/icones-cards/lotacao/registro/lotacoes.svg' %}
+
+                        <h2 class="card-titulo">Lotações</h2>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+{% endblock %}

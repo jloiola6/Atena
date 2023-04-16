@@ -1,0 +1,129 @@
+{% load static %}
+
+<div class="oculto" data-form-container="enturmacao">
+    <div data-container-enturmacao>
+        <div class="formulario-grupo">
+            <fieldset id="fieldset-tipo-disciplina1">
+                <input type="radio" name="fieldset-tipo-disciplina1" value="disciplina" id="radio-disciplina1" checked data-radio-disciplina>
+                <label class="texto-preto" for="radio-disciplina1">Formação Geral Básica</label>
+
+                <input type="radio" name="fieldset-tipo-disciplina1" value="rota" id="radio-rota1" data-radio-disciplina>
+                <label class="texto-preto" for="radio-rota1">Itinerários formativos</label>
+            </fieldset>
+        </div>
+
+        <div data-grupo-disciplina class="formulario-grupo">
+            <label class="texto-azul label-campo"  for="campo-disciplina1">Disciplina</label>
+
+            <select id="campo-disciplina1" name="disciplina1" class="campo-texto campo-medio">
+                {% for disciplina in disciplinas %}
+                    <option value="{{ disciplina.id }}">{{ disciplina.nome }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div data-grupo-rota class="formulario-grupo">
+            <label class="texto-azul label-campo"  for="campo-rota1">Rota</label>
+
+            <select id="campo-rota1" name="rota1" class="campo-texto campo-medio" onchange="document.getElementById">
+                {% for rota in rotas %}
+                    <option value="{{ rota }}">{{ rota}}</option>
+                {% endfor %}
+            </select>
+
+            <input type="text" name="rota_auxilia1_1" class="campo-texto campo-medio oculto" readonly>
+        </div>
+
+        <div data-selecao-rota="CHSA" class="formulario-grupo">
+            <label class="texto-azul label-campo"  for="campo-chsa1_1">CHSA</label>
+
+            <div>
+                <select  id="campo-chsa1_1" name="chsa1_1" class="campo-texto campo-medio">
+                    {% for opcao in unidades_chsa %}
+                        <option value="{{ opcao }}">{{ opcao }}</option>
+                    {% endfor %}
+                </select>
+
+                <button class="botao botao--azul" data-botao-adicionar-rota>Adicionar Rota</button>
+            </div>
+        </div>
+
+        <div data-selecao-rota="CNT" class="formulario-grupo">
+            <label class="texto-azul label-campo"  for="campo-cnt1_1">CNT</label>
+
+            <div>
+                <select  id="campo-cnt1" name="cnt1_1" class="campo-texto campo-medio">
+                    {% for opcao in unidades_cnt %}
+                        <option value="{{ opcao }}">{{ opcao }}</option>
+                    {% endfor %}
+                </select>
+
+                <button class="botao botao--azul" data-botao-adicionar-rota>Adicionar Rota</button>
+            </div>
+        </div>
+
+        <div data-selecao-rota="LGG" class="formulario-grupo">
+            <label class="texto-azul label-campo"  for="campo-lgg1_1">LGG</label>
+
+            <div>
+                <select  id="campo-lgg1_1" name="lgg1_1" class="campo-texto campo-medio">
+                    {% for opcao in unidades_lgg %}
+                        <option value="{{ opcao }}">{{ opcao }}</option>
+                    {% endfor %}
+                </select>
+
+                <button class="botao botao--azul" data-botao-adicionar-rota>Adicionar Rota</button>
+            </div>
+        </div>
+
+        <div data-selecao-rota="MAT" class="formulario-grupo">
+            <label class="texto-azul label-campo"  for="campo-mat1_1">MAT</label>
+
+            <div>
+                <select  id="campo-mat1_1" name="mat1_1" class="campo-texto campo-medio">
+                    {% for opcao in unidades_mat %}
+                        <option value="{{ opcao }}">{{ opcao }}</option>
+                    {% endfor %}
+                </select>
+
+                <button class="botao botao--azul" data-botao-adicionar-rota>Adicionar Rota</button>
+            </div>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-carga-horaria1">Carga horária por turma</label>
+            <input class="campo-texto campo-pequeno" type="text" value="" name="carga_turma1" id="campo-carga-horaria1" placeholder="Ex: 20" maxlength="3" required>
+        </div>
+
+        <div class="formulario-grupo" data-grupo-turma>
+            <label class="texto-azul label-campo" for="campo-turma-escola1_1">Turma</label>
+
+            <div>
+                <select name="turma_escolar1_1" id="campo-turma-escola1_1" class="campo-texto campo-medio" data-selecao-turma>
+                    {% for turma in turmas %}
+                        <option value="{{ turma.id }}">{{ turma }} - {{ turma.turno }}</option>
+                    {% endfor %}
+                </select>
+
+                <button class="botao botao--azul" data-botao-adicionar-turma>Adicionar Turma</button>
+            </div>
+        </div>
+
+        <div class="formulario-grupo">
+            <a href="#" class="link" data-link-formulario-turma>Adicionar nova turma</a>
+
+            {% for etapa in etapas %}
+                <span data-escola-etapa="{{ etapa.etapa.id }}">{{ etapa.etapa }}</span>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container-botoes">
+        <button class="botao botao--azul" data-adicionar-enturmacao>Adicionar Enturmação</button>
+    </div>
+
+    <div class="container-botoes">
+        <button data-form-botao="dados" class="botao botao--azul">Voltar</button>
+        <button class="botao botao--azul" data-modal-abrir="confirmar">Cadastrar</button>
+    </div>
+</div>

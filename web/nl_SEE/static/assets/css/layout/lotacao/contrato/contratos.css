@@ -1,0 +1,8 @@
+/* Estilização da página de contratos */
+
+
+.modal-filtros-titulo{
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}

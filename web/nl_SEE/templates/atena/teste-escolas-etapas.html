@@ -1,0 +1,16 @@
+<h1>Escolas ({{ len }})</h1>
+<h1>{{ etapa_aee }}</h1>
+
+<table>
+    {% for escola in escolas %}
+        <tr>
+            <td>{{ escola }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+<style>
+    table tr, table td{
+        border: 1px solid #c1c1c1;
+    }
+</style>

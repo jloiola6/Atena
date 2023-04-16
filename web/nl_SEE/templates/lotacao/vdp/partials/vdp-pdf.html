@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="pt-bt">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Exportar vdp</title>
+    </head>
+    <body>
+        <header>
+            <table>
+                <tr>
+                    <th><img id="img2" src="{{ url_logo }}" alt=""></th>
+                    <th class="direita"><img id="img3" src="{{ url_atena }}" alt="Logo" style="width:120px;height:auto;"></th>
+                    <!-- <th><img id="img2" src="C:\Users\joao.soares\Documents\code\Atena\nl_SEE\static\assets\img\vdp.png" alt=""></th>
+                    <th><img id="img3" src="C:\Users\joao.soares\Documents\code\Atena\nl_SEE\static\assets\img\ATENA-AZUL.svg" alt="Logo" style="width:120px;height:auto;"></th> -->
+                </tr>
+            </table>
+        </header>
+
+        <hr>
+
+        <table>
+            <tr>
+                <th class="dados dado-lotacao">Total de vdp: {{  quantidade_vdp  }}</th>
+                <th></th>
+                <th></th>
+                <th class="dados">Exportado por {{ nome }} dia {{ data }}</th>
+            </tr>
+        </table>
+        <table class="tabela tabela-lotacoes">
+            <thead>
+                <tr>
+                    <th class="digito">DIGITO</th>
+                    <th class="">NOME</th>
+                    <th class="ano">PERÍODO DE PAGAMENTO</th>
+                    <th class="ano">ANO DE AFERIÇAO</th>
+                    <th class="">VALOR LÍQUIDO</th>
+                    <th class="">VALOR BRUTO</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for vdp in vdps %}
+                <tr>
+                    <td>{{ vdp.contrato.digito }}</td>
+                    <td>{{ vdp.contrato.servidor.nome }}</td>
+                    <td>{{ vdp.ano_periodo }}</td>
+                    <td>{{ vdp.ano_verificacao }}</td>
+                    <td>{{ vdp.valor_liquido }}</td>
+                    <td>{{ vdp.valor_bruto }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <style>
+
+            .tabela-lotacoes{
+                border: 1px solid black;
+                text-align: center;
+                padding: 6px;
+            }
+
+            .tabela-lotacoes th{
+                font-size: 10px;
+            }
+
+            .tabela-lotacoes td{
+                font-size: 10px;
+            }
+
+            h1{
+                margin: 0;
+            }
+
+            #img2{
+                width: 100%;
+                height: auto;
+            }
+
+            #img3{
+                width: 120px;
+                height: auto;
+            }
+
+            .direita{
+                text-align: right;
+            }
+
+            .cabecalho{
+                font-size: 16px;
+                font-family: sans-serif;
+                text-align: center;
+            }
+
+            .texto1{
+                padding-top: 18px;
+            }
+
+            .texto2{
+                padding-bottom: 4px;
+            }
+
+            .dados{
+                padding-top: 8px;
+            }
+
+
+            .ano{
+                width: 75px;
+            }
+
+            .digito{
+                width: 45px;
+            }
+
+            .contrato{
+                width: 100px;
+            }
+
+
+            .dado-lotacao{
+                font-size: 16px;
+            }
+
+            .cpf{
+                width: 80px;
+            }
+
+        </style>
+
+    </body>
+</html>

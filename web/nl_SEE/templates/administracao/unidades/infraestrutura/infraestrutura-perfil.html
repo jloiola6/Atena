@@ -1,0 +1,175 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Infraestrutura {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/administracao/unidades/infraestrutura/infraestrutura-perfil.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'administracao:index' %}" class=" texto-azul">Administração</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'administracao:unidades_educacionais' %}" class=" texto-azul">Unidades</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'administracao:unidade-perfil' %}?inep={{ escola.cod_inep }}" class=" texto-azul">{{ escola.nome_escola }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Infraestrutura</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">{{ escola.nome_escola }}</h1>
+            <p class="texto-preto descricao">{{ endereco.municipio }} • {{ endereco.rua }}, {{ endereco.numero }} • {{ endereco.bairro }}</p>
+
+            {% if infraestrutura %}
+                <div class="container-surface">
+                    <h2 class="texto-medio texto-azul">Dependências Físicas</h2>
+
+                    {% if dependencias %}
+                        {% for categoria in categorias_dependencias %}
+                            <details class="dropdown">
+                                <summary>{{ categoria.tipo_dependencia__categoria }}</summary>
+
+                                {% for tipo in tipos_dependencias %}
+                                    {% if tipo.tipo_dependencia__categoria == categoria.tipo_dependencia__categoria %}
+                                        <details class="dropdown">
+                                            <summary>{{ tipo.tipo_dependencia__tipo }}</summary>
+
+                                            <div class="container-cards-simples">
+                                                {% for dependencia in dependencias %}
+                                                    {% if dependencia.tipo_dependencia.tipo == tipo.tipo_dependencia__tipo %}
+                                                        <div class="card-simples card--dependencia">
+                                                            <h3 class="card-simples__titulo">{{ dependencia.descricao }}</h3>
+
+                                                            <div class="card-simples__descricao">
+                                                                <p class="texto-preto"><b class="texto-azul">Capacidade: </b>{{ dependencia.capacidade_pessoas }} pessoas</p>
+                                                                <p class="texto-cinza">{{ dependencia.status }}</p>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </details>
+                                    {% endif %}
+                                {% endfor %}
+                            </details>
+                        {% endfor %}
+                    {% else %}
+                        <p class="texto-preto">Esta unidade não possui dependências físicas cadastradas neste endereço</p>
+                    {% endif %}
+
+                    <div class="container-botoes">
+                        <a href="{% url 'administracao:dependencia-formulario' endereco.id %}">
+                            <button class="botao botao--azul">Adicionar</button>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="container-surface">
+                    <h2 class="texto-medio texto-azul">Detalhes da unidade</h2>
+
+                    {% if locais %}
+                        <p class="texto-preto"><b class="texto-azul">Fornecimento de água potável: </b>{{ infraestrutura.agua_potavel }}</p>
+
+                        <b class="texto-azul">Local de funcionamento:</b>
+
+                        <ul class="lista descricao">
+                            {% for local in locais %}
+                                <li class="texto-preto">{{ local.local }}</li>
+                            {% endfor %}
+                        </ul>
+
+                        <b class="texto-azul">Abastecimento de água:</b>
+
+                        <ul class="lista descricao">
+                            {% for abastecimento in abastecimentos %}
+                                <li class="texto-preto">{{ abastecimento.tipo }}</li>
+                            {% endfor %}
+                        </ul>
+
+                        <b class="texto-azul">Rede de esgoto:</b>
+
+                        <ul class="lista descricao">
+                            {% for esgoto in esgotos %}
+                                <li class="texto-preto">{{ esgoto.tipo }}</li>
+                            {% endfor %}
+                        </ul>
+
+                        <b class="texto-azul">Fonte de energia elétrica:</b>
+
+                        <ul class="lista descricao">
+                            {% for energia in energias %}
+                                <li class="texto-preto">{{ energia.tipo }}</li>
+                            {% endfor %}
+                        </ul>
+
+                        <b class="texto-azul">Destinação do lixo:</b>
+
+                        <ul class="lista descricao">
+                            {% for destinacao in destinacoes %}
+                                <li class="texto-preto">{{ destinacao.tipo }}</li>
+                            {% endfor %}
+                        </ul>
+
+                        <b class="texto-azul">Tratamento do lixo:</b>
+
+                        <ul class="lista descricao">
+                            {% for tratamento in tratamentos %}
+                                <li class="texto-preto">{{ tratamento.tipo }}</li>
+                            {% endfor %}
+                        </ul>
+
+                        <b class="texto-azul">Recursos de acessibilidade:</b>
+
+                        <ul class="lista descricao">
+                            {% for recurso in recursos %}
+                                <li class="texto-preto">{{ recurso.tipo }}</li>
+                            {% endfor %}
+                        </ul>
+
+                        {% if permissao.editar == 1 %}
+                            <div class="container-botoes">
+                                <a href="{% url 'administracao:infraestrutura-formulario' %}?id_endereco={{ endereco.id }}">
+                                    <button class="botao botao--azul">Editar</button>
+                                </a>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <p class="texto-preto">Os detalhes sobre a infraestrutura da unidade ainda não foram cadastrados</p>
+
+                        <div class="container-botoes">
+                            <a href="{% url 'administracao:infraestrutura-formulario' %}?id_endereco={{ endereco.id }}">
+                                <button class="botao botao--azul">Adicionar</button>
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            {% else %}
+                <p class="texto-preto">Esta unidade não possui infraestrutura cadastrada neste endereço</p>
+
+                <div class="container-botoes">
+                    <a href="{% url 'administracao:dependencia-formulario' endereco.id %}">
+                        <button class="botao botao--azul">Adicionar dependência física</button>
+                    </a>
+
+                    <a href="{% url 'administracao:infraestrutura-formulario' %}?id_endereco={{ endereco.id }}">
+                        <button class="botao botao--azul">Adicionar dados gerais</button>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+{% endblock %}

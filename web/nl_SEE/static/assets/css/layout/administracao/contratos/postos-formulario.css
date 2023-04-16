@@ -1,0 +1,5 @@
+/* Estilização do formulário de postos de trabalho */
+
+.formulario-postos, .formulario-postos .container-botoes{
+    margin-top: 1rem;
+}

@@ -1,0 +1,106 @@
+/* Estilização dos menus dropdown */
+
+.dropdown{
+    border: 1px solid #C1C1C1;
+    border-radius: .5rem;
+    background-color: var(--cor-surface);
+    padding-inline: 1rem;
+    transition: .3s;
+}
+
+    .dropdown[open]{
+        padding-bottom: 1rem;
+    }
+
+    .dropdown[open]:has(> summary:only-child){
+        padding-bottom: 0;
+    }
+
+.dropdown summary{
+    align-items: center;
+    color: var(--texto-azul);
+    display: flex;
+    font-size: 1.25rem;
+    height: 4rem;
+    justify-content: space-between;
+
+}
+
+    .dropdown > summary::after{
+        content: '';
+        cursor: pointer;
+        background-image: url('../../img/module/dropdown/dropdown-seta.svg');
+        background-repeat: no-repeat;
+        background-size: contain;
+        height: .5rem;
+        transition: 0.5s;
+        width: 1rem;
+    }
+
+    .dropdown[open] > summary::after{
+        transform: rotate(180deg);
+    }
+
+
+    .dropdown > summary:only-child::after{
+        display: none;
+    }
+
+    .dropdown .dropdown:not(:first-of-type), .dropdown > .container-botoes{
+        margin-top: 1rem;
+    }
+
+.dropdown--borda{
+    border-left-width: .5rem;
+}
+
+.dropdown--borda:hover, .dropdown--borda[open]{
+    border-left-width: .75rem;
+}
+
+/* MENUS UTILIZADOS PARA DIFERENCIAR ETAPAS DE ENSINO */
+.dropdown--fundamental{
+    border-left-color: var(--cor-fundamental);
+}
+
+.dropdown--medio{
+    border-left-color: var(--cor-medio);
+}
+
+.dropdown--eja{
+    border-left-color: var(--cor-eja);
+}
+
+.dropdown--aee{
+    border-left-color: var(--cor-aee);
+}
+
+.dropdown--aprender-caminho{
+    border-left-color: var(--cor-aprender-caminho);
+}
+
+.dropdown--caminhos-campo{
+    border-left-color: var(--cor-caminhos-campo);
+}
+
+/* MENUS UTILIZADOS PARA DIFERENCIAR LOTAÇÕES ATIVAS E INATIVAS */
+.dropdown--lotacao-ativa{
+    border-left-color: var(--cor-verde);
+}
+
+.dropdown--lotacao-inativa{
+    border-left-color: var(--cor-vermelho);
+}
+
+/* RESPONSIVIDADE */
+@media screen and (max-width: 768px){
+    .dropdown summary{
+        height: fit-content;
+        padding-block: 1.5rem;
+    }
+}
+
+/* MODO ESCURO */
+body.modo-escuro .dropdown > summary::after{
+    background-image: url('../../img/module/dropdown/dropdown-seta-branca.svg');
+}

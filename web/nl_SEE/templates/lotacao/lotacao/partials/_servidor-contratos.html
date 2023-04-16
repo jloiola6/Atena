@@ -1,0 +1,29 @@
+{% load static %}
+
+<div class="servidor-contratos" data-nav-container="contratos">
+    <div class="container-cards-simples">
+        {% for contrato in servidor_contrato %}
+            <a href="{% url 'lotacao:contrato-perfil' %}?id_contrato={{ contrato.id }}">
+                <div class="card-simples ">
+                    <h4 class="card-simples__titulo texto-azul">N° {{ contrato.numero_contrato }}</h4>
+
+                    <div class="card-simples__descricao">
+                        <p class=" texto-azul texto-negrito">Digito: <span class="texto-preto texto-normal">{{ contrato.digito }}</span></p>
+                        <p class=" texto-azul texto-negrito">Cargo: <span class="texto-preto texto-normal">{{ contrato.cargo }}</span></p>
+                        {% if contrato.cargo.classe %}
+                            <p class=" texto-azul texto-negrito">Classe: <span class="texto-preto texto-normal">{{ contrato.cargo.classe }}</span></p>
+                        {% endif %}
+                        <p class=" texto-azul texto-negrito">Carga horária: <span class="texto-preto texto-normal">{{ contrato.cargo.carga_horaria }}H</span></p>
+                        <p class=" texto-azul texto-negrito">Situação: <span class="texto-preto texto-normal">{{ contrato.situacao }}</span></p>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+
+    <div class="container-botoes">
+        <a href="{% url 'lotacao:contrato-formulario' %}?id_servidor={{ servidor.id }}">
+            <button class="botao botao--azul">Adicionar</button>
+        </a>
+    </div>
+</div>

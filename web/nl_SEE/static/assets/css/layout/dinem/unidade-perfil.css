@@ -1,0 +1,6 @@
+/* Estiização da página de perfil de uma unidade educacional */
+
+.card--turma{
+    --largura: calc((100% / 4) - 1rem);
+    flex-basis: var(--largura);
+}

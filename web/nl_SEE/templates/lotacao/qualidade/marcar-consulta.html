@@ -1,0 +1,142 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Novo Agendamento {% endblock %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/lotacao/qualidade/agendamento-formulario.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class="texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'lotacao:index'%}" class="texto-azul">Gestão de Pessoas</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'lotacao:qualidade'%}" class="texto-azul">Qualidade de Vida</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'lotacao:lista-espera'%}" class="texto-azul">Lista de Espera</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="texto-azul">Marcar Consulta</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul"> Novo Agendamento </h1>
+
+            <form class="container-surface" method="POST">
+                {% csrf_token %}
+
+                <nav class="container-navegacao-surface">
+                    <ul class="navegacao-surface-lista">
+                        <li class="navegacao-surface-item navegacao-surface-item-ativo" data-form-aba="">
+                            <span class="texto-azul">Dados</span>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-servico">Serviço</label>
+                    <input class="campo-texto campo-grande" id="campo-servico" type="text" value="{{ agendamento_lista.atendimento }}" readonly>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-servidor">Servidor</label>
+                    <input class="campo-texto campo-grande" id="campo-servico" type="text" value="{{ agendamento_lista.servidor.nome }}" readonly>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul" for="campo-contato">Número para contato</label>
+                    <input type="text" id="campo-contato" name ="contato" class="campo-texto campo-medio" value="{{ agendamento_lista.contato }}">
+                </div>
+
+                <div class="formulario-grupo">
+                    <label for="fieldset-atividade">Tipo de Atividade</label>
+                    <fieldset id="fieldset-atividade">
+                        <input type="radio" value="Interno" name="radio-atividade" id="radio-interno" checked>
+                        <label for="radio-interno">Interno</label>
+
+                        <input type="radio" value="Externo" name="radio-atividade" id="radio-externo">
+                        <label for="radio-externo">Externo</label>
+                    </fieldset>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul formulario-grupo" for="campos-data">Data</label>
+
+                    <fieldset id="fieldset-horarios" class="fieldset-horarios">
+
+                        {% for dia in dias_validos %}
+                            <div class="formulario-grupo">
+                                {% if dia.dia == hoje %}
+                                    <label class="texto-azul">Hoje - {{ dia.dia }}</label>
+                                {% else %}
+                                    <label class="texto-azul">{{ dia.dia_semana }} - {{ dia.dia }}</label>
+                                {% endif %}
+
+                                {% comment %}
+                                    <div class="container-horarios">
+                                        {% for dia_atendimento in atendimento_dias %}
+                                            {% if dia_atendimento.dia == dia.dia_semana_numero %}
+
+                                                    <input id="radio-{{ dia.dia|date:'d' }}-{{ dia_atendimento.hora }}" class="radio-horario" type="radio" name="fieldset-horarios" value="{{ dia_atendimento.id }} {{ dia.dia|date:'SHORT_DATE_FORMAT' }} {{ dia_atendimento.hora }}" required>
+
+                                                <label for="radio-{{ dia.dia|date:'d' }}-{{ dia_atendimento.hora }}" class="texto-azul label-horario">{{ dia_atendimento.hora }}</label>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                {% endcomment %}
+
+                                <div class="container-horarios">
+                                    {% for horario in dia.horarios %}
+                                        {% if horario.disponivel %}
+                                            <input id="radio-{{ dia.dia|date:'d' }}-{{ horario.hora }}" class="radio-horario" type="radio" name="fieldset-horarios" value="{{ dia.dia|date:'SHORT_DATE_FORMAT' }} {{ horario.hora }}" required>
+                                        {% else %}
+                                            <input id="radio-{{ dia.dia|date:'d' }}-{{ horario.hora }}" class="radio-horario" type="radio" name="fieldset-horarios" value="{{ dia.dia|date:'SHORT_DATE_FORMAT' }} {{ horario.hora }}" disabled required>
+                                        {% endif %}
+
+                                        <label for="radio-{{ dia.dia|date:'d' }}-{{ horario.hora }}" class="texto-azul label-horario">{{ horario.hora }}</label>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </fieldset>
+                </div>
+
+                <div class="container-botoes">
+                    <button data-modal-abrir="confirmar" class="botao botao--azul">Salvar</button>
+                </div>
+
+                <div class="modal oculto" data-modal="confirmar">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                        <p class="texto-preto descricao">Tem certeza que deseja salvar o agendamento?</p>
+
+                        <div class="container-botoes">
+                            <button class="botao--verde botao" type="submit">Salvar</button>
+                            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/select2.js' %}" type="module"></script>
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+    <script src="{% static 'assets/js/module/abrirModal.js' %}" type="module"></script>
+    <script src="{% static 'assets/js/layout/lotacao/qualidade/agendamentos/controlaFiltros.js' %}"></script>
+{% endblock %}

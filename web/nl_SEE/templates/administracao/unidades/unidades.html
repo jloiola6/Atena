@@ -1,0 +1,82 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Unidades Educacionais {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/administracao/unidades/unidades.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/layout/partials/unidade-educacional/responsivo/_tabela-unidades-responsivo.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+
+            <nav class="container-navegacao ">
+                <a  class=" texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class=" texto-azul " href="{% url 'administracao:index' %}">Administração</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class=" texto-azul ">Unidades Educacionais</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Unidades Educacionais</h1>
+
+            {% if permissao.editar == 1 %}
+                <div class="container-menu-tabela">
+                    <a href="{% url 'administracao:unidade-consulta' %}"><button class="botao botao--azul">Adicionar</button></a>
+                </div>
+            {% endif %}
+
+            <div class="container-surface container-unidades-busca">
+                <h2 class="texto-medio texto-azul">Buscar unidade</h2>
+
+                <form class="formulario" method="GET">
+                    {% comment %} {% csrf_token %} {% endcomment %}
+
+                    <div class="formulario-grupo">
+                        <input class="campo-texto campo-pequeno" name="cod_inep" type="text" placeholder="INEP" maxlength="8" data-mascara="numero">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <input class="campo-texto campo-medio" name="nome_unidade" type="text" placeholder="Nome da Unidade">
+                    </div>
+
+                    <div class="container-botoes">
+                        <button class="botao botao--azul" type="submit">Buscar</button>
+                        <button data-modal-abrir="filtros" class="botao botao--azul">Filtros</button>
+
+                        {% if permissao.imprimir == 1 %}
+                            <button class="botao botao--azul" data-modal-abrir="exportar">Exportar</button>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+
+            {% if enderecos %}
+                {% include 'partials/unidade-educacional/_tabela-unidades.html' %}
+            {% else %}
+                <h3 class="texto-medio texto-azul" style="margin-top: 16px;">Nenhuma unidade encontrada</h3>
+            {% endif %}
+
+
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    {% include 'administracao/unidades/partials/_modal-unidades-filtros.html' %}
+    {% include 'administracao/unidades/partials/_modal-unidades-exportar.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/module/linkTabela.js' %}"></script>
+
+    <script src="{% static 'assets/js/layout/administracao/unidades/controlaFiltrosIndigenas.js' %}"></script>
+    <script src="{% static 'assets/js/layout/administracao/unidades/controlaFiltros.js' %}"></script>
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type='module'></script>
+{% endblock %}

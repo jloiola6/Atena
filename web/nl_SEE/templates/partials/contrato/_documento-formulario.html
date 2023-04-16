@@ -1,0 +1,46 @@
+{% comment %}
+    Esta partial contém um container com o formulário para anexar um documento a um contrato
+    Feita para evitar a repetição código em perfis de contrato nos módulos de ADMINISTRAÇÃO, TECNOLOGIA e TERCEIRIZAÇÃO
+{% endcomment %}
+
+<form class="container-surface formulario-documento" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <!-- <nav class="container-navegacao-surface">
+        <ul class="navegacao-surface-lista">
+            <li class="navegacao-surface-item navegacao-surface-item-ativo" data-form-aba="documento">
+                <span class="texto-azul">Documento</span>
+            </li>
+        </ul>
+    </nav> -->
+    <h2 class="texto-medio texto-azul">Anexar documento</h2>
+    <p class="descricao texto-preto">Escolha o arquivo que deseja anexar</p>
+
+    <div class="" data-form-container="documento">
+        <div class="formulario-grupo">
+            <label for="campo-documento" class="texto-azul label-campo">Insira o arquivo (PDF)</label>
+            <input type="file" id="campo-documento" accept=".pdf" name="arquivo" required>
+        </div>
+
+        <div class="formulario-grupo">
+            <label for="campo-descricao" class="texto-azul label-campo">Descrição</label>
+            <textarea class="campo-texto campo-area" name="descricao" id="campo-descricao" maxlength="300" required></textarea>
+        </div>
+
+        <div class="container-botoes">
+            <button class="botao botao--azul" data-modal-abrir="confirmar">Salvar</button>
+        </div>
+    </div>
+
+    <div class="modal  oculto" data-modal="confirmar">
+        <div class="modal-conteudo modal-confirmacao">
+            <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+            <p class="texto-preto descricao">Tem certeza que deseja anexar o documento</p>
+
+            <div class="container-botoes">
+                <button class="botao botao--verde" type="submit">Salvar</button>
+                <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+            </div>
+        </div>
+    </div>
+</form>

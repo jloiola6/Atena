@@ -1,0 +1,23 @@
+/* Estiização da página de perfil de uma unidade educacional */
+
+/* Estilicação da Navegação entre as sessões de uma unidade */
+
+/* INFRAESTRUTURA */
+.infraestrutura-resumo{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.infraestrutura-resumo > .link{
+    margin-top: 8px;
+}
+
+/* EXTINCAO */
+.extincao-resumo{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+}

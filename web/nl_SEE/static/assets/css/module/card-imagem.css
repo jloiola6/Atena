@@ -1,0 +1,12 @@
+/* Estilização do card que leva uma imagem */
+
+.card-imagem{
+    cursor: pointer;
+    padding: 16px;
+    width: 272px;
+}
+
+    .card-imagem img{
+        object-fit: cover;
+        height: 240px;
+    }

@@ -1,0 +1,136 @@
+{% load static %}
+
+<div class="container-empenho" data-nav-container="empenho">
+    {% if count > 0 %}
+        <table class="tabela tabela-empenho">
+            <thead>
+                <tr>
+                    <th>Tipo</th>
+                    <th>N° Empenho</th>
+                    <th>Data de Emissão</th>
+                    <th>Código Orçamentário</th>
+                    <th>Código de Despesa</th>
+                    <th>Valor</th>
+                    <th>Documento</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for empenho in empenhos %}
+                    <tr class="linha-desabilitada">
+                        <td>{{ empenho.tipo }}</td>
+                        <td>{{ empenho.num_empenho }}</td>
+                        <td>{{ empenho.data_emissao}}</td>
+                        <td>{{ empenho.cod_orcamento }}</td>
+                        <td>{{ empenho.cod_despesa }}</td>
+                        <td>{{ empenho.valor}}</td>
+                        {% if empenho.documento != Null %}
+                            <td><a class="link" href="{% url 'core:index' %}{{ empenho.documento.path_arquivo }}" target="_blank">Abrir documento</a></td>
+                        {% else %}
+                            <td>Documento não anexado</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td class="coluna-paginacao" colspan="7">
+                        <div class="container-paginacao">
+                            <div>
+                                <span class="texto-negrito texto-azul">Total de Empenhos:</span>
+                                <span class="texto-normal texto-preto">{{ count }}</span>
+                            </div>
+                            <div>
+                                {% if empenhos.has_previous %}
+                                    {% if aplicacao == 'Administração' %}
+                                        <a class="" href="{% url 'administracao:fonte-perfil' %}?{{ gets_primeira }}">
+                                    {% elif aplicacao == 'Tecnologia' %}
+                                        <a class="" href="{% url 'tecnologia:fonte-perfil' %}?{{ gets_primeira }}">
+                                    {% elif aplicacao == 'Terceirização' %}
+                                        <a class="" href="{% url 'terceirizacao:fonte-perfil' %}?{{ gets_primeira }}">
+                                    {% endif %}
+
+                                            <button class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                    {% if aplicacao == 'Administração' %}
+                                        <a class="" href="{% url 'administracao:fonte-perfil' %}?{{ gets_anterior }}">
+                                    {% elif aplicacao == 'Tecnologia' %}
+                                        <a class="" href="{% url 'tecnologia:fonte-perfil' %}?{{ gets_anterior }}">
+                                    {% elif aplicacao == 'Terceirização' %}
+                                        <a class="" href="{% url 'terceirizacao:fonte-perfil' %}?{{ gets_anterior }}">
+                                    {% endif %}
+
+                                            <button class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                {% else %}
+                                    <a class="" href="">
+                                        <button disabled class="botao-paginacao">first_page</button>
+                                    </a>
+
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% endif %}
+
+                                <span class="">
+                                    {{ empenhos.number }} de {{ empenhos.paginator.num_pages }}
+                                </span>
+
+                                {% if empenhos.has_next %}
+                                    {% if aplicacao == 'Administração' %}
+                                        <a class="" href="{% url 'administracao:fonte-perfil' %}?{{ gets_proxima }}">
+                                    {% elif aplicacao == 'Tecnologia' %}
+                                        <a class="" href="{% url 'tecnologia:fonte-perfil' %}?{{ gets_proxima }}">
+                                    {% elif aplicacao == 'Terceirização' %}
+                                        <a class="" href="{% url 'terceirizacao:fonte-perfil' %}?{{ gets_proxima }}">
+                                    {% endif %}
+
+                                            <button class="botao-paginacao">navigate_next</button>
+                                        </a>
+                                    {% if aplicacao == 'Administração' %}
+                                        <a class="" href="{% url 'administracao:fonte-perfil' %}?{{ gets_ultima }}">
+                                    {% elif aplicacao == 'Tecnologia' %}
+                                        <a class="" href="{% url 'tecnologia:fonte-perfil' %}?{{ gets_ultima }}">
+                                    {% elif aplicacao == 'Terceirização' %}
+                                        <a class="" href="{% url 'terceirizacao:fonte-perfil' %}?{{ gets_ultima }}">
+                                    {% endif %}
+
+                                            <button class="botao-paginacao">last_page</button>
+                                        </a>
+
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_next</button>
+                                    </a>
+
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">last_page</button>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    {% else %}
+        <h2 class="texto-medio texto-preto">Nenhum empenho adicionado nessa fonte.</h2>
+    {% endif %}
+
+    {% if permissao.editar == 1 %}
+        <div class="container-botoes">
+            {% if aplicacao == 'Administração' %}
+                <a href="{% url 'administracao:empenho-formulario' %}?id_fonte={{fonte.id}}">
+            {% elif aplicacao == 'Tecnologia' %}
+                <a href="{% url 'tecnologia:empenho-formulario' %}?id_fonte={{fonte.id}}">
+            {% elif aplicacao == 'Terceirização' %}
+                <a href="{% url 'terceirizacao:empenho-formulario' %}?id_fonte={{fonte.id}}">
+            {% endif %}
+
+                <button class="botao botao--azul">Adicionar</button>
+            </a>
+        </div>
+    {% endif %}
+</div>

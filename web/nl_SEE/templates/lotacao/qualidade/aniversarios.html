@@ -1,0 +1,215 @@
+{% extends 'partials/_base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Aniversários
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class="texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'lotacao:index' %}" class="texto-azul">Gestão de Pessoas</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'lotacao:qualidade' %}" class="texto-azul">Qualidade de Vida</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="texto-azul">Aniversários</span>
+            </nav>
+
+
+            <h1 class="titulo-pagina">Aniversariantes do Mês de {{ mes_nome }}</h1>
+
+            <div class="container-surface">
+                <h2 class="texto-azul texto-medio">Buscar por mês</h2>
+                <form method="GET">
+                    <div class="formulario-grupo">
+                        <label for="campo-mes">Mês</label>
+                        <select name="mes" id="campo-mes" class="campo-texto campo-medio" required>
+                            <option value="">-</option>
+                            <option value="1">Janeiro</option>
+                            <option value="2">Fevereiro</option>
+                            <option value="3">Março</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Maio</option>
+                            <option value="6">Junho</option>
+                            <option value="7">Julho</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Setembro</option>
+                            <option value="10">Outubro</option>
+                            <option value="11">Novembro</option>
+                            <option value="12">Dezembro</option>
+                        </select>
+                    </div>
+
+                    <div class="container-botoes">
+                        <button class="botao botao--azul" type="submit">Buscar</button>
+                    </div>
+                </form>
+            </div>
+
+            <h2 class="texto-azul texto-medio">Servidores da Casa</h2>
+
+            <table class="tabela">
+                <thead>
+                    <tr>
+                        <th>Data de Nascimento</th>
+                        <th>Nome</th>
+                        <th>Unidade</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for servidor in servidores_casa %}
+                        <tr>
+                            <td>{{ servidor.contrato__servidor__data_nascimento }}</td>
+                            <td>{{ servidor.contrato__servidor__nome }}</td>
+                            <td>{{ servidor.unidade_adm__nome }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td class="coluna-paginacao" colspan="3">
+                            <div class="container-paginacao">
+                                <div>
+                                    <span class="texto-negrito texto-azul">TOTAL:</span>
+                                    <span>{{ qtd_servidores_casa }}</span>
+                                </div>
+                                <div>
+                                    {% if servidores_casa.has_previous %}
+                                        <a class="" href="{% url 'lotacao:aniversarios' %}?{{ gets_primeira }}">
+                                            <button class="botao-paginacao" name="servidor_casa" value="casa">first_page</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'lotacao:aniversarios' %}?{{ gets_anterior }}">
+                                            <button class="botao-paginacao" name="servidor_casa" value="casa">navigate_before</button>
+                                        </a>
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% endif %}
+
+                                    <span class="">
+                                        {{ servidores_casa.number }} de {{ servidores_casa.paginator.num_pages }}
+                                    </span>
+
+                                    {% if servidores_casa.has_next %}
+                                        <a class="" href="{% url 'lotacao:aniversarios' %}?{{ gets_proxima }}">
+                                            <button class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'lotacao:aniversarios' %}?{{ gets_ultima }}">
+                                            <button class="botao-paginacao">last_page</button>
+                                        </a>
+
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">last_page</button>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <h2 class="texto-azul texto-medio">Servidores Terceirizados</h2>
+
+            <table class="tabela">
+                <thead>
+                    <tr>
+                        <th>Data de Nascimento</th>
+                        <th>Nome</th>
+                        <th>Unidade</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for servidor in servidores_terceirizados %}
+                        <tr>
+                            <td>{{ servidor.servidor__data_nascimento }}</td>
+                            <td>{{ servidor.servidor__nome }}</td>
+                            <td>{{ servidor.unidade_administrativa__nome }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td class="coluna-paginacao" colspan="3">
+                            <div class="container-paginacao">
+                                <div>
+                                    <span class="texto-negrito texto-azul">TOTAL:</span>
+                                    <span>{{ qtd_servidores_terceirizados}}</span>
+                                </div>
+                                <div>
+                                    {% if servidores_terceirizados.has_previous %}
+                                        <a class="" href="{% url 'lotacao:aniversarios' %}?{{ primeira_gets }}">
+                                            <button class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'lotacao:aniversarios' %}?{{ anterior_gets }}">
+                                            <button class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% endif %}
+
+                                    <span class="">
+                                        {{ servidores_terceirizados.number }} de {{ servidores_terceirizados.paginator.num_pages }}
+                                    </span>
+
+                                    {% if servidores_terceirizados.has_next %}
+                                        <a class="" href="{% url 'lotacao:aniversarios' %}?{{ proxima_gets }}">
+                                            <button class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'lotacao:aniversarios' %}?{{ ultima_gets }}">
+                                            <button class="botao-paginacao">last_page</button>
+                                        </a>
+
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">last_page</button>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+{% endblock %}

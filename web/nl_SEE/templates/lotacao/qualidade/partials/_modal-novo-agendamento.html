@@ -1,0 +1,23 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="adicionar-agendamento">
+    <form method="POST" class="modal-conteudo">
+        {% csrf_token %}
+
+        <h2 class="texto-medio texto-azul">Adicionar Agendamento</h2>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul" for="campo-servico">Serviço</label>
+
+            <select class="campo-texto campo-grande" name="servico" id="campo-servico">
+                {% for atendimento in atendimentos %}
+                    <option value="{{ atendimento.id }}">{{ atendimento.servico }} - {{ atendimento.atendente }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="container-botoes">
+            <button class="botao botao--azul" type="submit">Abrir Formulário</button>
+        </div>
+    </form>
+</div>

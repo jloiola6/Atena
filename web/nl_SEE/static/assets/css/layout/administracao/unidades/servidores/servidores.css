@@ -1,0 +1,32 @@
+/* Estilização da página de servidores de uma unidade */
+
+/* CONTAINER GESTORES */
+.container-surface-gestores{
+    margin-top: 16px;
+}
+
+.unidade-gestores{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+
+/* CONTAINER PROFESSORES */
+.container-surface-professores{
+    margin-top: 24px;
+}
+
+.container-cards-professores{
+    margin-top: 16px;
+    width: 100%;
+}
+
+.card-professor{
+    row-gap: 8px
+}
+
+.card-professores .card-simples__titulo{
+    font-size: 20px;
+}

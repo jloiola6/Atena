@@ -1,0 +1,59 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Administrador {% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'tecnologia:index' %}" class=" texto-azul">Tecnologia</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'tecnologia:chamados' %}" class=" texto-azul">Chamados</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Administrador</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Serviços</h1>
+
+            <div class="container-botoes">
+                <button class="botao botao--azul" data-modal-abrir="adicionar-tipo">Adicionar</button>
+            </div>
+
+            <table class="tabela">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tipo</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for tipo in tipos_chamado %}
+                        <tr class="linha-desabilitada">
+                            <td>{{ tipo.id }}</td>
+                            <td>{{ tipo.tipo }}</td>
+                            <td>{{ tipo.acao }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    {% include 'tecnologia/chamados/partials/_modal-chamados-adicionar-tipo.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+{% endblock %}

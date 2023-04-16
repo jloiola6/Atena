@@ -1,0 +1,54 @@
+{% comment %}
+    Esta partial contém um container com os dados de um item
+    Feita para evitar a repetição código em perfis de contrato nos módulos de ADMINISTRAÇÃO, TECNOLOGIA e TERCEIRIZAÇÃO -->
+{% endcomment %}
+
+<div class="surface-item container-surface">
+    <div class="item-dados">
+        <p class=" texto-azul texto-negrito">Item: <span class="texto-preto texto-normal">{{ item.numero_item }}</span></p>
+       
+        {% if item.numero_lote %}
+            <p class=" texto-azul texto-negrito">Nº do Lote: <span class="texto-preto texto-normal">{{ item.numero_item }}</span></p>
+        {% endif %}
+        
+        <p class=" texto-azul texto-negrito item-descricao">Descrição: <span class="texto-preto texto-normal">{{ item.descricao }}</span></p>
+        
+        {% if contrato.tipo_contrato == 'Postos de trabalho - Limpeza' %}
+            <p class=" texto-azul texto-negrito">Total m²: <span class="texto-preto texto-normal">{{ item.metragem_total }}</span></p>   
+        {% endif %}
+        
+        <p class=" texto-azul texto-negrito">Quantidade de vagas: <span class="texto-preto texto-normal">{{ item.quantidade }}</span></p>
+        <p class=" texto-azul texto-negrito">Valor Unitário: <span class="texto-preto texto-normal">{{ item.valor_unitario }}</span></p>
+        <p class=" texto-azul texto-negrito">Valor Total: <span class="texto-preto texto-normal">{{ item.valor_total }}</span></p>
+        
+    </div>
+</div>
+
+{% if 'Postos de trabalho' in contrato.tipo_contrato %}
+    <div class="surface-item container-surface">
+        <nav class="container-navegacao-surface">
+            <ul class="navegacao-surface-lista">
+                {% if contrato.tipo_contrato == 'Postos de trabalho - Vigilância Armada' %}
+                    <li class="navegacao-surface-item navegacao-surface-item-ativo texto-azul" data-nav-aba="">Postos de trabalho</li>
+                {% else %}
+                    <li class="navegacao-surface-item navegacao-surface-item-ativo texto-azul" data-nav-aba="">Servidores ({{ quantidade_servidores }})</li>
+                {% endif %}
+            </ul>
+        </nav>
+
+        {% if contrato.tipo_contrato == 'Postos de trabalho - Vigilância Armada' %}
+            {% include 'partials/contrato/partials/_item-postos.html' %}
+        {% else %}
+            {% include 'partials/contrato/partials/_item-servidores.html' %}
+        {% endif %}
+    </div>
+{% elif contrato.tipo_contrato == 'Serviços' and 'Link' in item.descricao %}
+    <div class="surface-item container-surface">
+        <nav class="container-navegacao-surface">
+            <ul class="navegacao-surface-lista">
+                <li class="navegacao-surface-item navegacao-surface-item-ativo texto-azul" data-nav-aba="links">Links ({{ quantidade_links }})</li>
+            </ul>
+        </nav>
+        {% include 'partials/contrato/partials/_item-links.html' %}
+    </div>
+{% endif %}

@@ -1,0 +1,226 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Permissoes de Usuário {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/usuario/editar-permissao.css' %}">
+{% endblock %}
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a  class="  texto-azul" href="{% url 'usuario:index' %}">Usuários</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a  class="  texto-azul" href="{% url 'usuario:usuario-perfil' %}?id_usuario={{ usuario_permissao.usuario.id }}">{{ usuario_permissao.usuario.nome }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Editar Permissão</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul" data-pagina-cadastro="true">Editar Permissão</h1>
+
+            <p class="descricao texto-preto">Defina permissões do usuário</p>
+
+            <form class="container-surface container-formulario-permissoes" method="POST">
+                {% csrf_token %}
+
+                <h2 class="texto-medio texto-azul">Seleção de Permissão</h2>
+                <div class="formulario-grupo">
+                    <label for="campo-aplicacao" class="texto-azul label-campo">Aplicação</label>
+                    <select class="campo-texto campo-pequeno" name="aplicacao" id="campo-aplicacao" data-selecao-aplicacao>
+                        <option value="{{ usuario_permissao.servico.aplicacao.id }}" selected>{{ usuario_permissao.servico.aplicacao.nome }}</option>
+                    </select>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label for="campo-servico" class="texto-azul label-campo">Serviço</label>
+                    <select class="campo-texto campo-medio" name="servico" id="campo-servico" data-selecao-servico>
+                        <option value="{{ usuario_permissao.servico.id }}" selected>{{ usuario_permissao.servico.nome }}</option>
+                    </select>
+                </div>
+
+                <!-- <div class="formulario-grupo oculto" data-campo-inep>
+                    <label class="texto-azul label-campo" for="campo-inep">INEP</label>
+                    <input class="campo-texto campo-pequeno" type="number" value="{{ gestor.inep }}" name="inep" id="campo-inep" required>
+                </div> -->
+
+                <div class="formulario-grupo oculto" data-campo-inep>
+                    <label class="texto-azul label-campo"  for="campo-unidade">Unidade</label>
+
+                    <select id="campo-unidade" name="inep" data-selecao2 class="campo-grande campo-texto">
+                        {% for unidade in unidades %}
+                            {% if unidade.cod_inep == gestor.inep %}
+                                <option value="{{ unidade.cod_inep }}" checked>{{ unidade.cod_inep }} - {{ unidade.nome_escola }}</option>
+                            {% else %}
+                                <option value="{{ unidade.cod_inep }}">{{ unidade.cod_inep }} - {{ unidade.nome_escola }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo">Consultar</label>
+                    <fieldset id="fieldset-consultar">
+                        {% if usuario_permissao.consultar == 1 %}
+                            <input type="radio" name="fieldset-consultar" value="1" id="radio-constultar-sim" checked>
+                        {% else %}
+                            <input type="radio" name="fieldset-consultar" value="1" id="radio-constultar-sim">
+                        {% endif %}
+                            <label class="texto-preto" for="radio-constultar-sim">Sim</label>
+
+                        {% if usuario_permissao.consultar == 0 %}
+                            <input type="radio" name="fieldset-consultar" value="0" id="radio-constultar-nao" checked>
+                        {% else %}
+                            <input type="radio" name="fieldset-consultar" value="0" id="radio-constultar-nao">
+                        {% endif %}
+                        <label class="texto-preto" for="radio-constultar-nao">Não</label>
+                    </fieldset>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo">Editar</label>
+                    <fieldset id="fieldset-editar">
+                        {% if usuario_permissao.editar == 1 %}
+                            <input type="radio" name="fieldset-editar" value="1" id="radio-editar-sim" checked>
+                        {% else %}
+                            <input type="radio" name="fieldset-editar" value="1" id="radio-editar-sim">
+                        {% endif %}
+                        <label class="texto-preto" for="radio-editar-sim">Sim</label>
+
+                        {% if usuario_permissao.editar == 0 %}
+                            <input type="radio" name="fieldset-editar" value="0" id="radio-editar-nao" checked>
+                        {% else %}
+                            <input type="radio" name="fieldset-editar" value="0" id="radio-editar-nao">
+                        {% endif %}
+                        <label class="texto-preto" for="radio-editar-nao">Não</label>
+                    </fieldset>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo">Imprimir</label>
+                    <fieldset id="fieldset-imprimir">
+                        {% if usuario_permissao.imprimir == 1 %}
+                            <input type="radio" name="fieldset-imprimir" value="1" id="radio-imprimir-sim" checked>
+                        {% else %}
+                            <input type="radio" name="fieldset-imprimir" value="1" id="radio-imprimir-sim">
+                        {% endif %}
+                        <label class="texto-preto" for="radio-imprimir-sim">Sim</label>
+
+                        {% if usuario_permissao.imprimir == 0 %}
+                            <input type="radio" name="fieldset-imprimir" value="0" id="radio-imprimir-nao" checked>
+                        {% else %}
+                            <input type="radio" name="fieldset-imprimir" value="0" id="radio-imprimir-nao">
+                        {% endif %}
+                        <label class="texto-preto" for="radio-imprimir-nao">Não</label>
+                    </fieldset>
+                </div>
+
+                {% comment %} <div class="formulario-grupo">
+                    <label class="texto-azul label-campo">Consultar</label>
+                    <fieldset id="fieldset-consultar">
+                        {%if permissao.consultar == 1 %}
+                            <input type="radio" name="fieldset-consultar" value="1" id="radio-consultar-sim" checked>
+                            <label class="texto-preto" for="radio-consultar-sim">Sim</label>
+                        {% else %}
+                            <input type="radio" name="fieldset-consultar" value="1" id="radio-consultar-sim">
+                            <label class="texto-preto" for="radio-consultar-sim">Sim</label>
+                        {% endif %}
+                        {%if permissao.consultar == 0 %}
+                            <input type="radio" name="fieldset-consultar" value="0" id="radio-consultar-nao" checked>
+                            <label class="texto-preto" for="radio-consultar-nao">Não</label>
+                        {% else %}
+                            <input type="radio" name="fieldset-consultar" value="0" id="radio-consultar-nao">
+                            <label class="texto-preto" for="radio-consultar-nao">Não</label>
+                        {% endif %}
+                    </fieldset>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo">Editar</label>
+                    <fieldset id="fieldset-editar">
+                        {%if permissao.editar == 1 %}
+                            <input type="radio" name="fieldset-editar" value="1" id="radio-editar-sim" checked>
+                            <label class="texto-preto" for="radio-editar-sim">Sim</label>
+                        {% else %}
+                            <input type="radio" name="fieldset-editar" value="1" id="radio-editar-sim">
+                            <label class="texto-preto" for="radio-editar-sim">Sim</label>
+                        {% endif %}
+                        {%if permissao.editar == 0 %}
+                            <input type="radio" name="fieldset-editar" value="0" id="radio-editar-nao" checked>
+                            <label class="texto-preto" for="radio-editar-nao">Não</label>
+                        {% else %}
+                            <input type="radio" name="fieldset-editar" value="0" id="radio-editar-nao">
+                            <label class="texto-preto" for="radio-editar-nao">Não</label>
+                        {% endif %}
+                    </fieldset>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo">Imprimir</label>
+                    <fieldset id="fieldset-imprimir">
+                        {%if permissao.imprimir == 1 %}
+                            <input type="radio" name="fieldset-imprimir" value="1" id="radio-imprimir-sim" checked>
+                            <label class="texto-preto" for="radio-imprimir-sim">Sim</label>
+                        {% else %}
+                            <input type="radio" name="fieldset-imprimir" value="1" id="radio-imprimir-sim" checked>
+                            <label class="texto-preto" for="radio-imprimir-sim">Sim</label>
+                        {% endif %}
+                        {%if permissao.imprimir == 0 %}
+                            <input type="radio" name="fieldset-imprimir" value="0" id="radio-imprimir-nao">
+                            <label class="texto-preto" for="radio-imprimir-nao">Não</label>
+                        {% else %}
+                            <input type="radio" name="fieldset-imprimir" value="0" id="radio-imprimir-nao">
+                            <label class="texto-preto" for="radio-imprimir-nao">Não</label>
+                        {% endif %}
+                    </fieldset>
+                </div> {% endcomment %}
+
+                <div class="container-botoes">
+                    <button class="botao botao--azul" data-modal-abrir="confirmar-cadastro">Salvar</button>
+                    <button class="botao botao--azul" data-modal-abrir="confirmar-exclusao">Excluir</button>
+                </div>
+
+                <div class="modal oculto" data-modal="confirmar-cadastro">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                        <p class="texto-preto descricao">Tem certeza que deseja salvar a permissão?</p>
+
+                        <div class="container-botoes">
+                            <button class="botao--verde botao" type="submit">Salvar</button>
+                            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal oculto" data-modal="confirmar-exclusao">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                        <p class="texto-preto descricao">Tem certeza que deseja excluir a permissão?</p>
+
+                        <div class="container-botoes">
+
+                                <a href="{% url 'usuario:excluir-permissao' %}?id_permissao={{ usuario_permissao.id }}">
+                                    <button class="botao--vermelho botao" value='excluir' name="excluir">Excluir</button>
+                                </a>
+
+                            <button class="botao botao--azul" data-modal-fechar>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static '/assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static '/assets/js/layout/usuario/usuario-permissoes/controlaServicos.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,46 @@
+/* Estilização de cards de dados utilziados no sistema */
+
+.container-cards-simples{
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.card-simples{
+    background-color: var(--cor-surface);
+    border: 1px solid #C1C1C1;
+    border-radius: .5rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-basis: 100%;
+    flex-direction: column;
+    padding: 1.5rem;
+    row-gap: 1rem;
+    transition: 0.5s;
+}
+
+.card-simples:hover{
+    background-color: var(--cor-surface-hover);
+}
+
+.card-simples--selecionavel{
+    cursor: pointer;
+}
+
+    .card-simples__titulo{
+        color: var(--texto-azul);
+        font-size: 1.25rem;
+    }
+
+    .card-simples__descricao{
+        display: flex;
+        flex-direction: column;
+        row-gap: .5rem;
+    }
+
+/* RESPONSIVIDADE */
+@media screen and (max-width: 768px) {
+    .container-cards-simples a, .container-cards-simples .card-simples{
+        flex-basis: 100%;
+    }
+}

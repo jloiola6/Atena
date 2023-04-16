@@ -1,0 +1,20 @@
+{% load static %}
+<div class="modal oculto" data-modal="termo">
+    <div id="modal-conteudo" class="modal-conteudo">
+        <h2 class="texto-grande texto-negrito texto-azul">Termo de Cancelamento de Contrato</h2>
+        <div class="container-detalhes">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="formulario-grupo">
+                    <label class="texto-negrito texto-azul label-campo" for="termo">Anexar termo de cancelamento</label>
+                    <input class="campo-termo texto-azul" id="termo" type="file" name="termo" >
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao--azul botao" name="termo_cancelamento" value="termo_cancelamento" type="submit">Confirmar</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+/* Estilização do formulário de contratos */
+
+.container-formulario-contrato-lotacao, .container-formulario-contrato-lotacao .container-botoes{
+    margin-top: 16px;
+}
+
+.botao-digito{
+    align-items: self-start;
+    justify-self: auto;
+}
+
+.digito-pendente{
+    size: 2rem;
+}
+
+.label-digito{
+    font-size: 3rem;
+}

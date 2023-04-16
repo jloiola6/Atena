@@ -1,0 +1,90 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Formulário de Vigilantes {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/administracao/contratos/vigilantes-formulario.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:index' %}">Administração</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:contratos' %}">Contratos</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:item-perfil' %}?id_item= {{ item.id }}">Item {{ item.id }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Formulário de Vigilantes</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Formulário de Vigilantes</h1>
+
+            <p class="descricao  texto-preto">Adicione vigilantes ao posto de trabalho</p>
+
+            <form class="container-surface formulario-vigilantes" method="POST">
+                {% csrf_token %}
+                <h2 class="texto-medio texto-azul">Vigilantes cadastrados</h2>
+
+                <div class="formulario-grupo">
+                    <h3 class="texto-medio texto-azul">Nome</h3>
+
+                    {% if posto.funcionario1 == None or posto.funcionario1 == '' and posto.funcionario2 == None or posto.funcionario2 == '' and posto.funcionario3 == None or posto.funcionario3 == '' %}
+                        <div class="grupo-vigilante">
+                            <input class="campo-texto campo-grande" value= '' name="0" placeholder='Ex: Érick Fernandes do Nascimento' autocomplete="off" value="">
+                            <button data-botao-excluir="" class="botao botao--vermelho">Exlcuir</button>
+                        </div>
+                    {% endif %}
+
+                    {% if posto.funcionario1 != None and posto.funcionario1 != '' %}
+                        <div class="grupo-vigilante">
+                            <input class="campo-texto campo-grande" value= '{{ posto.funcionario1 }}' name="0" placeholder='Ex: Érick Fernandes do Nascimento' autocomplete="off" value="">
+                            <button data-botao-excluir="" class="botao botao--vermelho">Exlcuir</button>
+                        </div>
+                    {% endif %}
+
+                    {% if posto.funcionario2 != None and posto.funcionario2 != '' %}
+                        <div class="grupo-vigilante">
+                            <input class="campo-texto campo-grande" value= '{{ posto.funcionario2 }}' name="1" placeholder='Ex: Érick Fernandes do Nascimento' autocomplete="off" value="">
+                            <button data-botao-excluir="" class="botao botao--vermelho">Exlcuir</button>
+                        </div>
+                    {% endif %}
+
+                    {% if posto.funcionario3 != None and posto.funcionario3 != '' %}
+                        <div class="grupo-vigilante">
+                            <input class="campo-texto campo-grande" value= '{{ posto.funcionario3 }}' name="2" placeholder='Ex: Érick Fernandes do Nascimento' autocomplete="off" value="">
+                            <button data-botao-excluir="" class="botao botao--vermelho">Exlcuir</button>
+                        </div>
+                    {% endif %}
+
+                    <div>
+                        {% if posto.funcionario2 != None and posto.funcionario2 != '' and posto.funcionario3 != None and posto.funcionario3 != '' %}
+                            <button class="botao botao--azul" data-botao-adicionar="celular" disabled>Adicionar</button>
+                        {% else %}
+                            <button class="botao botao--azul" data-botao-adicionar="celular">Adicionar</button>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao botao--verde" type="submit">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/layout/administracao/vigilantes-formulario/controlaCampos.js' %}"></script>
+{% endblock %}

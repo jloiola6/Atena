@@ -1,0 +1,51 @@
+<!-- ADICIONAR REQUIRED -->
+
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+    Anexo de Documento
+{% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/partials/contrato/_documento-formulario.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:index' %}">Tecnologia</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:contratos' %}">Contratos</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:contrato-perfil' %}?id_contrato={{ contrato.id }}">Contrato nº {{ contrato.numero_contrato }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Anexo de Documento</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Anexo de Documento</h1>
+
+            <p class="descricao  texto-preto">Insira o Documento correspondente ao contrato</p>
+
+            {% include 'partials/contrato/_documento-formulario.html' %}
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+
+{% endblock %}

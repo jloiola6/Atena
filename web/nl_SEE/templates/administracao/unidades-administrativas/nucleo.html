@@ -1,0 +1,72 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} {{ unidade.nome }} {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/administracao/unidades-administrativas/unidades.css' %}">
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/administracao/unidades-administrativas/nucleo.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:index' %}">Administração</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:unidades-administrativas' %}">Unidades</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:diretoria' %}?id={{ diretoria.id }}">{{ diretoria.nome }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:departamento' %}?id={{ departamento.id }}">{{ departamento.nome }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:divisao' %}?id={{ divisao.id }}">{{ divisao.nome }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">{{ unidade.nome }}</span>
+            </nav>
+
+            {% include 'partials/unidade-administrativa/_unidade-dados.html' %}
+
+            <h2 class="titulo-pagina texto-azul">Centros / Polo</h2>
+
+            {% if permissao.editar == 1 %}
+                <div class="container-botoes-centros">
+                    <a href="{% url 'administracao:polo-centro-formulario' %}?id={{ unidade.id }}">
+                        <button class="botao botao--azul">Adicionar</button>
+                    </a>
+                </div>
+            {% endif %}
+
+            {% if possui_centros %}
+                <div class="lista-centros lista-menus">
+                    {% for centro in centros %}
+                        <div class="menu-pai centro" data-accordeon-pai="{{ centro.id }}-{{ centro.sigla }}" data-accordeon-filho="{{ unidade.id }}-{{ unidade.sigla }}" data-accordeon-ativo="false">
+                            <a href="{% url 'administracao:centro' %}?id={{ centro.id }}">
+                                <h3 class="texto-medio texto-azul">{{ centro.nome }}</h3>
+                            </a>
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+                <p class=" texto-preto mensagem-sem-centros">Esta unidade não possui centros cadastrados.</p>
+            {% endif %}
+
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+{% endblock %}

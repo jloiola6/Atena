@@ -1,0 +1,142 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} {{ servidor.nome }} {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/lotacao/servidor/servidor-perfil.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'coex:index' %}">COEX</a>
+                <span class="texto-azul">&#62;</span>
+
+                {% if endereco %}
+                    <a class="  texto-azul" href="{% url 'coex:comite' %}">Comitê</a>
+                    <span class="texto-azul">&#62;</span>
+
+                    <a class="  texto-azul" href="{% url 'coex:comite-perfil' %}?id={{ endereco.id }}">{{ endereco.escola.nome_escola }}</a>
+                    <span class="texto-azul">&#62;</span>
+                {% else %}
+                    <a class="  texto-azul" href="{% url 'coex:consorcio' %}">Consórcio</a>
+                    <span class="texto-azul">&#62;</span>
+
+                    <a class="  texto-azul" href="{% url 'coex:consorcio-perfil' %}?id={{ consorcio.id }}">{{ consorcio.nome_consorcio }}</a>
+                    <span class="texto-azul">&#62;</span>
+                {% endif %}
+
+                <span class="  texto-azul">{{ servidor.nome }}</span>
+            </nav>
+
+            <div class="container-surface-servidor container-surface">
+                <div class="container-servidor-nome">
+                    <h1 class="texto-medio texto-azul">{{ servidor.nome }}</h1>
+
+                    <!-- <button class="botao botao--azul">Editar</button> -->
+                </div>
+                {% if historico_base %}
+                    <br>
+                    <p class=" texto-preto texto-normal">Última atualização cadastral dia <span class="texto-negrito">{{ historico_base.ultima_atualizacao }}</span></p>
+                {% endif %}
+
+                <div class="servidor-dados">
+                    {% if servidor.matricula %}
+                        <p class=" texto-azul texto-negrito">Matrícula: <span class="texto-preto texto-normal">{{ servidor.matricula }}</span></p>
+                    {% endif %}
+
+                    <p class=" texto-azul texto-negrito">CPF: <span class="texto-preto texto-normal">{{ servidor.cpf_oculto }}</span></p>
+
+                    {% if servidor.rg %}
+                        <p class=" texto-azul texto-negrito">RG: <span class="texto-preto texto-normal">{{ servidor.rg }}</span></p>
+                    {% endif %}
+
+                    {% if servidor.pis %}
+                        <p class=" texto-azul texto-negrito">PIS/PASEP: <span class="texto-preto texto-normal">{{ servidor.pis }}</span></p>
+                    {% endif %}
+
+                    {% if servidor.titulo_eleitor %}
+                        <p class=" texto-azul texto-negrito">Titulo Eleitoral: <span class="texto-preto texto-normal">{{ servidor.titulo_eleitor }}</span></p>
+                    {% endif %}
+                    <p class=" texto-azul texto-negrito">Data de Nascimento: <span class="texto-preto texto-normal">{{ servidor.data_nascimento }}</span></p>
+                    <p class=" texto-azul texto-negrito">Gênero: <span class="texto-preto texto-normal">{{ servidor.sexo }}</span></p>
+                    <p class=" texto-azul texto-negrito">Nacionalidade: <span class="texto-preto texto-normal">{{ servidor.nacionalidade }}</span></p>
+                    <p class=" texto-azul texto-negrito">Naturalidade: <span class="texto-preto texto-normal">{{ servidor.naturalidade }} - {{ servidor.uf }}</span></p>
+
+                    {% if permissao.editar == 1 %}
+                        <div class="container-botoes">
+                            <a href="{% url 'coex:servidor-base' %}?id={{ endereco.id }}&id_servidor={{ servidor.id }}&id_consorcio={{ consorcio.id }}"><button class="botao--azul botao">Editar</button></a>
+                        </div>
+                    {% endif %}
+
+                </div>
+
+                <h2 class="texto-medio texto-azul titulo-endereco-servidor">Endereço</h2>
+
+                <div class="servidor-endereco">
+                    {% if servidor_endereco %}
+                        <p class=" texto-azul texto-negrito texto">Estado: <span class="texto-preto texto-normal">{{ servidor_endereco.uf }}</span></p>
+                        <p class=" texto-azul texto-negrito texto">Município: <span class="texto-preto texto-normal">{{ servidor_endereco.municipio }}</span></p>
+                        <p class=" texto-azul texto-negrito texto">Regional: <span class="texto-preto texto-normal">{{ servidor_endereco.regiao }}</span></p>
+                        <p class=" texto-azul texto-negrito texto">CEP: <span class="texto-preto texto-normal">{{ servidor_endereco.cep }}</span></p>
+                        <p class=" texto-azul texto-negrito texto">Rua: <span class="texto-preto texto-normal">{{ servidor_endereco.rua }}</span></p>
+                        <p class=" texto-azul texto-negrito texto">Numero: <span class="texto-preto texto-normal">{{ servidor_endereco.numero }}</span></p>
+                        <p class=" texto-azul texto-negrito texto">Bairro: <span class="texto-preto texto-normal">{{ servidor_endereco.bairro }}</span></p>
+                        {% if servidor_endereco.complemento %}
+                            <p class=" texto-azul texto-negrito texto">Complemento: <span class="texto-preto texto-normal">{{ servidor_endereco.complemento }}</span></p>
+                        {% endif %}
+
+                        {% if permissao.editar == 1 %}
+                            <div class="container-botoes">
+                                <a href="{% url 'coex:servidor-endereco' %}?id={{ endereco.id }}&id_servidor={{ servidor.id }}&id_consorcio={{ consorcio.id }}"><button class="botao--azul botao">Editar</button></a>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <p class="texto-preto">Sem endereço cadastrado</p>
+                        {% if permissao.editar == 1 %}
+                            <div class="container-botoes">
+                                <a href="{% url 'coex:servidor-endereco' %}?id={{ endereco.id }}&id_servidor={{ servidor.id }}&id_consorcio={{ consorcio.id }}"><button class="botao--azul botao">Adicionar</button></a>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+
+                <h2 class="texto-medio texto-azul titulo-contatos-servidor">Contatos</h2>
+                <div class="servidor-contatos">
+                    {% if servidor_contato %}
+                        {% for contato in servidor_contato %}
+                            {% if contato.tipo_contato == 'C' %}
+                                <p class=" texto-azul texto-negrito texto">Celular: <span class="texto-preto texto-normal">{{ contato.contato }}</span></p>
+                            {% elif contato.tipo_contato == 'T' %}
+                                <p class=" texto-azul texto-negrito texto">Telefone: <span class="texto-preto texto-normal">{{ contato.contato }}</span></p>
+                            {% elif contato.tipo_contato == 'E' %}
+                                <p class=" texto-azul texto-negrito texto">Email: <span class="texto-preto texto-normal">{{ contato.contato }}</span></p>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <p class="texto-preto">Sem contatos cadastrados</p>
+                    {% endif %}
+
+                    {% if permissao.editar == 1 %}
+                        <div class="container-botoes">
+                            <a href="{% url 'coex:servidor-contato' %}?id={{ endereco.id }}&id_servidor={{ servidor.id }}&id_consorcio={{ consorcio.id }}"><button class="botao--azul botao">Adicionar</button></a>
+                        </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/controlaNavegacaoSurface.js' %}"></script>
+{% endblock %}

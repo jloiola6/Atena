@@ -1,0 +1,38 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Educação Conectada{% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:index' %}">Tecnologia</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Educação Conectada</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Educação Conectada</h1>
+
+            <div class="container-cards">
+                <a href="{% url 'tecnologia:escolas' %}">
+                    <div class="card-menu">
+                        {% include 'partials/icones-cards/tecnologia/educacao-conectada/tablets.svg' %}
+
+                        <h2 class="card-titulo">Tablets</h2>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,35 @@
+.container-500{
+    align-items: center;
+    display: flex;
+}
+
+.container-500 .container{
+    align-items: center;
+    display: flex;
+    gap: 64px;
+}
+
+.container-mensagem-erro{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.container-mensagem-erro .container-botoes{
+    margin-top: 8px;
+}
+
+@media screen and (max-width: 768px){
+    .container-500 .container{
+        flex-direction: column-reverse;
+        gap: 24px;
+    }
+
+    .container-mensagem-erro > *{
+        text-align: center;
+    }
+
+    .container-mensagem-erro, .container-mensagem-erro .container-botoes{
+        justify-content: center;
+    }
+}

@@ -1,0 +1,108 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Editar Contatos {% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'coex:index' %}">COEX</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'coex:comite' %}">Comitê</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'coex:comite-perfil' %}?id={{ endereco.id }}">{{ endereco.escola.nome_escola }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Editar Contatos</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Editar Contatos</h1>
+
+            <p class="descricao  texto-preto">Gerencie os contatos da unidade</p>
+
+            <form class="container-surface container-formulario-unidade-contatos" method="POST">
+                {% csrf_token %}
+                <h2 class="texto-medio texto-azul">Contatos da Unidade ({{ qtd_contatos }})</h2>
+
+                <div class="formulario-grupo">
+                    <h3 class="texto-medio texto-azul">Celular</h3>
+                    {% for contato in contatos %}
+                        {% if contato.tipo_contato == 'C' %}
+                            <div class="container-contato-edicao">
+                                <input class="campo-texto campo-medio" type="tel" name="celular_id{{contato.id}}" placeholder="Ex: (00) 00000-0000" autocomplete="off" value="{{ contato.contato }}" data-mascara="telefone">
+                                <button class="botao botao--vermelho" data-botao-excluir>Excluir</button>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                    <div>
+                        <button class="botao botao--azul" data-botao-adicionar="celular">Adicionar</button>
+                    </div>
+                </div>
+
+                <div class="formulario-grupo">
+                    <h3 class="texto-medio texto-azul">E-mail</h3>
+                    {% for contato in contatos %}
+                        {% if contato.tipo_contato == 'E' %}
+                            <div class="container-contato-edicao">
+                                <input class="campo-texto campo-medio" type="email" name="email_id{{contato.id}}" placeholder="Ex: escola@escola.com" autocomplete="off" value="{{ contato.contato }}">
+                                <button class="botao botao--vermelho" data-botao-excluir>Excluir</button>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                    <div>
+                        <button class="botao botao--azul" data-botao-adicionar="email">Adicionar</button>
+                    </div>
+                </div>
+
+                <div class="formulario-grupo">
+                    <h3 class="texto-medio texto-azul">Telefone</h3>
+                    {% for contato in contatos %}
+                        {% if contato.tipo_contato == 'T' %}
+                            <div class="container-contato-edicao">
+                                <input class="campo-texto campo-medio" type="tel" name="telefone_id{{contato.id}}" placeholder="Ex: (00) 0000-0000" autocomplete="off" value="{{ contato.contato }}" data-mascara="telefone">
+                                <button class="botao botao--vermelho" data-botao-excluir>Excluir</button>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                    <div>
+                        <button class="botao botao--azul" data-botao-adicionar="telefone">Adicionar</button>
+                    </div>
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao botao--azul" data-modal-abrir="confirmar">Salvar</button>
+                </div>
+
+                <div class="modal oculto" data-modal="confirmar">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                        <p class="texto-preto descricao">Tem certeza que deseja editar os contatos da unidade?</p>
+
+                        <div class="container-botoes">
+                            <button class="botao--verde botao" type="submit">Salvar</button>
+                            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/layout/coex/editar-contato/controlaCampos.js' %}" type="module"></script>
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+{% endblock %}

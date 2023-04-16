@@ -1,0 +1,18 @@
+/* Estilização da página de servidores lotados em uma unidade */
+
+.container-servidores-busca, .container-servidores-busca .container-botoes{
+    margin-top: 1rem;
+}
+.tabela-servidores--tablet{
+    display: none;
+}
+
+@media screen and (max-width: 573px) {
+    .tabela-servidores{
+        display: none;
+    }
+
+    .tabela-servidores--tablet{
+        display: block;
+    }
+}

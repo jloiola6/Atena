@@ -1,0 +1,123 @@
+<div data-dashboard-container="escolas">
+    <div class="container-dividido">
+        <div class="container-grafico container-surface">
+            <h2 class="texto-medio texto-azul">Escolas por localização</h2>
+
+            <table data-grafico="donut">
+                <thead>
+                    <tr>
+                        <th>Urbano</th>
+                        <th>Rural</th>
+                        <th>Indígena</th>
+                        <th>N/I</th> 
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>{{ escolas_urbanas }}</td>
+                        <td>{{ escolas_rurais }}</td>
+                        <td>{{ escolas_indigenas }}</td>
+                        <td>{{ escolas_ni }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="container-dividido vertical">
+            <div class="container-grafico container-surface">
+                <h2 class="texto-medio texto-azul">Escolas por regional</h2>
+
+                <table data-grafico="barra">
+                    <thead>
+                        <tr>
+                            <th>Alto Acre</th>
+                            <th>Baixo Acre</th>
+                            <th>Juruá</th>
+                            <th>Purus</th>
+                            <th>Tarauacá / Envira</th> 
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>{{ alto_acre }}</td>
+                            <td>{{ baixo_acre }}</td>
+                            <td>{{ jurua }}</td>
+                            <td>{{ purus }}</td>
+                            <td>{{ tarauaca }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="container-grafico container-surface">
+                <h2 class="texto-medio texto-azul">Escolas por tipificação</h2>
+
+                <table data-grafico="barra">
+                    <thead>
+                        <tr>
+                            <th>A</th>
+                            <th>B</th>
+                            <th>C</th>
+                            <th>D</th> 
+                            <th>E</th> 
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>{{ escolas_a }}</td>
+                            <td>{{ escolas_b }}</td>
+                            <td>{{ escolas_c }}</td>
+                            <td>{{ escolas_d }}</td>
+                            <td>{{ escolas_e }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-dividido">
+        <div class="container-surface container-grafico">
+            <h2 class="texto-medio texto-azul">Escolas com SIMAED</h2>
+
+            <table data-grafico="donut">
+                <thead>
+                    <tr>
+                        <th>Com SIMAED</th>
+                        <th>Sem SIMAED</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>{{ escolas_com_simaed }}</td>
+                        <td>{{ escolas_sem_simaed }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="container-surface container-grafico">
+            <h2 class="texto-medio texto-azul">Escolas com Energia Elétrica</h2>
+
+            <table data-grafico="donut">
+                <thead>
+                    <tr>
+                        <th>Com Energia Elétrica</th>
+                        <th>Sem Energia Elétrica</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>{{ escolas_com_energia }}</td>
+                        <td>{{ escolas_sem_energia }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

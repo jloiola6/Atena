@@ -1,0 +1,92 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Cadastro de Extinção{% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/fundiaria/infraestrutura-formulario.css' %}">
+{% endblock %}
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'fundiaria:index' %}" class=" texto-azul">Fundiária</a>
+                <span class="texto-azul">&#62;</span>
+
+                {% if endereco %}
+                    <a  class=" texto-azul" href="{% url 'fundiaria:unidades-educacionais' %}">Unidades Educacionais</a>
+                    <span class="texto-azul">&#62;</span>
+
+                    <a class="  texto-azul" href="{% url 'fundiaria:fundiaria-perfil' %}?inep={{ cod_inep }}">{{ endereco }}</a>
+                    <span class="texto-azul">&#62;</span>
+                {% else %}
+                    <a  class=" texto-azul" href="{% url 'fundiaria:unidades-adm' %}">Unidades Administrativas</a>
+                    <span class="texto-azul">&#62;</span>
+
+                    <a class="  texto-azul" href="{% url 'fundiaria:fundiaria-perfil' %}?adm={{ unidade.id }}">{{ unidade }}</a>
+                    <span class="texto-azul">&#62;</span>
+                {% endif %}
+
+                <span class="  texto-azul">Cadastro de Extinção</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Cadastro de Extinção</h1>
+            <p class="descricao texto-preto">Insira os detalhes de extinção</p>
+
+            <form class="container-surface" method="POST">
+                {% csrf_token %}
+
+                <h2 class="texto-medio texto-azul">Dados da Extinção</h2>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-paralisada">Paralisada em: </label>
+                    <input class="campo-texto campo-pequeno" type="date" name="data_paralizacao" value="" id="campo-paralisada" required>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-extinta">Extinta em: </label>
+                    <input class="campo-texto campo-pequeno" type="date" name="data_extincao" value="" id="campo-extinta"  required>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-guardia">Esc. Guardiã </label>
+                    <input class="campo-texto campo-grande" type="text" name="escola_guardia" value="" id="campo-guardia" required maxlength="100">
+
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-decreto_extincao">Decreto de Extinção </label>
+                    <input class="campo-texto campo-grande" type="text" name="decreto_extincao" value="" id="campo-decreto_extincao" required maxlength="100">
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao botao--azul" data-modal-abrir="confirmar" data-botao-cadastrar>Cadastrar</button>
+                </div>
+
+                <div class="modal oculto" data-modal="confirmar">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                        <p class="texto-preto descricao">Tem certeza que deseja cadastrar a extinção da escola?</p>
+
+                        <div class="container-botoes">
+                            <button class="botao--verde botao" type="submit">Salvar</button>
+                            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/layout/administracao/infraestrutura-formulario/controlaCampos.js' %}"></script>
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+{% endblock %}

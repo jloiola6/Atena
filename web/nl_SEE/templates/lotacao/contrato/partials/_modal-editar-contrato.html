@@ -1,0 +1,93 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="editar-contrato">
+    <form method="POST" class="modal-conteudo">
+        {% csrf_token %}
+
+        <h2 class="texto-azul texto-medio">Editar Contrato</h2>
+        <p class="descricao texto-preto">Preencha os seguintes campos para editar o contrato</p>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-tipo-contrato">Tipo de contrato</label>
+
+            <select name="tipo" id="campo-tipo-contrato" class="campo-texto campo-medio" data-selecao-tipo>
+                {% for tipo in tipos_contratos %}
+                    {% if tipo == contrato.tipo_contrato %}
+                        <option value="{{ tipo }}" selected>{{ tipo }}</option>
+                    {% else %}
+                        <option value="{{ tipo }}">{{ tipo }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+
+        <div class="formulario-grupo" data-grupo-cargo>
+            <label for="campo-cargo" class="label-campo texto-azul">Cargo</label>
+
+            <select name="cargos-efetivos"  class="campo-texto campo-grande" data-cargo="EFETIVO">
+                {% for cargo in cargos_efetivos %}
+                    {% if cargo.id == contrato.cargo.id %}
+                        <option value="{{ cargo.id }}" selected>{{ cargo.nome }}</option>
+                    {% else %}
+                        <option value="{{ cargo.id }}">{{ cargo.nome }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+
+            <select name="cargos-temporarios"  class="campo-texto campo-grande" data-cargo="TEMPORÁRIO">
+                {% for cargo in cargos_temporario %}
+                    {% if cargo.id == contrato.cargo.id %}
+                        <option value="{{ cargo.id }}" selected>{{ cargo.nome }}</option>
+                    {% else %}
+                        <option value="{{ cargo.id }}">{{ cargo.nome }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+
+            <select name="cargos-contratacao-direta"  class="campo-texto campo-grande" data-cargo="CONTRATAÇÃO DIRETA">
+                {% for cargo in cargos_temporario %}
+                    {% if cargo.id == contrato.cargo.id %}
+                        <option value="{{ cargo.id }}" selected>{{ cargo.nome }}</option>
+                    {% else %}
+                        <option value="{{ cargo.id }}">{{ cargo.nome }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+
+            <select name="cargos-comissaos"  class="campo-texto campo-grande" data-cargo="COMISSÃO">
+                {% for cargo in cargos_comissao %}
+                    {% if cargo.id == contrato.cargo.id %}
+                        <option value="{{ cargo.id }}" selected>{{ cargo.nome }}</option>
+                    {% else %}
+                        <option value="{{ cargo.id }}">{{ cargo.nome }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+
+            <select name="cargos-permutas"  class="campo-texto campo-grande" data-cargo="PERMUTA">
+                {% for cargo in cargos_permuta %}
+                    {% if cargo.id == contrato.cargo.id %}
+                        <option value="{{ cargo.id }}" selected>{{ cargo.nome }}</option>
+                    {% else %}
+                        <option value="{{ cargo.id }}">{{ cargo.nome }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+
+            <select name="cargos-cedido"  class="campo-texto campo-grande" data-cargo="CEDIDO">
+                {% for cargo in cargos_permuta %}
+                    {% if cargo.id == contrato.cargo.id %}
+                        <option value="{{ cargo.id }}" selected>{{ cargo.nome }}</option>
+                    {% else %}
+                        <option value="{{ cargo.id }}">{{ cargo.nome }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="container-botoes">
+            <button class="botao botao--azul" type="submit" name="btn-contrato-formulario">Abrir Formulário</button>
+        </div>
+    </form>
+</div>

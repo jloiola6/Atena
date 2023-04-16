@@ -1,0 +1,18 @@
+/* Estiização da página de edição de contatos de uma unidade educacional */
+
+.container-formulario-unidade-contatos{
+    margin-top: 1rem;
+}
+
+    .container-formulario-unidade-contatos .container-botoes{
+        margin-top: 1rem;
+    }
+
+    .container-formulario-unidade-contatos .formulario-grupo{
+        row-gap: 1rem;
+    }
+
+.container-contato-edicao{
+    display: flex;
+    gap: .5rem;
+}

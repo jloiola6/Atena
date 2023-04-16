@@ -1,0 +1,5 @@
+/* Estilização da página de servidores lotados em uma unidade */
+
+.container-servidores-busca, .container-servidores-busca .container-botoes{
+    margin-top: 16px;
+}

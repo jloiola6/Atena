@@ -1,0 +1,91 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="chamado-{{ chamado.solicitacao.id }}">
+    <div id="modal-conteudo" class="modal-conteudo ">
+        <h2 class="texto-medio texto-negrito texto-azul">Detalhes do Chamado</h2>
+
+        <div class="container-detalhes">
+            <h4 class="card-simples__titulo texto-azul">{{ chamado.servico }}</h4>
+
+            <div class="card-simples__descricao" >
+                <p class=" texto-azul texto-negrito">Protocolo: <span class="texto-preto texto-normal">{{ chamado.solicitacao.id }}</span></p>
+                <p class=" texto-azul texto-negrito">Solicitante: <span class="texto-preto texto-normal">{{ servidor.nome }}</span></p>
+                {% if chamado.solicitacao.endereco_escola %}
+                    <p class=" texto-azul texto-negrito">Unidade Escolar: <span class="texto-preto texto-normal">{{ chamado.solicitacao.endereco_escola.escola.nome_escola }}</span></p>
+                {% else %}
+                    <p class=" texto-azul texto-negrito">Unidade Administrativa: <span class="texto-preto texto-normal">{{ chamado.solicitacao.unidade_administrativa.nome }}</span></p>
+                {% endif %}
+
+                <p class=" texto-azul texto-negrito">Data Abertura: <span class="texto-preto texto-normal">{{ chamado.solicitacao.data_abertura }}</span></p>
+
+                {% if chamado.solicitacao.data_finalizacao %}
+                    <p class=" texto-azul texto-negrito">Data Finalização: <span class="texto-preto texto-normal">{{ chamado.solicitacao.data_finalizacao }}</span></p>
+                {% endif %}
+
+                {% if chamado.descricao_chamado %}
+                    <p class=" texto-azul texto-negrito">Descrição do chamado: <span class="texto-preto texto-normal">{{ chamado.descricao_chamado }}</span></p>
+                {% endif %}
+
+                <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">{{ chamado.solicitacao.situacao }}</span></p>
+            </div>
+        </div>
+        <!-- <div>
+            <h6 class=" texto-azul">Avaliação do Atendimento</h6>
+            <ul class="avaliacao">
+                <li class="star-icon ativo" data-avaliacao="1"></li>
+                <li class="star-icon" data-avaliacao="2"></li>
+                <li class="star-icon" data-avaliacao="3"></li>
+                <li class="star-icon" data-avaliacao="4"></li>
+                <li class="star-icon" data-avaliacao="5"></li>
+            </ul>
+            <div class="formulario-grupo" data-container-texto>
+                <label for="campo-motivo">Justifique sua Avaliação</label>
+                <textarea class="campo-texto campo-area" type="text" name="motivo" id="campo-motivo"></textarea>
+            </div>
+        </div> -->
+    </div>
+</div>
+
+<!-- <style>
+    .avaliacao{
+        display: flex;
+    }
+
+    .star-icon{
+        list-style-type: none;
+        cursor: pointer;
+        color: #ffe500;
+        font-size: 50px;/* alterar o tamanho das estrelas */
+    }
+
+    .star-icon::before{
+        content: "\2605";
+    }
+
+    .star-icon.ativo ~ .star-icon::before{
+        content: "\2606";
+    }
+
+    .avaliacao:hover .star-icon::before{
+        content: "\2605";
+    }
+
+    .star-icon:hover ~ .star-icon::before{
+        content: "\2606";
+    }
+
+</style>
+
+<script>
+    var stars = document.querySelectorAll('.star-icon');
+    document.addEventListener('click', function(e){
+    var classStar = e.target.classList;
+        if(!classStar.contains('ativo')){
+            stars.forEach(function(star){
+            star.classList.remove('ativo');
+            });
+            classStar.add('ativo');
+            console.log(e.target.getAttribute('data-avaliacao'));
+        }
+    });
+</script> -->

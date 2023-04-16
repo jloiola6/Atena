@@ -1,0 +1,20 @@
+/* Estilização da página de perfil de um contrato aditivo */
+
+.container-surface-aditivo{
+    margin-top: 1.5rem;
+}
+
+.aditivo-dados{
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    margin-top: 1rem;
+}
+
+.container-surface-aditivo-itens, .aditivo-itens{
+    margin-top: 1rem;
+}
+
+.aditivo-itens .texto-medio{
+    margin-top: 1rem;
+}

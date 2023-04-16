@@ -1,0 +1,72 @@
+<div data-form-container="formacao-basica-2021">
+
+    <div class="formulario-grupo">
+        <label for="campo-portugues" class="texto-azul label-campo">Língua Portuguesa e Literatura</label>
+        <input type="number" name="portugues" id="campo-portugues" class="campo-texto campo-pequeno" value="{{ relatorio.portugues }}" data-mascara="nota" >
+    </div>
+
+    {% if etapa != '3ª Série' %}
+        <div class="formulario-grupo">
+            <label for="campo-arte" class="texto-azul label-campo">Arte</label>
+            <input type="number" name="arte" id="campo-arte" class="campo-texto campo-pequeno" value="{{ relatorio.arte }}" data-mascara="nota" >
+        </div>
+
+        <div class="formulario-grupo">
+            <label for="campo-ingles" class="texto-azul label-campo">Língua Inglesa</label>
+            <input type="number" name="ingles" id="campo-ingles" class="campo-texto campo-pequeno" value="{{ relatorio.ingles }}" data-mascara="nota" >
+        </div>
+
+        <div class="formulario-grupo">
+            <label for="campo-educacao-fisica" class="texto-azul label-campo">Educação Física</label>
+            <input type="number" name="ed_fisica" id="campo-educacao-fisica" class="campo-texto campo-pequeno" value="{{ relatorio.ed_fisica }}" data-mascara="nota" >
+        </div>
+    {% endif %}
+
+    <div class="formulario-grupo">
+        <label for="campo-matematica" class="texto-azul label-campo">Matemática</label>
+        <input type="number" name="matematica" id="campo-matematica" class="campo-texto campo-pequeno" value="{{ relatorio.matematica }}" data-mascara="nota" >
+    </div>
+
+    {% if etapa != '3ª Série' %}
+        <div class="formulario-grupo">
+            <label for="campo-fisica" class="texto-azul label-campo">Física</label>
+            <input type="number" name="fisica" id="campo-fisica" class="campo-texto campo-pequeno" value="{{ relatorio.fisica }}" data-mascara="nota" >
+        </div>
+
+        <div class="formulario-grupo">
+            <label for="campo-quimica" class="texto-azul label-campo">Química</label>
+            <input type="number" name="quimica" id="campo-quimica" class="campo-texto campo-pequeno" value="{{ relatorio.quimica }}" data-mascara="nota" >
+        </div>
+
+        <div class="formulario-grupo">
+            <label for="campo-biologia" class="texto-azul label-campo">Biologia</label>
+            <input type="number" name="biologia" id="campo-biologia" class="campo-texto campo-pequeno" value="{{ relatorio.biologia }}" data-mascara="nota" >
+        </div>
+
+        <div class="formulario-grupo">
+            <label for="campo-historia" class="texto-azul label-campo">História</label>
+            <input type="number" name="historia" id="campo-historia" class="campo-texto campo-pequeno" value="{{ relatorio.historia }}" data-mascara="nota" >
+        </div>
+
+        <div class="formulario-grupo">
+            <label for="campo-geografia" class="texto-azul label-campo">Geografia</label>
+            <input type="number" name="geografia" id="campo-geografia" class="campo-texto campo-pequeno" value="{{ relatorio.geografia }}" data-mascara="nota" >
+        </div>
+
+        <div class="formulario-grupo">
+            <label for="campo-filosofia" class="texto-azul label-campo">Filosofia</label>
+            <input type="number" name="filosofia" id="campo-filosofia" class="campo-texto campo-pequeno" value="{{ relatorio.filosofia }}"  data-mascara="nota" >
+        </div>
+
+        <div class="formulario-grupo">
+            <label for="campo-sociologia" class="texto-azul label-campo">Sociologia</label>
+            <input type="number" name="sociologia" id="campo-sociologia" class="campo-texto campo-pequeno" value="{{ relatorio.sociologia }}" data-mascara="nota" >
+        </div>
+    {% endif %}
+
+    {% if turma.ano_letivo == '2021' %}
+        <div class="container-botoes">
+            <button class="botao botao--azul" data-form-botao="parte-diversificada">Avançar</button>
+        </div>
+    {% endif %}
+</div>

@@ -1,0 +1,35 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Suporte {% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a class="  texto-azul" href="/">Home</a>
+                <span class="texto-azul">&gt;</span>
+
+                <span class="  texto-azul">Suporte</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Suporte</h1>
+
+            <div class="container-surface">
+                <h2 class="texto-medio texto-preto"><b class="texto-azul">Contatos</b></h2>
+                <p class="texto-preto">Divisão de Projetos e Sistemas</p>
+                <div class="container-detalhes">
+                    <p class="texto-preto"><b class="texto-azul">Telefone:</b> (68) 3213-2389</p>
+                    <p class="texto-preto"><b class="texto-azul">Email:</b> suporteatena@see.ac.gov.br</p>
+                    <p class="texto-preto"><b class="texto-azul">SEI:</b> SEE-DIPS</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+{% endblock %}

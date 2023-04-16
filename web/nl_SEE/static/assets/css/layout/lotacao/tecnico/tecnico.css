@@ -1,0 +1,59 @@
+/* Estilização da página das lotações de um técnicos */
+
+.status{
+    aspect-ratio: 1;
+    border-radius: 100%;
+    display: block;
+    margin: auto;
+    width: 1rem;
+}
+
+    .status--pendente{
+        background-color: var(--cor-amarelo);
+    }
+
+    .status--ativo{
+        background-color: var(--cor-verde);
+    }
+
+    .status--recusado{
+        background-color: var(--cor-vermelho);
+    }
+
+.lotacao-detalhe-titulo{
+    align-items: center;
+    display: flex;
+    gap: 1rem
+}
+
+    .lotacao-detalhe-titulo .status{
+        margin: 0;
+        width: .75rem;
+    }
+
+/* RESPONSIVIDADE */
+
+.tabela-lotacoes--tablet{
+    display: none;
+}
+.tabela-lotacoes--smartphone{
+    display: none;
+}
+
+@media screen and (max-width: 658px){
+    .tabela-lotacoes--tablet{
+        display: block;
+    }
+    .tabela-lotacoes, .tabela-lotacoes--smartphone{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 469px){
+    .tabela-lotacoes--smartphone{
+        display: block;
+    }
+    .tabela-lotacoes, .tabela-lotacoes--tablet{
+        display: none;
+    }
+}

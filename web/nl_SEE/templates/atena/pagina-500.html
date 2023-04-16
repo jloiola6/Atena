@@ -1,0 +1,75 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Home {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/atena/pagina-500.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main class="container-500">
+        <div class="container">
+            <div class="container-mensagem-erro">
+                <h1 class="texto-grande texto-azul">Erro ao carregar a página</h1>
+                <p class="texto-preto ">Desculpe, tivemos um problema, tente novamente mais tarde.</p>
+
+                <div class="container-botoes">
+                    <a href="{% url 'core:index' %}">
+                        <button class="botao botao--azul">Voltar para a página incial</button>
+                    </a>
+                </div>
+            </div>
+
+            <span class="icone icone-azul icone-grande">error</span>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <style>
+        .icone{
+            color: var(--texto-azul);
+        }
+        .container-500{
+            align-items: center;
+            display: flex;
+        }
+
+        .container-500 .container{
+            align-items: center;
+            flex-direction: row;
+            gap: 64px;
+            height: 100%;
+        }
+
+        .container-mensagem-erro{
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .container-mensagem-erro .container-botoes{
+            margin-top: 8px;
+        }
+
+        @media screen and (max-width: 768px){
+            .container-500 .container{
+                flex-direction: column-reverse;
+                gap: 24px;
+                height: 50%;
+            }
+
+            .container-mensagem-erro > *{
+                text-align: center;
+            }
+
+            .container-mensagem-erro, .container-mensagem-erro .container-botoes{
+                justify-content: center;
+            }
+        }
+    </style>
+{% endblock %}

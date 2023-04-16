@@ -1,0 +1,6 @@
+/* Estilização do perfil de uma infraestrutura escolar */
+
+.card--dependencia{
+    --largura: calc((100% / 3) - .5rem);
+    flex-basis: var(--largura);
+}

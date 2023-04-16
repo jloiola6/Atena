@@ -1,0 +1,25 @@
+/* Estilização da página de chamados de um técnico */
+
+.externos-titulo{
+    margin-top: 8px;
+}
+
+.externos-titulo ~ .tabela{
+    margin-top: 16px;
+}
+
+/* CLASSES E TABELAS */
+
+/* .chamados-internos--tablet, .chamados-internos--smartphone{
+    display: none;
+} */
+
+@media screen and (max-width: 552px){
+    .chamados-internos{
+        display: none
+    }
+
+    .chamados-internos--tablet{
+        display: block;
+    }
+}

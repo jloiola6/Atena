@@ -1,0 +1,13 @@
+/* Estilização de menus no formato accordeon */
+
+@media screen and (max-width: 768px){
+    .menu-pai{
+        height: 88px;
+    }
+}
+
+@media screen and (max-width: 425px){
+    .menu-pai{
+        height: 128px;
+    }
+}

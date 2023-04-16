@@ -1,0 +1,51 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Matrizes {% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class="texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'administracao:index'%}" class="texto-azul">Administração</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="texto-azul">Matrizes</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Matrizes</h1>
+
+            <div class="container-botoes">
+                <a href="{% url 'administracao:matriz-formulario' %}">
+                    <button class="botao botao--azul">Adicionar</button>
+                </a>
+            </div>
+
+            <table class="tabela">
+                <thead>
+                    <th>Matriz</th>
+                    <th>Etapa</th>
+                </thead>
+
+                <tbody data-tabela-link="">
+                    {% for matriz in matrizes %}
+                        <tr data-tabela-link-chave="{% url 'administracao:matriz' matriz.id %}">
+                            <td>{{ matriz.nome }}</td>
+                            <td>{{ matriz.etapa.nome }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/linkTabela.js' %}"></script>
+{% endblock %}

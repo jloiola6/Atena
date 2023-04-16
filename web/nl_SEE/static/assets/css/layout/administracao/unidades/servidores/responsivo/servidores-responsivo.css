@@ -1,0 +1,23 @@
+.tabela-servidores-tablet, .tabela-servidores-smartphone{
+    display: none;
+}
+
+@media screen and (max-width: 894px){
+    .tabela-servidores, .tabela-servidores-smartphone{
+        display: none;
+    }
+
+    .tabela-servidores-tablet{
+        display: block;
+    }
+}
+
+@media screen and (max-width: 620px){
+    .tabela-servidores, .tabela-servidores-tablet{
+        display: none;
+    }
+
+    .tabela-servidores-smartphone{
+        display: block;
+    }
+}

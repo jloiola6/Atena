@@ -1,0 +1,5 @@
+/* Estilização da página de cadastro de empresas */
+
+.container-formulario-empresa, .container-formulario-empresa .container-botoes{
+    margin-top: 1rem;
+}

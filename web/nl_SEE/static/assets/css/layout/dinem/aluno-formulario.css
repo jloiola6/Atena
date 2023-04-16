@@ -1,0 +1,9 @@
+/* Arquivo de estilo da página de formulario de aluno */
+
+.container-formulario-aluno{
+    margin-top: 16px;
+}
+
+    .container-formulario-aluno .container-botoes{
+        margin-top: 16px;
+    }

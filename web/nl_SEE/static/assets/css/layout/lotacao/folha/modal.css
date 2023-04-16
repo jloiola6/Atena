@@ -1,0 +1,28 @@
+.detalhes{
+    font-size: 15px;
+}
+
+.container-detalhes{
+    padding-top: 0,2rem;
+    line-height: 10px;
+}
+
+.link-contrato{
+    padding-top: 0.5rem;
+}
+
+.detalhes-resultado{
+    font-size: 13px;
+}
+
+.lotacaoes-contrato{
+    padding-top: 5px;
+}
+
+.tabela-lotacao-contrato{
+    padding-top: 10px;
+}
+
+.horas-complementares{
+    width: 10rem;
+}

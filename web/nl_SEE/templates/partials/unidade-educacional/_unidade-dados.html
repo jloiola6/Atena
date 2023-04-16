@@ -1,0 +1,198 @@
+<!-- Esta partial contém um container com os dados de uma unidade educaional
+Feita para evitar a repetição código em perfis de escolas nos módulos que forem ncessários -->
+
+<div class="container-surface surface-unidade">
+    <h1 class="texto-medio texto-azul">{{ escola.nome_escola }}</h1>
+    <p class=" descricao texto-preto">Escola {{ escola.dependencia_adm }} </p>
+
+    {% if escola_etapas %}
+        <ul class="lista-unidade-modalidades">
+            {% for etapa in escola_etapas %}
+                {% if 'Ensino Infantil' in etapa.etapa.nome %}
+                    <li class="item-modalidade modalidade-infantil">{{ etapa.etapa.nome }}</li>
+                {% elif 'EJA' in etapa.etapa.nome %}
+                    <li class="item-modalidade modalidade-eja">{{ etapa.etapa.nome }}</li>
+                {% elif 'Ensino Fundamental' in etapa.etapa.nome %}
+                    <li class="item-modalidade modalidade-fundamental">{{ etapa.etapa.nome }}</li>
+                {% elif 'Ensino Médio' in etapa.etapa.nome %}
+                    <li class="item-modalidade modalidade-medio">{{ etapa.etapa.nome }}</li>
+                {% elif 'AEE - Atendimento Educacional Especializado' in etapa.etapa.nome %}
+                    <li class="item-modalidade modalidade-aee">{{ etapa.etapa.nome }}</li>
+                {% elif 'Aprender' in etapa.etapa.nome %}
+                    <li class="item-modalidade modalidade-aprender">{{ etapa.etapa.nome }}</li>
+                {% elif 'Campo' in etapa.etapa.nome %}
+                    <li class="item-modalidade modalidade-campo">{{ etapa.etapa.nome }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <div class="container-dividido-escola">
+
+        <div class="container-escola-dados">
+            <h2 class="texto-medio texto-azul">Dados</h2>
+            <p class=" texto-azul texto-negrito ">INEP: <span class="texto-preto texto-normal">{{ escola.cod_inep }}</span></p>
+            {% comment %} <p class=" texto-azul texto-negrito">CNPJ: <span class="texto-preto texto-normal">{{ escola.cnpj }}</span></p> {% endcomment %}
+
+            {% if escola.cod_turmalina %}
+                <p class=" texto-azul texto-negrito">Turmalina: <span class="texto-preto texto-normal">{{ escola.cod_turmalina }}</span></p>
+            {% endif %}
+
+            <p class=" texto-azul texto-negrito">Total de alunos:
+                {% if escola.total_alunos %}
+                    <span class="texto-preto texto-normal">{{ escola.total_alunos }}</span>
+                {% else %}
+                    <span class="texto-preto texto-normal">Não informado</span>
+                {% endif %}
+            </p>
+
+            <p class=" texto-azul texto-negrito">Tipificação:
+                {% if escola.tipificacao %}
+                    <span class="texto-preto texto-normal">{{ escola.tipificacao }}</span>
+                {% else %}
+                    <span class="texto-preto texto-normal">Não informado</span>
+                {% endif %}
+            </p>
+
+            {% if coex.nome_empresarial %}
+                <p class=" texto-azul texto-negrito">Nome Empresárial: <span class="texto-preto texto-normal">{{ coex.nome_empresarial }}</span></p>
+            {% endif %}
+
+            <p class=" texto-azul texto-negrito">CNPJ: <span class="texto-preto texto-normal">{{ coex.cnpj }}</span></p>
+
+            {% if consorcio %}
+                <p class=" texto-azul texto-negrito">Consórcio: <a class="link" href="{% url 'coex:consorcio-perfil' %}?id={{ consorcio.id }}"><span class="texto-preto texto-normal">{{ consorcio.nome_consorcio }}</span></a></p>
+            {% endif %}
+
+            {% if coex.status == 0 %}
+                <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">INATIVO</span></p>
+                <p class=" texto-azul texto-negrito">Usuário: <span class="texto-preto texto-normal">{{ coex.user_inativou }}</span></p>
+                <p class=" texto-azul texto-negrito">Data de Inativação: <span class="texto-preto texto-normal">{{ coex.data_inativo }}</span></p>
+            {% endif %}
+
+
+            {% if aplicacao == 'Administração' %}
+                {% if permissao.editar == 1 %}
+                    <div class="container-botoes">
+                        <a href="{% url 'administracao:editar-dados' %}?id={{ escola.id }}"><button class="botao botao--azul">Editar</button></a>
+                    </div>
+                {% endif %}
+            {% endif %}
+
+            {% if aplicacao == 'Fundiária' %}
+                {% if permissao.editar == 1 %}
+                    <div class="container-botoes">
+                        <a href="{% url 'fundiaria:editar_dados' %}?id={{ escola.id }}"><button class="botao botao--azul">Editar</button></a>
+                    </div>
+                {% endif %}
+            {% endif %}
+
+        </div>
+
+        <div class="container-escola-dados">
+            <h2 class="texto-medio texto-azul">Equipe Gestora</h2>
+            <p class=" texto-azul texto-negrito">Diretor(a): <span class="texto-preto texto-normal">{{ diretor }}</span></p>
+            <p class=" texto-azul texto-negrito">Coordenador(a) Pedagógico: <span class="texto-preto texto-normal">{{ pedagogico }}</span></p>
+            <p class=" texto-azul texto-negrito">Coordenador(a) de Ensino: <span class="texto-preto texto-normal">{{ ensino }}</span></p>
+            <p class=" texto-azul texto-negrito">Coordenador(a) administrativo: <span class="texto-preto texto-normal">{{ administrativo }}</span></p>
+            <p class=" texto-azul texto-negrito">Secretario(a) escolar: <span class="texto-preto texto-normal">{{ secretario }}</span></p>
+        </div>
+    </div>
+
+
+    <div class="container-dividido-escola">
+        <div class="container-escola-dados">
+            <h2 class=" texto-medio texto-azul">Endereço</h2>
+            <p class=" texto-azul texto-negrito texto">Município: <span class="texto-preto texto-normal">{{ endereco.municipio }}</span></p>
+            <p class=" texto-azul texto-negrito texto">Regional: <span class="texto-preto texto-normal">{{ endereco.regiao }}</span></p>
+            <p class=" texto-azul texto-negrito texto">CEP: <span class="texto-preto texto-normal">{{ endereco.cep }}</span></p>
+            <p class=" texto-azul texto-negrito texto unidade-rua">Rua: <span class="texto-preto texto-normal">{{ endereco.rua }}</span></p>
+            <p class=" texto-azul texto-negrito texto">Numero: <span class="texto-preto texto-normal">{{ endereco.numero }}</span></p>
+            <p class=" texto-azul texto-negrito texto">Bairro: <span class="texto-preto texto-normal">{{ endereco.bairro }}</span></p>
+            <p class=" texto-azul texto-negrito texto">Complemento: <span class="texto-preto texto-normal">{{ endereco.complemento }}</span></p>
+            <p class=" texto-azul texto-negrito texto">Tipo de Localização: <span class="texto-preto texto-normal">{{ endereco.tipo_localizacao }}</span></p>
+
+            {% if aplicacao == 'Administração' %}
+                {% if permissao.editar == 1 %}
+                    <div class="container-botoes">
+                        <a href="{% url 'administracao:editar-endereco' %}?id={{ endereco.id }}"><button class="botao botao--azul">Editar</button></a>
+                    </div>
+                {% endif %}
+            {% endif %}
+
+            {% if aplicacao == 'Fundiária' %}
+                {% if permissao.editar == 1 %}
+                    <div class="container-botoes">
+                        <a href="{% url 'fundiaria:editar_endereco' %}?id={{ endereco.id }}"><button class="botao botao--azul">Editar</button></a>
+                    </div>
+                {% endif %}
+            {% endif %}
+
+            {% if aplicacao == 'COEX' %}
+                {% if permissao.editar == 1 %}
+                    <div class="container-botoes">
+                        <a href="{% url 'coex:endereco-formulario' %}?id={{ endereco.id }}"><button class="botao botao--azul">Editar</button></a>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+
+        <div class="container-escola-dados">
+            <h3 class=" texto-medio texto-azul">Contatos</h3>
+            {% if possui_contatos %}
+                {% for contato in contatos %}
+                    {% if contato.tipo_contato == 'C' %}
+                        <p class=" texto-azul texto-negrito texto">Celular: <span class="texto-preto texto-normal">{{ contato.contato }}</span></p>
+                    {% elif contato.tipo_contato == 'E' %}
+                        <p class=" texto-azul texto-negrito texto">E-mail: <span class="texto-preto texto-normal">{{ contato.contato }}</span></p>
+                    {% elif contato.tipo_contato == 'T' %}
+                        <p class=" texto-azul texto-negrito texto">Telefone: <span class="texto-preto texto-normal">{{ contato.contato }}</span></p>
+                    {% endif %}
+                {% endfor %}
+
+            {% else %}
+                <p class=" texto-preto">Nenhum contato cadastrado</p>
+            {% endif %}
+
+            {% if aplicacao == 'Administração' %}
+                {% if permissao.editar == 1 %}
+                    <div class="container-botoes">
+                        <a href="{% url 'administracao:unidade-contatos' %}?id={{ endereco.id }}"><button class="botao botao--azul">Adicionar</button></a>
+                    </div>
+                {% endif %}
+            {% endif %}
+
+            {% if aplicacao == 'Fundiária' %}
+                {% if permissao.editar == 1 %}
+                    <div class="container-botoes">
+                        <a href="{% url 'fundiaria:editar-contatos' %}?id={{ endereco.id }}"><button class="botao botao--azul">Adicionar</button></a>
+                    </div>
+                {% endif %}
+            {% endif %}
+
+            {% if aplicacao == 'COEX' %}
+                {% if permissao.editar == 1 %}
+                    <div class="container-botoes">
+                        <a href="{% url 'coex:contato-formulario'%}?id={{ endereco.id }}"><button class="botao botao--azul">Adicionar</button></a>
+                    </div>
+                {% endif %}
+            {% endif %}
+
+        </div>
+    </div>
+
+    {% if aplicacao == 'Administração' %}
+        {% if endereco.tipo == 'S' and permissao.editar == 1%}
+            <div class="container-botoes">
+                <a href="{% url 'administracao:unidade-anexo' %}?id={{ escola.id }}"><button class="botao botao--azul">Adicionar Anexo</button></a>
+            </div>
+        {% endif %}
+        <div class="container-botoes">
+            <form method= 'POST'>
+                {% csrf_token %}
+                <button class="botao botao--azul" type='submit' name='btn-unidade' value= 'exportar-unidade'>Exportar</button>
+            </form>
+        </div>
+    {% endif %}
+
+</div>

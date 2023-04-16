@@ -1,0 +1,45 @@
+.container-404{
+    align-items: center;
+    display: flex;
+}
+
+.container-404 .container{
+    align-items: center;
+    display: flex;
+    gap: 64px;
+}
+
+.container-mensagem-erro{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.container-mensagem-erro .container-botoes{
+    margin-top: 8px;
+}
+
+@keyframes animacao-404{
+    from{transform: scale(1);}
+    to{transform: scale(1.5);}
+}
+
+.icone-404{
+    animation: animacao-404 1.5s linear infinite alternate;
+    font-size: 120px;
+}
+
+@media screen and (max-width: 768px){
+    .container-404 .container{
+        flex-direction: column-reverse;
+        gap: 32px;
+    }
+
+    .container-mensagem-erro > *{
+        text-align: center;
+    }
+
+    .container-mensagem-erro, .container-mensagem-erro .container-botoes{
+        justify-content: center;
+    }
+}

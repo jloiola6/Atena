@@ -1,0 +1,5 @@
+/* Estiçização da partial de um formulário de responsável de um contrato */
+
+.formulario-gestores, .formulario-gestores .container-botoes, .formulario-gestores-subtitulo{
+    margin-top: 16px;
+}

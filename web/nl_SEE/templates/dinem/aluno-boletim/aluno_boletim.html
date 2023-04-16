@@ -1,0 +1,130 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} {{ aluno.nome }} {% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'dinem:index' %}">N.E.M.</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'dinem:unidade-perfil' %}?inep={{ turma.endereco.escola.cod_inep }}">{{ turma.endereco.escola.nome_escola }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'dinem:unidade-turmas' turma.endereco.id %}">Turmas</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'dinem:turma-perfil' turma.id %}">{{ turma.nome }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'dinem:aluno-perfil' aluno_turma.id %}">{{ aluno.nome }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Boletim {{ etapa }}</span>
+            </nav>
+
+            <h2 class="titulo-pagina texto-azul">Boletim {{ etapa }}</h2>
+            <p class="descricao texto-preto">Insira as notas do aluno</p>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="container-surface">
+                    <h3 class="texto-azul texto-medio">Situação do Aluno</h3>
+
+                    <div class="formulario-grupo">
+                        <fieldset id="aluno-fieldset-situacao">
+
+                            <input type="radio" name="aluno-fieldset-situacao" value="matriculado" id="radio-matriculado" checked data-radio-situacao-matriculado>
+                            <label class="texto-preto" for="radio-matriculado">Aluno Matriculado</label>
+
+                            {% if relatorio.resultado == 'TRANSFERIDO' %}
+                                <input type="radio" name="aluno-fieldset-situacao" checked value="transferido" id="radio-transferido" data-radio-situacao-transferido>
+                            {% else %}
+                                <input type="radio" name="aluno-fieldset-situacao" value="transferido" id="radio-transferido" data-radio-situacao-transferido>
+                            {% endif %}
+                            <label class="texto-preto" for="radio-transferido">Aluno Transferido</label>
+
+                            {% if relatorio.resultado == 'DESISTENTE' %}
+                                <input type="radio" name="aluno-fieldset-situacao" checked value="desistente" id="radio-desistente" data-radio-situacao-desistente>
+                            {% else %}
+                                <input type="radio" name="aluno-fieldset-situacao" value="desistente" id="radio-desistente" data-radio-situacao-desistente>
+                            {% endif %}
+                            <label class="texto-preto" for="radio-desistente">Aluno Desistente</label>
+                        </fieldset>
+                    </div>
+
+                    <div class="container-botoes" data-salvar-situacao>
+                        <button class="botao botao--verde" type="submit">Salvar</button>
+                    </div>
+                </div>
+
+                <div class="container-surface" data-container-boletim>
+                    <nav class="container-navegacao-surface">
+                        <ul class="navegacao-surface-lista">
+                            {% if turma.ano_letivo == '2021' %}
+                                <li class="navegacao-surface-item navegacao-surface-item-ativo" data-form-aba="formacao-basica-2021">Formação Geral Básica</li>
+                            {% else %}
+                                <li class="navegacao-surface-item navegacao-surface-item-ativo" data-form-aba="formacao-basica">Formação Geral Básica</li>
+                            {% endif %}
+
+                            {% if turma.etapa.id == 6 and turma.ano_letivo == '2022' %}
+                                <li class="navegacao-surface-item" data-form-aba="itinerario-formativo-integral">Itinerários Formativos</li>
+                            {% elif turma.etapa.id == 5 and turma.ano_letivo == '2022' %}
+                                <li class="navegacao-surface-item" data-form-aba="itinerario-formativo-parcial">Itinerários Formativos</li>
+                            {% elif turma.etapa.id == 18 and turma.ano_letivo == '2022' %}
+                                <li class="navegacao-surface-item" data-form-aba="itinerario-formativo-profissionalizante">Itinerários Formativos</li>
+                            {% elif turma.ano_letivo == '2021' %}
+                                <li class="navegacao-surface-item" data-form-aba="parte-diversificada">Parte Diversificada</li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+
+                    {% if turma.ano_letivo == '2021' %}
+                        {% include 'dinem/aluno-boletim/partials/_formacao-basica-2021.html' %}
+                    {% else %}
+                        {% include 'dinem/aluno-boletim/partials/_formacao-basica.html' %}
+                    {% endif %}
+
+                    {% if turma.etapa.id == 6 and turma.ano_letivo == '2022' %}
+                        {% include 'dinem/aluno-boletim/partials/_itinerario-formativo-integral.html' %}
+                    {% elif turma.etapa.id == 5 and turma.ano_letivo == '2022' %}
+                        {% include 'dinem/aluno-boletim/partials/_itinerario-formativo-parcial.html' %}
+                    {% elif turma.etapa.id == 18 and turma.ano_letivo == '2022' %}
+                        {% include 'dinem/aluno-boletim/partials/_itinerario-formativo-profissionalizante.html' %}
+                    {% elif turma.ano_letivo == '2021' %}
+                        {% include 'dinem/aluno-boletim/partials/_parte-diversificada-2021.html' %}
+                    {% endif %}
+
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/controlaNavegacaoFormulario.js' %}"></script>
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+
+    <script src="{% static 'assets/js/layout/dinem/aluno-boletim/controlaSituacao.js' %}"></script>
+
+    {% if turma.etapa.nome == 'Ensino Médio - Integral' and turma.ano_letivo == '2022' %}
+        <script src="{% static 'assets/js/layout/dinem/aluno-boletim/controlaItinerariosIntegral.js' %}"></script>
+    {% elif turma.etapa.nome == 'Ensino Médio - Regular' and turma.ano_letivo == '2022' %}
+        <script src="{% static 'assets/js/layout/dinem/aluno-boletim/controlaItinerariosParcial.js' %}"></script>
+    {% endif %}
+
+
+
+    <!-- <script src="{% static 'assets/js/layout/dinem/aluno-boletim/controlaSituacao.js' %}" type="module"></script> -->
+    <!-- <script src="{% static 'assets/js/layout/dinem/aluno-boletim/controlaNavegacao.js' %}"></script> -->
+    <!-- <script src="{% static 'assets/js/layout/dinem/aluno-boletim/controlaCampos.js' %}" type="module"></script> -->
+{% endblock %}

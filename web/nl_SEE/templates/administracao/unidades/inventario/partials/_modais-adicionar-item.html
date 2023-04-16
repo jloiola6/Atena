@@ -1,0 +1,38 @@
+{% for dependencia in dependencias %}
+    <div class="modal oculto" data-modal="adicionar-{{ dependencia.id }}">
+        <div class="modal-conteudo">
+            <h2 class="texto-azul texto-medio">Adicionar item</h2>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <input type="hidden" value="{{ dependencia.id }}" name="dependencia" required>
+
+                <div class="formulario-grupo">
+                    <label for="campo-dependencia">Dependência física</label>
+                    <input class="campo-texto campo-medio" type="text" value="{{ dependencia.descricao }}" readonly required>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label for="campo-tipo">Tipo de item</label>
+
+                    <select class="campo-texto campo-grande" name="tipo" id="campo-tipo">
+                        {% for categoria in itens_categorias %}
+                            <optgroup label="{{ categoria.nome }}">
+                                {% for tipo in itens_tipos %}
+                                    {% if tipo.categoria == categoria %}
+                                        <option value="{{ tipo.id }}">{{ tipo.nome }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </optgroup>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao--azul botao" type="submit">Abrir formulário</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endfor %}

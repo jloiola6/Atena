@@ -1,0 +1,48 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Administração {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Fundiária</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Fundiária</h1>
+
+            <div class="container-cards">
+
+                <a href="{% url 'fundiaria:unidades-educacionais' %}">
+                    <div class="card-menu">
+                        {% include 'partials/icones-cards/fundiaria/unidades-educacionais.svg' %}
+
+                        <h2 class="card-titulo texto-azul">Unidades Educacionais</h3>
+                    </div>
+                </a>
+
+                <a href="{% url 'fundiaria:unidades-adm' %}">
+                    <div class="card-menu">
+                        {% include 'partials/icones-cards/fundiaria/unidades-administrativas.svg' %}
+
+                        <h2 class="card-titulo texto-azul">Unidades Administrativas</h3>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+{% endblock %}

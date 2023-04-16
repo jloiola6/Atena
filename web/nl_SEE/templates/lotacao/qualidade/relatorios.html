@@ -1,0 +1,62 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Relatórios {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/lotacao/registro/registro-lotacoes.css' %}">
+{% endblock %}
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+
+<main>
+    <div class="container">
+        <nav class="container-navegacao">
+            <a href="{% url 'core:index' %}" class="texto-azul">Home</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'lotacao:index'%}" class="texto-azul">Gestão de Pessoas</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'lotacao:qualidade'%}" class="texto-azul">Qualidade de Vida</a>
+            <span class="texto-azul">&#62;</span>
+
+            <span class="texto-azul">Relatórios</span>
+        </nav>
+
+        <h1 class="titulo-pagina texto-azul"> Relatórios </h1>
+
+        <div class="container-surface container-contratos-busca">
+            <h2 class="texto-medio texto-azul">Buscar</h2>
+
+            <form class="formulario" method="POST">
+                {% csrf_token %}
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-servico">Serviço</label>
+                    <select class="campo-texto campo-grande" name="servico" id="campo-servico">
+                        {% for atendimento in atendimentos %}
+                            <option value="{{ atendimento.id }}">{{ atendimento.servico }} - {{ atendimento.atendente }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="grupo-datas">
+                    <div class="formulario-grupo">
+                        <label for="campo-mes">Mês</label>
+                        <input type="month" class="campo-texto" id="campo-mes" name="campo-mes">
+                    </div>
+                </div>
+                <div class="container-botoes">
+                    <button class="botao botao--azul" name="relatorio" value="relatorio-pdf">Exportar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+{% include 'partials/_rodape.html' %}
+
+
+{% endblock %}

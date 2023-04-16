@@ -1,0 +1,35 @@
+.tabela-servidores--smartphone{
+    display: none;
+}
+
+@media screen  and (max-width: 768px) {
+    .container-grade-lista > a{
+        flex-basis: 45%;
+    }
+
+    .card-simples-grade{
+        width: 100%;
+    }
+}
+
+@media screen  and (max-width: 425px) {
+    .container-grade-lista > a{
+        flex-basis: 100%;
+    }
+
+    .tabela-aluno{
+        display: none;
+    }
+
+    .tabela-aluno-smartphone{
+        display: block;
+    }
+
+    .tabela-servidores--smartphone{
+        display: block;
+    }
+
+    .tabela-servidores{
+        display: none;
+    }
+}

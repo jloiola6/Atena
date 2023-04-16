@@ -1,0 +1,183 @@
+{% load static %}
+
+{% for lotacao in lotacoes %}
+    <div class="modal oculto" data-modal="lotacao-detalhe-{{ lotacao.id }}">
+        <div class="modal-conteudo modal-preview">
+            <div class="preview-cabecalho">
+                <img class="preview-brasao" src="{% static 'assets/img/divisao-lotacao.png' %}">
+
+                <img class="preview-logo" src="{% static 'assets/img/ATENA - AZUL.svg' %}">
+            </div>
+
+            <hr>
+
+            <div class="container-detalhes">
+                <p class="texto-negrito paragrafo">MEMO/NLRB/SEE/N°: {{ lotacao.id }}/{{lotacao.ano_referencia }}</p>
+                <p class="texto-negrito paragrafo">Do(a): {{ lotacao.assinatura.sigla }} - {{ lotacao.assinatura.lotacao_gestor|upper }}</p>
+
+                {% if lotacao.unidade_adm__nome %}
+                    <p class="texto-negrito paragrafo">Para: {{ lotacao.unidade_adm__sigla }} - {{ lotacao.unidade_adm__nome }}</p>
+                {% elif lotacao.unidade_escolar %}
+                    <p class="texto-negrito paragrafo">Para: {{ lotacao.unidade_escolar__escola__nome_escola }}</p>
+                {% endif %}
+
+                <p class="texto-negrito paragrafo">Assunto: LOTAÇÃO DE PESSOAS</p>
+
+                {% if lotacao.data_memorando %}
+                    <p class="texto-negrito paragrafo">Data: {{ lotacao.data_memorando }}</p>
+                {% else %}
+                    <p class="texto-negrito paragrafo">Data: {{ data.date }}</p>
+                {% endif %}
+
+                {% if lotacoes.tipo_lotacao != "Sem Lotação" %}
+                    <p>Apresentamos a Vossa Senhoria o(a) Senhor(a) abaixo que, a partir desta data deverá exercer a função de {{ lotacao.funcao }}.</p>
+                {% endif %}
+            </div>
+
+            {% if professor_adm %}
+                <tr>
+                    <td class="cabecalho-tabela">DISCIPLINA:</td><td class="conteudo-tabela">{{ professor_adm.disciplina.nome }}</td>
+                </tr>
+            {% endif %}
+
+            <table class="preview-tabela">
+                {% if lotacao.tipo_lotacao != "Permuta" or lotacao.tipo_lotacao != "Cedido" %}
+                    <tr>
+                        <th>Matrícula:</th>
+                        <td>{{ lotacao.contrato__servidor__matricula }} - {{ lotacao.contrato__digito }}</td>
+                    </tr>
+                {% endif %}
+
+                <tr>
+                    <th>Nome:</th>
+                    <td>{{ lotacao.contrato__servidor__nome }}</td>
+                </tr>
+
+                <tr>
+                    <th>Tipo de Lotação:</th>
+                    <td>{{ lotacao.tipo_lotacao }}</td>
+                </tr>
+
+                <tr>
+                    <th>Cargo:</th>
+                    <td>{{ lotacao.contrato__cargo__nome }}</td>
+                </tr>
+
+                <tr>
+                    <th>Subconta:</th>
+                    <td>{{ lotacao.subconta__sub }} - {{ lotacao.subconta__fonte }}</td>
+                </tr>
+
+                {% if lotacao.tipo_lotacao != "Sem Lotação" %}
+                    <tr>
+                        <th>Função:</th>
+                        <td>{{ lotacao.funcao }}</td>
+                    </tr>
+                {% endif %}
+
+                {% if lotacao.enturmacao_disciplinas_adm %}
+                    <th>DISCIPLINA:</th>
+                    <td>{{ lotacao.enturmacao_disciplinas_adm.0.disciplina }}</td>
+                {% endif %}
+
+                {% if lotacao.enturmacao_escola  %}
+                    <tr>
+                        <th>DISCIPLINA | TURNO | SERIES (turmas):</th>
+                        <td>
+                            {% for grade in lotacao.enturmacao_escola %}
+                                {% if grade.disciplina %}
+                                    <p>{{ grade.disciplina}} | {{grade.turma.turno}} | {{grade.turma}}</p>
+                                {% else %}
+                                    <p>{{ grade.rota }} | {{grade.turma.turno}} | {{grade.turma}}</p>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% elif lotacao.enturmacao_alunos %}
+                    <tr>
+                        <th>Aluno(s):</th>
+                        <td>
+                            {% for aluno in lotacao.enturmacao_alunos %}
+                                <p>{{ aluno.aluno.nome }} - {{ aluno.aluno.turma.nome }} - {{ aluno.aluno.turma.turno }}</p>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endif %}
+
+
+                {% if tipo_lotacao != 'Sem Lotação' %}
+                    <tr>
+                        <th>C.H. Semanal:</th>
+                        <td>{{ lotacao.carga_horaria }}h</td>
+                    </tr>
+                {% endif %}
+
+                {% if lotacao.turnos %}
+                    <tr>
+                        <th>Turno:</th>
+                        <td>
+                            {% for turno in lotacao.turnos %}
+                                {{ turno }} |
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endif %}
+
+                <tr>
+                    <th>Data de Início:</th>
+                    <td>{{ lotacao.data_inicio }}</td>
+                </tr>
+
+                {% if lotacao.data_termino %}
+                    <tr>
+                        <th>Data de Término:</th>
+                        <td>{{ lotacao.data_termino }}</td>
+                    </tr>
+                {% endif %}
+            </table>
+
+            <div class="container-detalhes">
+
+                <p class="texto-negrito ">Observações:</p>
+
+                {% if lotacao.observacoes %}
+                    <p class="">{{ lotacao.observacoes }}</p>
+                {% else %}
+                    <p class="">Não possui observações</p>
+                {% endif %}
+            </div>
+
+            <form method="POST">
+                {% csrf_token %}
+                {% if verificador == False %}
+                    <input type="hidden" name="lotacao" value="{{ lotacao.id }}">
+
+                    <div class="formulario-grupo">
+                        <label for="campo-status" class="texto-azul">Status</label>
+
+                        <select class="campo-texto campo-medio" name="status" id="campo-status" data-selecao-status>
+                            <option value="1">Autorizar</option>
+                            <option value="3">Recusar</option>
+                        </select>
+                    </div>
+
+                    <div class="formulario-grupo oculto" data-campo-motivo>
+                        <label for="campo-motivo" class="texto-azul">Motivo</label>
+
+                        <textarea class="campo-texto campo-area" name="motivo" id="campo-motivo" maxlength="300" minlength="20"></textarea>
+                    </div>
+
+                    <div class="container-botoes">
+                        <button class="botao botao--azul" type="submit">Salvar</button>
+                        <button class="botao botao--vermelho" type="button" data-modal-fechar>Cancelar</button>
+                    </div>
+
+                {% elif verificador %}
+                    <div class="container-botoes">
+                        <button class="botao botao--vermelho" type="button" data-modal-fechar>Fechar</button>
+                    </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+{% endfor %}

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- <link rel="stylesheet" href="../exportar/reset.css"> -->
+    </head>
+
+    <body>
+
+        <header>
+            <img class="header--brasao" src="C:\Users\joao.soares\Documents\code\exportar\teste.png" alt="Logo">
+            <h1 class="header--texto">Estado do Acre</h1>
+            <h1 class="header--texto">Secretaria de Estado de Educação, Cultura e Esportes</h1>
+            <h1 class="header--texto">Divisão de Regularização Fundiária</h1>
+        </header>
+        <table>
+            <tr>
+                <td class="titulo">Escola</td>
+                <td class="titulo">Código do INEP</td>
+            </tr>
+
+            <tr>
+                <td>{{ fundiaria.endereco.escola.nome_escola }}</td>
+                <td>{{ fundiaria.endereco.escola.cod_inep }}</td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td class="titulo">Decreto de extinsão</td>
+                <td class="titulo">Data de paralização</td>
+                <td class="titulo">Data de Extinsão</td>
+                <td class="titulo">Escola guardiã</td>
+            </tr>
+
+            <tr>
+                <td>235/89</td>
+                <td>01/04/2022</td>
+                <td>01/06/2022</td>
+                <td>ESC DR JOAO BATISTA AGUIAR</td>
+            </tr>
+        </table>
+    
+        <table>
+            <tr>
+                <td colspan="6" class="titulo">Documentação da Escola</td>
+            </tr>
+
+            <tr>
+                <td>Totalmente regularizada</td>
+                <td>X</td>
+
+                <td>Parcialmente regularizada</td>
+                <td>X</td>
+
+                <td>Não regularizada</td>
+                <td>X</td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td colspan="6" class="titulo">Situação da Escola</td>
+            </tr>
+
+            <tr>
+                <td>Estadual</td>
+                <td>X</td>
+                <td>Municipalizada</td>
+                <td>X</td>
+                <td>Estadualizada</td>
+                <td>X</td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td colspan="6" class="titulo">Localização da Escola</td>
+            </tr>
+
+            <tr>
+                <td>Urbana</td>
+                <td>X</td>
+                <td>Rural</td>
+                <td>X</td>
+                <td>Indígena</td>
+                <td>X</td>
+            </tr>
+        </table>
+        
+
+        
+        <table>
+            <tr>
+                <td class="titulo">Endereço</td>
+                <td class="titulo">Município</td>
+                <td class="titulo">Estado</td>
+            </tr>
+            <tr>
+                <td>Endereço: {{ fundiaria.endereco.rua }}, n° {{ fundiaria.endereco.numero }} - {{ fundiaria.endereco.bairro }}</td>
+                <td>Município: {{ fundiaria.endereco.municipio }}</td>
+                <td>Estado: {{ fundiaria.endereco.escola.uf }}</td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td colspan="4" class="titulo">Coordenadas Geográficas</td>
+            </tr>
+
+            <tr>
+                <td>{{ fundiaria.endereco.latitude }}</td>
+                <td>S</td>
+                <td>{{ fundiaria.endereco.longitude }}</td>
+                <td>W</td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td class="titulo">Matrícula de Registro de Imóveis</td>
+            </tr>
+            <tr>
+                {{ fundiaria.matricula_imoveis }}
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td class="titulo">Unidade de Consumo Água</td>
+                <td class="titulo">Unidade de Consumo Energia Elétrica</td>
+            </tr>
+
+            <tr>
+                <td>UC 771090</td>
+                <td>UC 771090</td>
+            </tr>
+
+        </table>
+
+        <table>
+            <tr>
+                <td class="titulo">Área do Imóvel</td>
+                <td class="titulo">Área Construída</td>
+                <td class="titulo">Perímetro</td>
+                <td class="titulo">Área Utilizada</td>
+            </tr>
+
+            <tr>
+                <td>{{ fundiaria.area_imovel }} m²</td>
+                <td>{{ fundiaria.area_construida }} m²</td>
+                <td>{{ fundiaria.perimetro }} m</td>
+                <td>{{ fundiaria.area_utilizada }} m²</td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td class="titulo">Decreto de Criação</td>
+                <td class="titulo">Portaria de Autorização</td>
+                <td class="titulo">RIP – Registro na PPI</td>
+                <td class="titulo">B.C.I. – Prefeitura N</td>
+            </tr>
+            
+            <tr>
+                <td>{{ fundiaria.decreto_criacao }}</td>
+                <td>{{ fundiaria.portaria_autorizacao }}</td>
+                <td>{{ fundiaria.ppi }}</td>
+                <td>{{ fundiaria.bci }}</td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td colspan="2" class="titulo">Fotos</td>
+            </tr>
+
+            <tr>
+                <td>Frente</td>
+                <td>Aérea</td>
+                <tr>
+                    <td><img class="fotos" src="../Atena/nl_SEE/static/media/Fundiaria/ESC_1_DE_MAIO_/Imagem(2).JPG" alt=""></td>
+                    <td><img class="fotos" src="../Atena/nl_SEE/static/media/Fundiaria/ESC_1_DE_MAIO_/Imagem(2).JPG" alt=""></td>
+                </tr>
+            </tr>
+        </table>
+
+    </body>
+</html>
+
+<style>
+    body{
+        font-family: sans-serif;
+        font-size: 14px;
+        text-align: center;
+        padding: 60px;
+        scale: 90%;
+    }
+
+    header{
+        margin-top: -50px;
+    }
+        .header--brasao{
+            width: 75px;
+        }
+
+        .header--texto{
+            margin: 0px;
+            font-size: 18px;
+            font-weight: bolder;
+        }
+        
+    table{
+        margin-top: 14px;
+        width: 100%;
+    }
+    
+
+    table * {
+        border: #333333 1px solid;
+    }
+
+    .fotos{
+        width: 290px;
+        height: 170px;
+    }
+
+    
+    .titulo{
+        font-size: 14px;
+        font-weight: bold;
+        background-color: #cac7c7;
+    }
+    
+
+
+</style>

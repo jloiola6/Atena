@@ -1,0 +1,59 @@
+{% load static %}
+<div class="servidor-contratos" data-nav-container="servicos">
+
+    {% if chamados %}
+        <div class="container-cards-simples">
+            {% for chamado in chamados %}
+                <div class="card-simples card-chamado">
+                    <h4 class="card-simples__titulo texto-azul">{{ chamado.tipo }}</h4>
+
+                    <div class="card-simples__descricao">
+                        <p class="texto-azul texto-negrito paragrafo">Serviço: <span class="texto-preto texto-normal">{{ chamado.servico }}</span></p>
+                        <p class="texto-azul texto-negrito paragrafo">Descrição: <span class="texto-preto texto-normal">{{ chamado.descricao_chamado }}</span></p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if subchamados %}
+        <h2 class="texto-azul texto-medio chamados-titulo">Subchamados</h2>
+
+        <div class="container-cards-simples">
+            {% for chamado in subchamados %}
+                <div class="card-simples card-chamado">
+                    <h4 class="card-simples__titulo texto-azul">{{ chamado.tipo }}</h4>
+
+                    <div class="card-simples__descricao">
+                        <p class="texto-azul texto-negrito paragrafo">Serviço: <span class="texto-preto texto-normal">{{ chamado.servico }}</span></p>
+                        <p class="texto-azul texto-negrito paragrafo">Descrição: <span class="texto-preto texto-normal">{{ chamado.descricao_chamado }}</span></p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if equipamentos %}
+        <h2 class="texto-medio texto-azul chamados-titulo">Equipamentos</h2>
+
+        <div class="container-cards-simples">
+            {% for equipamento in equipamentos %}
+            <div class="card-simples card-chamado">
+                <h4 class="card-simples__titulo texto-azul">{{ equipamento.equipamento }}</h4>
+
+                <div class="card-simples__descricao">
+                    <p class=" texto-azul texto-negrito paragrafo">Descrição: <span class="texto-preto texto-normal">{{ equipamento.descricao }}</span></p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if solicitacao.situacao == 'Em atendimento' and tecnico_atual %}
+        <div class="container-botoes">
+            <a href="{% url 'tecnologia:chamados-adicionar' %}?id={{ chamado_id }}">
+                <button class="botao botao--azul">Adicionar</button>
+            </a>
+        </div>
+    {% endif %}
+</div>

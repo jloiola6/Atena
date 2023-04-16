@@ -1,0 +1,96 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Controle de Inventário {% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+
+                <a href="{% url 'administracao:index'%}" class="texto-azul">Administração</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="texto-azul">Controle de Inventário</span>
+            </nav>
+
+            <h1 class="titulo-pagina">Controle de Inventário</h1>
+
+            <form class="container-surface" method="POST">
+                {% csrf_token %}
+
+                <nav class="container-navegacao-surface">
+                    <ul class="navegacao-surface-lista">
+                        <li class="navegacao-surface-item navegacao-surface-item-ativo" data-form-aba="">
+                            <span class="texto-azul">Nova Categoria</span>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="formulario-grupo">
+                    <label for="campo-tipo">Nome</label>
+                    <input class="campo-texto campo-medio" type="text" name="categoria-tipo" maxlength="100" required>
+                </div>
+
+                <div class="container-botoes">
+                    <button type="submit" class="botao botao--verde">Salvar</button>
+                </div>
+            </form>
+
+            <form class="container-surface" method="POST">
+                {% csrf_token %}
+
+                <nav class="container-navegacao-surface">
+                    <ul class="navegacao-surface-lista">
+                        <li class="navegacao-surface-item navegacao-surface-item-ativo" data-form-aba="">
+                            <span class="texto-azul">Novo Tipo</span>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="formulario-grupo">
+                    <label for="campo-categoria">Categoria</label>
+
+                    <select class="campo-texto campo-medio" name="categoria" id="campo-categoria">
+                        {% for categoria in categorias %}
+                            <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label for="campo-tipo">Nome</label>
+                    <input class="campo-texto campo-medio" type="text" name="tipo-nome" maxlength="100" required>
+                </div>
+
+                <div class="container-botoes">
+                    <button type="submit" class="botao botao--verde">Salvar</button>
+                </div>
+            </form>
+
+            <table class="tabela">
+                <thead>
+                    <th>Categoria</th>
+                    <th>Tipo</th>
+                </thead>
+
+                <tbody>
+                    {% for tipo in tipos %}
+                        <tr>
+                            <td>{{ tipo.categoria.nome }}</td>
+                            <td>{{ tipo.nome }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+{% endblock %}

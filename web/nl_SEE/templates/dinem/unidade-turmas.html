@@ -1,0 +1,74 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} {{ escola }} {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/dinem/unidade-turmas.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'dinem:index' %}">N.E.M.</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'dinem:unidade-perfil' %}?inep={{ escola.cod_inep }}">{{ escola }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Turmas</span>
+            </nav>
+
+            {% if possui_turmas %}
+                {% for ano in anos_letivos %}
+                    <details class="dropdown">
+                        <summary>{{ ano.ano_letivo }}</summary>
+
+                        {% for etapa in etapas_turmas %}
+                            {% if etapa.ano_letivo == ano.ano_letivo %}
+                                <details class="dropdown dropdown--borda dropdown--medio">
+                                    <summary>{{ etapa.etapa__nome }}</summary>
+
+                                    {% for serie in series_turmas %}
+                                        {% if serie.ano_letivo == ano.ano_letivo and serie.etapa == etapa.etapa %}
+                                            <details class="dropdown">
+                                                <summary>{{ serie.ano_serie }}</summary>
+
+                                                <div class="container-cards-simples">
+                                                    {% for turma in turmas %}
+                                                        {% if turma.ano_letivo == ano.ano_letivo and turma.etapa.id == etapa.etapa and turma.ano_serie == serie.ano_serie %}
+                                                            <a href="{% url 'dinem:turma-perfil' turma.id %}">
+                                                                <div class="card-simples">
+                                                                    <h2 class="card-simples__titulo">{{ turma.nome }}</h2>
+
+                                                                    <div class="card-simples__descricao">
+                                                                        <p class="texto-preto"><b class="texto-azul">Turno: </b>{{ turma.turno }}</p>
+                                                                        <p class="texto-preto"><b class="texto-azul">Total de Alunos: </b>{{ turma.total_alunos }}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                            </details>
+                                        {% endif %}
+                                    {% endfor %}
+                                </details>
+                            {% endif %}
+                        {% endfor %}
+                    </details>
+                {% endfor %}
+            {% else %}
+            {% endif %}
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+{% endblock %}

@@ -1,0 +1,187 @@
+<div class="oculto" data-form-container="itinerario-formativo-integral">
+    {% if etapa == '1ª Série' %}
+        <div class="formulario-grupo">
+            <label for="campo-eletiva" >Eletiva</label>
+            <input type="number" name="eletiva" id="campo-eletiva" class="campo-texto campo-pequeno" value="{{ relatorio.eletiva }}" data-mascara="nota">
+        </div>
+    {% endif %}
+
+    <div class="formulario-grupo">
+        <label for="campo-estudo-orientado" >Estudo Orientado</label>
+        <input type="number" name="estudo_orientado" id="campo-estudo-orientado" class="campo-texto campo-pequeno" value="{{ relatorio.estudo_orientado }}" data-mascara="nota">
+    </div>
+
+    <div class="formulario-grupo">
+        <label for="campo-praticas-experimentais" >Práticas Experimentais</label>
+        <input type="number" name="praticas_experimentais" id="campo-praticas-experimentais" class="campo-texto campo-pequeno" value="{{ relatorio.praticas_experimentais }}" data-mascara="nota">
+    </div>
+
+    {% if turma.etapa.id == 6 and turma.ano_serie == '1ª Série' and turma.ano_letivo == '2022' %}
+        <div class="formulario-grupo">
+            <label for="campo-protagonismo" >Protagonismo</label>
+            <input type="number" name="protagonismo" id="campo-protagonismo" class="campo-texto campo-pequeno" value="{{ relatorio.protagonismo}}" data-mascara="nota">
+        </div>
+    {% endif %}
+
+    {% if etapa == '3ª Série' %}
+        <div class="formulario-grupo">
+            <label for="campo-pos-medio" >Pós Médio</label>
+            <input type="number" name="pos_medio" id="campo-pos-medio" class="campo-texto campo-pequeno" value="{{ relatorio.pos_medio }}" data-mascara="nota">
+        </div>
+    {% endif %}
+
+    {% if etapa == '2ª Série' %}
+        <div class="formulario-grupo">
+            <label for="campo-espanhol" class="texto-azul label-campo">Língua Espanhola</label>
+            <input type="number" name="espanhol" id="campo-espanhol" class="campo-texto campo-pequeno" value="{{ relatorio.espanhol }}" data-mascara="nota">
+        </div>
+    {% endif %}
+
+    {% if etapa == '1ª Série' or etapa == '2ª Série' %}
+        <div class="formulario-grupo">
+            <label for="campo-projeto-vida" >Projeto de Vida</label>
+            <input type="number" name="projeto_vida" id="campo-projeto-vida" class="campo-texto campo-pequeno" value="{{ relatorio.projeto_vida }}" data-mascara="nota">
+        </div>
+    {% endif %}
+
+    {% if etapa == '1ª Série' %}
+        <div class="formulario-grupo">
+            <label for="campo-oficina-linguagens" >Oficinas de Linguagens</label>
+            <input type="number" name="oficina_linguagens" id="campo-oficina-linguagens" class="campo-texto campo-pequeno" value="{{ relatorio.oficina_linguagens }}" data-mascara="nota">
+        </div>
+
+        <div class="formulario-grupo">
+            <label for="campo-oficina-matematica" >Oficinas de Matemática</label>
+            <input type="number" name="oficina_matematica" id="campo-oficina-matematica" class="campo-texto campo-pequeno" value="{{ relatorio.oficina_matematica }}" data-mascara="nota">
+        </div>
+
+        <div class="formulario-grupo">
+            <label for="campo-oficina-naturaza" >Oficinas de Ciências da Natureza</label>
+            <input type="number" name="oficina_natureza" id="campo-oficina-naturaza" class="campo-texto campo-pequeno" value="{{ relatorio.oficina_natureza }}" data-mascara="nota">
+        </div>
+
+        <div class="formulario-grupo">
+            <label for="campo-oficina-humanas" >Oficinas de Ciências Humanas</label>
+            <input type="number" name="oficina_humanas" id="campo-oficina-humanas" class="campo-texto campo-pequeno" value="{{ relatorio.oficina_humanas }}" data-mascara="nota">
+        </div>
+    {% endif %}
+
+    {% if etapa == '2ª Série' or etapa == '3ª Série' %}
+        <div class="formulario-grupo">
+            <h3 class="texto-medio texto-azul">Rotas de Aprofundamento</h3>
+
+            <fieldset id="aluno-fieldset-rota">
+                {% if relatorio.formacao_tecnica == '-' or not edicao %}
+                    <input type="radio" name="aluno-fieldset-rota-integral" value="propedeutica" id="radio-propedeutica-integral" data-radio-propedeutica checked>
+                    <label class="texto-preto" for="radio-propedeutica-integral">Aprofundamento Propedêutica</label>
+
+                    <input type="radio" name="aluno-fieldset-rota-integral" value="formacao" id="radio-formacao-integral" data-radio-formacao>
+                    <label class="texto-preto" for="radio-formacao-integral">Formação Técnica e Profissional</label>
+                {% else %}
+                    <input type="radio" name="aluno-fieldset-rota-integral" value="propedeutica" id="radio-propedeutica-integral" data-radio-propedeutica>
+                    <label class="texto-preto" for="radio-propedeutica-integral">Aprofundamento Propedêutica</label>
+
+                    <input type="radio" name="aluno-fieldset-rota-integral" value="formacao" id="radio-formacao-integral" data-radio-formacao checked>
+                    <label class="texto-preto" for="radio-formacao-integral">Formação Técnica e Profissional</label>
+                {% endif %}
+
+            </fieldset>
+        </div>
+
+
+        <div class="formulario-grupo" data-grupo-rotas>
+            <label  for="aluno-fieldset-areas">Área de conhecimento</label>
+
+            {% if relatorio.ciencias_natureza != '-' and relatorio.formacao_tecnica == '-' %}
+                <div>
+                    <input type="checkbox" name="area_natureza" value="Ciências da natureza e suas tecnologias" id="checkbox-natureza" data-check-aprofundamento="natureza" checked>
+                    <label class="texto-preto" for="checkbox-natureza">Ciências da natureza e suas tecnologias</label>
+                </div>
+            {% else %}
+                <div>
+                    <input type="checkbox" name="area_natureza" value="Ciências da natureza e suas tecnologias" id="checkbox-natureza" data-check-aprofundamento="natureza">
+                    <label class="texto-preto" for="checkbox-natureza">Ciências da natureza e suas tecnologias</label>
+                </div>
+            {% endif %}
+
+            {% if relatorio.ciencias_humanas != '-' and relatorio.formacao_tecnica == '-' %}
+                <div>
+                    <input type="checkbox" name="area_humanas" value="Ciências humanas e suas tecnologias" id="checkbox-humanas" data-check-aprofundamento="humanas" checked>
+                    <label class="texto-preto" for="checkbox-humanas">Ciências humanas e suas tecnologias</label>
+                </div>
+            {% else %}
+                <div>
+                    <input type="checkbox" name="area_humanas" value="Ciências humanas e suas tecnologias" id="checkbox-humanas" data-check-aprofundamento="humanas">
+                    <label class="texto-preto" for="checkbox-humanas">Ciências humanas e suas tecnologias</label>
+                </div>
+            {% endif %}
+
+            {% if relatorio.matematica_tecnologias != '-' and relatorio.formacao_tecnica == '-' %}
+                <div>
+                    <input type="checkbox" name="area_matematica" value="Matemática e suas tecnologias" id="checkbox-matematica" data-check-aprofundamento="matematica" checked>
+                    <label class="texto-preto" for="checkbox-matematica">Matemática e suas tecnologias</label>
+                </div>
+            {% else %}
+                <div>
+                    <input type="checkbox" name="area_matematica" value="Matemática e suas tecnologias" id="checkbox-matematica" data-check-aprofundamento="matematica">
+                    <label class="texto-preto" for="checkbox-matematica">Matemática e suas tecnologias</label>
+                </div>
+            {% endif %}
+
+            {% if relatorio.linguagens_tecnologias != '-' and relatorio.formacao_tecnica == '-' %}
+                <div>
+                    <input type="checkbox" name="area_linguagem" value="Linguagens e suas tecnologias" id="checkbox-linguagens" data-check-aprofundamento="linguagens" checked>
+                    <label class="texto-preto" for="checkbox-linguagens">Linguagens e suas tecnologias</label>
+                </div>
+            {% else %}
+                <div>
+                    <input type="checkbox" name="area_linguagem" value="Linguagens e suas tecnologias" id="checkbox-linguagens" data-check-aprofundamento="linguagens">
+                    <label class="texto-preto" for="checkbox-linguagens">Linguagens e suas tecnologias</label>
+                </div>
+            {% endif %}
+
+            <div class="formulario-grupo" data-grupo-aprofundamento="natureza">
+                <label for="campo-media-natureza" >Ciências da natureza e suas tecnologias</label>
+                <input id="campo-media-natureza" type="number" class="campo-texto campo-pequeno" name="media_natureza" value="{{ relatorio.ciencias_natureza }}" data-mascara="nota">
+            </div>
+
+            <div class="formulario-grupo" data-grupo-aprofundamento="humanas">
+                <label for="campo-media-humanas" >Ciências humanas e suas tecnologias</label>
+                <input id="campo-media-humanas" type="number" class="campo-texto campo-pequeno" name="media_humanas" value="{{ relatorio.ciencias_humanas }}" data-mascara="nota">
+            </div>
+
+            <div class="formulario-grupo" data-grupo-aprofundamento="matematica">
+                <label for="campo-media-matematica" >Matemática e suas tecnologias</label>
+                <input id="campo-media-matematica" type="number" class="campo-texto campo-pequeno" name="media_matematica" value="{{ relatorio.matematica_tecnologias }}" data-mascara="nota">
+            </div>
+
+            <div class="formulario-grupo" data-grupo-aprofundamento="linguagens">
+                <label for="campo-media-linguagens" >Linguagens e suas tecnologias</label>
+                <input id="campo-media-linguagens" type="number" class="campo-texto campo-pequeno" name="media_linguagens" value="{{ relatorio.linguagens_tecnologias }}" data-mascara="nota">
+            </div>
+        </div>
+
+        <div class="formulario-grupo" data-campo-formacao>
+            <label for="campo-formacao-tecnica" >Formação Técnica e Profissional</label>
+            <input type="number" class="campo-texto campo-pequeno" id="campo-formacao-tecnica" name="formacao_tecnica" value="{{ relatorio.formacao_tecnica }}" data-mascara="nota">
+        </div>
+    {% endif %}
+
+    <div class="formulario-grupo">
+        <label for="camppo-resultado">Resultado</label>
+        <select class="campo-texto campo-medio" name="resultado" id="campo-resultado">
+            {% for item in resultados %}
+                {% if relatorio.resultado == item.0 %}
+                    <option value="{{ item.0 }}" selected>{{ item.1 }}</option>
+                {% else %}
+                    <option value="{{ item.0 }}">{{ item.1 }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="container-botoes">
+        <button id="botao-diversificada-voltar" data-form-botao="formacao-basica" class="botao botao--azul">Voltar</button>
+        <button class="botao botao--verde" type="submit">Salvar</button>
+    </div>
+</div>

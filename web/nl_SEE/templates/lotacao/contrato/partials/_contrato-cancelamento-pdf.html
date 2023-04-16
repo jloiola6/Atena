@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-bt">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cancelamento de Contrato</title>
+    </head>
+
+    <body>
+        <header>
+            <table>
+                <tr>
+                    <!-- <th><img id="img1" src="/home/suporte/Atena/nl_SEE/static/assets/img/contrato.png" width='550px' alt="Cabecalho"></th>
+                    <th><img id="img2" src="/home/suporte/Atena/nl_SEE/static/assets/img/ATENA-AZUL.svg" width='120px' alt="Logo Atena"></th> -->
+                    <th><img id="img2" src="{{ url_logo }}" width='550px' alt="Cabecalho"></th>
+                    <th class="direita"><img id="img1" src="{{ url_atena }}"  width='120px' alt="Logo Atena"></th>
+                </tr>
+            </table>
+        </header>
+
+        <hr>
+        <div>
+            <br><br>
+            <section>
+                <div style="text-align: justify;">
+                    <span>
+                        <b>TERMO DE CANCELAMENTO Nº {{ contratos.id }}/{{ contratos.ano_referencia }}</b>
+                    </span>
+                    <br><br><br>
+                    <span>
+                        Eu <b>{{contratos.servidor.nome}}</b>, de matrícula <b>{{contratos.servidor.matricula}}</b>, dígito <b>{{contratos.digito}}</b>,
+
+                        {% if contratos.servidor.rg %}
+                            RG <b>{{contratos.servidor.rg}}</b>,
+                        {% endif %}
+
+                        CPF <b>{{contratos.servidor.cpf}}</b>, no cargo <b>{{contratos.cargo}}</b>,
+                        lotado(a) na
+                        {% if lotacao.unidade_escolar__escola__nome_escola %}
+                            <b>{{lotacao.unidade_escolar__escola__nome_escola}}</b>,
+                        {% else %}
+                            <b>{{lotacao.unidade_adm__nome}}</b>,
+                        {% endif %}
+                        {% if 'PROFESSOR' in contratos.cargo %}
+                            , na disciplina
+                            {% for grade in grades %}
+                                {{grade.disciplina}},
+                            {% endfor %}
+                            nas turmas de
+                            {% for grade in grades %}
+                                {{grade.turma}},
+                            {% endfor %}
+
+                            no turno
+                            {% for grade in grades %}
+                                {{grade.turma.turno}},
+                            {% endfor %}
+                            na CH {{lotacao.carga_horaria}} semanal
+                        {% else %}
+                            no turno da
+                            {% if lotacao.turno_manha == 1 %}
+                                <span>Manhã</span>
+                            {% endif %}
+
+                            {% if lotacao.turno_tarde == 1 %}
+                                <span>Tarde</span>
+                            {% endif %}
+
+                            {% if lotacao.turno_noite == 1 %}
+                                <span>Noite</span>
+                            {% endif %}
+                        {% endif %}
+                        no sistema de Contrato <b>{{contratos.tipo_contrato}}</b>, venho solicitar o CANCELAMENTO DO CONTRATO a partir de ____/___/______.
+                    </span>
+                    <br><br><br>
+                    <span>
+                        <b>Motivo: <u>{{ contratos.motivo_cancelamento }}</u></b>
+                    </span>
+                    <br><br><br>
+                    <p class="data">
+                        <b>{{contratos.municipio}}, {{data_cancelamento}}</b>
+                    </p>
+                    <br><br><br><br>
+                    <div class="assinatura">
+                        <table>
+                            <tr>
+                                <td>
+                                    <p>___________________________________________</p>
+                                    <p><b>Assinatura</b></p>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </body>
+    <style>
+        @page{
+            margin-left: 3cm;
+            margin-right: 3cm;
+            margin-top: 1cm;
+            margin-bottom: 1cm;
+        }
+
+        body{
+            font-size: 10px;
+        }
+
+
+        p{
+            line-height: 1px;
+        }
+
+        span{
+            text-align: justify;
+
+        }
+
+        .data{
+            margin-left: 250px;
+        }
+
+        .invisivel{
+                color: white;
+            }
+
+        td{
+            text-align: center;
+        }
+
+        .dados{
+            padding-top: 40px;
+        }
+
+        .direita{
+            text-align: right;
+        }
+
+    </style>
+</html>

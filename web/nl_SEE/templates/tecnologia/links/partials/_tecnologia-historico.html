@@ -1,0 +1,20 @@
+<div class="historico-dados oculto" data-nav-container="historico">
+    <table class="tabela tabela-historico">
+        <thead>
+            <tr>
+                <th class="">Histórico</th>
+                <th class="">Data</th>
+            </tr> 
+        </thead>
+        
+        {%for link_mudanca in links_mudancas %}
+            <tbody>
+                <tr class="">
+                    <td class="texto-azul texto-negrito" data-modal-abrir="link-historico{{ link_mudanca.0 }}">Alteração {{ link_mudanca.0 }}</td>
+                    <td class="texto-azul texto-negrito" data-modal-abrir="link-historico{{ link_mudanca.0 }}">{{ link_mudanca.2 }}</td>
+                </tr>
+            </tbody>
+            {% include 'tecnologia/links/partials/_modal-links-historico.html' %}
+        {% endfor %}
+    </table>
+</div>

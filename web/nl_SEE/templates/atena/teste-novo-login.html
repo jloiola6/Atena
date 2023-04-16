@@ -1,0 +1,72 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Título da Página {% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+
+
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Configurações</span>
+            </nav>
+
+            <div class="container-surface container-surface-sistema">
+                <div class="container-status-link">
+                    <h1 class="texto-medio texto-azul">Status do Sistema</h1>
+                    <a href="http://172.22.0.90:8000/admin" class="link">Django Admin</a>
+                </div>
+
+                <div class="container-status-sistema">
+
+                    <p class=" texto-azul texto-negrito ">Disponibilidade:
+                        <span class="texto-preto texto-normal">
+                            {% if detalhe.situacao == 'Ativo' %}
+                                No Ar
+                            {% elif detalhe.situacao == 'Desativado' %}
+                                Em Manutenção
+                            {% endif %}
+                        </span>
+                    </p>
+
+                    <p class=" texto-azul texto-negrito">Usuários logados: <span class="texto-preto texto-normal">53</span></p>
+                </div>
+
+                <div class="container-manutencao-sistema">
+                    <h2 class="texto-medio texto-azul">Manutenção</h2>
+
+                    <div class="container-botoes">
+                        <form method="POST">
+                            {% csrf_token %}
+
+                            {% if detalhe.situacao == 'Ativo' %}
+                                <button class="botao botao--azul" type="submit" name="botao" value="Desativado">Ativar</button>
+                            {% elif detalhe.situacao == 'Desativado' %}
+                                <button class="botao botao--vermelho" type="submit" name="botao" value="Ativo" >Desativar</button>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <a href="" class="titulo-pagina texto-azul link">Página teste</a>
+
+
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/select2.js' %}"></script>
+
+{% endblock %}

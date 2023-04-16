@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="pt-bt">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Educação Conectada - Tablets</title>
+    </head>
+    <body>
+        <header>
+            <table>
+                <tr>
+                    <th><img id="img2" src="{{ url_logo }}" alt=""></th>
+                    <th class="direita"><img id="img3" src="{{ url_atena }}" alt="Logo"></th>
+                    <!-- <th><img id="img2" src="C:\Users\joao.soares\Documents\code\Atena\nl_SEE\static\assets\img\divisao-infraestrutura-redes.png" alt=""></th>
+                    <th><img id="img3" src="C:\Users\franklin.farias\Documents\Programação\Atena\nl_SEE\static\assets\img\ATENA-AZUL.svg" alt="Logo" style="width:120px;height:auto;"></th>
+                </tr> -->
+            </table>
+        </header>
+
+        <hr>
+
+        <table>
+            <tr>
+                <th class="dados">Total: {{ quantidade }}</th>
+                <th></th>
+                <th></th>
+                <th class="dados">Exportado por {{nome}} dia {{data}}</th>
+            </tr>
+        </table>
+        <table class="tabela-tablets">
+            <thead>
+                <tr>
+                    <th>Aluno</th>
+                    <th>Escola</th>
+                    <th class="turma">Turma</th>
+                    <th class="municipio">Município</th>
+                    <th class="cad">Aluno CAD</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for solicitacao in exportar %}
+                    <tr>
+                        <td>{{ solicitacao.aluno_turma__aluno__nome }}</td>
+                        <td>{{ solicitacao.endereco_escola__escola__nome_escola }}</td>
+                        <td>{{ solicitacao.aluno_turma__turma__nome }}</td>
+                        <td>{{ solicitacao.endereco_escola__municipio }}</td>
+                        {% if solicitacao.cad_unico == 1 %}
+                            <td>SIM</td>
+                        {% else %}
+                            <td>NÃO</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        <style>
+            @page{
+                size: landscape;
+                margin: 1cm;
+            }
+
+            .tabela-tablets{
+                border: 1px solid black;
+                text-align: center;
+                padding: 4px;
+            }
+
+            .dados{
+                padding-top: 5px;
+                padding-bottom: 5px;
+            }
+
+            .tabela-tablets th{
+                font-size: 12px;
+            }
+
+            .cad{
+                width: 10%;
+            }
+
+            .municipio{
+                width: 15%;
+            }
+
+            .turma{
+                width: 18%;
+            }
+
+            .tabela-tablets td{
+                font-size: 10px;
+            }
+
+            #img2{
+                width: 100%;
+                height: auto;
+            }
+
+            #img3{
+                width: 120px;
+                height: auto;
+            }
+
+            .direita{
+                text-align: right;
+            }
+
+        </style>
+
+    </body>
+</html>

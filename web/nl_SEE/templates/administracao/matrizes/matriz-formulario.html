@@ -1,0 +1,105 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Adicionar Matriz {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/administracao/matrizes/matriz-formulario.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class="texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'administracao:index'%}" class="texto-azul">Administração</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'administracao:matrizes'%}" class="texto-azul">Matrizes</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="texto-azul">Adicionar Matriz</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Adicionar Matriz</h1>
+
+            <form method="POST" class="container-surface">
+                {% csrf_token %}
+
+                <nav class="container-navegacao-surface">
+                    <ul class="navegacao-surface-lista">
+                        <li class="navegacao-surface-item navegacao-surface-item-ativo" data-form-aba="matriz">
+                            <span class="texto-azul">Matriz</span>
+                        </li>
+
+                        <li class="navegacao-surface-item" data-form-aba="disciplinas">
+                            <span class="texto-azul">Disciplinas</span>
+                        </li>
+
+                    </ul>
+                </nav>
+
+                <div data-form-container="matriz">
+                    <div class="formulario-grupo">
+                        <label for="campo-nome">Nome</label>
+                        <input class="campo-texto campo-grande" type="text" name="nome" id="campo-nome" maxlength="100" placeholder="Ex: Anos Iniciais" required>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label for="campo-etapa">Etapa</label>
+
+                        <select name="etapa" id="campo-etapa" class="campo-texto campo-grande">
+                            {% for etapa in etapas %}
+                                <option value="{{ etapa.id }}">{{ etapa }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="container-botoes">
+                        <button class="botao botao--azul" data-form-botao="disciplinas">Avançar</button>
+                    </div>
+
+                </div>
+
+                <div class="oculto" data-form-container="disciplinas">
+
+                    <div class="formulario-grupo">
+                        <label>Disicplina e Carga horária semanal</label>
+
+                        <div class="formulario-grupo--disciplina" data-container-disciplina>
+                            <select name="disciplina1" class="campo-texto campo-grande" data-selecao-disciplina>
+                                {% for disciplina in disciplinas %}
+                                    <option value="{{ disciplina.id }}">{{ disciplina.nome }}</option>
+                                {% endfor %}
+                            </select>
+
+                            <input type="number" name="ch1" class="campo-texto campo-pequeno" data-campo-ch placeholder="Carga Horária" required>
+                        </div>
+                    </div>
+
+                    <div class="button-adicionar  container-botoes">
+                        <button class="botao botao--azul" type="button" data-botao-adicionar>Adicionar</button>
+                    </div>
+
+                    <div class="container-botoes">
+                        <button class="botao botao--azul" data-form-botao="matriz">Voltar</button>
+                        <button class="botao botao--verde" type="submit">Salvar</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/controlaNavegacaoFormulario.js' %}"></script>
+
+    <script src="{% static 'assets/js/layout/administracao/matriz-formulario/controlaCampos.js' %}"></script>
+
+{% endblock %}

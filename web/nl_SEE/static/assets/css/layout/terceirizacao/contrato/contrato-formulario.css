@@ -1,0 +1,5 @@
+/* Estilização da página de formulário de contrato de terceirizados */
+
+.container-formulario-contrato, .container-formulario-contrato .container-botoes{
+    margin-top: 16px;
+}

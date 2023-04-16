@@ -1,0 +1,12 @@
+/* Estilização da página de cadastro de tablets */
+
+.nome-aluno{
+    font-size: 20px;
+}
+
+.grupo-equipamento{
+    display: flex;
+    column-gap: 16px;
+    flex-wrap: wrap;
+    row-gap: 0;
+}

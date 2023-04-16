@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Lotação Lotus</title>
+    </head>
+
+    <body>
+        <header>
+            <table>
+                <tr>
+                    <th><img id="img1" src="{{ url_logo }}" width='550px' alt=""></th>
+                    <th class="direita"><img id="img2" src="{{ url_atena }}" width='120px' alt=""></th>
+                </tr>
+            </table>
+        </header>
+
+        <hr>
+        <div>
+            <section class="detalhes">
+                <div class="dados-servidor">
+                    <h2>MEMO/SEE/N°: {{ lotacoes.numero_memorando }}</h2>
+                    <h2>Do(a): </h2>
+                    <h2>Para: {{ lotacoes.unidiade_lotacao }}</h2>
+                    <h2>Assunto: LOTAÇÃO DE SERVIDOR</h2>
+                    <h2>Data: {{ data.date }}</h2>
+
+                </div>
+
+                <div class="apresentacao">
+                    <p>Apresentamos a Vossa Senhoria o(a) Senhor(a) abaixo que, a partir desta data deverá exercer a função de {{ lotacoes.funcao }}.</p>
+                </div>
+            </section>
+
+            <section class="meio">
+                <table class="tabela-lotacao">
+                    <tbody>
+                        <tr>
+                            <td class="cabecalho-tabela">MATRÍCULA:</td><td class="conteudo-tabela">{{ lotacoes.matricula }} - {{ lotacoes.digito }}</td>
+                        </tr>
+                        <tr>
+                            <td class="cabecalho-tabela">NOME:</td><td class="conteudo-tabela">{{ servidor.nome }}</td>
+                        </tr>
+                        <tr>
+                            <td class="cabecalho-tabela">TIPO DE CONTRATO:</td><td class="conteudo-tabela">{{ contrato.tipo }}</td>
+                        </tr>
+                        <tr>
+                            <td class="cabecalho-tabela">CARGO:</td><td class="conteudo-tabela">{{ contrato.cargo }}</td>
+                        </tr>
+                        <tr>
+                            <td class="cabecalho-tabela">SUBCONTA:</td><td class="conteudo-tabela">{{ lotacoes.subconta }}</td>
+                        </tr>
+                        {% if contrato.situacao != 'Cedido' %}
+                            <tr>
+                                <td class="cabecalho-tabela">FUNÇÃO:</td><td class="conteudo-tabela">{{ lotacoes.funcao }}</td>
+                            </tr>
+                        {% endif %}
+
+                        <tr>
+                            <td class="cabecalho-tabela">DISCIPLINA | TURNO | SERIES(turmas):</td>
+                            <td class="conteudo-tabela">
+                                {% for turma in turma_lotus %}
+                                    {% if turma.id_lotacao == lotacoes.id|stringformat:"s" %}
+                                        <p>{{ turma.disciplina }} | {{ turma.turno }} | {{ turma.turma }}</p>
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="cabecalho-tabela">CH SEMANAL:</td><td class="conteudo-tabela">{{ lotacoes.carga_horaria }}H</td>
+                        </tr>
+                        <tr>
+                            <td class="cabecalho-tabela">DATA DE INÍCIO:</td><td class="conteudo-tabela">{{ lotacoes.data_inicio }}</td>
+                        </tr>
+                        {% if lotacoes.data_termino %}
+                            <tr>
+                                <td class="cabecalho-tabela">DATA DE TÉRMINO:</td><td class="conteudo-tabela">{{ lotacoes.data_termino }}</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="final">
+                <div class="div-observacao">
+                    <h1 class="observacao">Observação:</h1>
+                    {% if lotacoes.observacao %}
+                        <p class="observacoes">{{ lotacoes.observacao }}</p>
+                    {% else %}
+                        <p class="observacoes">Não possui observações</p>
+                    {% endif %}
+                </div>
+
+                <table>
+                    <tr>
+                        <th class="dados">2° Via importada do Lotus por {{ nome }} dia {{ data }}</th>
+                    </tr>
+                </table>
+            </section>
+        </div>
+
+        <style>
+            body{
+                font-size: 12px;
+            }
+
+            @page{
+                margin: 1cm;
+            }
+
+            #img1{
+                width: 100%;
+                height: auto;
+            }
+
+            #img2{
+                width: 120px;
+                height: auto;
+            }
+
+            .direita{
+                text-align: right;
+            }
+
+            h2{
+                margin: 0;
+            }
+
+            .apresentacao{
+                font-size: 12px;
+                text-align: left;
+                padding-bottom: 12px;
+                padding-top: 12px;
+
+            }
+
+            .tabela-lotacao{
+                border: 1px solid black;
+                padding-top: 4px;
+                padding-left: 2px;
+            }
+
+            .cabecalho-tabela{
+                font-size: 12px;
+                font-weight: bold;
+            }
+
+            .conteudo-tabela{
+                font-size: 12px;
+            }
+
+            .div-observacao{
+                margin: 0;
+            }
+
+            .observacao{
+                font-family: sans-serif;
+                font-size: 12px;
+                padding-top: 26px;
+            }
+
+            .observacoes{
+                font-family: sans-serif;
+                font-size: 12px;
+            }
+
+            .atensiosamente{
+                font-family: sans-serif;
+                font-size: 12px;
+                padding-bottom: 80px;
+            }
+
+            .assinatura{
+                text-align: center;
+                font-weight: normal;
+                font-size: 12px;
+            }
+
+            .invisivel{
+                color: white;
+            }
+
+            .rodape{
+                text-align: center;
+                font-size: 12px;
+                font-family: sans-serif;
+                margin: 0;
+            }
+
+            .teste{
+                margin: 0px;
+                font-family: sans-serif;
+                font-size: 12px;
+            }
+
+            .dados-rodape{
+                padding-top: 120px;
+            }
+
+            p{
+                margin: 0px;
+            }
+
+            .dados-servidor{
+                font-size: 14px;
+            }
+
+            .dados{
+                padding-top: 40px;
+            }
+
+        </style>
+
+    </body>
+</html>

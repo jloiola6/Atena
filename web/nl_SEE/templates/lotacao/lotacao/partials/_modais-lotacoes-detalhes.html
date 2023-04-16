@@ -1,0 +1,95 @@
+{% load static %}
+
+{% for lotacao in lotacoes_aux %}
+    <div class="modal oculto" data-modal="lotacao-detalhe-{{ lotacao.id }}">
+        <div class="modal-conteudo">
+
+            <h3 class="texto-medio texto-azul">{{ lotacao.contrato__servidor__nome }}</h3>
+
+            <div class="container-detalhes">
+                <a href="{% url 'lotacao:servidor-perfil' %}?id={{ lotacao.contrato__servidor__id }}" class="link">Abrir perfil do servidor</a>
+
+                {% if lotacao.unidade_adm__nome %}
+                    <p class="texto-preto">{{ lotacao.unidade_adm__nome }}</p>
+                    <p class="texto-preto">{{ lotacao.unidade_adm__endereco__municipio }}</p>
+                {% elif lotacao.unidade_escolar__escola__nome_escola %}
+                    <p class="texto-preto">{{ lotacao.unidade_escolar__escola__nome_escola }}</p>
+                    <p class="texto-preto">{{ lotacao.unidade_escolar__municipio }}</p>
+                {% else %}
+                    {% if lotacao.contrato__municipio != 'Não Informado' %}
+                        <p class="texto-preto">{{ lotacao.contrato__municipio }}</p>
+                    {% else %}
+                        <p class="texto-preto">Município não informado</p>
+                    {% endif %}
+                {% endif %}
+
+
+
+                <p class="texto-azul texto-negrito container-detalhes-bloco">Matrícula: <span class="texto-preto texto-normal">{{ lotacao.contrato__servidor__matricula }}</span></p>
+                <p class="texto-azul texto-negrito">Dígito: <span class="texto-preto texto-normal">{{ lotacao.contrato__digito }}</span></p>
+                <p class="texto-azul texto-negrito">Subconta: <span class="texto-preto texto-normal">{{ lotacao.subconta__fonte }}</span></p>
+                <p class="texto-azul texto-negrito">DOE: <span class="texto-preto texto-normal">{{ lotacao.contrato__doe }}</span></p>
+                <p class="texto-azul texto-negrito">Carga Horária: <span class="texto-preto texto-normal">{{ lotacao.carga_horaria }}h</span></p>
+                <p class="texto-azul texto-negrito">Data de Admissão: <span class="texto-preto texto-normal">{{ lotacao.contrato__data_contrato }}</span></p>
+                <p class="texto-azul texto-negrito">Tipo de Contrato: <span class="texto-preto texto-normal">{{ lotacao.contrato__tipo_contrato }}</span></p>
+                <p class="texto-azul texto-negrito">Cargo: <span class="texto-preto texto-normal">{{ lotacao.contrato__cargo__nome }}</span></p>
+
+
+                <p class="texto-azul texto-negrito container-detalhes-bloco">Tipo de Lotação: <span class="texto-preto texto-normal">{{ lotacao.tipo_lotacao }}</span></p>
+                <p class="texto-azul texto-negrito">Função: <span class="texto-preto texto-normal">{{ lotacao.funcao }}</span></p>
+
+                {% if lotacao.enturmacao_disciplinas_adm %}
+                    <p class="texto-azul texto-negrito">Disciplina: <span class="texto-preto texto-normal">{{ lotacao.enturmacao_disciplinas_adm.0.disciplina }}</span></p>
+                {% endif %}
+
+                {% if lotacao.enturmacao_escola %}
+                    <h4 class="texto-azul texto-medio container-detalhes-bloco">Turmas</h4>
+
+                    <table class="tabela">
+                        <thead>
+                            <tr>
+                                <th>Turma</th>
+                                <th>Disciplina</th>
+                                <th>Ano</th>
+                                <th>C.H.</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                           {% for grade in lotacao.enturmacao_escola  %}
+                                <tr class="linha-desabilitada">
+                                    <td>{{ grade.turma }}</td>
+                                    <td>{{ grade.disciplina }}</td>
+                                    <td>{{ grade.ano }}</td>
+                                    <td>{{ grade.carga_horaria }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+
+                {% if lotacao.enturmacao_alunos %}
+                    <h4 class="texto-azul texto-medio container-detalhes-bloco">Alunos</h4>
+
+                    <table class="tabela">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Turma</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                           {% for aluno in lotacao.enturmacao_alunos  %}
+                                <tr class="linha-desabilitada">
+                                    <td>{{ aluno.aluno.nome }}</td>
+                                    <td>{{ aluno.aluno.turma }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endfor %}

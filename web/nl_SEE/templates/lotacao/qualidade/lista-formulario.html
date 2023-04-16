@@ -1,0 +1,63 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Lista de Espera {% endblock %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/lotacao/qualidade/agendamento-formulario.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class="texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+                
+                <a href="{% url 'lotacao:index' %}" class="texto-azul">Lotação</a>
+                <span class="texto-azul">&#62;</span>
+                
+                <a href="{% url 'lotacao:qualidade' %}" class="texto-azul">Qualidade de Vida</a>
+                <span class="texto-azul">&#62;</span>
+                
+                <span class="texto-azul">Lista de Espera</span>
+            </nav>
+            
+            <h1 class="titulo-pagina texto-azul">Lista de Espera</h1>
+            <form class="container-surface" method="post">
+                
+                {% csrf_token %}
+                <label for="servidor">Servidor</label>
+                <select data-selecao2 name="servidor" id="servidor" class="campo-medio campo-texto">
+                    {% for servidor in servidores %}
+                        <option value="{{ servidor.id }}"> {{ servidor.nome }} </option>
+                    {% endfor %}
+                </select>
+
+                <label for="servico">Serviço</label>
+                <select data-selecao2 name="servico" id="servico" class="campo-medio campo-texto" data-selecao2>
+                    <option value="None" selected></option>
+                    {% for servico in atendimentos %}
+                        <option value="{{ servico.id }}"> {{ servico.servico__nome }} - {{ servico.atendente__nome }}</option>
+                    {% endfor %}
+                </select>
+                
+
+                <label for="telefone">Telefone</label>
+                <input type="text" name="telefone" id="telefone" class="campo-texto campo-medio" required>
+                
+                <div class="container-botoes">
+                    <button type="submit" class="botao botao--azul">Salvar</button>
+                </div>
+            </form>
+        </div>    
+    </main>
+    {% include 'partials/_rodape.html' %}
+    <script src="{% static 'assets/js/module/select2.js' %}"></script>
+{% endblock %}

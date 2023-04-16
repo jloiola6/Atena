@@ -1,0 +1,357 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <header>
+            <table>
+                <tr>
+                    <!-- <td><img class="header--brasao" src="C:\Users\joao.soares\Documents\code\Atena\nl_SEE\static\assets\img\fundiaria-cabecalho.png" alt="Logo"></td>
+                    <td><img class="header--atena" src="C:\Users\joao.soares\Documents\code\Atena\nl_SEE\static\assets\img\ATENA-AZUL.svg" alt="Logo"></td> -->
+                    <td><img class="header--brasao" src="{{ url_logo }}" alt="Logo"></td>
+                    <td class="direita"><img class="header--atena" src="{{ url_atena }}" alt="Logo"></td>
+            </table>
+        </header>
+
+        <table>
+            <tr>
+                <td class="titulo">Escola</td>
+                <td class="titulo">Código do INEP</td>
+            </tr>
+
+            <tr>
+                <td>{{ fundiaria.endereco.escola.nome_escola }}</td>
+                <td>{{ fundiaria.endereco.escola.cod_inep }}</td>
+            </tr>
+        </table>
+        {% if extincao %}
+            <table>
+                <tr>
+                    <td class="titulo">Decreto de extinção</td>
+                    <td class="titulo">Data de paralização</td>
+                    <td class="titulo">Data de Extinção</td>
+                    <td class="titulo">Escola guardiã</td>
+                </tr>
+                <tr>
+                    <td>{{ extincao.decreto_extincao }}</td>
+                    <td>{{ extincao.data_paralizacao }}</td>
+                    <td>{{ extincao.data_extincao }}</td>
+                    <td>{{ extincao.escola_guardia }}</td>
+                </tr>
+            </table>
+        {% endif %}
+        <table>
+            <tr>
+                <td colspan="6" class="titulo">Documentação da Escola</td>
+            </tr>
+
+            <tr>
+                <td>Totalmente regularizada</td>
+                {% if fundiaria.regularizacao == "Totalmente regularizada" %}
+                    <td>X</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+
+                <td>Parcialmente regularizada</td>
+                {% if fundiaria.regularizacao == "Parcialmente regularizada" %}
+                    <td>X</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+
+                <td>Não regularizada</td>
+                {% if fundiaria.regularizacao == "Não regularizada" %}
+                    <td>X</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td colspan="6" class="titulo">Situação da Escola</td>
+            </tr>
+
+            <tr>
+                <td>Estadual</td>
+                {% if fundiaria.forma_ocupacao == "Próprio" %}
+                    <td>X</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+
+                <td>Municipalizada</td>
+                {% if fundiaria.convenio == "Cedido do estado para o município" %}
+                    <td>X</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+
+                <td>Estadualizada</td>
+                {% if fundiaria.convenio == "Cedido do município para o estado" %}
+                    <td>X</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td colspan="6" class="titulo">Localização da Escola</td>
+            </tr>
+
+            <tr>
+                <td>Urbano</td>
+                {% if fundiaria.endereco.tipo_localizacao == "Urbano" %}
+                <td>X</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+
+                <td>Rural</td>
+                {% if fundiaria.endereco.tipo_localizacao == "Rural" %}
+                <td>X</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+
+                <td>Indígena</td>
+                {% if fundiaria.endereco.tipo_localizacao == "Indígena" %}
+                <td>X</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+            </tr>
+        </table>
+
+
+
+        <table>
+            <tr>
+                <td class="titulo">Endereço</td>
+                <td class="titulo">Município</td>
+                <td class="titulo">Estado</td>
+            </tr>
+            <tr>
+                <td>{{ fundiaria.endereco.rua }}, n° {{ fundiaria.endereco.numero }} - {{ fundiaria.endereco.bairro }}</td>
+                <td>{{ fundiaria.endereco.municipio }}</td>
+                <td>{{ fundiaria.endereco.uf }}</td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td colspan="2" class="titulo">Coordenadas Geográficas</td>
+            </tr>
+
+            <tr>
+                <td>{{ fundiaria.endereco.latitude }}</td>
+
+                <td>{{ fundiaria.endereco.longitude }}</td>
+
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td class="titulo">Matrícula de Registro de Imóveis</td>
+            </tr>
+            <tr>
+                <td>{{ fundiaria.matricula_imoveis }}</td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td colspan="2" class="titulo">Fotos</td>
+            </tr>
+
+            <tr>
+                <td>Frente</td>
+                <td>Aérea</td>
+                <tr>
+                    <td><img class="fotos" src="{{ img1 }}"></td>
+                    <td><img class="fotos" src="{{ img2 }}"></td>
+                </tr>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td class="titulo">Área do Imóvel</td>
+                <td class="titulo">Área Construída</td>
+                <td class="titulo">Perímetro</td>
+                <td class="titulo">Área Utilizada</td>
+            </tr>
+
+            <tr>
+                <td>{{ fundiaria.area_imovel }} m²</td>
+                <td>{{ fundiaria.area_construida }} m²</td>
+                <td>{{ fundiaria.perimetro }} m</td>
+                <td>{{ fundiaria.area_utilizada }} m²</td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td class="titulo">Decreto de Criação</td>
+                <td class="titulo">Portaria de Autorização</td>
+                <td class="titulo">RIP – Registro na PPI</td>
+                <td class="titulo">B.C.I. – Prefeitura N</td>
+            </tr>
+
+            <tr>
+                <td>{{ fundiaria.decreto_criacao }}</td>
+                <td>{{ fundiaria.portaria_autorizacao }}</td>
+                <td>{{ fundiaria.ppi }}</td>
+                <td>{{ fundiaria.bci }}</td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td class="titulo">Unidade de Consumo (Água)</td>
+            </tr>
+
+            <tr>
+                <td>{{ fundiaria.conta_agua }}</td>
+            </tr>
+
+        </table>
+        <br>
+        <br>
+        <br>
+        <table class="energia">
+            <tr>
+                <td class="titulo">Unidade de Consumo (Energia Elétrica)</td>
+            </tr>
+
+            {% for unidade in energia %}
+                <tr>
+                    <td>
+                        <span>{{ unidade.energia_eletrica }}</span>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+
+    </body>
+
+    <style>
+        html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var, u, i, center,
+        dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend,
+        table, caption, tbody, tfoot, thead, tr, th, td,
+        article, aside, canvas, details, embed,
+        figure, figcaption, footer, header, hgroup,
+        menu, nav, output, ruby, section, summary,
+        time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+a{
+	text-decoration: none;
+}
+
+        body{
+            font-family: sans-serif;
+            font-size: 14px;
+            text-align: center;
+            padding: 40px;
+            /* scale: 90%; */
+        }
+
+        table{
+            margin-top: 14px;
+            width: 100%;
+        }
+
+
+
+        td {
+            border: #333333 1px solid;
+            padding:2px 0px;
+        }
+
+        .fotos{
+            width: 290px;
+            height: 170px;
+        }
+
+        header{
+            padding-top: -30px;
+        }
+            header td{
+                border: #ffffff 1px solid;
+                padding: 0px;
+                height: 100px;
+            }
+
+            .header--brasao{
+                width: auto;
+                height: 100%;
+            }
+
+            .header--atena{
+                width: 120px;
+                height: auto;
+            }
+
+            .header--texto{
+                margin: 0px;
+                /* padding-top: 10px; */
+                font-size: 12px;
+                font-weight: bolder;
+                text-align: left;
+            }
+
+        .titulo{
+            font-size: 14px;
+            font-weight: bold;
+            background-color: #cac7c7;
+        }
+
+        .direita{
+            text-align: right;
+        }
+
+    </style>
+</html>

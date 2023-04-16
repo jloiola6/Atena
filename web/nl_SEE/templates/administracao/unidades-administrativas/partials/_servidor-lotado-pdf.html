@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exportar Servidores Lotados</title>
+</head>
+<body>
+    <header>
+        <table>
+            <tr>
+                <td><img class="img1" src= "{{ url_logo }}" alt="Logo"></td>
+                <td class="direita"><img class="img2" src="{{ url_atena }}" alt="Logo"></td>
+                <!-- <td><img class="header--brasao" src="C:\Users\joao.soares\Documents\code\Atena\nl_SEE\static\assets\img\servidores-lotados.png" alt="Logo"></td>
+                <td></td>
+                <td><img src="C:\Users\joao.soares\Documents\code\Atena\nl_SEE\static\assets\img\ATENA-AZUL.svg" alt="Logo" style="width:120px;height:auto;"></td>  -->
+            </tr>
+        </table>
+    </header>
+
+    <hr>
+    <br><br>
+
+    <table class="tabela tabela-lotados">
+        <thead>
+            <tr class="cabecalho-coluna">
+                <th class="">Nome</th>
+                <th class="digito">Digito</th>
+                <th class="">Lotação</th>
+                <th class="">Cargo</th>
+                <th class="">Função</th>
+                <th class="funcao">Tipo</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for lotado in lotados %}
+                <tr>
+                    <td>{{ lotado.0 }}</td>
+                    <td>{{ lotado.1 }}</td>
+                    <td>{{ lotado.2 }}</td>
+                    <td>{{ lotado.3 }}</td>
+
+                    {% if lotado.5 != None and lotado.5 != '' %}
+                        <td>{{ lotado.5 }}</td>
+                    {% else %}
+                        <td>Terceirizado</td>
+                    {% endif %}
+
+                    {% if lotado.4 != None and lotado.4 != '' %}
+                        <td>{{ lotado.4 }}</td>
+                    {% else %}
+                        <td>Terceirizado</td>
+                    {% endif %}
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <style>
+        @page{
+            size: landscape;
+            margin: 1cm;
+        }
+
+        .img1{
+            width: 100%;
+            height: auto;
+        }
+
+        .img2{
+            width: 120px;
+            height: auto;
+        }
+
+        .direita{
+            text-align: right;
+        }
+
+        .tabela-lotados{
+            border: 1px solid black;
+            padding-top: 4px;
+            padding-left: 2px;
+            padding-right: 2px;
+            font-family: sans-serif;
+        }
+
+        .cabecalho-coluna{
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .digito{
+                width: 60px;
+            }
+
+        .funcao{
+            width: 80px;
+        }
+    </style>
+
+</body>
+</html>

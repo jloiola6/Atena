@@ -1,0 +1,25 @@
+/* Responsivdade das tabels de itens */
+
+.tabela-contrato-itens-smartphone, .tabela-contrato-itens-tablet{
+    display: none;
+}
+
+@media screen and (max-width: 896px){
+    .tabela-contrato-itens, .tabela-contrato-itens-smartphone{
+        display: none;
+    }
+
+    .tabela-contrato-itens-tablet{
+        display: block;
+    }
+}
+
+@media screen and (max-width: 481px){
+    .tabela-contrato-itens, .tabela-contrato-itens-tablet{
+        display: none;
+    }
+
+    .tabela-contrato-itens-smartphone{
+        display: block;
+    }
+}

@@ -1,0 +1,316 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} {{ aluno.nome }} {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/dinem/aluno-boletim.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'dinem:index' %}">N.E.M.</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'dinem:unidade-perfil' %}?inep={{ turma.endereco.escola.cod_inep }}">{{ turma.endereco.escola.nome_escola }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'dinem:turma-perfil' turma.id %}">{{ turma.nome }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'dinem:aluno-perfil' aluno_turma.id %}">{{ aluno.nome }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Boletim {{ etapa }}</span>
+            </nav>
+
+            <h2 class="titulo-pagina texto-azul">Boletim {{ etapa }}</h2>
+            <p class="descricao texto-preto">Insira as notas do aluno</p>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="container-surface">
+                    <h3 class="texto-azul texto-medio">Situação do Aluno</h3>
+
+                    <div class="formulario-grupo">
+                        <fieldset id="aluno-fieldset-situacao">
+                            {% if relatorio.resultado != 'Transferido' %}
+                                <input type="radio" name="aluno-fieldset-situacao" value="matriculado" id="radio-matriculado" checked data-form-rota>
+                            {% else %}
+                                <input type="radio" name="aluno-fieldset-situacao" checked value="matriculado" id="radio-matriculado" checked data-form-rota>
+                            {% endif %}
+                            <label class="texto-preto" for="radio-matriculado">Aluno Matriculado</label>
+
+                            {% if relatorio.resultado == 'Transferido' %}
+                                <input type="radio" name="aluno-fieldset-situacao" checked value="transferido" id="radio-transferido" data-form-rota>
+                            {% else %}
+                                <input type="radio" name="aluno-fieldset-situacao" value="transferido" id="radio-transferido" data-form-rota>
+                            {% endif %}
+                            <label class="texto-preto" for="radio-transferido">Aluno Transferido</label>
+
+                            {% if relatorio.resultado == 'Desistente' %}
+                                <input type="radio" name="aluno-fieldset-situacao" checked value="desistente" id="radio-desistente" data-form-rota>
+                            {% else %}
+                                <input type="radio" name="aluno-fieldset-situacao" value="desistente" id="radio-desistente" data-form-rota>
+                            {% endif %}
+                            <label class="texto-preto" for="radio-desistente">Aluno Desistente</label>
+
+                            <div class="container-botoes situacao-transferido-salvar" data-form-transferido-salvar>
+                                <button class="botao botao--verde" type="submit">Salvar</button>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+
+
+                <div class="container-surface" data-form-relatorio>
+
+                    {% if etapa == '3ª Série' %}
+                        <div class="formulario-grupo formulario-aluno-formacao-geral" data-form-geral>
+                            <div class="formulario-grupo">
+                                <label for="campo-portugues" class="texto-azul label-campo">Língua Portuguesa e Literatura</label>
+                                <input type="number" name="portugues" id="campo-portugues" class="campo-texto campo-pequeno" value="{{ relatorio.portugues }}" min="0" max="10" step="0.1" required data-campo-nota>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label for="campo-matematica" class="texto-azul label-campo">Matemática</label>
+                                <input type="number" name="matematica" id="campo-matematica" class="campo-texto campo-pequeno" value="{{ relatorio.matematica }}" min="0" max="10" step="0.1" required data-campo-nota>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label for="campo-projeto" class="texto-azul label-campo">Projeto de Vida</label>
+                                <input type="number" name="projeto_vida" id="campo-projeto" class="campo-texto campo-pequeno" value="{{ relatorio.projeto_vida }}" min="0" max="10" step="0.1" required data-campo-nota>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <h3 class="texto-medio texto-azul">Rota</h3>
+
+                                <fieldset id="aluno-fieldset-rota">
+                                    {% if relatorio.investigacao == '-' %}
+                                        <input type="radio" name="aluno-fieldset-rota" value="propedeutica" id="radio-propedeutica" checked data-form-rota>
+                                    {% else %}
+                                        <input type="radio" name="aluno-fieldset-rota" checked value="propedeutica" id="radio-propedeutica" checked data-form-rota>
+                                    {% endif %}
+
+                                    <label class="texto-preto" for="radio-propedeutica">Aprofundamento Propedêutica</label>
+
+                                    {% if relatorio.investigacao == '-' %}
+                                        <input type="radio" name="aluno-fieldset-rota" checked value="formacao" id="radio-formacao" data-form-rota>
+                                    {% else %}
+                                        <input type="radio" name="aluno-fieldset-rota" value="formacao" id="radio-formacao" data-form-rota>
+                                    {% endif %}
+
+                                    <label class="texto-preto" for="radio-formacao">Formação Técnica e Profissional</label>
+                                </fieldset>
+                            </div>
+
+                        <div class="formulario-grupo" data-form-propedeutica>
+                            <label class="texto-azul label-campo" for="aluno-fieldset-areas">Área de conhecimento</label>
+
+                                <div>
+                                    <input type="radio" name="aluno-fieldset-areas" value="Ciências da natureza e suas tecnologias" id="radio-natureza" checked>
+                                    <label class="texto-preto" for="radio-natureza">Ciências da natureza e suas tecnologias</label>
+                                </div>
+
+                                <div class="descricao">
+                                    <input type="radio" name="aluno-fieldset-areas" value="Ciências humanas e suas tecnologias" id="radio-humanas">
+                                    <label class="texto-preto" for="radio-humanas">Ciências humanas e suas tecnologias</label>
+                                </div>
+
+                                <div class="descricao">
+                                    <input type="radio" name="aluno-fieldset-areas" value="Matemática e suas tecnologias" id="radio-matematica">
+                                    <label class="texto-preto" for="radio-matematica">Matemática e suas tecnologias</label>
+                                </div>
+
+                                <div class="descricao">
+                                    <input type="radio" name="aluno-fieldset-areas" value="Linguagens e suas tecnologias" id="radio-linguagens">
+                                    <label class="texto-preto" for="radio-linguagens">Linguagens e suas tecnologias</label>
+                                </div>
+
+
+                        </div>
+
+                        <div class="formulario-grupo" data-form-propedeutica>
+                            <label for="campo-investigacao" class="texto-azul label-campo">Investigação Científica</label>
+                            <input type="number" name="investigacao" id="campo-investigacao" class="campo-texto campo-pequeno" value="{{ relatorio.investigacao}}" min="0" max="10" step="0.1" required data-campo-nota>
+                        </div>
+
+                        <div class="formulario-grupo" data-form-propedeutica>
+                            <label for="campo-processos" class="texto-azul label-campo">Processos Criativos</label>
+                            <input type="number" name="criativos" id="campo-processos" class="campo-texto campo-pequeno" value="{{ relatorio.criativos }}" min="0" max="10" step="0.1" required data-campo-nota>
+                        </div>
+
+                        <div class="formulario-grupo" data-form-propedeutica>
+                            <label for="campo-mediacao" class="texto-azul label-campo">Mediação e Interverção Sociocultural</label>
+                            <input type="number" name="sociocultural" id="campo-mediacao" class="campo-texto campo-pequeno" value="{{ relatorio.sociocultural }}" min="0" max="10" step="0.1" required data-campo-nota>
+                        </div>
+
+                        <div class="formulario-grupo" data-form-propedeutica>
+                            <label for="campo-empreendedorismo" class="texto-azul label-campo">Empreendedorismo</label>
+                            <input type="number" name="empreendedorismo" id="campo-empreendedorismo" class="campo-texto campo-pequeno" value="{{ relatorio.empreendedorismo }}" min="0" max="10" step="0.1" required data-campo-nota>
+                        </div>
+
+                            <div class="formulario-grupo">
+                                <label for="camppo-resultado" class="texto-azul label-campo">Resultado</label>
+                                <select class="campo-texto campo-medio" name="resultado" id="campo-resultado">
+                                    {% for item in resultados %}
+                                        {% if relatorio.resultado == item.0 %}
+                                            <option value="{{ item.0 }}" selected>{{ item.1 }}</option>
+                                        {% else %}
+                                            <option value="{{ item.0 }}">{{ item.1 }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="container-botoes">
+                                <button class="botao botao--verde" type="submit">Salvar</button>
+                            </div>
+                        </div>
+                    {% else %}
+                        <nav class="container-navegacao-surface">
+                            <ul class="navegacao-surface-lista">
+                                <li class="navegacao-surface-item navegacao-surface-item-ativo" data-nav-item="geral">
+                                    <span class="texto-azul ">Formação Geral Básica</span>
+                                </li>
+
+                                <li class="navegacao-surface-item" data-nav-item="diversificada">
+                                    <span class="texto-azul ">Parte Diversificada</span>
+                                </li>
+                            </ul>
+                        </nav>
+
+                        <div class="formulario-grupo formulario-aluno-formacao-geral" data-form-geral>
+                            <div class="formulario-grupo">
+                                <label for="campo-portugues" class="texto-azul label-campo">Língua Portuguesa e Literatura</label>
+                                <input type="number" name="portugues" id="campo-portugues" class="campo-texto campo-pequeno" value="{{ relatorio.portugues }}" min="0" max="10" step="0.1" required data-campo-nota>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label for="campo-arte" class="texto-azul label-campo">Arte</label>
+                                <input type="number" name="arte" id="campo-arte" class="campo-texto campo-pequeno" value="{{ relatorio.arte }}" min="0" max="10" step="0.1" required data-campo-nota>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label for="campo-ingles" class="texto-azul label-campo">Língua Inglesa</label>
+                                <input type="number" name="ingles" id="campo-ingles" class="campo-texto campo-pequeno" value="{{ relatorio.ingles }}" min="0" max="10" step="0.1" required data-campo-nota>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label for="campo-educacao-fisica" class="texto-azul label-campo">Educação Física</label>
+                                <input type="number" name="ed_fisica" id="campo-educacao-fisica" class="campo-texto campo-pequeno" value="{{ relatorio.ed_fisica }}" min="0" max="10" step="0.1" required data-campo-nota>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label for="campo-matematica" class="texto-azul label-campo">Matemática</label>
+                                <input type="number" name="matematica" id="campo-matematica" class="campo-texto campo-pequeno" value="{{ relatorio.matematica }}" min="0" max="10" step="0.1" required data-campo-nota>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label for="campo-fisica" class="texto-azul label-campo">Física</label>
+                                <input type="number" name="fisica" id="campo-fisica" class="campo-texto campo-pequeno" value="{{ relatorio.fisica }}" min="0" max="10" step="0.1" required data-campo-nota>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label for="campo-quimica" class="texto-azul label-campo">Química</label>
+                                <input type="number" name="quimica" id="campo-quimica" class="campo-texto campo-pequeno" value="{{ relatorio.quimica }}" min="0" max="10" step="0.1" required data-campo-nota>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label for="campo-biologia" class="texto-azul label-campo">Biologia</label>
+                                <input type="number" name="biologia" id="campo-biologia" class="campo-texto campo-pequeno" value="{{ relatorio.biologia }}" min="0" max="10" step="0.1" required data-campo-nota>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label for="campo-historia" class="texto-azul label-campo">História</label>
+                                <input type="number" name="historia" id="campo-historia" class="campo-texto campo-pequeno" value="{{ relatorio.historia }}" min="0" max="10" step="0.1" required data-campo-nota>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label for="campo-geografia" class="texto-azul label-campo">Geografia</label>
+                                <input type="number" name="geografia" id="campo-geografia" class="campo-texto campo-pequeno" value="{{ relatorio.geografia }}" min="0" max="10" step="0.1" required data-campo-nota>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label for="campo-filosofia" class="texto-azul label-campo">Filosofia</label>
+                                <input type="number" name="filosofia" id="campo-filosofia" class="campo-texto campo-pequeno" value="{{ relatorio.filosofia }}"  min="0" max="10" step="0.1" required data-campo-nota>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label for="campo-sociologia" class="texto-azul label-campo">Sociologia</label>
+                                <input type="number" name="sociologia" id="campo-sociologia" class="campo-texto campo-pequeno" value="{{ relatorio.sociologia }}" min="0" max="10" step="0.1" required data-campo-nota>
+                            </div>
+
+                            <div class="container-botoes">
+                                <button id="botao-geral-avancar" class="botao botao--azul">Avançar</button>
+                            </div>
+                        </div>
+
+                        <div class="formulario-aluno-parte-diversificada" data-form-diversificada>
+                            <h3 class="formulario-grupo texto-medio texto-azul">Atividades Flexíveis</h3>
+
+                            <div class="formulario-grupo">
+                                <label for="campo-espanhol" class="texto-azul label-campo">Espanhol</label>
+                                <input type="number" name="espanhol" id="campo-espanhol" class="campo-texto campo-pequeno" value="{{ relatorio.espanhol }}" min="0" max="10" step="0.1"  data-campo-nota>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label for="campo-projeto" class="texto-azul label-campo">Projeto de Vida</label>
+                                <input type="number" name="projeto_vida" id="campo-projeto" class="campo-texto campo-pequeno" value="{{ relatorio.projeto_vida }}" min="0" max="10" step="0.1"  data-campo-nota>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label for="campo-lt-ch" class="texto-azul label-campo">Eletiva Interdisciplinar (LT-CH)</label>
+                                <input type="number" name="lt_ch" id="campo-lt-ch" class="campo-texto campo-pequeno" value="{{ relatorio.lt_ch }}" min="0" max="10" step="0.1"  data-campo-nota>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label for="campo-mt-cn" class="texto-azul label-campo">Eletiva Interdisciplinar (MT-CN)</label>
+                                <input type="number" name="mt_cn" id="campo-mt-cn" class="campo-texto campo-pequeno" value="{{ relatorio.mt_cn}}" min="0" max="10" step="0.1"  data-campo-nota>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label for="camppo-resultado" class="texto-azul label-campo">Resultado</label>
+                                <select class="campo-texto campo-medio" name="resultado" id="campo-resultado">
+                                    {% for item in resultados %}
+                                        {% if relatorio.resultado == item.0 %}
+                                            <option value="{{ item.0 }}" selected>{{ item.1 }}</option>
+                                        {% else %}
+                                            <option value="{{ item.0 }}">{{ item.1 }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="container-botoes">
+                                <button id="botao-diversificada-voltar" class="botao botao--azul">Voltar</button>
+
+                                <button class="botao botao--verde" type="submit">Salvar</button>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </form>
+
+
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/controlaNavegacaoFormulario.js' %}"></script>
+
+    <script src="{% static 'assets/js/layout/dinem/aluno-boletim/controlaSituacao.js' %}" type="module"></script>
+    <script src="{% static 'assets/js/layout/dinem/aluno-boletim/controlaNavegacao.js' %}"></script>
+    <script src="{% static 'assets/js/layout/dinem/aluno-boletim/controlaCampos.js' %}" type="module"></script>
+{% endblock %}

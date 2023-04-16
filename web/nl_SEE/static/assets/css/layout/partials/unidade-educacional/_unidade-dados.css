@@ -1,0 +1,84 @@
+/* Estilização da partial de dados de uma unidade educional */
+
+/* .surface-unidade{
+    margin-top: 24px;
+}
+
+    .surface-unidade .container-botoes{
+        margin-top: 16px;
+    } */
+
+.lista-unidade-modalidades{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+    .item-modalidade{
+        border: 2px solid #1458B1;
+        border-radius: 8px;
+        color: var(--text-primary-color);
+        padding: 4px 16px;
+    }
+
+    .modalidade-infantil{
+        border-color: #ffb344;
+    }
+
+    .modalidade-fundamental{
+        border-color: var(--secondary-color-hover);
+    }
+
+    .modalidade-medio{
+        border-color: var(--error-color-hover);
+    }
+
+
+    .modalidade-aee{
+        border-color: #9632af;
+    }
+
+    .modalidade-aprender{
+        border-color: #84b114;
+    }
+
+    .modalidade-campo{
+        border-color: #d57a07;
+    }
+
+.container-escola-dados{
+    display: flex;
+    flex-basis: 50%;
+    flex-direction: column;
+    row-gap: 8px;
+}
+
+    .container-escola-dados .container-botoes{
+        margin-top: 8px;
+    }
+
+.container-dividido-escola{
+    display: flex;
+    margin-top: 24px;
+    width: 100%;
+}
+
+.unidade-rua{
+    line-height: 1;
+    width: 80%;
+}
+
+.link-servidores{
+    margin-top: 8px;
+}
+
+@media screen and (max-width: 768px){
+    .container-dividido-escola{
+        flex-direction: column;
+        row-gap: 16px;
+    }
+
+    .unidade-rua{
+        width: 100%;
+    }
+}

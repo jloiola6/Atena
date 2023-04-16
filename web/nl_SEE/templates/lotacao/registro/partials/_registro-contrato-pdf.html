@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-bt">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Contrato</title>
+    </head>
+
+    <body>
+        <header>
+            <table>
+                <tr>
+                    <th><img id="img1" src="{{ url_logo }}" alt="Cabecalho"></th>
+                    <th class="direita"><img id="img2" src="{{ url_atena }}" width='120px' alt="Logo Atena"></th>
+                    <!-- <th><img id="img2" src="C:\Users\franklin.farias\Documents\Programação\Atena\nl_SEE\static\assets\img\contrato.png" width='550px' alt="Cabecalho"></th>
+                    <th><img id="img1" src="C:\Users\franklin.farias\Documents\Programação\Atena\nl_SEE\static\assets\img\ATENA-AZUL.svg"  width='120px' alt="Logo Atena"></th> -->
+                </tr>
+            </table>
+        </header>
+        <hr>
+        <br>
+
+        <table class="tabela tabela-registro">
+            <thead>
+                <tr>
+                    <th class="num_lotacao">Nº Contrato</th>
+                    <th>Servidor</th>
+                    <th>Cargo</th>
+                    <th class="municipio">Município</th>
+                    <th>Técnico</th>
+                    <th class="data">Data</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for registro in registros %}
+                    <tr>
+                        <td>{{ registro.4 }}</td>
+                        <td>{{ registro.1 }}</td>
+                        <td>{{ registro.3 }}</td>
+                        <td>{{ registro.2 }}</td>
+                        <td>{{ registro.0.0.log__usuario__nome}}</td>
+                        <td>{{ registro.0.0.data}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+
+    <style>
+        @page{
+            size: landscape;
+            margin: 0.7cm;
+        }
+
+        .direita{
+            text-align: right;
+        }
+
+        .tabela-registro{
+            border: 1px solid black;
+            text-align: center;
+            padding: 6px;
+        }
+
+        .tabela-registro th{
+            font-size: 12px;
+        }
+
+        .tabela-registro td{
+            font-size: 10px;
+        }
+
+        h1{
+            margin: 0;
+        }
+
+        #img1{
+            width: 100%;
+            height: auto;
+        }
+
+        #img2{
+            width: 140px;
+            height: auto;
+        }
+
+        .num_lotacao{
+            width: 9%;
+        }
+
+        .municipio{
+            width: 10%;
+        }
+
+        .data{
+            width: 12%;
+        }
+    </style>
+</html>

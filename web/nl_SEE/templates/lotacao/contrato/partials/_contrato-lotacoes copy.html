@@ -1,0 +1,207 @@
+{% load static %}
+
+<div class="contrato-lotacoes" data-nav-container="lotacoes">
+    {% if lotacoes %}
+        <div class="container-cards-simples">
+            {% for lotacao in lotacoes %}
+                {% if lotacao.0.status != 2 and lotacao.0.status != 3 %}
+                    <div class="card-simples card-lotacao">
+                        {% if lotacao.0.unidade_escolar != None %}
+                            {% if lotacao.0.unidade_escolar.tipo == 'S' %}
+                                <h4 class="card-simples__titulo texto-azul">{{ lotacao.0.unidade_escolar }}</h4>
+                            {% else %}
+                                <h4 class="card-simples__titulo texto-azul">{{ lotacao.0.unidade_escolar }} - (Anexo {{ lotacao.0.unidade_escolar.numero_anexo }})</h4>
+                            {% endif %}
+                        {% elif lotacao.0.unidade_adm != None %}
+                            <h4 class="card-simples__titulo texto-azul">{{ lotacao.0.unidade_adm }}</h4>
+                        {% elif lotacao.0.orgao_cedido != None %}
+                            <h4 class="card-simples__titulo texto-azul">{{ lotacao.0.orgao_cedido }}</h4>
+                        {% else %}
+                            <h4 class="card-simples__titulo texto-azul">SEM LOTAÇÃO</h4>
+                        {% endif %}
+
+                        <div class="card-simples__descricao">
+                            {% if contrato.tipo_contrato != 'ESTAGIÁRIO' %}
+                                {% if lotacao.0.tipo_lotacao %}
+                                    <p class=" texto-azul texto-negrito">Tipo de Lotação: <span class="texto-preto texto-normal">{{ lotacao.0.tipo_lotacao }}</span></p>
+                                {% endif %}
+
+                                {% if lotacao.0.tipo_lotacao == 'Aula Complementar' or lotacao.0.tipo_lotacao == 'Dedicação Exclusiva' or lotacao.0.tipo_lotacao == 'Complementação Salarial' %}
+                                    {% if lotacao.0.numero_sei %}
+                                        <p class=" texto-azul texto-negrito">Nº SEI: <span class="texto-preto texto-normal">{{ lotacao.0.numero_sei }}</span></p>
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if lotacao.0.tipo_lotacao != 'Sem Lotação' %}
+                                    <p class=" texto-azul texto-negrito">Carga Horária: <span class="texto-preto texto-normal">{{ lotacao.0.carga_horaria }}h</span></p>
+                                {% endif %}
+
+                                <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ lotacao.0.data_inicio }}</span></p>
+
+                                {% if lotacao.0.funcao %}
+                                    <p class=" texto-azul texto-negrito">Função: <span class="texto-preto texto-normal">{{ lotacao.0.funcao }}</span></p>
+                                {% endif %}
+
+                                {% if lotacao.0.data_termino %}
+                                    <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ lotacao.0.data_termino }}</span></p>
+                                {% endif %}
+                            {% else %}
+                                <p class=" texto-azul texto-negrito">Função: <span class="texto-preto texto-normal">{{ lotacao.0.funcao }}</span></p>
+                                <p class=" texto-azul texto-negrito">Carga Horária: <span class="texto-preto texto-normal">{{ lotacao.0.carga_horaria }}h</span></p>
+                                <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ lotacao.0.data_inicio }}</span></p>
+                            {% endif %}
+
+                            {% if lotacao.1 %}
+                                {% for grade in lotacao.1 %}
+                                    <p class=" texto-azul texto-negrito">Turma: <span class="texto-preto texto-normal">{{ grade }}</span></p>
+                                {% endfor %}
+                            {% elif lotacao.2 %}
+                                {% for aluno in lotacao.2 %}
+                                    <p class=" texto-azul texto-negrito">Aluno: <span class="texto-preto texto-normal">{{ aluno.aluno.nome }}</span></p>
+                                {% endfor %}
+                            {% endif %}
+
+                                {% if lotacao.0.tipo_lotacao == "Interprete"%}
+                                    <p class=" texto-azul texto-negrito">Aluno: <span class="texto-preto texto-normal">{{ aluno.aluno.nome }}</span></p>
+                                {% endif %}
+
+                            {% if lotacao.3.disciplina %}
+                                <p class=" texto-azul texto-negrito">Disciplina: <span class="texto-preto texto-normal">{{ lotacao.3.disciplina.nome }}</span></p>
+                            {% endif %}
+
+                            {% if lotacao.0.observacoes %}
+                                <p class=" texto-azul texto-negrito"> Observações: <span class="texto-preto texto-normal">{{ lotacao.0.observacoes }}</span></p>
+                            {% endif %}
+
+                            {% if lotacao.0.status == 1 %}
+                                <p class=" texto-azul texto-negrito ">Status: <span class="texto-preto texto-normal">Ativo</span></p>
+                            {% else %}
+                                <p class=" texto-azul texto-negrito ">Status: <span class="texto-preto texto-normal">Inativo</span></p>
+                                <p class=" texto-azul texto-negrito">Motivo: <span class="texto-preto texto-normal">{{ lotacao.0.motivo }}</span></p>
+                            {% endif %}
+
+                            <div class="container-botoes">
+                                {% if user in usuarios_excluir %}
+                                    <form method= 'POST'>
+                                        {% csrf_token %}
+                                        <button class="botao botao--vermelho" type='submit' name='btn-excluir' value='excluir-{{lotacao.0.id}}'>Excluir Lotação</button>
+                                    </form>
+                                {% endif %}
+                                
+                                {% if permissao.imprimir == 1 %}
+                                    {% if lotacao.0.tipo_lotacao %}
+                                        <form method= 'POST'>
+                                            {% csrf_token %}
+                                            <button class="botao botao--azul" type='submit' name='btn-exportar' value='exportar-memorando-{{lotacao.0.id}}'>Exportar</button>
+                                        </form>
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if lotacao.0.status == 1 %}
+                                    {% if permissao.imprimir == 1 %}
+                                        <a href="{% url 'lotacao:finalizar-contrato' %}?id_lotacao={{ lotacao.0.id }}">
+                                            <button class="botao botao--azul">Finalizar lotação</button>
+                                        </a>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% elif id_contrato_lotus and id_contrato %}
+        <h3 class="texto-preto texto-medio">Este contrato não possui lotações cadastradas.</h3>
+    {% endif %}
+
+    {% if lotacoes_lotus %}
+        <div class="container-cards-simples">
+            {% for lotacao in lotacoes_lotus %}
+                <div class="card-simples card-lotacao">
+                    <div class="card-titulo-imagem">
+                        <h4 class="card-simples__titulo texto-azul">{{ lotacao.unidiade_lotacao }}</h4>
+                        <img src="{% static 'assets/img/lotus.png' %}">
+                    </div>
+
+                    <div class="card-simples__descricao">
+                        <p class=" texto-azul texto-negrito">Carga Horária: <span class="texto-preto texto-normal">{{ lotacao.carga_horaria }}h</span></p>
+                        <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ lotacao.data_inicio }}</span></p>
+                        <p class=" texto-azul texto-negrito">Função: <span class="texto-preto texto-normal">{{ lotacao.funcao }}</span></p>
+
+                        {% for turma in turma_lotus %}
+                            {% if turma.id_lotacao == lotacao.id|stringformat:"s" %}
+                                <p class=" texto-azul texto-negrito">Turma: <span class="texto-preto texto-normal">{{ turma.disciplina }} | {{ turma.turno }} | {{ turma.turma }}({{ turma.quantidade }})</span></p>
+                            {% endif %}
+                        {% endfor %}
+
+                        <p class=" texto-azul texto-negrito">Status:
+                            <span class="texto-preto texto-normal">
+                                {% if lotacao.status %}
+                                    Ativo
+                                {% else %}
+                                    Inativo
+                                {% endif %}
+                            </span>
+                        </p>
+                    </div>
+
+                    <p class="descricao texto-cinza texto-negrito">Dados importados via Lotus</p>
+                    <div class="container-botoes">
+                        {% if permissao.imprimir == 1 %}
+                            <form method= 'POST'>
+                                {% csrf_token %}
+                                <button class="botao botao--azul" type='submit' name='btn-exportar-lotus' value='lotus-{{lotacao.id}}'>Exportar</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if 'CHEFE' not in contrato.cargo.nome and 'CEC' not in contrato.cargo.nome %}
+        <!-- {% if contrato.saldo != 0 %} -->
+
+            {% if permissao_lotacao and id_contrato %}
+                <div class="container-botoes">
+                    <!-- <a href="{% url 'lotacao:lotacao-formulario' %}?id_contrato={{ contrato.id }}">
+                        <button class="botao botao--azul">Adicionar</button>
+                    </a> -->
+                    <button class="botao botao--azul" data-modal-abrir="adicionar-lotacao">Adicionar</button>
+                </div>
+            {% endif %}
+
+        <!-- {% endif %} -->
+    {% else %}
+        {% if lotacoes and id_contrato %}
+            {% if permissao_lotacao %}
+                {% if ultima_lotacao.status == 0 %}
+                    <div class="container-botoes">
+                        <!-- <a href="{% url 'lotacao:lotacao-formulario' %}?id_contrato={{ contrato.id }}">
+                            <button class="botao botao--azul">Adicionar</button>
+                        </a> -->
+                        <button class="botao botao--azul" data-modal-abrir="adicionar-lotacao">Adicionar</button>
+                    </div>
+                {% else %}
+                    <div class="container-botoes">
+                        <a href="{% url 'lotacao:finalizar-contrato' %}?id_contrato={{ contrato.id }}">
+                            <button class="botao botao--azul">Finalizar lotação</button>
+                        </a>
+                    </div>
+                {% endif %}
+            {% endif %}
+
+        {% else %}
+
+            {% if permissao_lotacao and id_contrato %}
+                <div class="container-botoes">
+                    <!-- <a href="{% url 'lotacao:lotacao-formulario' %}?id_contrato={{ contrato.id }}">
+                        <button class="botao botao--azul">Adicionar</button>
+                    </a> -->
+                    <button class="botao botao--azul" data-modal-abrir="adicionar-lotacao">Adicionar</button>
+                </div>
+            {% endif %}
+
+        {% endif %}
+    {% endif %}
+</div>

@@ -1,0 +1,5 @@
+/* Estiçização da partial de um formulário de responsável de um contrato */
+
+.formulario-responsavel, .formulario-responsavel .container-botoes, .formulario-responsavel-subtitulo{
+    margin-top: 16px;
+}

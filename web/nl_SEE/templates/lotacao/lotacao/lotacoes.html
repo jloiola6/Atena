@@ -1,0 +1,367 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Lotações {% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/lotacao/lotacao/lotacoes.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/layout/lotacao/lotacao/responsivo/lotacoes-responsivo.css' %}">
+{% endblock %}
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+
+<main>
+    <div class="container">
+        <nav class="container-navegacao">
+            <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'lotacao:index' %}" class=" texto-azul">Gestão de Pessoas</a>
+            <span class="texto-azul">&#62;</span>
+
+            <span class="  texto-azul">Lotações</span>
+        </nav>
+
+        <h1 class="titulo-pagina texto-azul">Lotações</h1>
+
+        <div class="container-surface container-lotacoes-busca">
+            <h2 class="texto-medio texto-azul">Buscar lotação</h2>
+
+            <form class="formulario" method="GET">
+
+                <div class="formulario-grupo">
+                    <input type="text" name="cpf" class="campo-texto campo-pequeno" placeholder="CPF" data-mascara="cpf">
+                </div>
+
+                <div class="formulario-grupo">
+                    <input type="text" name="matricula" class="campo-texto campo-pequeno" placeholder="Matrícula" data-mascara="numero">
+                </div>
+
+                <div class="formulario-grupo">
+                    <input type="text" name="nome" class="campo-texto campo-grande" placeholder="Nome do servidor">
+                </div>
+
+                <div class="container-botoes">
+                    <button type='submit' class="botao botao--azul">Buscar</button>
+                    <button data-modal-abrir="filtros" class="botao botao--azul">Filtros</button>
+                
+                    {% if filtro %}
+                        <form method="POST" data-form-exportar>
+                            {% csrf_token %}
+                            <button class="botao botao--azul" name="btn-exportar" value="exportar" type="submit">Exportar</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </form>
+
+            
+        </div>
+
+
+        <table class="tabela tabela-lotacoes">
+            <thead>
+                <tr>
+                    <th>Matrícula</th>
+                    <th>Digito</th>
+                    <th>Servidor</th>
+                    <th>Função</th>
+                    <th>Unidade</th>
+                    <th>Município</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for lotacao in lotacoes %}
+                    {% if lotacao.unidade_adm__nome %}
+                        <tr data-modal-abrir="lotacao-detalhe-{{ lotacao.id }}">
+                            <td>{{ lotacao.contrato__servidor__matricula }}</td>
+                            <td>{{ lotacao.contrato__digito }}</td>
+                            <td>{{ lotacao.contrato__servidor__nome }}</td>
+                            <td>{{ lotacao.funcao }}</td>
+                            <td>{{ lotacao.unidade_adm__nome }}</td>
+                            <td>{{ lotacao.unidade_adm__endereco__municipio }}</td>
+                        </tr>
+                    {% else %}
+                        <tr data-modal-abrir="lotacao-detalhe-{{ lotacao.id }}">
+                            <td>{{ lotacao.contrato__servidor__matricula }}</td>
+                            <td>{{ lotacao.contrato__digito }}</td>
+                            <td>{{ lotacao.contrato__servidor__nome }}</td>
+
+                            {% if lotacao.funcao %}
+                                <td>{{ lotacao.funcao }}</td>
+                            {% else %}
+                                <td>Não Informada</td>
+                            {% endif %}
+
+                            {% if lotacao.unidade_escolar__escola__nome_escola %}
+                                <td>{{ lotacao.unidade_escolar__escola__nome_escola }}</td>
+                            {% else %}
+                                <td>Não Informada</td>
+                            {% endif %}
+
+                            {% if lotacao.unidade_escolar__municipio %}
+                                <td>{{ lotacao.unidade_escolar__municipio }}</td>
+                            {% else %}
+                                {% if lotacao.contrato__municipio %}
+                                    <td>{{ lotacao.contrato__municipio }}</td>
+                                {% endif %}
+                            {% endif %}
+                        </tr>
+                    {% endif %}
+
+                {% endfor %}
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td class="coluna-paginacao" colspan="6">
+                        <div class="container-paginacao">
+                            <div>
+                                <span class="texto-negrito texto-azul">TOTAL:</span>
+                                <span>{{ quantidade_lotacoes }}</span>
+                            </div>
+
+                            <div>
+                                {% if lotacoes.has_previous %}
+                                    <a class="" href="{% url 'lotacao:lotacoes' %}?{{ gets_primeira }}">
+                                        <button class="botao-paginacao">first_page</button>
+                                    </a>
+
+                                    <a class="" href="{% url 'lotacao:lotacoes' %}?{{ gets_anterior }}">
+                                        <button class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">first_page</button>
+                                    </a>
+
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% endif %}
+
+                                <span class="">
+                                    {{ lotacoes.number }} de {{ lotacoes.paginator.num_pages }}
+                                </span>
+
+                                {% if lotacoes.has_next %}
+                                    <a class="" href="{% url 'lotacao:lotacoes' %}?{{ gets_proxima }}">
+                                        <button class="botao-paginacao">navigate_next</button>
+                                    </a>
+
+                                    <a class="" href="{% url 'lotacao:lotacoes' %}?{{ gets_ultima }}">
+                                        <button class="botao-paginacao">last_page</button>
+                                    </a>
+
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_next</button>
+                                    </a>
+
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">last_page</button>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <table class="tabela tabela-lotacoes-tablet">
+            <thead>
+                <tr>
+                    <th>Servidor</th>
+                    <th>Função</th>
+                    <th>Unidade</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for lotacao in lotacoes %}
+                    {% if lotacao.unidade_adm %}
+                        <tr data-modal-abrir="lotacao-detalhe-{{ lotacao.id }}">
+                            <td>{{ lotacao.contrato__servidor__nome }}</td>
+                            <td>{{ lotacao.funcao }}</td>
+                            <td>{{ lotacao.unidade_adm__nome }}</td>
+                        </tr>
+                    {% else %}
+                        <tr data-modal-abrir="lotacao-detalhe-{{ lotacao.id }}">
+                            <td>{{ lotacao.contrato__servidor__nome }}</td>
+                            <td>{{ lotacao.funcao }}</td>
+
+                            {% if lotacao.unidade_escolar__escola__nome_escola %}
+                                <td>{{ lotacao.unidade_escolar__escola__nome_escola }}</td>
+                            {% else %}
+                                <td>Não Informada</td>
+                            {% endif %}
+                        </tr>
+                    {% endif %}
+
+                {% endfor %}
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td class="coluna-paginacao" colspan="3">
+                        <div class="container-paginacao">
+                            <div>
+                                <span class="texto-negrito texto-azul">TOTAL:</span>
+                                <span>{{ quantidade_lotacoes }}</span>
+                            </div>
+
+                            <div>
+                                {% if lotacoes.has_previous %}
+                                    <a class="" href="{% url 'lotacao:lotacoes' %}?{{ gets_primeira }}">
+                                        <button class="botao-paginacao">first_page</button>
+                                    </a>
+
+                                    <a class="" href="{% url 'lotacao:lotacoes' %}?{{ gets_anterior }}">
+                                        <button class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">first_page</button>
+                                    </a>
+
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% endif %}
+
+                                <span class="">
+                                    {{ lotacoes.number }} de {{ lotacoes.paginator.num_pages }}
+                                </span>
+
+                                {% if lotacoes.has_next %}
+                                    <a class="" href="{% url 'lotacao:lotacoes' %}?{{ gets_proxima }}">
+                                        <button class="botao-paginacao">navigate_next</button>
+                                    </a>
+
+                                    <a class="" href="{% url 'lotacao:lotacoes' %}?{{ gets_ultima }}">
+                                        <button class="botao-paginacao">last_page</button>
+                                    </a>
+
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_next</button>
+                                    </a>
+
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">last_page</button>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <table class="tabela tabela-lotacoes-smartphone">
+            <thead>
+                <tr>
+                    <th>Servidor</th>
+                    <th>Função</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for lotacao in lotacoes %}
+                    {% if lotacao.unidade_adm %}
+                        <tr data-modal-abrir="lotacao-detalhe-{{ lotacao.id }}">
+                        <tr>
+                            <td>{{ lotacao.contrato__servidor__nome }}</td>
+                            <td>{{ lotacao.funcao }}</td>
+                        </tr>
+                    {% else %}
+                        <tr data-modal-abrir="lotacao-detalhe-{{ lotacao.id }}">
+                            <td>{{ lotacao.contrato__servidor__nome }}</td>
+                            <td>{{ lotacao.funcao }}</td>
+                        </tr>
+                    {% endif %}
+
+                {% endfor %}
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td class="coluna-paginacao" colspan="2">
+                        <div class="container-paginacao">
+                            <div>
+                                <span class="texto-negrito texto-azul">TOTAL:</span>
+                                <span>{{ quantidade_lotacoes }}</span>
+                            </div>
+
+                            <div>
+                                {% if lotacoes.has_previous %}
+                                    <a class="" href="{% url 'lotacao:lotacoes' %}?{{ gets_primeira }}">
+                                        <button class="botao-paginacao">first_page</button>
+                                    </a>
+
+                                    <a class="" href="{% url 'lotacao:lotacoes' %}?{{ gets_anterior }}">
+                                        <button class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">first_page</button>
+                                    </a>
+
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% endif %}
+
+                                <span class="">
+                                    {{ lotacoes.number }} de {{ lotacoes.paginator.num_pages }}
+                                </span>
+
+                                {% if lotacoes.has_next %}
+                                    <a class="" href="{% url 'lotacao:lotacoes' %}?{{ gets_proxima }}">
+                                        <button class="botao-paginacao">navigate_next</button>
+                                    </a>
+
+                                    <a class="" href="{% url 'lotacao:lotacoes' %}?{{ gets_ultima }}">
+                                        <button class="botao-paginacao">last_page</button>
+                                    </a>
+
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_next</button>
+                                    </a>
+
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">last_page</button>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+    </div>
+</main>
+
+{% include 'partials/_rodape.html' %}
+
+{% include 'lotacao/lotacao/partials/_modal-lotacao-filtros.html' %}
+
+{% include 'lotacao/lotacao/partials/_modais-lotacoes-detalhes.html' %}
+
+<script src="{% static 'assets/js/module/linkTabela.js' %}"></script>
+<script src="{% static 'assets/js/module/mascaras.js' %}" type='module'></script>
+<script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+<script src="{% static 'assets/js/module/select2.js' %}"></script>
+
+<script src="{% static 'assets/js/layout/lotacao/lotacoes/controlaExportar.js' %}"></script>
+
+{% endblock %}

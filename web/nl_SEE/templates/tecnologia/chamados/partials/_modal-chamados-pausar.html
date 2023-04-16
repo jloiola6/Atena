@@ -1,0 +1,18 @@
+<div class="modal oculto" data-modal="pausar">
+    <form id="modal-conteudo" class="modal-conteudo" method="POST">
+        {% csrf_token %}
+        <div class="modal-filtros-titulo">
+            <h2 class="texto-grande texto-negrito texto-azul">PAUSAR CHAMADO</h2>
+        </div>
+
+        <div class="formulario-grupo">
+            <label for="descricao" class="label-campo texto-azul">Atividades Realizadas:</label>
+            <textarea class="campo-texto campo-area" name="motivo"></textarea>
+        </div>
+
+        <div class="container-botoes">
+            <button type="submit" class="botao botao--verde" name="btn-pausar" value="Pausado">Pausar</button>
+            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+        </div>
+    </form>
+</div>

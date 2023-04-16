@@ -1,0 +1,25 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="adicionar">
+    <div id="modal-conteudo"  class="modal-conteudo">
+        <h2 class="texto-grande texto-negrito texto-azul">Adicionar contrato</h2>
+        <p class="descricao texto-preto ">Selecione o tipo de contrato que deseja adicionar</p>
+
+        <div class="formulario-grupo">
+            <label for="selecao-tipo" class="texto-azul label-campo">Tipo de contrato</label>
+            <select class="campo-texto campo-medio" name="" id="selecao-tipo" data-selecao-tipo-contrato>
+                <option value="Produtos">Produtos</option>
+                <option value="Serviços">Serviços</option>
+                <option value="Postos de trabalho">Postos de trabalho</option>
+                <option value="Postos de trabalho - Limpeza">Postos de trabalho - Limpeza</option>
+                <option value="Postos de trabalho - Vigilância Armada">Postos de trabalho - Vigilância Armada</option>
+            </select>
+        </div>
+
+        <div class="container-botoes">
+            <a href="#" data-link-form-contrato>
+                <button class="botao botao--azul">Abrir formulário</button>
+            </a>
+        </div>
+    </div>
+</div>

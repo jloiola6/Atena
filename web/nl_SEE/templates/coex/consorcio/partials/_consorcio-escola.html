@@ -1,0 +1,33 @@
+
+<div data-nav-container="escolas">
+    {% if qtd_escolas > 0 %}
+        <table class="tabela tabela-consorcio">
+            <thead>
+                <tr>
+                    <th class="">INEP</th>
+                    <th class="">Escolas vinculadas</th>
+                    <th class="">MUNICÍPIO</th>
+                </tr>
+            </thead>
+
+            <tbody data-tabela-link="{% url 'coex:comite-perfil' %}?id=">
+                {% for item in escolas %}
+                    <tr data-tabela-link-chave="{{ item.escola__id }}">
+                        <td>{{ item.escola__cod_inep }}</td>
+                        <td>{{ item.escola__nome_escola|upper }}</td>
+                        <td>{{ item.municipio|upper }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    <div class="container-botoes">
+        {% if qtd_escolas < 5 %}
+            <a href="{% url 'coex:vincular-escola' %}?id={{ id_consorcio }}"><button class="botao botao--azul">Vincular escola</button></a>
+        {% endif %}
+        {% if qtd_escolas < 6 and qtd_escolas > 2 %}
+            <a href="{% url 'coex:desvincular-escola' %}?id={{ id_consorcio }}"><button class="botao botao--azul">Desvincular escola</button></a>
+        {% endif %}
+    </div>
+</div>

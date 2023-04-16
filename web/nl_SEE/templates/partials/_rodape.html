@@ -1,0 +1,18 @@
+{% load static %}
+
+<footer class="rodape">
+    <div class="rodape-faixa"></div>
+
+    <div class="rodape-container">
+        <div>
+            <img class="rodape-logo" src="{% static 'assets/img/logo-rodape.svg' %}" alt="Logotipo rodapé">
+        </div>
+
+        <div class="container-saiba-mais">
+            <p><a class="texto-branco" href="{% url 'core:saiba-mais' %}">Saiba mais</a></p>
+
+            <p><a class="texto-branco" href="{% url 'core:suporte' %}">Suporte</a></p>
+
+        </div>
+    </div>
+</footer>

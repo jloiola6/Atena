@@ -1,0 +1,82 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+Anexo de Documento
+{% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'coex:index' %}">COEX</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'coex:comite' %}">Comitê</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'coex:comite-perfil' %}?id={{ escola.id }}">{{ escola.nome_escola }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Anexo de Documento</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Anexo de Documento</h1>
+            <p class="descricao  texto-preto">Insira os documento da unidade</p>
+
+            <form class="container-surface" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <h2 class="texto-medio texto-azul">Anexar documento</h2>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="arquivo">Insira o arquivo</label>
+                    <input class="campo-arquivo" id="arquivo" type="file" name="arquivo" required>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo">Categorias</label>
+
+                    <select data-selecao2 name="categorias" class="campo-texto campo-medio">
+                        {% for categoria in categorias %}
+                            <option data-opcao-empresa value="{{ categoria }}">{{ categoria }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label for="campo-texto-descricao" class="texto-azul label-campo">Descrição do Documento</label>
+                    <textarea name="descricao" id="campo-texto-descricao" class="campo-texto campo-area" required maxlength="100"></textarea>
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao botao--azul" data-modal-abrir="confirmar">Cadastrar</button>
+                </div>
+
+                <div class="modal oculto" data-modal="confirmar">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                        <p class="texto-preto descricao">Tem certeza que deseja anexar o documento?</p>
+
+                        <div class="container-botoes">
+                            <button class="botao--verde botao" type="submit">Salvar</button>
+                            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+
+    <script src="{% static 'assets/js/layout/coex/comite-formulario/controlaSubmissao.js' %}"></script>
+
+{% endblock %}

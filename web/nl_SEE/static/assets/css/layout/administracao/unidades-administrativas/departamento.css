@@ -1,0 +1,48 @@
+/* Estilização da página de perfil de uma departamento */
+
+.container-surface-departamento{
+    margin-top: 1.5rem;
+}
+
+.container-departamento-dados{
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+    row-gap: .5rem;
+}
+
+.titulo-endereco-departamento{
+    margin-top: 1rem;
+}
+
+.container-endereco-departamento{
+    display: flex;
+    flex-basis: 50%;
+    flex-direction: column;
+    margin-top: 1rem;
+    row-gap: .5rem;
+}
+
+.container-endereco-departamento .container-botoes{
+    margin-top: .5rem;
+}
+
+.titulo-equipe-departamento{
+    margin-top: 1rem;
+}
+
+.container-equipe-departamento{
+    display: flex;
+    flex-basis: 50%;
+    flex-direction: column;
+    margin-top: 1rem;
+    row-gap: .5rem;
+}
+
+.container-equipe-departamento .link{
+    margin-top: .5rem;
+}
+
+.mensagem-sem-divisoes{
+    margin-top: .5rem;
+}

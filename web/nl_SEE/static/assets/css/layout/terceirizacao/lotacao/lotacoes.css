@@ -1,0 +1,5 @@
+/* Estilização da página de lotações */
+
+.container-lotacoes-busca, .container-lotacoes-busca .container-botoes{
+    margin-top: 16px;
+}

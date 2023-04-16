@@ -1,0 +1,25 @@
+
+.container-surface-sistema{
+    margin-top: 24px;
+}
+
+.container-status-link{
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.container-status-sistema{
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+    row-gap: 8px;
+}
+
+.container-manutencao-sistema{
+    margin-top: 16px;
+}
+
+.container-manutencao-sistema .container-botoes{
+    margin-top: 16px;
+}

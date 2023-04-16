@@ -1,0 +1,113 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Cadastro de Tablets {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/tecnologia/educacao-conectada/tablets/tablet-formulario.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:index' %}">Tecnologia</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:educacao-conectada' %}">Educação Conectada</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:tablets' %}">Tablets</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:escola-perfil' turma.endereco.escola.id %}">{{ turma.endereco.escola }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:turma-perfil' turma.id %}">{{ turma }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Cadastro de Tablets</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Cadastro de Tablets</h1>
+
+            {% if alunos %}
+                <form method="POST" class="container-surface">
+                    {% csrf_token %}
+                    <nav class="container-navegacao-surface">
+                        <ul class="navegacao-surface-lista">
+                            <li class="navegacao-surface-item navegacao-surface-item-ativo" data-form-aba="alunos">Alunos ({{ qtd_alunos }})</li>
+                        </ul>
+                    </nav>
+
+                    {% for aluno in alunos %}
+                        <div class="formulario-grupo">
+                            <p class="texto-preto"><b class="texto-azul">Aluno: </b>{{ aluno.aluno.nome }}</p>
+
+                            {% if aluno.aluno.bolsa_familia %}
+                                <p class="texto-preto"><b class="texto-azul">CAD Único: </b>Sim</p>
+                            {% else %}
+                                <p class="texto-preto"><b class="texto-azul">CAD Único: </b>Não</p>
+                            {% endif %}
+                        </div>
+
+                        <div class="grupo-equipamento">
+                            <div class="formulario-grupo">
+                                <label for="campo-tablet-serial-{{ aluno.aluno.id }}" class="label-campo texto-azul">Tablet (Serial)</label>
+                                <input id="campo-tablet-serial-{{ aluno.aluno.id }}" name="tablet_serial-{{ aluno.id }}" class="campo-texto campo-medio" type="text" autocomplete="off" data-campo-equipamento>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label for="campo-tablet-imei${contador}" class="label-campo texto-azul">Tablet (Patrimônio)</label>
+                                <input id="campo-tablet-imei${contador}" name="tablet_imei-{{ aluno.id }}" class="campo-texto campo-medio" type="text" autocomplete="off" data-campo-equipamento>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label for="campo-chip-serial${contador}" class="label-campo texto-azul">Chip (Serial)</label>
+                                <input id="campo-chip-serial${contador}" name="chip_serial-{{ aluno.id }}" class="campo-texto campo-medio" type="text" autocomplete="off" data-campo-equipamento>
+                            </div>
+                        </div>
+
+                        {% if not forloop.last %}
+                            <hr>
+                        {% endif %}
+                    {% endfor %}
+
+                    <div class="container-botoes">
+                        <button class="botao botao--azul" data-modal-abrir="confirmar">Cadastrar</button>
+                    </div>
+
+                    <div class="modal oculto" data-modal="confirmar">
+                        <div class="modal-conteudo modal-confirmacao">
+                            <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+
+                            <p class="texto-preto descricao">Cadastrar tablets da turma selecionada?</p>
+
+                            <div class="container-botoes">
+                                <button class="botao botao--verde" type="submit">Cadastrar</button>
+                                <button class="botao botao--vermelho" data-modal-fechar="">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            {% else %}
+                <p class="texto-preto">Esta turma não possui alunos cadastrados.</p>
+            {% endif %}
+        </div>
+    </main>
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/module/controlaNavegacaoFormulario.js' %}"></script>
+    <!-- <script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script> -->
+
+    <script src="{% static 'assets/js/layout/tecnologia/educacao-conectada/tablets/tablet-formulario/controlaCampos.js' %}"></script>
+
+    {% include 'partials/_rodape.html' %}
+{% endblock %}

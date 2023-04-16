@@ -1,0 +1,29 @@
+/* Configuração da responsividade da tabela de unidades */
+
+.tabela-unidades-tablet, .tabela-unidades-smartphone{
+    display: none;
+}
+
+@media screen and (max-width: 768px){
+    .tabela-unidades, .tabela-unidades-smartphone{
+        display: none;
+    }
+
+    .tabela-unidades-tablet{
+        display: block;
+    }
+
+    .tabela-unidades-campo{
+        width: 1%;
+    }
+}
+
+@media screen and (max-width: 425px){
+    .tabela-unidades, .tabela-unidades-tablet{
+        display: none;
+    }
+
+    .tabela-unidades-smartphone{
+        display: block;
+    }
+} 

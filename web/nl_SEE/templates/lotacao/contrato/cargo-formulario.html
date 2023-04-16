@@ -1,0 +1,105 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+    Cadastro de Cargo
+{% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:index' %}">Gestão de Pessoas</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:contratos' %}">Contratos</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:contrato-formulario' %}?id_servidor={{id_servidor}}">Cadastro de Contrato</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Cadastro de Cargo</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Cadastro de Cargo</h1>
+            <p class="descricao  texto-preto">Insira os dados do cargo</p>
+
+            <form class="container-surface container-formulario-contrato-lotacao" method="POST">
+                {% csrf_token %}
+
+                <h2 class="texto-azul texto-medio">Dados do Cargo</h2>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-nome">Nome</label>
+                    <input class="campo-texto campo-grande" type="text" value="" name="nome" id="campo-nome" placeholder="Ex: PROFESSOR P2" maxlength="150" required>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-classe">Classe</label>
+                    <input class="campo-texto campo-medio" type="text" value="" name="classe" id="campo-classe" placeholder="Ex: CLASSE I" maxlength="15" required>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-carga-horaria">Carga Horária</label>
+                    <input class="campo-texto campo-pequeno" type="text" value="" name="carga_horaria" id="campo-carga-horaria" placeholder="Ex: 30" maxlength="3" data-mascara="numero" required>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-nivel">Nível</label>
+                    <select name="nivel" id="campo-nivel" class="campo-texto campo-medio">
+                        {% for nivel in niveis %}
+                            <option value="{{ nivel }}">{{ nivel }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-tipo">Tipo</label>
+                    <select name="tipo" id="campo-tipo" class="campo-texto campo-medio">
+                        <option value="EFETIVO">EFETIVO</option>
+                        <option value="TEMPORÁRIO">TEMPORÁRIO</option>
+                        <option value="COMISSÃO">COMISSÃO</option>
+                    </select>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-situacao">Situação</label>
+                    <select name="situacao" id="campo-situacao" class="campo-texto campo-medio">
+                        <option value="ATIVO">ATIVO</option>
+                        <option value="EXTINTO">EXTINTO</option>
+                    </select>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-atribuicao">Atribuição</label>
+                    <textarea class="campo-texto campo-area" type="text" name="atribuicao" id="campo-atribuicao" maxlength="200" required></textarea>
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao botao--azul" data-modal-abrir="confirmar">Cadastrar</button>
+                </div>
+
+                <div class="modal oculto" data-modal="confirmar">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                        <p class="texto-preto descricao">Tem certeza que deseja salvar o novo cargo?</p>
+
+                        <div class="container-botoes">
+                            <button class="botao--verde botao" type="submit">Cadastrar</button>
+                            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type='module'></script>
+{% endblock %}

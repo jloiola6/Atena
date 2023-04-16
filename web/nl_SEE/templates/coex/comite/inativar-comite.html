@@ -1,0 +1,75 @@
+<!-- ADICIONAR REQUIRED -->
+
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+    Inativar Comitê
+{% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'coex:index' %}">COEX</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'coex:comite' %}">Comitês</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'coex:comite-perfil' %}?id={{ comite.escola.id }}">{{ comite.escola.nome_escola }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Inativar Comitê</span>
+            </nav>
+
+            <form class="container-surface container-formulario-inativar-link" method="POST">
+                {% csrf_token %}
+
+                <h1 class="texto-medio texto-azul">Inativar Comitê</h1>
+                <p class="descricao texto-preto">Preencha o formulário para inativar o comitê. Preencha os dados</p>
+
+                <div class="formulario-grupo">
+                    <label for="campo-numero-contrato" class="texto-azul label-campo">Nome Empresarial</label>
+                    <input id="campo-numero-contrato" type="text" class="campo-texto campo-grande" readonly value="{{ comite.nome_empresarial }}">
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-data-inativo">Data de inativação</label>
+                    <input id="campo-data-inativo" name='data_inativo' type="date" class="campo-pequeno campo-texto" required>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label for="campo-texto-motivo" class="texto-azul label-campo">Motivo</label>
+                    <textarea name="motivo" id="campo-texto-motivo" class="campo-texto campo-area" required></textarea>
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao botao--azul" data-modal-abrir="confirmar">Salvar</button>
+                </div>
+
+                <div class="modal oculto" data-modal="confirmar">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                        <p class="texto-preto descricao">Tem certeza que deseja inativar o comitê?</p>
+
+                        <div class="container-botoes">
+                            <button class="botao--verde botao" type="submit">Salvar</button>
+                            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+
+{% endblock %}

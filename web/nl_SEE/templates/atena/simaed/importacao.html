@@ -1,0 +1,70 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} SIMAED {% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'atena:index' %}" class=" texto-azul">Configurações</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'atena:simaed' %}" class=" texto-azul">SIMAED</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">{{ importacao }}</span>
+            </nav>
+
+            <div class="container-surface">
+                <h1 class="texto-azul texto-medio">{{ importacao }}</h1>
+
+                <div class="container-detalhes">
+                    <p class="texto-preto"><b class="texto-azul">Data: </b>{{ importacao.data_hora }}</p>
+                    <p class="texto-preto"><b class="texto-azul">Enturmações: </b>{{ importacao.enturmacoes }}</p>
+                    <p class="texto-preto"><b class="texto-azul">Novas enturmações: </b>{{ importacao.novas_enturmacoes }}</p>
+                    <p class="texto-preto"><b class="texto-azul">Arquivo: </b>{{ importacao.get_arquivo }}</p>
+                    <a href="{% url 'core:index' %}{{ importacao.path_arquivo }}" class="link">Abrir arquivo</a>
+                </div>
+
+                <form method="POST" class="container-botoes">
+                    {% csrf_token %}
+
+                    <button class="botao botao--azul" type="submit" name="importar-tudo">Importar tudo</button>
+                </form>
+            </div>
+
+            <h2 class="titulo-pagina">Escolas ({{ qtd_escolas }})</h2>
+
+            <table class="tabela">
+                <thead>
+                    <tr>
+                        <th>INEP</th>
+                        <th>Nome</th>
+                    </tr>
+                </thead>
+
+                <tbody data-tabela-link="/atena/escola/">
+                    {% for escola in escolas %}
+                        <tr data-tabela-link-chave="{{ id_importacao }}/{{ escola.inep_escola }}">
+                            <td>{{ escola.inep_escola }}</td>
+                            <td>{{ escola.escola }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/linkTabela.js' %}"></script>
+    <script src="{% static 'assets/js/module/controlaSubmissao.js' %}"></script>
+{% endblock %}

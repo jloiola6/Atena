@@ -1,0 +1,103 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} {{ escola.nome_escola }} {% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+    {% include 'partials/_cabecalho.html' %}
+<main>
+    <div class="container">
+        <nav class="container-navegacao">
+            <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'coex:index' %}" class=" texto-azul">COEX</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'coex:comite' %}" class=" texto-azul">Comitês</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'coex:comite-perfil' %}?id={{ escola.id }}" class=" texto-azul">{{ escola.nome_escola }}</a>
+            <span class="texto-azul">&#62;</span>
+
+            <span class="  texto-azul">Gerenciador de Documentos</span>
+        </nav>
+
+        <div class="container-botoes">
+            <a href="{% url 'coex:documento-formulario' %}?id={{ coex.escola.id }}">
+                <button class="botao botao--azul">Adicionar</button>
+            </a>
+        </div>
+
+        <div class="container-surface">
+            <h2 class="texto-medio texto-azul">Buscar Documento</h2>
+
+            <form class="formulario" method="GET">
+
+                <div class="formulario-grupo oculto">
+                    <input class="campo-texto campo-medio" name="id_coex" value='{{ coex.id }}' type="text" placeholder="Descrição do documento">
+                </div>
+
+                <div class="formulario-grupo">
+                    <input class="campo-texto campo-medio" name="documento" type="text" placeholder="Descrição do documento" data-campo-busca>
+                </div>
+
+            </form>
+        </div>
+        <div class="container-surface">
+            <nav class="container-navegacao-surface">
+                <ul class="navegacao-surface-lista">
+
+                    <li class="navegacao-surface-item navegacao-surface-item-ativo navegacao-surface-item-selecionavel" data-nav-aba="atas">
+                        <span class="texto-azul ">ATA's</span>
+                    </li>
+
+                    <li class="navegacao-surface-item navegacao-surface-item-selecionavel" data-nav-aba="pessoais">
+                        <span class="texto-azul ">Documentos Pessoais</span>
+                    </li>
+
+                    <li class="navegacao-surface-item navegacao-surface-item-selecionavel" data-nav-aba="edital">
+                        <span class="texto-azul ">Edital</span>
+                    </li>
+
+                    <li class="navegacao-surface-item navegacao-surface-item-selecionavel" data-nav-aba="estatutos">
+                        <span class="texto-azul ">Estatuto</span>
+                    </li>
+
+                    <li class="navegacao-surface-item navegacao-surface-item-selecionavel" data-nav-aba="presenca">
+                        <span class="texto-azul ">Lista de presença</span>
+                    </li>
+
+                    <li class="navegacao-surface-item navegacao-surface-item-selecionavel" data-nav-aba="requerimento">
+                        <span class="texto-azul ">Requerimento</span>
+                    </li>
+
+                    <li class="navegacao-surface-item navegacao-surface-item-selecionavel" data-nav-aba="outros">
+                        <span class="texto-azul ">Outros</span>
+                    </li>
+                </ul>
+            </nav>
+
+            {% include 'coex/comite/partials/_coex-documentos-atas.html'  %}
+            {% include 'coex/comite/partials/_coex-documentos-pessoais.html'  %}
+            {% include 'coex/comite/partials/_coex-documentos-estatuto.html'  %}
+            {% include 'coex/comite/partials/_coex-documentos-requerimento.html'  %}
+            {% include 'coex/comite/partials/_coex-documentos-edital.html' %}
+            {% include 'coex/comite/partials/_coex-documentos-presenca.html'  %}
+            {% include 'coex/comite/partials/_coex-documentos-outros.html'  %}
+
+            <p class="texto-preto  oculto" data-sem-resultado>Nenhum documento encontrado</p>
+
+        </div>
+    </div>
+</main>
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/layout/coex/gerenciador-documentos/buscaDocumento.js' %}"></script>
+    <script src="{% static 'assets/js/module/controlaNavegacaoSurface.js' %}"></script>
+
+
+{% endblock %}

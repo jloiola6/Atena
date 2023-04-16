@@ -1,0 +1,18 @@
+@media screen and (max-width: 768px){
+    .modal-filtro-usuarios{
+        width: 80%;
+    }
+}
+
+/* @media screen and (max-width: 768px){
+    .modal-conteudo{
+        width: 80%;
+    }
+} */
+
+@media screen and (max-width: 425px){
+    .modal-filtro-usuarios{
+        width: 90%;
+        padding: 40px 24px;
+    }
+}

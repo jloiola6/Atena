@@ -1,0 +1,11 @@
+/* Estilização da página Meu Perfil */
+
+.container-servidor__titulo{
+    align-items: center;
+    display:flex;
+    gap: .5rem;
+}
+
+.card-lotacao{
+    flex-basis: 100%;
+}

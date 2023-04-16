@@ -1,0 +1,52 @@
+html{
+	/* Definição do padrão de cores */
+
+	/* Cores para texto */
+	--texto-azul: #104183;
+	--texto-verde: #0A898F;
+	--texto-cinza: #747474;
+	--texto-branco: #FFFFFF;
+	--texto-preto: #000000;
+	--texto-vermelho: #B11504;
+	--texto-amarelo: #8f860a;
+
+	/* Cores para componentes */
+	--cor-azul: #104183;
+	--cor-azul-hover: #1458B1;
+
+	--cor-verde: #0A898F;
+	--cor-verde-hover: #0DA4AC;
+
+	--cor-vermelho: #851003;
+	--cor-vermelho-hover: #B11504;
+
+	--cor-amarelo: #F4EC51;
+
+	--cor-branco: #FFFFFF;
+
+	--cor-laranja: #F4B351;
+
+	--cor-desabilitado: #575757;
+
+	--cor-fundo: #F0F8FF;
+
+	--cor-surface: #FFFFFF;
+	--cor-surface-hover: #F6F6F6;
+
+	/* CORES PARA ETAPAS DE ENSINO */
+
+	--cor-fundamental: #0DA4AC;
+	--cor-medio: #B11504;
+	--cor-eja: #104183;
+	--cor-aee: #9632AF;
+	--cor-aprender-caminho: #84B114;
+	--cor-caminhos-campo: #D57A07;
+
+
+	/* CORES PARA UNIDADES ADMINISTRATIVAS */
+	--cor-diretoria: #4EAF49;
+	--cor-departamento: #66B2FF;
+	--cor-divisao: border-left-color: #009999;
+	--cor-nucleo: #10739E;
+	--cor-centro: #006600;
+}

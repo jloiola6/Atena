@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-bt">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Termo Aditivo do Contrato</title>
+    </head>
+
+    <body>
+        <header>
+            <table>
+                <tr>
+                    <th><img id="img1" src="{{ url_logo }}" width='550px' alt="Cabecalho"></th>
+                    <th class="direita"><img id="img2" src="{{ url_atena }}" width='120px' alt="Logo Atena"></th>
+                    <!-- <th><img id="img2" src="C:\Users\franklin.farias\Documents\Programação\Atena\nl_SEE\static\assets\img\termo-aditivo.png" width='550px' alt="Cabecalho"></th>
+                    <th><img id="img1" src="C:\Users\franklin.farias\Documents\Programação\Atena\nl_SEE\static\assets\img\ATENA-AZUL.svg"  width='120px' alt="Logo Atena"></th> -->
+                </tr>
+            </table>
+        </header>
+
+        <hr>
+        <div>
+            <br>
+            <section>
+                <div style="text-align: justify;">
+                    <span>
+                        <b>TERMO ADITIVO AO CONTRATO {{contratos.tipo_contrato}} DE PRESTAÇÃO DE SERVIÇO Nº {{contratos.id}}/{{contratos.ano_referencia}}</b>
+                    </span>
+                    <br><br>
+                    <span>
+                        Pelo presente Termo Aditivo ao Contrato Individual de Prestação de Serviços <b>{{contratos.tipo_contrato}}</b>, que entre si celebram como partes
+                        o Estado do Acre, representado neste ato pela <b>SECRETARIA DE ESTADO DE EDUCAÇÃO, CULTURA E ESPORTES</b>, inscrita no CNPJ sob o nº 04.033.254/0001-67,
+                        com sede na Rua Rio Grande do Sul, 1907 - Volta Seca, CEP 69.911-018, representada pelo Senhor <b>{{ secretario.contrato.servidor.nome }}</b>, Secretário de Estado de
+                        Educação, Cultura e Esportes, CPF nº 753.451.292-15, RG nº 353911 SSP/AC doravante denominado CONTRATANTE, e o(a) Sr(a). <b>{{contratos.servidor.nome}},
+                        CPF nº {{ contratos.servidor.cpf }} e RG nº {{ contratos.servidor.rg }}</b>, <b>Telefone: {{ contato.contato }}</b>, a seguir denominado(a) CONTRATADO(A), domiciliado(a) no(a) <b>{{ endereco.rua }}, Nº {{ endereco.numero }}, {{ endereco.bairro }}</b>,
+                        no Município de <b>{{ endereco.municipio }} - {{ endereco.uf }}</b>, conforme processo seletivo simplificado,
+                        {% if contratos.doe %}
+                            publicado no <b>D.O.E: {{contratos.doe}}</b>,
+                        {% elif contratos.parecer %}
+                            publicado no <b>Parecer: {{contratos.parecer}}</b>,
+                        {% endif %}
+                        convencionam o seguinte:
+                    </span>
+                    <br><br>
+                    <span>
+                        <b>CLÁUSULA PRIMEIRA - DO OBJETO</b>
+                    </span>
+                    <br>
+                    <span>
+                        O presente Termo Aditivo tem por objeto a prorrogação do prazo de vigência estavelecido na cláusula Segunda do contrato.
+                    </span>
+                    <br><br>
+                    <span>
+                        <b>CLÁUSULA SEGUNDA - DO PRAZO</b>
+                    </span>
+                    <br>
+                    <span>
+                        O presente Termo Aditivo vigorará pelo prazo previsto na Cláusula Segunda do contrato celebrado entre as partes, iniciando-se o mesmo em <b>{{ aditivos.data_inicio }}</b>
+                        e findando em <b>{{ aditivos.data_termino }}</b>. O presente Termo Aditivo vigorará a partir da data de sua assinatura, ficando, ao término do período de vigência, rescindido de
+                        pleno direito, sem qualquer ônus para o CONTRATANTE ou direito a indenização ao CONTRATADO.
+                    </span>
+                    <br><br>
+                    <span>
+                        <b>CLÁUSULA TERCEIRA - DA RATIFICAÇÃO</b>
+                    </span>
+                    <br>
+                    <span>
+                        Todas as demais Cláusulas não especificamente modificadas pelas alterações decorrentes deste Termo Aditivo permanecemem vigor e obrigando as Partes
+                        conforme originalmente pactuadas. E por estarem assim justos e avençados, firmam o presente Instrumento, redigido em 02 (duas) vias de igual teor e forma,
+                         paraum só efeito, juntamente com as testemunhas abaixo-assinadas.
+                    </span>
+                    <br><br>
+                    <p class="data">
+                        <b>{{contratos.municipio}}, {{data}}</b>
+                    </p>
+                    <br><br><br><br>
+                    <div class="assinatura">
+                        <table>
+                            <tr>
+                                <td>
+                                    <p>___________________________________________</p>
+                                    <p><b>{{ secretario.contrato.servidor.nome }}</b></p>
+                                    <p>Secretário de Estado de Educação, Cultura e Esportes</p>
+
+                                </td>
+                                <td>
+                                    <p>___________________________________________</p>
+                                    <p><b>{{ contratos.servidor.nome }}</b></p>
+                                    <p>Contratado(a)</p>
+                                </td>
+                            </tr>
+                        </table>
+                        <br><br><br><br><br>
+                        <table>
+                            <tr>
+                                <td>
+                                    <p>___________________________________________</p>
+                                    <p><b>1ª Testemunha</b></p>
+                                </td>
+                                <td>
+                                    <p>___________________________________________</p>
+                                    <p><b>2ª Testemunha</b></p>
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <th class="dados">Exportado por {{ nome }} dia {{ data_hora }}</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </body>
+    <style>
+        @page{
+            margin: 1cm;
+        }
+
+        .direita{
+            text-align: right;
+        }
+
+        body{
+            font-size: 12px;
+        }
+
+
+        p{
+            line-height: 1px;
+        }
+
+        span{
+            text-align: justify;
+
+        }
+
+        .data{
+            margin-left: 250px;
+        }
+
+        .invisivel{
+                color: white;
+            }
+
+        td{
+            text-align: center;
+        }
+
+        .dados{
+            padding-top: 70px;
+        }
+
+    </style>
+</html>

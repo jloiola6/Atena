@@ -1,0 +1,127 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Gestão de Pessoas {% endblock %}
+
+{% load static %}
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+
+<main>
+    <div class="container">
+        <nav class="container-navegacao">
+            <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+            <span class="texto-azul">&#62;</span>
+
+            <span class="  texto-azul">Gestão de Pessoas</span>
+        </nav>
+
+        <h1 class="titulo-pagina texto-azul">Gestão de Pessoas</h1>
+
+        <div class="container-cards">
+            {% if 37 in permissoes %}
+                <a href="{% url 'lotacao:autorizacao-lotacao' %}">
+                    <div class="card-menu" >
+                        {% include 'partials/icones-cards/lotacao/autorizacao.svg' %}
+
+                        <h2 class="card-titulo">Autorização Lotação</h2>
+                    </div>
+                </a>
+            {% endif %}
+
+            {% if 38 in permissoes %}
+                <a href="{% url 'lotacao:autorizacao-verbas' %}">
+                    <div class="card-menu" >
+                        {% include 'partials/icones-cards/lotacao/autorizacao-verbas.svg' %}
+
+                        <h2 class="card-titulo">Autorização Verbas</h2>
+                    </div>
+                </a>
+            {% endif %}
+
+            {% if 14 in permissoes %}
+                <a href="{% url 'lotacao:contratos' %}">
+                    <div class="card-menu" >
+                        {% include 'partials/icones-cards/lotacao/contratos.svg' %}
+
+                        <h2 class="card-titulo">Contratos</h2>
+                    </div>
+                </a>
+            {% endif %}
+
+            {% if 34 in permissoes %}
+                <a href="{% url 'lotacao:folha-pagamento' %}">
+                    <div class="card-menu" >
+                        {% include 'partials/icones-cards/lotacao/folha.svg' %}
+
+                        <h2 class="card-titulo">Folha de Pagamento</h2>
+                    </div>
+                </a>
+            {% endif %}
+
+            {% if 15 in permissoes %}
+                <a href="{% url 'lotacao:lotacoes' %}">
+                    <div class="card-menu" >
+                        {% include 'partials/icones-cards/lotacao/lotacoes.svg' %}
+
+                        <h2 class="card-titulo">Lotações</h2>
+                    </div>
+                </a>
+            {% endif %}
+
+            {% if 8 in permissoes or 14 in permissoes or 15 in permissoes %}
+                <a href="{% url 'lotacao:tecnico' %}">
+                    <div class="card-menu">
+                        {% include 'partials/icones-cards/lotacao/tecnico.svg' %}
+
+                        <h2 class="card-titulo">Minhas Lotações</h2>
+                    </div>
+                </a>
+            {% endif %}
+
+            {% if 33 in permissoes %}
+                <a href="{% url 'lotacao:registro' %}">
+                    <div class="card-menu" >
+                        {% include 'partials/icones-cards/lotacao/registro.svg' %}
+
+                        <h2 class="card-titulo">Registro</h2>
+                    </div>
+                </a>
+            {% endif %}
+
+            {% if 8 in permissoes %}
+                <a href="{% url 'lotacao:servidores' %}">
+                    <div class="card-menu">
+                        {% include 'partials/icones-cards/lotacao/servidores.svg' %}
+
+                        <h2 class="card-titulo">Servidores</h2>
+                    </div>
+                </a>
+            {% endif %}
+
+            {% if 36 in permissoes %}
+                <a href="{% url 'lotacao:qualidade' %}">
+                    <div class="card-menu" >
+                        {% include 'partials/icones-cards/lotacao/qualidade.svg' %}
+
+                        <h2 class="card-titulo">Qualidade de Vida</h2>
+                    </div>
+                </a>
+            {% endif %}
+
+            {% if 24 in permissoes %}
+                <a href="{% url 'lotacao:anos-vdp' %}">
+                    <div class="card-menu" >
+                        {% include 'partials/icones-cards/lotacao/vdp.svg' %}
+
+                        <h2 class="card-titulo">V.D.P.</h2>
+                    </div>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</main>
+
+{% include 'partials/_rodape.html' %}
+
+{% endblock %}

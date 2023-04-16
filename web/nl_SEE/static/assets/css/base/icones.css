@@ -1,0 +1,30 @@
+.icone{
+	font-family: 'Material Icons';
+	text-transform: lowercase;
+}
+
+	.icone::selection{
+		background-color: transparent;
+	}
+
+.icone-branco{
+	color: var(--on-primary);
+}
+
+.icone-azul{
+	color: var(--text-primary-color);
+}
+
+.icone-medio{
+	font-size: 32px;
+}
+
+.icone-grande{
+	font-size: 80px;
+}
+
+/* REFATORAÇÃO */
+
+.icone--azul > path{
+	fill: var(--texto-azul);
+}

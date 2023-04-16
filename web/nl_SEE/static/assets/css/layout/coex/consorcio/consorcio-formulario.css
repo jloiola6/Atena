@@ -1,0 +1,19 @@
+/* Estiização da página de cadastro de uma unidade educacional */
+
+.formulario-unidade-dados, .formulario-unidade-endereco, .formulario-unidade-contatos, .formulario-unidade-indigena{
+    animation: var(--main-animation);
+}
+
+/* .formulario-unidade-endereco, .formulario-unidade-contatos{
+    display: none;
+} */
+
+.container-formulario-unidade{
+    margin-top: 16px;
+}
+
+    .container-formulario-unidade .container-botoes{
+        margin-top: 16px;
+    }
+
+

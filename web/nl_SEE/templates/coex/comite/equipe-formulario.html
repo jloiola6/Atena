@@ -1,0 +1,170 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Cadastro da equipe {% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'coex:index' %}" class=" texto-azul">COEX</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'coex:comite' %}" class=" texto-azul">Comitês</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'coex:comite-perfil' %}?id={{ escola.id }}" class=" texto-azul">{{ escola.nome_escola }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="texto-azul">Cadastro do comitê</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Cadastro do comitê</h1>
+
+            <p class="descricao texto-preto">Insira os detalhes referentes à equipe do comitê</p>
+
+            <form class="container-surface container-formulario-infraestrutura" method="POST">
+                {% csrf_token %}
+
+                <h2 class="texto-medio texto-azul">Membros do comitê</h2>
+
+                {% if edicao %}
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-nome_empresarial">Nome Empresarial</label>
+                        <input id="campo-nome_empresarial" class="campo-texto campo-medio" name="nome_empresarial" value="{{ coex_dado.nome_empresarial }}">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-cnpj">CNPJ</label>
+                        <input id="campo-cnpj" class="campo-texto campo-medio" name="cnpj" data-mascara="cnpj" value="{{ coex_dado.cnpj }}">
+                    </div>
+                {% endif %}
+
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-equipe0">Presidente</label>
+
+                    <select data-selecao2 name="comite-presidente" id="campo-equipe0" class="campo-texto campo-grande" data-selecao-servidor>
+                        {% if edicao %}
+                            <option selected value="{{ equipe_presidente.servidor__id }}">{{ equipe_presidente.servidor__nome }}</option>
+                        {% else %}
+                            <option value='None'></option>
+                        {% endif %}
+                    </select>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-equipe1">Tesoureiro</label>
+
+                    <select data-selecao2 name="comite-tesoureiro" id="campo-equipe1" class="campo-texto campo-grande" data-selecao-servidor>
+                        {% if edicao %}
+                            <option selected value="{{ equipe_tesoureiro.servidor__id }}">{{ equipe_tesoureiro.servidor__nome }}</option>
+                        {% else %}
+                            <option value='None'></option>
+                        {% endif %}
+                    </select>
+                </div>
+
+                {% if equipe_secretario1.nome == None %}
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-equipe-secretario1">Secretário 1</label>
+                        <input type="text" class="campo-texto campo-grande" name="secretario1" placeholder="Ex: João Pedro Soares">
+                    </div>
+                {% else %}
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-equipe-secretario1">Secretário 1</label>
+                        <input type="text" class="campo-texto campo-grande" value='{{ equipe_secretario1.nome }}' name="secretario1" placeholder="Ex: João Pedro Soares">
+                    </div>
+                {% endif %}
+
+                {% if equipe_secretario2.nome == None %}
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-equipe-secretario2">Secretário 2</label>
+                        <input type="text" class="campo-texto campo-grande" name="secretario2" placeholder="Ex: João Pedro Soares">
+                    </div>
+                {% else %}
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-equipe-secretario2">Secretário 2</label>
+                        <input type="text" class="campo-texto campo-grande" value='{{ equipe_secretario2.nome }}' name="secretario2" placeholder="Ex: João Pedro Soares">
+                    </div>
+                {% endif %}
+
+                <!-- <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-equipe-secretario2">Secretário 2</label>
+
+                    <select data-selecao2 name="comite-secretario2" id="campo-equipe3" class="campo-texto campo-grande" data-selecao-servidor>
+                        {% if edicao %}
+                            <option selected value="{{ equipe_secretario2.servidor__id }}">{{ equipe_secretario2.servidor__nome }}</option>
+                        {% else %}
+                            <option value='None'></option>
+                        {% endif %}
+                    </select>
+                </div> -->
+
+                {% if equipe_secretario3.nome == None %}
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-equipe-secretario3">Secretário 3</label>
+                        <input type="text" class="campo-texto campo-grande" name="secretario3" placeholder="Ex: João Pedro Soares">
+                    </div>
+                {% else %}
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-equipe-secretario3">Secretário 3</label>
+                        <input type="text" class="campo-texto campo-grande" value='{{ equipe_secretario3.nome }}' name="secretario3" placeholder="Ex: João Pedro Soares">
+                    </div>
+                {% endif %}
+
+                {% if equipe_secretario4.nome == None %}
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-equipe-secretario4">Secretário 4</label>
+                        <input type="text" class="campo-texto campo-grande" name="secretario4" placeholder="Ex: Ana Marina Felicio">
+                    </div>
+                {% else %}
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-equipe-secretario4">Secretário 4</label>
+                        <input type="text" class="campo-texto campo-grande" value='{{ equipe_secretario4.nome }}' name="secretario4" placeholder="Ex: Ana Marina Felicio">
+                    </div>
+                {% endif %}
+
+                {% if edicao %}
+                    <div class="container-botoes">
+                        <button class="botao botao--azul" data-modal-abrir="confirmar" data-botao-cadastrar>Editar</button>
+                    </div>
+                {% else %}
+                    <div class="container-botoes">
+                        <button class="botao botao--azul" data-modal-abrir="confirmar" data-botao-cadastrar>Cadastrar</button>
+                    </div>
+                {% endif %}
+
+                <div class="modal oculto" data-modal="confirmar">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                        <p class="texto-preto descricao">Tem certeza que deseja cadastrar a equipe?</p>
+
+                        <div class="container-botoes">
+                            <button class="botao--verde botao" type="submit">Salvar</button>
+                            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/select2.js' %}"></script>
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+
+    <script src="{% static 'assets/js/layout/coex/equipe-formulario/controlaCampoGestor.js' %}"></script>
+    <script src="{% static 'assets/js/layout/coex/comite-formulario/controlaSubmissao.js' %}"></script>
+{% endblock %}

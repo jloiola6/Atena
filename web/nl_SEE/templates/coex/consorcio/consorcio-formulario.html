@@ -1,0 +1,254 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+    {% if edicao %}
+        Edição de Consórcio
+    {% else %}
+        Cadastro de Consórcio
+    {% endif %}
+{% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class=" texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a  class=" texto-azul" href="{% url 'coex:index' %}">COEX</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'coex:consorcio' %}">Consórcios</a>
+                <span class="texto-azul">&#62;</span>
+
+                {% if edicao %}
+                    <span class="  texto-azul">Edição de Consórcio</span>
+                {% else %}
+                    <span class="  texto-azul">Cadastro de Consórcio</span>
+                {% endif %}
+            </nav>
+
+            <h1 class=" titulo-pagina texto-azul">Cadastro de Consórcio</h1>
+
+            <form class="container-surface container-formulario-chamado" method="POST">
+                <h2 class="texto-azul texto-medio">Dados</h2>
+                <p class="descricao texto-preto ">Insira os dados do consórcio</p>
+
+                {% csrf_token %}
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-nome-consorcio">Nome do Consórcio</label>
+                    <input id="campo-nome-consorcio" class="campo-texto campo-grande" value="{{ consorcio.nome_consorcio }}" name="nome-consorcio"  required>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-cnpj">CNPJ</label>
+
+                    {% if edicao %}
+                        <input id="campo-cnpj" class="campo-texto campo-medio" name="cnpj-consorcio" value="{{ consorcio.cnpj }}" data-mascara="cnpj" required>
+                    {% else %}
+                        <input id="campo-cnpj" class="campo-texto campo-medio" name="cnpj-consorcio" value="{{ consorcio.cnpj }}" data-mascara="cnpj" required>
+                    {% endif %}
+                </div>
+
+                {% if edicao %}
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-equipe0">Presidente</label>
+
+                        <div>
+                            <select data-selecao2 name="comite-presidente" id="campo-equipe0" class="campo-texto campo-grande" data-selecao-servidor>
+                                <option value='{{ equipe_presidente.servidor__id }}' selected>{{ equipe_presidente.servidor__nome }}</option>
+                            </select>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-equipe0">Presidente</label>
+
+                        <div>
+                            <select data-selecao2 name="comite-presidente" id="campo-equipe0" class="campo-texto campo-grande" data-selecao-servidor >
+                                <option value='None' selected></option>
+                            </select>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if edicao %}
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-equipe1">Tesoureiro</label>
+
+                        <select data-selecao2 name="comite-tesoureiro" id="campo-equipe1" class="campo-texto campo-grande" data-selecao-servidor >
+                            <option value='{{ equipe_tesoureiro.servidor__id }}' selected>{{ equipe_tesoureiro.servidor__nome }}</option>
+                        </select>
+
+                    </div>
+                {% else %}
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-equipe1">Tesoureiro</label>
+
+                        <select data-selecao2 name="comite-tesoureiro" id="campo-equipe1" class="campo-texto campo-grande" data-selecao-servidor >
+                            <option value='None' selected></option>
+                        </select>
+
+                    </div>
+                {% endif %}
+
+                {% if equipe_secretario1.nome == None %}
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-equipe-secretario1">Secretário 1</label>
+                        <input type="text" class="campo-texto campo-grande" name="secretario1">
+                    </div>
+                {% else %}
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-equipe-secretario1">Secretário 1</label>
+                        <input type="text" class="campo-texto campo-grande" value='{{ equipe_secretario1.nome }}' name="secretario1">
+                    </div>
+                {% endif %}
+
+                {% if equipe_secretario2.nome == None %}
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-equipe-secretario2">Secretário 2</label>
+                        <input type="text" class="campo-texto campo-grande" name="secretario2">
+                    </div>
+                {% else %}
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-equipe-secretario2">Secretário 2</label>
+                        <input type="text" class="campo-texto campo-grande" value='{{ equipe_secretario2.nome }}' name="secretario2">
+                    </div>
+                {% endif %}
+
+                <!-- {% if edicao %}
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-equipe-secretario2">Secretário 2</label>
+
+                        <select data-selecao2 name="comite-secretario2" id="campo-equipe3" class="campo-texto campo-grande" data-selecao-servidor >
+                            <option value='{{ equipe_secretario2.servidor__id }}' selected>{{ equipe_secretario2.servidor__nome }}</option>
+                        </select>
+                    </div>
+                {% else %}
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-equipe-secretario2">Secretário 2</label>
+
+                        <select data-selecao2 name="comite-secretario2" id="campo-equipe3" class="campo-texto campo-grande" data-selecao-servidor>
+                            <option value='None' selected></option>
+                        </select>
+                    </div>
+
+                {% endif %} -->
+
+                {% if equipe_secretario3.nome == None %}
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-equipe-secretario3">Secretário 3</label>
+                        <input type="text" class="campo-texto campo-grande" name="secretario3">
+                    </div>
+                {% else %}
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-equipe-secretario3">Secretário 3</label>
+                        <input type="text" class="campo-texto campo-grande" value='{{ equipe_secretario3.nome }}' name="secretario3">
+                    </div>
+                {% endif %}
+
+                {% if equipe_secretario4.nome == None %}
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-equipe-secretario4">Secretário 4</label>
+                        <input type="text" class="campo-texto campo-grande" name="secretario4">
+                    </div>
+                {% else %}
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-equipe-secretario4">Secretário 4</label>
+                        <input type="text" class="campo-texto campo-grande" value='{{ equipe_secretario4.nome }}' name="secretario4">
+                    </div>
+                {% endif %}
+
+                {% if not edicao %}
+
+                    <h2 class="texto-azul texto-medio formulario-subtitulo">Unidades Vinculadas</h2>
+
+                    <div class="formulario-grupo" data-selecao-escola>
+                        <label id="label-campo-unidade1" class="texto-azul label-campo" for="campo-unidade1">Unidade Educacional</label>
+                        <select name="unidade1" class="campo-texto campo-grande" id="campo-unidade1" data-selecao2>
+                            {% for escola in escolas %}
+                                <option value="{{ escola.escola__id }}">{{escola.escola__cod_inep}} - {{ escola.escola__nome_escola }} - {{ escola.municipio }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="formulario-grupo" data-selecao-escola>
+                        <label id="label-campo-unidade2" class="texto-azul label-campo" for="campo-unidade2">Unidade Educacional 2</label>
+                        <select name="unidade2" class="campo-texto campo-grande" id="campo-unidade2" data-selecao2>
+                            {% for escola in escolas %}
+                                <option value="{{ escola.escola__id }}">{{escola.escola__cod_inep}} - {{ escola.escola__nome_escola }} - {{ escola.municipio }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="formulario-grupo" data-selecao-escola>
+                        <label id="label-campo-unidade3" class="texto-azul label-campo" for="campo-unidade3">Unidade Educacional 3</label>
+                        <select name="unidade3" class="campo-texto campo-grande" id="campo-unidade3" data-selecao2>
+                            <option><option>
+                            {% for escola in escolas %}
+                                <option value="{{ escola.escola__id }}">{{escola.escola__cod_inep}} - {{ escola.escola__nome_escola }} - {{ escola.municipio }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="formulario-grupo" data-selecao-escola>
+                        <label id="label-campo-unidade4" class="texto-azul label-campo" for="campo-unidade4">Unidade Educacional 4</label>
+                        <select name="unidade4" class="campo-texto campo-grande" id="campo-unidade4" data-selecao2>
+                            <option><option>
+                            {% for escola in escolas %}
+                                <option value="{{ escola.escola__id }}">{{escola.escola__cod_inep}} - {{ escola.escola__nome_escola }} - {{ escola.municipio }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="formulario-grupo" data-selecao-escola>
+                        <label id="label-campo-unidade5" class="texto-azul label-campo" for="campo-unidade5">Unidade Educacional 5</label>
+                        <select name="unidade5" class="campo-texto campo-grande" id="campo-unidade5" data-selecao2>
+                            <option><option>
+                            {% for escola in escolas %}
+                                <option value="{{ escola.escola__id }}">{{escola.escola__cod_inep}} - {{ escola.escola__nome_escola }} - {{ escola.municipio }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                {% endif %}
+
+                <div class="container-botoes">
+                    {% if edicao %}
+                        <button class="botao botao--azul" data-modal-abrir="confirmar" data-botao-cadastrar>Editar</button>
+                    {% else %}
+                        <button class="botao botao--azul" data-modal-abrir="confirmar" data-botao-cadastrar>Cadastrar</button>
+                    {% endif %}
+                </div>
+
+                <div class="modal oculto" data-modal="confirmar">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                        <p class="texto-preto descricao">Tem certeza que deseja cadastrar um consórcio?</p>
+
+                        <div class="container-botoes">
+                            <button class="botao--verde botao" type="submit">Salvar</button>
+                            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+    <script src="{% static 'assets/js/module/select2.js' %}"></script>
+
+    <script src="{% static 'assets/js/layout/coex/consorcio-formulario/controlaCamposEquipe.js' %}"></script>
+    <script src="{% static 'assets/js/layout/coex/comite-formulario/controlaSubmissao.js' %}"></script>
+{% endblock %}

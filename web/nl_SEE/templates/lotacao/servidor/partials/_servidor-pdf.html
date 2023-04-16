@@ -1,0 +1,29 @@
+<table class="tabela tabela-lotacao-servidores">
+    <thead>
+        <tr>
+            <th>Matrícula</th>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Situação</th>
+        </tr>
+    </thead>
+    
+    <tbody data-tabela-link="{% url 'lotacao:servidor-perfil' %}?id=" >
+        {% for servidor in exportar %}
+            <tr data-tabela-link-chave="{{ servidor.id }}">
+                <td>{{ servidor.matricula }}</td>
+                <td>{{ servidor.nome }}</td>
+                <td>{{ servidor.cpf }}</td>
+                <td>{{ servidor.situacao }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- <style>
+table th, table td{
+    text-align: center;
+    padding-top: 4px;
+    border: 1px solid black;
+}
+</style> -->

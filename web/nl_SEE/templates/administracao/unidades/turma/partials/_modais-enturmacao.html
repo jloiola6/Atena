@@ -1,0 +1,14 @@
+{% for aluno in alunos %}
+    <form class="modal oculto" data-modal="enturmacao-{{ aluno.id }}" method="POST">
+        {% csrf_token %}
+        <div class="modal-conteudo">
+            <h3 class="texto-medio texto-azul">{{ aluno.aluno.nome }}</h3>
+
+            {% if 7 in permissoes %}
+                <div class="container-botoes">
+                    <button class="botao botao--vermelho" type="submit" name="enturmacao" value="{{ aluno.id }}">Excluir Enturmação</button>
+                </div>
+            {% endif %}
+        </div>
+    </form>
+{% endfor %}

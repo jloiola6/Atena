@@ -1,0 +1,43 @@
+{% load static %}
+
+<div class="servidor-chamados oculto" data-nav-container="chamados">
+    {% if chamados %}
+        <div class="container-cards-contratos">
+            {% for chamado in chamados %}
+                <div class="card-simples">
+                    <h4 class="card-simples__titulo texto-azul">{{ chamado.servico }}</h4>
+
+                    <div class="card-simples__descricao" >
+                        {% if chamado.solicitacao.endereco_escola %}
+                            <p class=" texto-azul texto-negrito">Unidade Escolar: <span class="texto-preto texto-normal">{{ chamado.solicitacao.endereco_escola.escola.nome_escola }}</span></p>
+                        {% else %}
+                            <p class=" texto-azul texto-negrito">Unidade Administrativa: <span class="texto-preto texto-normal">{{ chamado.solicitacao.unidade_administrativa.nome }}</span></p>
+                        {% endif %}
+
+                        <p class=" texto-azul texto-negrito">Data Abertura: <span class="texto-preto texto-normal">{{ chamado.solicitacao.data_abertura }}</span></p>
+
+                        {% if chamado.solicitacao.data_finalizacao %}
+                            <p class=" texto-azul texto-negrito">Data Finalização: <span class="texto-preto texto-normal">{{ chamado.solicitacao.data_finalizacao }}</span></p>
+                        {% endif %}
+
+                        {% if chamado.descricao_chamado %}
+                            <p class=" texto-azul texto-negrito">Descrição do chamado: <span class="texto-preto texto-normal">{{ chamado.descricao_chamado }}</span></p>
+                        {% endif %}
+
+                        <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">{{ chamado.solicitacao.situacao }}</span></p>
+                    </div>
+                </div>
+                <br>
+            {% endfor %}
+        </div>
+    {% else %}
+        <h3 class="texto-medio texto-preto">Nenhum chamado foi solicitado.</h3>
+    {% endif %}
+
+    {% if qtd_chamados >= 3 %}
+        <div class="container-botoes">
+            <a class="link" href="{% url 'core:historico-chamados' %}?id={{ servidor.id }}">Histórico de Chamados</a>
+        </div>
+    {% endif %}
+
+</div>

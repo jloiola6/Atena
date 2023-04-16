@@ -1,0 +1,17 @@
+{% load static %}
+
+<div class="oculto" data-form-container="enturmacao-adm">
+    <div class="formulario-grupo">
+        <label for="campo-disciplina" class="texto-azul label-campo">Disciplina</label>
+        <select name="disciplina" id="campo-disciplina" class="campo-texto campo-grande">
+            {% for disciplina in disciplinas %}
+                <option value="{{ disciplina.id }}">{{ disciplina.nome }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="container-botoes">
+        <button data-form-botao="dados" class="botao botao--azul">Voltar</button>
+        <button class="botao botao--azul" data-modal-abrir="confirmar">Cadastrar</button>
+    </div>
+</div>

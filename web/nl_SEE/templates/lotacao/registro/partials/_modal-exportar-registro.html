@@ -1,0 +1,24 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="exportar">
+    <form id="modal-conteudo" class="modal-conteudo" method="POST">
+        {% csrf_token %}
+        <h2 class="texto-grande texto-negrito texto-azul">Exportar dados</h2>
+        <p class="descricao texto-preto ">Insira o formato e campos que deseja exportar</p>
+
+        <div class="formulario-grupo">
+            <h3 class="texto-medio texto-azul">Formato</h3>
+
+            <fieldset id="exportar-fieldset-formatos">
+                <input type="radio" name="exportar-fieldset-formatos" value="pdf" id="radio-contrato" checked>
+                <label class="texto-preto" for="radio-contrato">PDF</label>
+
+                <!-- <input type="radio" name="exportar-fieldset-formatos" value="cancelamento" id="radio-cancelamento">
+                <label class="texto-preto" for="radio-cancelamento">Termo de Cancelamento de Contrato</label> -->
+            </fieldset>
+        </div>
+        <div class="container-botoes">
+            <button type="POST" class="botao botao--verde">Exportar</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,8 @@
+/* Estilização do container de aviso, utilizado quando a página tem somente um informe */
+
+.container-aviso{
+    align-items: center;
+    display: flex;
+    gap: 16px;
+    height: 50vh;
+}

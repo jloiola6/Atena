@@ -1,0 +1,96 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} {{ usuario }} {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/fundiaria/gerenciador-documentos.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/layout/fundiaria/responsivo/fundiaria-perfil-responsivo.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    {% include 'partials/_cabecalho.html' %}
+<main>
+    <div class="container">
+        <nav class="container-navegacao">
+            <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a  href="{% url 'core:perfil' %}?id={{servidor_id}}" class=" texto-azul">{{ servidor.nome }}</a>
+            <span class="texto-azul">&#62;</span>
+
+            <span class="  texto-azul">Gerenciador de Documentos</span>
+        </nav>
+
+        <div class="container-botoes">
+            <a href="{% url 'core:servidor-documento' %}?id={{servidor_id}}">
+                <button class="botao botao--azul">Adicionar</button>
+            </a>
+        </div>
+
+        <div class="container-surface">
+            <h2 class="texto-medio texto-azul">Buscar Documento</h2>
+
+            <form class="formulario" method="GET">
+
+                <div class="formulario-grupo oculto">
+                    <input class="campo-texto campo-medio" name="id_servidor" value='{{ servidor_id }}' type="text" placeholder="Descrição do documento">
+                </div>
+
+                <div class="formulario-grupo">
+                    <input class="campo-texto campo-medio" name="documento" type="text" placeholder="Descrição do documento" data-campo-busca>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="container-surface">
+            <nav class="container-navegacao-surface">
+                <ul class="navegacao-surface-lista">
+                    <li class="navegacao-surface-item navegacao-surface-item-ativo navegacao-surface-item-selecionavel" data-nav-aba="comprovante_residencia">
+                        <span class="texto-azul ">Comprovante de Residência</span>
+                    </li>
+
+                    <li class="navegacao-surface-item navegacao-surface-item-selecionavel" data-nav-aba="cnh">
+                        <span class="texto-azul ">CNH</span>
+                    </li>
+
+                    <li class="navegacao-surface-item navegacao-surface-item-selecionavel" data-nav-aba="cpf">
+                        <span class="texto-azul ">CPF</span>
+                    </li>
+
+                    <li class="navegacao-surface-item navegacao-surface-item-selecionavel" data-nav-aba="rg">
+                        <span class="texto-azul ">RG</span>
+                    </li>
+
+                    <li class="navegacao-surface-item navegacao-surface-item-selecionavel" data-nav-aba="passaporte">
+                        <span class="texto-azul ">Passaporte</span>
+                    </li>
+
+                    <li class="navegacao-surface-item navegacao-surface-item-selecionavel" data-nav-aba="outros">
+                        <span class="texto-azul ">Outros</span>
+                    </li>
+                </ul>
+            </nav>
+            {% include 'core/servidor/partials/documentos/_comprovante.html' %}
+            {% include 'core/servidor/partials/documentos/_cnh.html' %}
+            {% include 'core/servidor/partials/documentos/_cpf.html' %}
+            {% include 'core/servidor/partials/documentos/_rg.html' %}
+            {% include 'core/servidor/partials/documentos/_passaporte.html' %}
+            {% include 'core/servidor/partials/documentos/_outros.html' %}
+
+
+            <p class="texto-preto  oculto" data-sem-resultado>Nenhum documento encontrado</p>
+
+        </div>
+    </div>
+</main>
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/layout/core/gerenciador-documento/buscaDocumento.js' %}"></script>
+    <script src="{% static 'assets/js/module/controlaNavegacaoSurface.js' %}"></script>
+
+
+{% endblock %}

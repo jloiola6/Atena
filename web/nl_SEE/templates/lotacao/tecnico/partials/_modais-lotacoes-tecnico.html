@@ -1,0 +1,40 @@
+{% load static %}
+
+{% for aut in autorizacao %}
+    <div class="modal oculto" data-modal="lotacao-detalhe-{{ aut.lotacao__id }}">
+        <div class="modal-conteudo">
+
+            {% if aut.status == 1 %}
+                <div class="lotacao-detalhe-titulo">
+                    <i class="status status--ativo"></i>
+                    <h2 class="texto-medio texto-azul">Lotação ativa</h2>
+                </div>
+
+                <div class="container-detalhes">
+                    <p class="texto-preto"><b class="texto-azul">Servidor: </b>{{ aut.lotacao__contrato__servidor__nome }}</p>
+                    <p class="texto-preto"><b class="texto-azul">Aurotizado por: </b>{{ aut.autorizador__nome }}</p>
+                </div>
+
+                <a href="{% url 'lotacao:servidor-perfil' %}?id={{ aut.lotacao__contrato__servidor__id }}" class="link">Abrir perfil do servidor</a>
+            {% elif aut.status == 3 %}
+                <div class="lotacao-detalhe-titulo">
+                    <i class="status status--recusado"></i>
+                    <h2 class="texto-medio texto-azul">Lotação não autorizada</h2>
+                </div>
+
+                <p class="texto-preto descricao">Acesse o formulário e tente novamente</p>
+
+                <div class="container-detalhes">
+                    <p class="texto-preto"><b class="texto-azul">Servidor: </b>{{ aut.lotacao__contrato__servidor__nome }}</p>
+                    <p class="texto-preto"><b class="texto-azul">Recusado por: </b>{{ aut.autorizador__nome }}</p>
+                    <p class="texto-preto"><b class="texto-azul">Motivo: </b>{{ aut.motivo }}</p>
+                </div>
+
+                <a href="{% url 'lotacao:servidor-perfil' %}?id={{ aut.lotacao__contrato__servidor__id }}" class="link">Abrir perfil do servidor</a>
+            {% endif %}
+
+        </div>
+    </div>
+
+
+{% endfor %}

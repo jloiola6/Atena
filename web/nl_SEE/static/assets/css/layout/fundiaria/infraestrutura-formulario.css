@@ -1,0 +1,36 @@
+/* Estilização do fomulário de cadastro de infraestrutura escolar */
+
+.container-formulario-infraestrutura, .container-formulario-infraestrutura .container-botoes{
+    margin-top: 16px;
+}
+
+.linha {
+    display: flex;
+    padding: 0px;
+
+  }
+
+  .card {
+    border-style: solid;
+    border-width: 5px;
+    border-color: #e6e6e6;
+    padding: 15px;
+    width: 300px;
+
+  }
+
+  .image {
+    max-width: 300px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    max-height: 300px;
+  }
+
+  .texto{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #c8c8c8
+  }
+
+

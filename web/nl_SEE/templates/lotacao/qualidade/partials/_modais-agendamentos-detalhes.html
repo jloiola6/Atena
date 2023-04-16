@@ -1,0 +1,46 @@
+{% load static %}
+
+{% for agendamento in agendamentos %}
+    <div class="modal oculto" data-modal="agendamento-{{ agendamento.id }}">
+        <div class="modal-conteudo">
+            <h3 class="texto-medio texto-azul">Agendamento #{{ agendamento.id }}</h3>
+            <p class="texto-preto descricao">{{ agendamento.atendimento.servico }}</p>
+
+            <div class="container-detalhes">
+                <p class="texto-preto"><b class="texto-azul">Atendente: </b>{{ agendamento.atendimento.atendente }}</p>
+                <p class="texto-preto"><b class="texto-azul">Data: </b>{{ agendamento.data }}</p>
+                <p class="texto-preto"><b class="texto-azul">Hora: </b>{{ agendamento.hora_atendimento }}</p>
+                <p class="texto-preto"><b class="texto-azul">Servidor: </b>{{ agendamento.servidor }}</p>
+
+                {% if agendamento.contato %}
+                    <p class="texto-preto"><b class="texto-azul">Contato: </b>{{ agendamento.contato }}</p>
+                {% endif %}
+            </div>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <input type="hidden" name="agendamento" value="{{ agendamento.id }}">
+
+                <div class="formulario-grupo">
+                    <label for="campo-status" class="texto-azul">Status</label>
+
+                    <select class="campo-texto campo-medio" name="status" id="campo-status">
+                        {% for status in lista_status %}
+                            {% if status.id == agendamento.status %}
+                                <option value="{{ status.id }}" selected>{{ status.status }}</option>
+                            {% else %}
+                                <option value="{{ status.id }}">{{ status.status }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao botao--azul" type="submit">Salvar</button>
+                    <button class="botao botao--vermelho" type="button" data-modal-fechar>Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endfor %}

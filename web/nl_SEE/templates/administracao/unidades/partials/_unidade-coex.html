@@ -1,0 +1,46 @@
+<div class="oculto" data-nav-container="coex">
+    {% if consorcio or equipe %}
+        <h3 class="texto-medio texto-azul">Dados cadastrados</h3>
+
+        <div class="container-detalhes">
+            {% if equipe_presidente %}
+                <p class=" texto-azul texto-negrito">
+                    Presidente:
+                    <span class="texto-preto texto-normal">{{ equipe_presidente.servidor__nome }}</span>
+                </p>
+            {% endif %}
+
+            {% if equipe_tesoureiro %}
+                <p class=" texto-azul texto-negrito">
+                    Tesoureiro:
+                    <span class="texto-preto texto-normal">{{ equipe_tesoureiro.servidor__nome }}</span></a>
+                </p>
+            {% endif %}
+
+            {% if equipe_secretario1.nome %}
+                <p class=" texto-azul texto-negrito">Secretário 1: <span class="texto-preto texto-normal">{{ equipe_secretario1.nome }}</span></p>
+            {% endif %}
+
+            {% if equipe_secretario2.nome %}
+                <p class=" texto-azul texto-negrito">Secretário 2: <span class="texto-preto texto-normal">{{ equipe_secretario2.nome }}</span></p>
+            {% endif %}
+
+            {% if equipe_secretario3.nome %}
+                <p class=" texto-azul texto-negrito">Secretário 3: <span class="texto-preto texto-normal">{{ equipe_secretario3.nome }}</span></p>
+            {% endif %}
+
+            {% if equipe_secretario4.nome %}
+                <p class=" texto-azul texto-negrito">Secretário 4: <span class="texto-preto texto-normal">{{ equipe_secretario4.nome }}</span></p>
+            {% endif %}
+        </div>
+        <div class="container-botoes">
+            <form method= 'POST'>
+                {% csrf_token %}
+                <button class="botao botao--azul" type='submit' name='btn-coex' value= 'exportar-coex'>Exportar</button>
+            </form>
+        </div>
+    {% else %}
+        <span class="texto-medio texto-preto">Esta unidade ainda não possui equipe do COEX cadastrada.</span>
+    {% endif %}
+
+</div>

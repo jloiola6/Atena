@@ -1,0 +1,65 @@
+<div class="modal oculto" data-modal="adicionar">
+    <form id="modal-conteudo" class="modal-conteudo" method="GET">
+        <h2 class="texto-grande texto-negrito texto-azul">Adicionar Solicitação</h2>
+
+        <p class="descricao  texto-preto">Insira o tipo de solicitação</p>
+
+        <div class="formulario-grupo">
+            <label class="label-campo texto-azul" for="campo-tipo-solicitacao">Tipo de solicitação</label>
+            <select class="campo-texto campo-grande" name="tipo_solicitacao" id="campo-tipo-solicitacao">
+                <option value="chamado">Chamado</option>
+                <option value="solicitacao_equipamento">Solicitação de equipamentos</option>
+            </select>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="label-campo texto-azul" for="tipo_unidade">Tipo de unidade</label>
+
+            <fieldset id="tipo_unidade">
+                <input type="radio" name="tipo_unidade" value="Unidade Administrativa" id="radio-adm" checked data-radio-adm>
+                <label class="texto-preto" for="radio-adm">Unidade Administrativa</label>
+
+                <input type="radio" name="tipo_unidade" value="Unidade Escolar" id="radio-escolar" data-radio-escola>
+                <label class="texto-preto" for="radio-escolar">Unidade Escolar</label>
+            </fieldset>
+        </div>
+
+        <div class="formulario-grupo" data-grupo-adm>
+            <label class="label-campo texto-azul" for="campo-adm">Unidade Administrativa</label>
+            <select class="campo-texto campo-grande" name="unidade_administrativa" id="campo-adm" data-selecao2>
+                {% for unidade in unidades_adm %}
+                    <option value="{{ unidade.id }}">{{ unidade.sigla }} - {{ unidade }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="formulario-grupo" data-grupo-escola>
+            <label class="label-campo texto-azul" for="campo-escola">Unidade Escolar</label>
+            <select class="campo-texto campo-grande" name="unidade_escolar" id="campo-escola" data-selecao2>
+                {% for endereco in enderecos %}
+                    {% if endereco.tipo == 'S' %}
+                        <option value="{{ endereco.id }}">{{ endereco }} - {{ endereco.municipio }}</option>
+                    {% else %}
+                        <option value="{{ endereco.id }}">{{ endereco }} (Anexo {{ endereco.numero_anexo }}) - {{ endereco.municipio }}</option>
+                    {% endif %}
+                    <!-- <option value="{{ endereco.id }}">{{ endereco.escola }} - {{ endereco.municipio }}</option> -->
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="formulario-grupo" data-grupo-tipo-chamado>
+            <label class="texto-azul label-campo" for="">Tipo de Chamado</label>
+
+            <select name="tipo_chamado" id="tipo-chamado" class="campo-texto campo-pequeno">
+                <option value="Interno">Interno</option>
+                <option value="Externo">Externo</option>
+            </select>
+
+            <input name="tipo_chamado_escola" id="tipo-chamado-escola" class="campo-texto campo-pequeno" value="Externo" readonly>
+        </div>
+
+        <div class="container-botoes">
+            <button type="submit" class="botao botao--azul">Adicionar</button>
+        </div>
+    </form>
+</div>

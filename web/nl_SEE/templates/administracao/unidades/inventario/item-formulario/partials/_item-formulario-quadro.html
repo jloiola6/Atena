@@ -1,0 +1,32 @@
+<form class="container-surface" method="POST">
+    {% csrf_token %}
+
+    <nav class="container-navegacao-surface">
+        <ul class="navegacao-surface-lista">
+            <li class="navegacao-surface-item navegacao-surface-item-ativo">
+                <span class="texto-azul">Quadro</span>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="formulario-grupo">
+        <label for="campo-patrimonio">Patrimônio</label>
+        <input class="campo-texto campo-medio" type="text" id="campo-patrimonio" name="patrimonio" maxlength="30" required>
+    </div>
+
+    <div class="formulario-grupo">
+        <label for="campo-tamanho">Tamanho</label>
+        <input class="campo-texto campo-medio" type="text" id="campo-tamanho" name="tamanho" maxlength="100" required>
+    </div>
+
+    <div class="formulario-grupo">
+        <label for="campo-tipo-quadro">Tipo</label>
+
+        <select class="campo-texto campo-medio" name="tipo-quadro" id="campo-tipo-quadro">
+            <option>Quadro de vidro</option>
+            <option>Quadro magnético</option>
+        </select>
+    </div>
+
+    {% include 'administracao/unidades/inventario/item-formulario/partials/_modal-confirmacao.html' %}
+</form>

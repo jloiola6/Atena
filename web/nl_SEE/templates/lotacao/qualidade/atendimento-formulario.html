@@ -1,0 +1,166 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Novo Atendimento {% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block css_layout %}
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class="texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'lotacao:index'%}" class="texto-azul">Gestão de Pessoas</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'lotacao:qualidade'%}" class="texto-azul">Qualidade de Vida</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="texto-azul">Novo Atendimento</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Novo Atendimento</h1>
+
+            <form class="container-surface" method="POST">
+                {% csrf_token %}
+
+                <nav class="container-navegacao-surface">
+                    <ul class="navegacao-surface-lista">
+                        <li class="navegacao-surface-item navegacao-surface-item-ativo" data-form-aba="">
+                            <span class="texto-azul">Serviço</span>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="formulario-grupo" data-grupo-servico-novo>
+                    <label for="campo-servico-novo" class="texto-azul">Serviço</label>
+                    <input type="text" class="campo-texto campo-grande" id="campo-servico-novo" name="servico-novo" maxlength="30" placeholder="Ex: Massagem" required>
+                </div>
+
+                <div class="formulario-grupo" data-grupo-servico-existente>
+                    <label for="campo-servico-existente" class="texto-azul">Serviço</label>
+
+                    <select type="text" class="campo-texto campo-grande" id="campo-servico-existente" name="servico-existente">
+                        {% for servico in servicos_existentes %}
+                            <option value="{{ servico.id }}">{{ servico.nome }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="formulario-grupo">
+                    <fieldset id="tipo-servico">
+                        <input type="radio" id="servico-existente" name="tipo-servico" value="existente" data-radio-servico-existente checked>
+                        <label class="texto-preto" for="servico-existente">Serviço existente</label>
+
+                        <input type="radio" id="servico-novo" name="tipo-servico" value="novo" data-radio-servico-novo>
+                        <label class="texto-preto" for="servico-novo">Novo serviço</label>
+                    </fieldset>
+                </div>
+
+                <div class="formulario-grupo" data-grupo-atendente>
+                    <label for="campo-atendente" class="texto-azul">Atendente</label>
+
+                    <select name="atendente" id="campo-atendente" class="campo-texto campo-grande" data-selecao2>
+                        {% for servidor in servidores %}
+                            <option value="{{ servidor.id }}">{{ servidor.nome }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="container-botoes">
+                    <button type='submit' class="botao botao--azul">Salvar</button>
+                </div>
+            </form>
+
+            <table class="tabela">
+                <thead>
+                    <tr>
+                        <th>Serviço</th>
+                        <th>Atendente</th>
+                    </tr>
+                </thead>
+
+                <tbody data-tabela-link="/lotacao/atendimento/">
+                    {% for atendimento in atendimentos %}
+                        <tr data-tabela-link-chave="{{ atendimento.id }}">
+                            <td>{{ atendimento.servico__nome }}</td>
+                            <td>{{ atendimento.atendente__nome }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td class="coluna-paginacao" colspan="6">
+                            <div class="container-paginacao">
+                                <div>
+                                    <span class="texto-negrito texto-azul">TOTAL:</span>
+                                    <span>{{ qtd_atendimentos }}</span>
+                                </div>
+
+                                <div>
+                                    {% if atendimentos.has_previous %}
+                                        <a class="" href="{% url 'lotacao:atendimento-formulario' %}?{{ gets_primeira }}">
+                                            <button class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'lotacao:atendimento-formulario' %}?{{ gets_anterior }}">
+                                            <button class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% endif %}
+
+                                    <span class="">
+                                        {{ atendimentos.number }} de {{ atendimentos.paginator.num_pages }}
+                                    </span>
+
+                                    {% if atendimentos.has_next %}
+                                        <a class="" href="{% url 'lotacao:atendimento-formulario' %}?{{ gets_proxima }}">
+                                            <button class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'lotacao:atendimento-formulario' %}?{{ gets_ultima }}">
+                                            <button class="botao-paginacao">last_page</button>
+                                        </a>
+
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">last_page</button>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/select2.js' %}"></script>
+    <script src="{% static 'assets/js/module/linkTabela.js' %}"></script>
+
+    <script src="{% static 'assets/js/layout/lotacao/qualidade/atendimento-formulario/controlaCampos.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Cadastrar comitê {% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+
+<main>
+    <div class="container">
+        <nav class="container-navegacao">
+            <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a  class="  texto-azul" href="{% url 'coex:index' %}">COEX</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a  class="  texto-azul" href="{% url 'coex:comite' %}">Comitês</a>
+            <span class="texto-azul">&#62;</span>
+
+            <span class="  texto-azul">Cadastrar comitê</span>
+
+        </nav>
+
+        <h1 class="titulo-pagina texto-azul">Cadastrar comitê</h1>
+        <p class="descricao texto-preto">Insira os dados</p>
+
+        <form class="container-surface" method="POST">
+            {% csrf_token %}
+            <h2 class="texto-medio texto-azul">Dados do comitê</h2>
+
+            <div class="formulario-grupo" data-selecao-escola>
+                <label id="label-campo-unidade" class="texto-azul label-campo" for="campo-unidade">Unidade Educacional</label>
+                <select name="unidade" class="campo-texto campo-grande" id="campo-unidade" data-selecao2>
+                    {% for escola in escolas %}
+                        <option value="{{ escola.escola__id }}">{{escola.escola__cod_inep}} - {{ escola.escola__nome_escola }} - {{ escola.municipio }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="formulario-grupo">
+                <label class="texto-azul label-campo" for="campo-cnpj">CNPJ</label>
+                <input id="campo-cnpj" class="campo-texto campo-medio" name="cnpj" data-mascara="cnpj" required placeholder="Ex: 00.000.000/0000-00">
+            </div>
+
+            <div class="formulario-grupo">
+                <label class="texto-azul label-campo" for="campo-nome_empresarial">Nome Empresarial</label>
+                <input id="campo-nome_empresarial" class="campo-texto campo-medio" name="nome_empresarial" placeholder="Ex: Nome Empresárial">
+            </div>
+
+            <div class="container-botoes">
+                <button class="botao botao--azul" data-modal-abrir="confirmar">Cadastrar</button>
+            </div>
+
+            <div class="modal oculto" data-modal="confirmar">
+                <div class="modal-conteudo modal-confirmacao">
+                    <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+
+                    <p class="texto-preto descricao">Tem certeza que deseja vincular a escola?</p>
+
+                    <div class="container-botoes">
+                        <button class="botao--verde botao" type="submit">Salvar</button>
+                        <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</main>
+
+{% include 'partials/_rodape.html' %}
+
+<script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+<script src="{% static 'assets/js/module/select2.js' %}"></script>
+<script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+
+<script src="{% static 'assets/js/layout/coex/comite-formulario/controlaSubmissao.js' %}"></script>
+
+{% endblock %}

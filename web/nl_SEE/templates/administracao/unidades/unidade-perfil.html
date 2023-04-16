@@ -1,0 +1,78 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} {{ escola.nome_escola }} {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/partials/unidade-educacional/_unidade-perfil.css' %}">
+
+    <link rel="stylesheet" href="{% static 'assets/css/layout/administracao/unidades/unidade-perfil.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:index' %}">Administração</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:unidades_educacionais' %}">Unidades</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">{{ escola.nome_escola }}</span>
+            </nav>
+
+            {% include 'partials/unidade-educacional/_unidade-perfil.html' %}
+
+            <div class="container-surface">
+                <nav class="container-navegacao-surface">
+                    <ul class="navegacao-surface-lista">
+                        <li class="navegacao-surface-item navegacao-surface-item-ativo navegacao-surface-item-selecionavel" data-nav-aba="turmas">Turmas {{ ANO_LETIVO }} ({{ quantidade_turmas }})</li>
+
+                        <li class="navegacao-surface-item navegacao-surface-item-selecionavel" data-nav-aba="infraestrutura">Infraestrutura</li>
+
+                        <li class="navegacao-surface-item navegacao-surface-item-selecionavel" data-nav-aba="inventario">Inventário</li>
+
+                        <li class="navegacao-surface-item navegacao-surface-item-selecionavel" data-nav-aba="organizacao">Organização</li>
+
+                        {% if user == 'joaopedro.passos' %}
+                            <li class="navegacao-surface-item navegacao-surface-item-selecionavel" data-nav-aba="ouvidoria">Ouvidoria</li>
+                        {% endif %}
+                        
+                        <!-- <li class="navegacao-surface-item navegacao-surface-item-selecionavel" data-nav-aba="links">Links</li>
+
+                        <li class="navegacao-surface-item navegacao-surface-item-selecionavel" data-nav-aba="coex">Coex</li>
+
+                        <li class="navegacao-surface-item navegacao-surface-item-selecionavel" data-nav-aba="fundiaria">Fundiária</li> -->
+                    </ul>
+                </nav>
+
+                {% include 'administracao/unidades/partials/_unidade-turmas.html'  %}
+                {% include 'administracao/unidades/partials/_unidade-infraestrutura.html'  %}
+                {% include 'administracao/unidades/partials/_unidade-inventario.html'  %}
+                {% include 'administracao/unidades/partials/_unidade-organizacao.html'  %}
+                {% include 'administracao/unidades/partials/_unidade-ouvidoria.html'  %}
+                {% include 'administracao/unidades/partials/_unidade-links.html'  %}
+                {% include 'administracao/unidades/partials/_unidade-coex.html'  %}
+                {% include 'administracao/unidades/partials/_unidade-fundiaria.html'  %}
+            </div>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    {% include 'administracao/unidades/partials/_modal-adicionar-item.html' %}
+    {% include 'administracao/unidades/partials/_modal-adicionar-denuncia.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/module/controlaNavegacaoSurface.js' %}"></script>
+
+    <script src="{% static 'assets/js/layout/partials/unidade-educacional/_unidade-perfil/controlaMapa.js' %}"></script>
+
+{% endblock %}

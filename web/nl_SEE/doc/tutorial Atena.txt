@@ -1,0 +1,94 @@
+GitHub:
+01 - Clonar repositório do Atena -> https://github.com/seesistemas/Atena.git
+02 - Entrar na pasta do Atena - > cd Atena
+03 - Criar Branch develop -> git checkout -b develop
+04 - Solicitar um update - git pull
+05 - Realizar sincronia da branch local (develop) com a branch online do git (develop) -> git branch --set-upstream-to=origin/develop develop
+06 - Solicitar um update - git pull
+07 - Verificar branchs ativas no repositório -> git branch (Não Obrigatório)
+
+
+Mysql:
+01 - Pegar arquivo .sql do Atena na maquina de produção
+02 - Colocar arquivo em uma pasta fácil de localizar (de preferencia)
+03 - Baixar programas mysql (MySQL Server e Workbench)
+04 - Abrir o MySQL Command Line Client
+05 - Digitar senha (criada na instalação do MySQL Server)
+06 - Criar banco da secretária -> create database secretaria;
+07 - Entrar no banco criado ->  use secretaria;
+08 - Copiar atena.sql para o banco criado no MySQL -> source D:\atena.sql
+09 - Visualizar tabelas criadas -> show tables; (Não Obrigatório)
+10 - Criar usuário de acessos ao banco secretaria - > create user 'see'@'localhost' identified by 'dtmisee@'; 
+11 - Conceder permissoes de acesso de todas as tabelas ao usuário criado anteriomente -> grant all privileges on secretaria.* to 'see'@'localhost';
+12 - Visualizar usuários existentes no MySQL -> select user from mysql.user; (Não Obrigatório)
+
+
+Code:
+01 - Abrir pasta do Atena no VSCode
+02 - Abrir o CMD -> ctrl+j
+03 - Baixar pacote do virtualenv -> pip install virtualenv
+04 - Criar virtualenv -> virtualenv venv
+05 - Iniciar Venv:
+	-> cd venv
+	-> cd Scripts
+	-> activate
+06 - Volte para a pasta do Atena -> (cd ..) * 2
+07 - Instalar pendências do Atena -> pip install -r requiriments.txt
+
+
+Configurar migrations (Workbench):
+01 - Entrar no banco secretaria no Workbench
+02 - Apagar as tabelas de inventário:
+	-> aux_computador
+	-> aux_nobreak
+	-> aux_projetor
+	-> aux_impressora
+	-> aux_switch
+	-> aux_geladeira
+	-> aux_A/C
+	-> aux_freezer
+	-> aux_liquidificador
+	-> aux_fogao
+	-> aux_cadeira
+	-> aux_mesa
+	-> aux_armario
+	-> aux_estante
+	-> aux_quadro
+
+Configurar migrations (VSCode):
+01 - Abrir arquivo models da aplicação atena
+02 - Comentar classes de inventário -> linha 9 - 162
+03 - Rodar makemigrations da aplicação atena -> py manage.py makemigrations atena
+04 - Rodar migrate - > py manage.py migrate
+05 - Rodar makemigrations da aplicação administracao-> py manage.py makemigrations administracao
+06 - Rodar migrate - > py manage.py migrate
+07 - Descomentar classes de inventário -> linha 9 - 162
+08 - Rodar makemigrations da aplicação atena -> py manage.py makemigrations atena
+09 - Rodar migrate - > py manage.py migrate
+10 - Rodar seguintes comandos makemigrations:
+	-> py manage.py makemigrations usuario
+	-> py manage.py migrate
+	-> py manage.py makemigrations core
+	-> py manage.py migrate
+	-> py manage.py makemigrations coex
+	-> py manage.py migrate
+	-> py manage.py makemigrations dinem
+	-> py manage.py migrate
+	-> py manage.py makemigrations fundiaria
+	-> py manage.py migrate
+	-> py manage.py makemigrations lotacao
+	-> py manage.py migrate
+	-> py manage.py makemigrations lotus
+	-> py manage.py migrate
+	-> py manage.py makemigrations tecnologia
+	-> py manage.py migrate
+	-> py manage.py makemigrations terceirizacao
+	-> py manage.py migrate
+11 - Rodar aplicação - py manage.py runserver
+
+
+
+
+
+	
+ 

@@ -1,0 +1,145 @@
+/* Estiização da página de login */
+
+body{
+    flex-direction: row;
+}
+
+.container-fundo{
+    align-items: center;
+    background-image: linear-gradient(rgba(0, 0, 0, .4), rgba(0, 0, 0, .4)), url('../../../img/login/fundo.jpg');
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: cover;
+    flex-basis: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.container-login{
+    align-items: center;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    flex-basis: 480px;
+    justify-content: space-between;
+    padding: 3.5rem 2.5rem;
+}
+
+    .cabecalho-mobile{
+        align-items: center;
+        box-sizing: border-box;
+        background-color: rgba(0, 0, 0, 0.6);
+        display: none;
+        height: 4rem;
+        padding-inline: 2rem;
+        width: 100%;
+    }
+
+    form, .formulario-grupo{
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+    }
+
+        .formulario-grupo{
+            gap: .5rem;
+        }
+
+            label{
+                color: var(--texto-azul);
+            }
+
+        .mensagem-erro{
+            color: var(--texto-vermelho);
+            text-align: center;
+        }
+
+    .container-botoes{
+        justify-content: center;
+    }
+
+    .container-logos{
+        display: flex;
+        gap: 2rem;
+    }
+
+    .container-logos-mobile{
+        display: none;
+        gap: 1.5rem;
+    }
+
+/* RESPONSIVIDADE */
+@media screen and (max-width: 800px), (max-width: 800px) and (orientation: landscape){
+    body{
+        background-image: linear-gradient(rgba(0, 0, 0, .6), rgba(0, 0, 0, .6)), url('../../../img/login/fundo.jpg');
+        background-position: right;
+    }
+
+    .container-fundo, .logo-see{
+        display: none;
+    }
+
+    .cabecalho-mobile{
+        display: flex;
+    }
+
+    .container-login{
+        background-color: transparent;
+        flex-basis: 100%;
+        padding: 0;
+        padding-bottom: 3.5rem;
+    }
+
+    form, .cabecalho-mobile{
+        padding-inline: 2rem;
+    }
+
+    form{
+        max-width: 400px;
+    }
+
+    label{
+        color: var(--texto-branco);
+    }
+
+    .mensagem-erro{
+        color: var(--texto-branco);
+        font-weight: 600;
+    }
+
+    .container-logos {
+        display: none;
+    }
+
+    .container-logos-mobile{
+        display: flex;
+    }
+}
+
+@media screen and (max-height: 500px) and (min-width: 800px) {
+    .container-login{
+        padding-block: 2rem;
+    }
+
+    .logo-see{
+       height: 4rem;
+       width: auto;
+    }
+
+    .container-logos img{
+        height: 2rem;
+        width: auto;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .cabecalho-mobile, form{
+        padding-inline: 1rem;
+    }
+
+    .container-logos-mobile{
+        gap: 1rem;
+    }
+}

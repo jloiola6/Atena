@@ -1,0 +1,43 @@
+{% load static %}
+
+{% comment %} <h2 class="texto-medio texto-azul">Lotações</h2> {% endcomment %}
+<div data-nav-container="lotacoes">
+    <div class="container-cards-simples contrato-lotacoes">
+
+        {% for lotacao in lotacoes %}
+            <div class="card-simples card-lotacao">
+                {% if lotacao.endereco != None %}
+                    <h4 class="card-simples__titulo texto-azul">{{ lotacao.endereco }}</h4>
+                {% else %}
+                    <h4 class="card-simples__titulo texto-azul">{{ lotacao.unidade_administrativa }}</h4>
+                {% endif %}
+
+                <div class="card-simples__descricao">
+                    <p class=" texto-azul texto-negrito">Numero do Item: <span class="texto-preto texto-normal">{{ lotacao.item.numero_item }}</span></p>
+                    <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ lotacao.data_inicio }}</span></p>
+                    <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ lotacao.data_termino }}</span></p>
+
+                    {% if lotacao.status == 1 %}
+                        <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">Ativo</span></p>
+                    {% else %}
+                        <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">Inativo</span></p>
+                        <p class=" texto-azul texto-negrito">Motivo: <span class="texto-preto texto-normal">{{ lotacao.motivo }}</span></p>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+
+
+    </div>
+
+    {% if permissao.editar == 1 %}
+        {% if ultima_lotacao.status == 1 %}
+            <div class="container-botoes">
+                <a href="{% url 'terceirizacao:finalizar-contrato' %}?id_contrato={{ ultima_lotacao.id }}&situacao=True">
+                    <button class="botao botao--azul">Alterar lotação</button>
+                </a>
+            </div>
+        {% endif %}
+    {% endif %}
+
+</div>

@@ -1,0 +1,6 @@
+/* Estilização da página de formulário de matriz */
+
+.formulario-grupo--disciplina{
+    display: flex;
+    gap: .5rem;
+}

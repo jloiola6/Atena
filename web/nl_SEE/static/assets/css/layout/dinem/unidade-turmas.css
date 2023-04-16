@@ -1,0 +1,5 @@
+/* Estilização da página */
+
+.dropdown--medio{
+    border-left-color: var(--cor-medio);
+}

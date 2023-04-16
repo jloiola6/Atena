@@ -1,0 +1,166 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Front {% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'atena:index' %}" class=" texto-azul">Configurações</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Front</span>
+            </nav>
+
+
+            <h1 class="titulo-pagina">Front</h1>
+            <p class="texto-preto descricao">Componentes e testes</p>
+
+            <div class="container-surface">
+                <h2 class="texto-medio texto-azul">Máscaras</h2>
+
+                <div class="formulario-grupo">
+                    <label for="campo-cpf">CPF</label>
+                    <input id="campo-cpf" class="campo-texto campo-pequeno" type="text" data-mascara="cpf">
+                </div>
+
+                <div class="formulario-grupo">
+                    <label for="campo-nota">Nota</label>
+                    <input id="campo-nota" class="campo-texto campo-pequeno" type="text" data-mascara="nota">
+                </div>
+            </div>
+
+            <div class="container-surface">
+                <h2 class="texto-medio texto-azul">Detectar resolução do dispositivo</h2>
+
+                <div class="formulario-grupo">
+                    <input class="campo-texto campo-pequeno" data-campo-resolucao readonly>
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao botao--azul" data-botao-detectar>Detectar</button>
+                </div>
+            </div>
+
+            <h2 class="texto-medio texto-azul">Menu Dropdown</h2>
+
+            <details class="dropdown">
+                <summary>Dropdown Dropdown Dropdown Dropdown</summary>
+
+                <details class="dropdown dropdown--borda">
+                    <summary>Dropdown</summary>
+
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio nihil consequuntur ipsa reiciendis, ullam aperiam unde ut saepe consectetur omnis incidunt, dolorem dolor explicabo adipisci! Minus fuga eaque sit ab.</p>
+                </details>
+            </details>
+
+            <details class="dropdown dropdown--borda">
+                <summary>Dropdown</summary>
+
+                <details class="dropdown">
+                    <summary d>Dropdown</summary>
+                </details>
+            </details>
+
+            <details class="dropdown dropdown--borda">
+                <summary>Dropdown</summary>
+
+                <details class="dropdown">
+                    <summary>Dropdown</summary>
+
+                    <div class="container-cards-simples">
+                        <div class="card-simples">
+                            <div class="card-simples__titulo">Testando</div>
+                            <div class="card-simples__descricao">
+                                <p class="texto-preto"><b>Teste: </b>Teste</p>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+            </details>
+
+            <h2 class="texto-medio texto-azul">Botões</h2>
+
+            <div class="container-surface">
+                <div class="container-botoes">
+                    <button class="botao--secundario botao">Abrir Mapa</button>
+                    <button class="botao botao--azul">Abrir Mapa</button>
+                </div>
+            </div>
+
+
+            <h1 class="titulo-pagina">Louça / Água</h1>
+            <p class="descricao texto-preto">Quem vai lavar a louça ou buscar a água hoje?</p>
+
+            <ul class="lista" data-lista>
+                <li>Érick</li>
+                <li>Felipe</li>
+                <li>Franklares</li>
+                <li>Gustavo</li>
+                <li>Jota</li>
+                <li>Rute</li>
+                <li>Vitor</li>
+            </ul>
+
+            <div class="container-botoes">
+                <button class="botao botao--verde" data-botao-escolher>Escolher</button>
+            </div>
+
+            <img class="fotinha oculto" src="{% static 'assets/img/saiba-mais/erick.jpeg' %}" data-fotinha>
+            <img class="fotinha oculto" src="{% static 'assets/img/saiba-mais/felipe.jpg' %}" data-fotinha>
+            <img class="fotinha oculto" src="{% static 'assets/img/saiba-mais/franklares.jpg' %}" data-fotinha>
+            <img class="fotinha oculto" src="{% static 'assets/img/saiba-mais/gus.jpeg' %}" data-fotinha>
+            <img class="fotinha oculto" src="{% static 'assets/img/saiba-mais/jp.jpeg' %}" data-fotinha>
+            <img class="fotinha oculto" src="{% static 'assets/img/saiba-mais/rute.jpeg' %}" data-fotinha>
+            <img class="fotinha oculto" src="{% static 'assets/img/saiba-mais/xvitos.jpeg' %}" data-fotinha>
+
+
+
+            <!-- <span class="texto-grande texto-azul texto-negrito escolhido" data-escolhido></span> -->
+            {% comment %}{% endcomment %}
+
+
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/layout/atena/detectarResolucao.js' %}"></script>
+
+    <!-- DAQUI PRA BAIXO É SÓ PRA VER QUEM VAI LAVAR A LOUÇA -->
+
+    <style>
+        @keyframes roda{
+            from{transform: rotate(0deg);}
+            to {transform: rotate(360deg); width: 100vw;}
+        }
+
+        .lista{
+            list-style-type: decimal;
+        }
+
+        .fotinha{
+            animation: roda 1s infinite alternate;
+            aspect-ratio: 1;
+            border-radius: 100vmax;
+            object-fit: cover;
+            width: 100px;
+        }
+/*
+        .escolhido{
+            animation: roda 3s infinite alternate;
+            width: fit-content;
+        } */
+    </style>
+
+    <script src="{% static 'assets/js/layout/atena/front/louca.js' %}"></script>
+
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+{% endblock %}

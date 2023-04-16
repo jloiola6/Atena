@@ -1,0 +1,17 @@
+{% for item in itens %}
+    <div class="modal oculto" data-modal="item-detalhes-{{ item.id }}">
+        <div class="modal-conteudo">
+            <h2 class="texto-azul texto-medio">{{ item.tipo.nome }}</h2>
+
+            <div class="container-detalhes">
+                <p class="texto-preto"><b class="texto-azul">Patrimônio: </b>{{ item.patrimonio }}</p>
+
+                {% for detalhe in itens_detalhes %}
+                    {% if detalhe.item == item %}
+                        <p class="texto-preto"><b class="texto-azul">{{ detalhe.campo }}: </b>{{ detalhe.valor }}</p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endfor %}

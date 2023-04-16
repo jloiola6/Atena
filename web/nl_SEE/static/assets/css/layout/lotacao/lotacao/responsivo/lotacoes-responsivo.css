@@ -1,0 +1,23 @@
+.tabela-lotacoes-tablet, .tabela-lotacoes-smartphone{
+    display: none;
+}
+
+@media screen and (max-width: 615px){
+    .tabela-lotacoes, .tabela-lotacoes-smartphone{
+        display: none;
+    }
+
+    .tabela-lotacoes-tablet{
+        display: block;
+    }
+}
+
+@media screen and (max-width: 440px){
+    .tabela-lotacoes, .tabela-lotacoes-tablet{
+        display: none;
+    }
+
+    .tabela-lotacoes-smartphone{
+        display: block;
+    }
+}

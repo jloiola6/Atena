@@ -1,0 +1,5 @@
+/* Estilização da página de edição de permissões */
+
+.container-formulario-permissoes, .container-formulario-permissoes .container-botoes{
+    margin-top: 16px;
+}

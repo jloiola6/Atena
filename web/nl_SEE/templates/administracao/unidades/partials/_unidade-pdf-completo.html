@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Exportar Dados Escolares</title>
+    </head>
+
+    <body>
+        <header>
+            <table>
+                <tr>
+                    <th><img ïd="img1" src="{{ url_logo }}" alt=""></th>
+                    <th class="direita"><img id="img2" src="{{ url_atena }}" alt=""></th>
+                </tr>
+            </table>
+        </header>
+        <hr>
+        <br>
+
+        <table class="tabela-unidade">
+            <tr>
+                <td class="titulo"><b>Dados Unidade Educacional</b></td>
+            </tr>
+        </table>
+
+        <table class="tabela-unidade">
+            <tr>
+                <td><b>INEP:</b> {{ endereco.escola.cod_inep }}</td><td><b>Escola:</b> {{ endereco.escola.nome_escola }}</td><td><b>Dependência:</b> {{ endereco.escola.dependencia_adm }}</td>
+            </tr>
+        </table>
+
+        <table class="tabela-unidade">
+            <tr>
+                <td><b>Rua:</b> {{ endereco.rua }}</td><td><b>Bairro:</b> {{ endereco.bairro }}</td><td><b>Número:</b> {{ endereco.numero }}</td><td><b>Município:</b> {{ endereco.municipio }}</td>
+            </tr>
+        </table>
+
+        <br>
+
+        {% if fundiaria %}
+            <table class="tabela-unidade">
+                <tr>
+                    <td class="titulo"><b>Regularização Fundiária</b></td>
+                </tr>
+            </table>
+
+            <table class="tabela-fundiaria">
+                <tr>
+                    <td><b>Matrícula de Imóveis:</b> {{ fundiaria.matricula_imoveis }}</td><td class="ocupacao"><b>Forma Ocupação:</b> {{ fundiaria.forma_ocupacao }}</td>
+                </tr>
+            </table>
+
+            <table class="tabela-fundiaria">
+                <tr>
+                    <td><b>Área do Imóvel:</b> {{ fundiaria.area_imovel }}m²</td><td><b>Área Construída:</b> {{ fundiaria.area_construida }}m²</td><td><b>Perímetro:</b> {{ fundiaria.perimetro }}m</td><td><b>Área Utiliazada:</b> {{ fundiaria.area_utilizada }}m²</td>
+                </tr>
+            </table>
+
+            <table class="tabela-fundiaria">
+                <tr>
+                    <td><b>Decreto Criação:</b> {{ fundiaria.decreto_criacao }}</td><td><b>Portaria Autorização:</b> {{ fundiaria.portaria_autorizacao }}</td>
+                </tr>
+            </table>
+
+            <table class="tabela-fundiaria">
+                <tr>
+                    <td><b>Registro PPI:</b> {{ fundiaria.ppi }}</td><td><b>Nº B.C.I.:</b> {{ fundiaria.bci }}</td>
+                </tr>
+            </table>
+
+            {% if extincao %}
+                <table class="tabela-fundiaria">
+                    <tr>
+                        <td><b>Decreto Extinção:</b> {{ exticao.decreto_extincao }}</td><td><b>Data Paralisação:</b> {{ extincao.data_paralizacao }}</td>
+                    </tr>
+                </table>
+
+                <table class="tabela-fundiaria">
+                    <tr>
+                        <td><b>Escola Guardiã:</b> {{ extincao.escola_guardia }}</td><td><b>Data de Extinção:</b> {{ extincao.data_extincao }}</td>
+                    </tr>
+                </table>
+            {% endif %}
+
+            <table class="tabela-fundiaria">
+                <tr class="imagens">
+                    <td><b>Foto Frente</b></td>
+                    <td><b>Foto Aérea</b></td>
+                    <tr class="fotos">
+                        <td><img  src="{{ img1 }}"></td>
+                        <td><img class="fotos" src="{{ img2 }}"></td>
+                    </tr>
+                </tr>
+            </table>
+        {% endif %}
+
+        {% if links %}
+            {% for link in links %}
+                <br>
+                <table class="tabela-links">
+                    <tr>
+                        <td class="titulo"><b>Link {{ link.0 }}</b></td>
+                    </tr>
+                </table>
+                <table class="tabela-links">
+                    <tr>
+                        <td><b>Fornecedor:</b> {{ link.1.fornecedor }}</td><td><b>Nº Circuito:</b> {{ link.1.circuito }}</td><td><b>Tipo de Alocação:</b> {{ link.1.tipo }}</td>
+                    </tr>
+                </table>
+
+                <table class="tabela-links">
+                    <tr>
+                        <td><b>Operadora:</b> {{ link.1.operadora }}</td><td><b>Tipo de Banda:</b> {{ link.1.tipo_banda }}</td><td><b>Velocidade:</b> {{ link.1.velocidade }}</td>
+                    </tr>
+                </table>
+
+                <table class="tabela-links">
+                    <tr>
+                        <td><b>Data Ativação:</b> {{ link.1.data_ativo }}</td><td><b>IP LAN:</b> {{ link.1.iplan }}</td><td><b>IP WAN:</b> {{ link.1.ipwan }}</td><td><b>Status:</b> {{ link.1.status }}</td>
+                    </tr>
+                </table>
+
+                <table class="tabela-links">
+                    <tr>
+                        <td><b>Observação:</b> {{ link.1.observacao }}</td>
+                    </tr>
+                </table>
+            {% endfor %}
+            <br>
+        {% endif %}
+
+        {% if coex or consorcio %}
+            <table class="tabela-unidade">
+                <td class="titulo"><b>COEX</b></td>
+            </table>
+            <table class="tabela-unidade">
+                <tr>
+                    {% if consorcio %}
+                        <td><b>Nome Empresarial:</b> {{consorcio.nome_consorcio}}</td>
+                        <td><b>CNPJ:</b> {{consorcio.cnpj}}</td>
+                        <td><b>Tipo:</b> Consórcio</td>
+
+                    {% else %}
+                        <td><b>Nome Empresarial:</b> {{coex.nome_empresarial}}</td>
+                        <td><b>CNPJ:</b> {{coex.cnpj}}</td>
+                        <td><b>Tipo:</b> Comitê</td>
+                    {% endif %}
+                </tr>
+            </table>
+
+            <br>
+            <table class="tabela-unidade">
+                {% if consorcio %}
+                    <td class="titulo"><b>Equipe Consórcio</b></td>
+                {% else %}
+                    <td class="titulo"><b>Equipe Comitê</b></td>
+                {% endif %}
+            </table>
+            <table class="tabela-unidade">
+                <tr>
+                    {% if presidente.servidor__nome %}
+                        <td><b>Presidente: </b>{{presidente.servidor__nome}}</td>
+                    {% else %}
+                        <td><b>Presidente: </b>Não informado</td>
+                    {% endif %}
+
+                    {% if tesoureiro.servidor__nome %}
+                        <td><b>Tesoureiro: </b>{{tesoureiro.servidor__nome}}</td>
+                    {% else %}
+                        <td><b>Tesoureiro: </b>Não informado</td>
+                    {% endif %}
+                </tr>
+            </table>
+            <table class="tabela-unidade">
+                <tr>
+                    {% if secretario1.nome %}
+                        <td><b>Secretário 1: </b>{{secretario1.nome}}</td>
+                    {% else %}
+                        <td><b>Secretário 1: </b>Não informado</td>
+                    {% endif %}
+
+                    {% if secretario2.nome %}
+                        <td><b>Secretário 2: </b>{{secretario2.nome}}</td>
+                    {% else %}
+                        <td><b>Secretário 2: </b>Não informado</td>
+                    {% endif %}
+                </tr>
+            </table>
+            <table class="tabela-unidade">
+                <tr>
+                    {% if secretario3.nome %}
+                        <td><b>Secretário 3: </b>{{secretario3.nome}}</td>
+                    {% else %}
+                        <td><b>Secretário 3: </b>Não informado</td>
+                    {% endif %}
+                    {% if secretario4.nome %}
+                        <td><b>Secretário 4: </b>{{secretario4.nome}}</td>
+                    {% else %}
+                        <td><b>Secretário 4: </b>Não informado</td>
+                    {% endif %}
+                </tr>
+            </table>
+        {% endif %}
+
+        <style>
+            @page{
+                margin: 1cm;
+            }
+
+            #img1{
+                width: 100%;
+                height: auto;
+            }
+
+            #img2{
+                width: 120px;
+                height: auto;
+            }
+
+            .direita{
+                text-align: right;
+            }
+
+            .tabela-unidade{
+                padding-top: 4px;
+                padding-left: 2px;
+                border: 1px black solid;
+            }
+
+            .tabela-fundiaria{
+                padding-top: 4px;
+                padding-left: 2px;
+                border: 1px black solid;
+            }
+
+            .ocupacao{
+                width: 30%;
+            }
+
+            .imagens{
+                text-align: center;
+            }
+
+            .fotos{
+                text-align: center;
+                width: 290px;
+                height: 170px;
+            }
+
+            .tabela-links{
+                padding-top: 4px;
+                padding-left: 2px;
+                border: 1px black solid;
+            }
+
+            .titulo{
+                padding-top: 5px;
+                font-size: 14px;
+                text-align: center;
+                background-color: beige;
+            }
+
+
+        </style>
+
+
+    </body>

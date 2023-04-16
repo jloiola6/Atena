@@ -1,0 +1,8 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="imagem-{{ imagem.id }}">
+    <div id="modal-conteudo" class="modal-conteudo modal-imagem" >
+        <img src="{% static imagem.path_arquivo %}" alt="{{ imagem.descricao }}">
+        <p class=" texto-azul texto-negrito descricao">Descrição: <span class="texto-preto texto-normal">{{ imagem.descricao }}</span></p>
+    </div>
+</div>

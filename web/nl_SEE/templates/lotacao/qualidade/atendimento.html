@@ -1,0 +1,99 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Atendimento {% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class="texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'lotacao:index'%}" class="texto-azul">Gestão de Pessoas</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'lotacao:qualidade'%}" class="texto-azul">Qualidade de Vida</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'lotacao:atendimento-formulario'%}" class="texto-azul">Novo Atendimento</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="texto-azul">Atendimento</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Atendimento</h1>
+
+            <div class="container-surface">
+                <h2 class="texto-medio texto-azul">{{ atendimento.servico }}</h2>
+
+                <div class="container-detalhes">
+                    <p class="texto-azul texto-negrito">Atendente: <span class="texto-preto texto-normal">{{ atendimento.atendente }}</span></p>
+                </div>
+            </div>
+
+            <h2 class="titulo-pagina texto-azul">Adicionar Horário</h2>
+
+            <form class="container-surface" method="POST">
+                {% csrf_token %}
+
+                <nav class="container-navegacao-surface">
+                    <ul class="navegacao-surface-lista">
+                        <li class="navegacao-surface-item navegacao-surface-item-ativo" data-form-aba="">
+                            <span class="texto-azul">Dia e Hora</span>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="formulario-grupo">
+                    <label for="campo-dia" class="texto-azul">Dia</label>
+
+                    <select name="dia" id="campo-dia" class="campo-texto campo-pequeno">
+                        <option value="1">Segunda Feira</option>
+                        <option value="2">Terça Feira</option>
+                        <option value="3">Quarta Feira</option>
+                        <option value="4">Quinta Feira</option>
+                        <option value="5">Sexta Feira</option>
+                    </select>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label for="campo-hora" class="texto-azul">Hora</label>
+
+                    <input id="campo-hora" name="hora" type="time" class="campo-texto campo-pequeno" required>
+                </div>
+
+                <div class="container-botoes">
+                    <button type='submit' class="botao botao--azul">Salvar</button>
+                </div>
+            </form>
+
+            <h2 class="titulo-pagina texto-azul">Dias e Horários</h2>
+
+            <table class="tabela">
+                <thead>
+                    <tr>
+                        <th>Dia</th>
+                        <th>Hora</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for dia in atendimento_dias %}
+                        <tr class="linha-desabilitada">
+                            <td>{{ dia.dia }}</td>
+                            <td>{{ dia.hora }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+
+{% endblock %}

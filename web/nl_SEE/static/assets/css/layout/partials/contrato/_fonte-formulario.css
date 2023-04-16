@@ -1,0 +1,5 @@
+/* Estilização da página de cadastro de fonte de contrato */
+
+.formulario-fonte, .formulario-fonte .container-botoes{
+    margin-top: 16px;
+}

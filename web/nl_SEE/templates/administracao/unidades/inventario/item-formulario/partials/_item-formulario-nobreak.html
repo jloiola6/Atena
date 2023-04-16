@@ -1,0 +1,35 @@
+<form class="container-surface" method="POST">
+    {% csrf_token %}
+
+    <nav class="container-navegacao-surface">
+        <ul class="navegacao-surface-lista">
+            <li class="navegacao-surface-item navegacao-surface-item-ativo">
+                <span class="texto-azul">Nobreak</span>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="formulario-grupo">
+        <label for="campo-patrimonio">Patrimônio</label>
+        <input class="campo-texto campo-medio" type="text" id="campo-patrimonio" name="patrimonio" maxlength="30" required>
+    </div>
+
+    <div class="formulario-grupo">
+        <label for="campo-tomadas">Quantidade de tomadas</label>
+        <input class="campo-texto campo-medio" type="number" id="campo-tomadas" name="tomadas" min="1" required>
+    </div>
+
+    <div class="formulario-grupo">
+        <label for="campos-estabilizador">Estabilizador</label>
+
+        <fieldset id="campos-estabilizador">
+            <input type="radio" id="estabilizador-sim" name="estabilizador" value="Sim" checked>
+            <label for="estabilizador-sim" class="texto-preto">Sim</label>
+
+            <input type="radio" id="estabilizador-nao" name="estabilizador" value="Não">
+            <label for="estabilizador-nao" class="texto-preto">Não</label>
+        </fieldset>
+    </div>
+
+    {% include 'administracao/unidades/inventario/item-formulario/partials/_modal-confirmacao.html' %}
+</form>

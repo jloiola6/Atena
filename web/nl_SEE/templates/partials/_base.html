@@ -1,0 +1,104 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <title> Atena - {% block title %} {% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Meta tags para não carregar cache da página -->
+        <meta http-equiv='cache-control' content='no-cache'>
+        <meta http-equiv='expires' content='0'>
+        <meta http-equiv='pragma' content='no-cache'>
+
+        <link rel="icon" href="{% static 'assets/img/icone-aba.png' %}">
+        <link rel="apple-touch-icon" sizes="152x152" href="{% static 'assets/img/icone-mobile.png' %}" />
+
+        {% block select %}{% endblock %}
+
+        {% block charts-js %}{% endblock %}
+
+        <!-- Arquivos CSS de base -->
+        <link rel="stylesheet"  href="{% static 'assets/css/base/reset.css' %}"/>
+        <link rel="stylesheet"  href="{% static 'assets/css/base/base.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/base/cores.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/base/container.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/base/tipografia.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/base/icones.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/base/modal-carregamento.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/base/scroll.css' %}">
+
+        <!-- Arquivos CSS de componentes -->
+        <link rel="stylesheet"  href="{% static 'assets/css/module/cabecalho.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/module/rodape.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/module/container-aviso.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/module/container-navegacao.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/module/container-navegacao-surface.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/module/container-surface.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/module/card-menu.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/module/card-simples.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/module/tabela.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/module/inputs.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/module/botao.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/module/formulario.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/module/modal.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/module/menu-accordeon.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/module/lista.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/module/select2.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/module/card-imagem.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/module/modal-imagem.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/module/card-documento.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/module/container-detalhes.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/module/dropdown.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/module/barra-progresso.css' %}">
+
+
+        <!-- Arquivos de CSS para responsividade de componentes -->
+        <link rel="stylesheet" href="{% static 'assets/css/module/responsivo/container-navegacao-responsivo.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/module/responsivo/container-navegacao-surface-responsivo.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/module/responsivo/tabela-responsiva.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/module/responsivo/inputs-responsivo.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/module/responsivo/modal-responsivo.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/module/responsivo/menu-accordeon-responsivo.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/module/responsivo/select2-responsivo.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/module/responsivo/card-imagem-responsivo.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/module/responsivo/modal-imagem-responsivo.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/module/responsivo/container-detalhes-responsivo.css' %}">
+
+        <!-- Arquivos CSS de layouts de páginas -->
+        {% block css_layout %}{% endblock %}
+
+        <!-- Arquivos de CSS para classes genéricas -->
+        <link rel="stylesheet"  href="{% static 'assets/css/base/classes-genericas.css' %}">
+
+        <!-- Arquivo de CSS para o modo escuro -->
+        <link rel="stylesheet"  href="{% static 'assets/css/theme/modo-escuro.css' %}">
+
+        <!-- Arquivo de CSS para o ambiente de desenvolvimento -->
+        <link rel="stylesheet"  href="{% static 'assets/css/base/devatena.css' %}">
+
+        <meta name="theme-color" content='#000000'>
+        <link rel="apple-touch-icon" href="{% static 'assets/js/PWA/images/icons/icon-192x192.png' %}">
+        <link rel="manifest" href="{% static 'assets/js/PWA/manifest.json' %}">
+
+    </head>
+
+    <body>
+        <!-- <script src="{% static 'assets/js/PWA/index.js' %}"></script> -->
+
+
+        <div class="modal-carregamento" data-modal-carregamento>
+            <div class="spinner-carregamento"></div>
+        </div>
+
+        {% block content %}{% endblock %}
+
+        <script src="{% static 'assets/js/theme/controlaTema.js' %}"></script>
+
+        <script src="{% static 'assets/js/base/carregamento.js' %}"></script>
+        <script src="{% static 'assets/js/base/controlaSubmissao.js' %}"></script>
+
+        <script src="{% static 'assets/js/module/dropdownUsuario.js' %}"></script>
+    </body>
+</html>

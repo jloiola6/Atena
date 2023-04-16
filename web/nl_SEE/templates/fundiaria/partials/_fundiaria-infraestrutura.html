@@ -1,0 +1,103 @@
+<div class="fundiaria-infraestrutura" data-nav-container="infraestrutura">
+    {% if fundiaria %}
+        <h3 class="texto-medio texto-azul">Dados cadastrados</h3>
+
+        <div class="container-detalhes">
+            <p class=" texto-azul texto-negrito">
+                Matrícula Imóveis:
+                <span class="texto-preto texto-normal">{{ fundiaria.matricula_imoveis }}</span>
+            </p>
+
+            <p class=" texto-azul texto-negrito">
+                Regularização:
+                <span class="texto-preto texto-normal">{{ fundiaria.regularizacao }}</span>
+            </p>
+
+            <p class=" texto-azul texto-negrito">
+                Forma de Ocupação:
+                <span class="texto-preto texto-normal">{{ fundiaria.forma_ocupacao }}</span>
+            </p>
+
+            {% if fundiaria.forma_ocupacao == "Cedido" %}
+                <p class=" texto-azul texto-negrito">
+                    Convênio:
+                    <span class="texto-preto texto-normal">{{ fundiaria.convenio }}</span>
+                </p>
+            {% endif %}
+
+            <p class=" texto-azul texto-negrito">
+                B.C.I. - Prefeitura:
+                <span class="texto-preto texto-normal">{{ fundiaria.bci }}</span>
+            </p>
+
+            <p class=" texto-azul texto-negrito">
+                Decreto de criação:
+                <span class="texto-preto texto-normal">{{ fundiaria.decreto_criacao }}</span>
+            </p>
+
+            <p class=" texto-azul texto-negrito">
+                Portaria de autorização:
+                <span class="texto-preto texto-normal">{{ fundiaria.portaria_autorizacao }}</span>
+            </p>
+
+            <p class=" texto-azul texto-negrito">
+               Área Imóvel:
+                <span class="texto-preto texto-normal">{{ fundiaria.area_imovel }}m²</span>
+            </p>
+
+             <p class=" texto-azul texto-negrito">
+               Área Utilizada:
+                <span class="texto-preto texto-normal">{{ fundiaria.area_utilizada }}m²</span>
+            </p>
+
+            <p class=" texto-azul texto-negrito">
+                Área Construída:
+                <span class="texto-preto texto-normal">{{ fundiaria.area_construida }}m² </span>
+            </p>
+
+            <p class=" texto-azul texto-negrito">
+                Perímetro:
+                <span class="texto-preto texto-normal">{{ fundiaria.perimetro }}m </span>
+            </p>
+
+            <p class=" texto-azul texto-negrito">
+                Registro na PPI:
+                <span class="texto-preto texto-normal">{{ fundiaria.ppi }} </span>
+            </p>
+
+            {% for cod in energia_eletrica %}
+                <p class=" texto-azul texto-negrito">
+                    Unidade Consumidora (Energia Elétrica):
+                    <span class="texto-preto texto-normal">{{ cod.energia_eletrica }} </span>
+                </p>
+            {% endfor %}
+
+            <p class=" texto-azul texto-negrito">
+                Unidade Consumidora (Água):
+                <span class="texto-preto texto-normal">{{ fundiaria.conta_agua }} </span>
+            </p>
+
+        </div>
+
+        <div class="container-botoes">
+            <a href="{% url 'fundiaria:infraestrutura-formulario' %}?id_fundiaria={{ fundiaria.id }}">
+                <button class="botao botao--azul" name='btn-editar' value='editar'>Editar</button>
+            </a>
+            <form method= 'POST'>
+                {% csrf_token %}
+                <button class="botao botao--azul" type='submit' name='btn-exportar' value= 'exportar'>Exportar</button>
+            </form>
+        </div>
+
+    {% else %}
+        <span class="texto-medio texto-preto">Esta unidade ainda não possui dados de Infraestrutura</span>
+
+        {% if permissao.editar == 1 %}
+            <div class="container-botoes">
+                <a href="{% url 'fundiaria:infraestrutura-formulario' %}?id_endereco={{ endereco.id }}">
+                    <button class="botao botao--azul">Adicionar</button>
+                </a>
+            </div>
+        {% endif %}
+    {% endif %}
+</div>

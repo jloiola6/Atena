@@ -1,0 +1,18 @@
+{% load static %}
+<div class="servidor-contratos oculto" data-nav-container="recolher">
+    {% if equipamento_recolhido %}
+        <div class="card-lotacao">
+            <div class="card-simples ">
+                <h1 class="texto-medio texto-azul titulo-contratos-terceirizados">{{equipamento_recolhido.equipamento}}</h1>
+                <div class="card-simples__descricao">
+                    <p class=" texto-azul texto-negrito paragrafo">Patrimônio: <span class="texto-preto texto-normal">{{ equipamento_recolhido.patrimonio }}</span></p>
+                    <p class=" texto-azul texto-negrito paragrafo">Nº Série: <span class="texto-preto texto-normal">{{ equipamento_recolhido.num_serie }}</span></p>
+                    <p class=" texto-azul texto-negrito paragrafo">Data Inicio: <span class="texto-preto texto-normal">{{ equipamento_recolhido.horario_retirada }}</span></p>
+                </div>
+            </div>
+        </div>
+        <br>
+    {% else %}
+    <span class="texto-preto texto-normal">Não Contém</span>
+    {% endif %}
+</div>

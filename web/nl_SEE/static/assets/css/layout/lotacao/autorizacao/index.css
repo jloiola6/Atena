@@ -1,0 +1,89 @@
+/* Estilização da página de autorização de lotações */
+
+/* Estilização do modal de preview */
+
+body.modo-escuro .modal-preview{
+    background-color: #FFFFFF;
+}
+
+.modal-preview{
+    font-size: 0.875rem;
+    width: 1024px;
+}
+
+    .modal-preview *:not(form *){
+        font-family: sans-serif;
+    }
+
+    .modal-preview label{
+        font-size: 1rem;
+    }
+
+    body.modo-escuro .modal-preview label{
+        color: #104381;
+    }
+
+    body.modo-escuro .modal-preview .campo-texto:hover, body.modo-escuro .modal-preview .campo-texto:focus{
+        border: 1px solid #104381;
+    }
+
+.preview-cabecalho {
+    display: flex;
+    justify-content: space-between;
+}
+
+    .preview-brasao, .preview-logo{
+        max-height: 3rem;
+        width: auto;
+    }
+
+.preview-tabela{
+    text-align: left;
+    width: 100%;
+}
+
+    .preview-tabela tr{
+        height: 2rem;
+    }
+
+    .preview-tabela th{
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .preview-tabela th, .preview-tabela td{
+        border: 1px solid black;
+        vertical-align: middle;
+        padding: .5rem;
+        width: 50%;
+    }
+
+    .preview-tabela td > p:not(:first-child){
+        margin-top: .5rem;
+    }
+
+/* RESPONSIVIDADE */
+
+.tabela-lotacoes--tablet, .tabela-lotacoes--smartphone{
+    display: none;
+}
+
+@media screen and (max-width: 591px) {
+    .tabela-lotacoes, .tabela-lotacoes--smartphone{
+        display: none;
+    }
+
+    .tabela-lotacoes--tablet{
+        display: block;
+    }
+}
+
+@media screen and (max-width: 385px) {
+    .tabela-lotacoes, .tabela-lotacoes--tablet{
+        display: none;
+    }
+
+    .tabela-lotacoes--smartphone{
+        display: block;
+    }
+}

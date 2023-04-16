@@ -1,0 +1,143 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Configurações {% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/atena/index.css' %}">
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/atena/pagina-manutencao.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Configurações</span>
+            </nav>
+
+            <div class="container-surface">
+                <div class="container-status-link">
+                    <h1 class="texto-medio texto-azul">Status do Sistema</h1>
+                    <a href="/admin" class="link">Django Admin</a>
+                </div>
+
+                <div class="container-status-sistema">
+
+                    <p class=" texto-azul texto-negrito ">Disponibilidade:
+                        <span class="texto-preto texto-normal">
+                            {% if detalhe.situacao == 'Ativo' %}
+                                No Ar
+                            {% elif detalhe.situacao == 'Desativado' %}
+                                Em Manutenção
+                            {% endif %}
+                        </span>
+                    </p>
+
+                    <!-- <p class=" texto-azul texto-negrito">Usuários logados: <span class="texto-preto texto-normal">Não sabemos</span></p> -->
+                </div>
+
+                    <!-- <h2 class="texto-medio texto-azul">Manutenção</h2> -->
+
+                <div class="container-botoes">
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        {% if detalhe.situacao == 'Ativo' %}
+                            <button class="botao botao--azul" type="submit" name="botao" id="desativar" value="Desativado">Ativar Manutenção</button>
+                        {% elif detalhe.atualizar_simaed == 1 %}
+                            <button class="botao botao--vermelho" type="submit" name="botao"  value="Ativo" disabled>Desativar Manutenção</button>
+                        {% elif detalhe.situacao == 'Desativado' %}
+                            <button class="botao botao--vermelho" type="submit" name="botao" value="Ativo" >Desativar Manutenção</button>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+
+            <!-- <form class="container-surface" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="">
+                    <h1 class="texto-medio texto-azul">Atualizar turmas do SIMAED</h1>
+                    {% if detalhe.atualizar_simaed == 0 %}
+                        <div class="anexar-arquivo" data-anexar-arquivo>
+                            <div class="formulario-grupo">
+                                <input class="campo-arquivo" id="arquivo" type="file" accept=".csv" name="arquivo">
+                            </div>
+
+                            <div class="container-manutencao-sistema">
+                                <div class="container-botoes">
+                                    <button class="botao botao--azul" data-modal-abrir="confirmar">Anexar arquivo</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="atualizacao-siamed container-manutencao oculto" data-atualizacao-siamed>
+                            <br>
+                            <p class=" texto-azul">Atualizando banco de dados... </p>
+                            <span class="icone icone-azul icone-medio icone-manutencao">settings</span>
+                        </div>
+                    {% else %}
+                        <div class="container-manutencao">
+                            <br>
+                            <p class=" texto-azul">Atualizando banco de dados... </p>
+                            <span class="icone icone-azul icone-medio icone-manutencao">settings</span>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="modal oculto" data-modal="confirmar">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                        <p class="texto-preto descricao">Tem certeza que deseja anexar dados das turmas do SIMAED?</p>
+
+                        <div class="container-botoes">
+                            <button class="botao--verde botao" type="submit" onclick="atualizar_simaed()">Salvar</button>
+                            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </form> -->
+
+            <div class="container-cards">
+                <a href="{% url 'atena:simaed' %}">
+                    <div class="card-menu">
+                        {% include 'partials/icones-cards/atena/simaed.svg' %}
+
+                        <h2 class="card-titulo">SIMAED</h2>
+                    </div>
+                </a>
+
+                <a href="{% url 'atena:front' %}">
+                    <div class="card-menu">
+                        {% include 'partials/icones-cards/atena/front.svg' %}
+
+                        <h2 class="card-titulo">Front</h2>
+                    </div>
+                </a>
+
+                <a href="{% url 'atena:testes' %}">
+                    <div class="card-menu">
+                        {% include 'partials/icones-cards/atena/testes.svg' %}
+
+                        <h2 class="card-titulo">Testes</h2>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/layout/atena/turmas-simaed/controlaCampos.js' %}"></script>
+
+
+{% endblock %}

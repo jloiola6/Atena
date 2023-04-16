@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Exportar Lotação</title>
+    </head>
+
+    <body>
+        <header>
+            <table>
+                <tr>
+                    <th><img id="img1" src="{{ url_logo }}" width='550px' alt=""></th>
+                    <th class="direita"><img id="img2" src="{{ url_atena }}" width='120px' alt=""></th>
+                    <!-- <th><img id="img1" src="C:\Users\joao.soares\Documents\code\Atena\nl_SEE\static\assets\img\divisao-lotacao.png" width='550px' alt=""></th>
+                    <th><img id="img2" src="C:\Users\joao.soares\Documents\code\Atena\nl_SEE\static\assets\img\ATENA-AZUL.svg" width='120px' alt=""></th> -->
+                </tr>
+            </table>
+        </header>
+
+        <hr>
+        <div>
+            <section class="detalhes">
+                <div class=" borda">
+                    <table>
+                        <tr>
+                            <td><h2>MEMO/{{ lotacao_assinatura.sigla }}/SEE/N°: {{ lotacoes.id }}/{{ lotacoes.ano_referencia }}</h2></td>
+                            <!-- <th></th>; -->
+                            <td><h2>SUBCONTA: {{ lotacoes.subconta.sub }}</h2></td>
+                            
+                        </tr>
+
+                        <tr>
+                            <td><h2>Do(a): {{ lotacao_assinatura.sigla }} - {{ lotacao_assinatura.lotacao_gestor|upper }}</h2></td>
+                            <!-- <th></th>; -->
+                            {% if lotacoes.unidade_escolar.escola.cod_turmalina %}
+                                <td><h2>Código Turmalina: {{ lotacoes.unidade_escolar.escola.cod_turmalina }}</h2></td>
+                            {% else %}
+                                <td><h2>Código Turmalina: Não informado</h2></td>
+                            {% endif %}
+                        </tr>
+                    </table>
+                
+                    {% if lotacoes.unidade_escolar %}
+                        
+                        {% if lotacoes.unidade_escolar.tipo == 'S' %}
+                            <td><h2>Para: {{ lotacoes.unidade_escolar.escola.nome_escola }}</h2></td>
+                   
+                        {% else %}
+                            <td><h2>Para: {{ lotacoes.unidade_escolar.escola.nome_escola }} - (Anexo {{ lotacoes.unidade_escolar.numero_anexo }})</h2></td>
+                        {% endif %}
+                        
+                    {% elif lotacoes.unidade_adm %}
+                        <h2>Para: {{ lotacoes.unidade_adm.sigla }} - {{ lotacoes.unidade_adm.nome|upper }}</h2>
+
+                    {% elif lotacoes.orgao_cedido != None %}
+                        <h2>Para: {{ lotacoes.orgao_cedido }}</h2>
+
+                    {% else %}
+                        <h2>Para: SEM LOTAÇÃO</h2>
+                    {% endif %}
+
+                    <h2>Assunto: LOTAÇÃO DE SERVIDOR</h2>
+
+                    {% if lotacoes.data_memorando %}
+                        <h2>Data: {{ lotacoes.data_memorando }}</h2>
+                    {% else %}
+                        <h2>Data: {{ data.date }}</h2>
+                    {% endif %}
+                </div>
+
+                {% if lotacoes.tipo_lotacao != "Sem Lotação" %}
+                    <div class="apresentacao">
+                        <p>Apresentamos a Vossa Senhoria o(a) Senhor(a) abaixo que, a partir desta data deverá exercer a função de {{ lotacoes.funcao }}.</p>
+                    </div>
+                {% else %}
+                    <br><br>
+                {% endif %}
+            </section>
+
+            <section class="meio">
+                <table class="tabela-lotacao">
+                    <tbody>
+                        {% if lotacoes.contrato.servidor.matricula %}
+                            <tr>
+                                <td class="cabecalho-tabela">MATRÍCULA:</td><td class="conteudo-tabela">{{ lotacoes.contrato.servidor.matricula }} - {{ lotacoes.contrato.digito }}</td>
+                            </tr>
+                        {% endif %}
+
+                        {% if lotacoes.tipo_lotacao == 'Aula Complementar' or lotacoes.tipo_lotacao == 'Dedicação Exclusiva' or lotacoes.tipo_lotacao == 'Complementação Salarial' %}
+                            {% if lotacoes.numero_sei %}
+                                <tr>
+                                    <td class="cabecalho-tabela">Nº SEI:</td><td class="conteudo-tabela">{{ lotacoes.numero_sei }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endif %}
+
+                        <tr>
+                            <td class="cabecalho-tabela">NOME:</td><td class="conteudo-tabela">{{ lotacoes.contrato.servidor.nome }}</td>
+                        </tr>
+                        <tr>
+                            <td class="cabecalho-tabela">TIPO DE LOTAÇÃO:</td><td class="conteudo-tabela">{{ lotacoes.tipo_lotacao }}</td>
+                        </tr>
+
+                        <tr>
+                            <td class="cabecalho-tabela">CARGO:</td><td class="conteudo-tabela">{{ lotacoes.contrato.cargo }}</td>
+                        </tr>
+                        {% if lotacoes.tipo_lotacao != 'Sem Lotação' %}
+                            <tr>
+                                <td class="cabecalho-tabela">FUNÇÃO:</td><td class="conteudo-tabela">{{ lotacoes.funcao }}</td>
+                            </tr>
+                        {% endif %}
+
+                        {% if professor_adm %}
+                            <tr>
+                                <td class="cabecalho-tabela">DISCIPLINA:</td><td class="conteudo-tabela">{{ professor_adm.disciplina.nome }}</td>
+                            </tr>
+                        {% endif %}
+
+                        {% if lotacoes.tipo_lotacao != 'Sem Lotação' %}
+                            <tr>
+                                <td class="cabecalho-tabela">CH SEMANAL:</td><td class="conteudo-tabela">{{ lotacoes.carga_horaria }}H</td>
+                            </tr>
+                        {% endif %}
+
+                        
+                        <tr>
+                            <td class="cabecalho-tabela">DATA DE INÍCIO:</td><td class="conteudo-tabela">{{ lotacoes.data_inicio }}</td>
+                        </tr>
+                        {% if lotacoes.data_termino %}
+                            <tr>
+                                <td class="cabecalho-tabela">DATA DE TÉRMINO:</td><td class="conteudo-tabela">{{ lotacoes.data_termino }}</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+                <br>
+                {% if alunos %}
+                    <tr>
+                        <td class="cabecalho-tabela">ALUNOS:</td>
+                        <td class="conteudo-tabela">
+                            {% for aluno in alunos %}
+                                <p>{{ aluno.aluno.nome }} - {{ aluno.turma.nome }} - {{ aluno.turma.turno }}</p>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endif %}
+
+                {% if vinculacao_aluno %}
+                    <table class="tabela-lotacao-disciplinas">
+                        <thead>
+                            <tr class="cabecalho-tabela">
+                                <th>ALUNO(S)</th>
+                                <th>TURMA(S)</th>
+                                <th>TURNO(S)</th>
+                                <th>ETAPAS(S)</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for aluno in vinculacao_aluno %}
+                                <tr class="dados-grade">
+                                    <td>{{ aluno.0 }}</td>
+                                    <td>{{ aluno.1 }}</td>
+                                    <td>{{ aluno.2 }}</td>
+                                    <td>{{ aluno.3 }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+
+                {% if lotacoes.unidade_escolar and lotacoes.funcao == 'Professor(a) AEE' or lotacoes.funcao == 'Coordenador(a) Pedagógico(a) de Anos' %}
+                    <table class="tabela-lotacao-disciplinas">
+                        <thead>
+                            <tr class="cabecalho-tabela">
+                                <th>TURMA(S)</th>
+                                <th>TURNO(S)</th>
+                                <th>ETAPA(S)</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for grade in grades %}
+                                <tr class="dados-grade">
+                                    <td>{{ grade.0 }}</td>
+                                    <td>{{ grade.1 }}</td>
+                                    <td>{{ grade.2 }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+
+                {% if lotacoes.funcao == 'Professor(a)' and lotacoes.unidade_escolar %}
+                    <table class="tabela-lotacao-disciplinas">
+                        <thead>
+                            <tr class="cabecalho-tabela">
+                                <th>TURMA(S)</th>
+                                <th>DISCIPLINA(S) / ROTA(S)</th>
+                                <th>TURNO(S)</th>
+                                <th>ETAPA(S)</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for grade in grades %}
+                                <tr class="dados-grade">
+                                    <td>{{ grade.0 }}</td>
+                                    <td>{{ grade.1 }}</td>
+                                    <td>{{ grade.2 }}</td>
+                                    <td>{{ grade.3 }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </section>
+
+            <section class="final">
+                <div class="div-observacao">
+                    <h1 class="observacao">Observação:</h1>
+                    {% if lotacoes.observacoes %}
+                        <p class="observacoes">{{ lotacoes.observacoes }}</p>
+                    {% else %}
+                        <p class="observacoes">Não possui observações</p>
+                    {% endif %}
+                </div>
+
+                <br>
+                <div>
+                    <p class="atensiosamente">Atenciosamente,</p>
+                </div>
+
+                <div class="assinatura">
+                    <table>
+                        <tr>
+                            <td>
+                                <p>___________________________________________</p>
+                                <p>{{ lotacao_assinatura.gestor|upper }}</p>
+                                {% if 'Representação' in lotacao_assinatura.lotacao_gestor %}
+                                    <p>Coordenador(a) Geral</p>
+                                    <p>{{ lotacao_assinatura.lotacao_gestor }}</p>
+                                {% else %}
+                                    <p>Chefe do(a) {{ lotacao_assinatura.lotacao_gestor }}</p>
+                                    <p class="invisivel">i</p>
+                                {% endif %}
+
+                                {% if chefe.portaria %}
+                                    <p>SEE Portaria n° 1.840/2021</p>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <p>___________________________________________</p>
+                                <p>{{ lotacao_assinatura.tecnico|upper }}</p>
+                                {% if  lotacao_assinatura.funcao_tecnico %}
+                                    <p>{{ lotacao_assinatura.funcao_tecnico }}</p>
+                                {% else %}
+                                    <p>Técnico(a) de Lotação</p>
+                                {% endif %}
+                                <p class="invisivel">i</p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- {% for i in espacos %}
+                    <br>
+                {% endfor %}     -->
+
+                <div class="rodape">
+                    <p class="teste dados-rodape">{{ lotacao_assinatura.rua }}, {{ lotacao_assinatura.numero }} - {{ lotacao_assinatura.bairro }} - {{ lotacao_assinatura.cep }}</p>
+                    <p class="teste">{{ lotacao_assinatura.municipio }} ({{ lotacao_assinatura.uf }}) - {{ lotacao_assinatura.telefone }}</p>
+                    <p class="teste">{{ lotacao_assinatura.email }}</p>
+                </div>
+
+                <table>
+                    <tr>
+                        {% if nome|upper == servidor|upper %}
+                            <th class="dados">Exportado por {{ nome }} dia {{ data }}</th>
+                        {% else %}
+                            <th class="dados">2ª Via exportada por {{ nome }} dia {{ data }}</th>
+                        {% endif %}
+                    </tr>
+                </table>
+            </section>
+        </div>
+
+        <style>
+            body{
+                font-size: 10px;
+            }
+
+            @page{
+                margin: 1cm;
+            }
+
+            
+
+            #img1{
+                width: 100%;
+                height: auto;
+            }
+
+            #img2{
+                width: 120px;
+                height: auto;
+            }
+
+            .direita{
+                text-align: right;
+            }
+
+
+            h2{
+                margin: 0;
+            }
+
+            .apresentacao{
+                font-size: 12px;
+                text-align: left;
+                padding-bottom: 12px;
+                padding-top: 12px;
+
+            }
+
+            .tabela-lotacao{
+                border: 1px solid black;
+                padding-top: 4px;
+                padding-left: 2px;
+            }
+            .tabela-lotacao-disciplinas{
+                border: .5px solid black;
+                padding-top: 2px;
+                padding-left: 1px;
+            }
+
+            .cabecalho-tabela{
+                font-size: 10px;
+                font-weight: bold;
+            }
+
+            .conteudo-tabela{
+                font-size: 10px;
+            }
+
+            .div-observacao{
+                margin: 0;
+            }
+
+            .observacao{
+                font-family: sans-serif;
+                font-size: 10px;
+                padding-top: 26px;
+            }
+
+            .observacoes{
+                font-family: sans-serif;
+                font-size: 10px;
+            }
+
+            .atensiosamente{
+                font-family: sans-serif;
+                font-size: 10px;
+                padding-bottom: 40px;
+            }
+
+            .assinatura{
+                text-align: center;
+                font-weight: normal;
+                font-size: 10px;
+            }
+
+            .invisivel{
+                color: white;
+            }
+
+            .rodape{
+                text-align: center;
+                font-size: 10px;
+                font-family: sans-serif;
+                margin: 0;
+            }
+
+            .teste{
+                margin: 0px;
+                font-family: sans-serif;
+                font-size: 10px;
+            }
+
+            .dados-rodape{
+                padding-top: 40px;
+            }
+
+            p{
+                margin: 0px;
+            }
+
+            .dados-servidor{
+                
+                font-size: 10px;
+            }
+           
+
+            .dados-grade{
+                text-align: center;
+            }
+
+            /* .dados{
+                padding-top: 20px;
+            } */
+            
+        </style>
+
+    </body>
+</html>

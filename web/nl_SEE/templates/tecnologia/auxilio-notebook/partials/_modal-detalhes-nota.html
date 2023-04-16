@@ -1,0 +1,78 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="nota-{{ nota.auxilio__id }}">
+    <div id="modal-conteudo" class="modal-conteudo">
+        <h2 class="texto-medio texto-negrito texto-azul">Notas Fiscais</h2>
+
+        {% for item in notas %}
+            {% if item.auxilio__id == nota.auxilio__id %}
+                <div class="container-detalhes">
+                    <p class="texto-azul texto-negrito">Servidor: <span class="texto-preto texto-normal">{{ item.auxilio__usuario__nome }}</span></p>
+                    <p class="texto-azul texto-negrito">CPF: <span class="texto-preto texto-normal">{{ item.auxilio__usuario__cpf }}</span></p>
+                    <p class="texto-azul texto-negrito">E-mail: <span class="texto-preto texto-normal">{{ item.auxilio__usuario__email }}</span></p>
+                    <p class="texto-azul texto-negrito">Cargo: <span class="texto-preto texto-normal">{{ item.auxilio__usuario__cargo }}</span></p>
+                    <p class="texto-azul texto-negrito">Lotação: <span class="texto-preto texto-normal">{{ item.auxilio__usuario__lotacao__nome }}</span></p>
+                    <p class="texto-azul texto-negrito">Município: <span class="texto-preto texto-normal">{{ item.auxilio__usuario__lotacao__municipio }}</span></p>
+                </div>
+
+                <form method="POST">
+                    {% csrf_token %}
+                    {% for doc in documentos %}
+                        {% if doc.auxilio__id == item.auxilio__id %}
+                            <div class="container-detalhes">
+                                <p class="texto-azul texto-negrito">Nota:
+                                    <a class="link" href="{{doc.path_arquivo}}" target="_blank">{{doc.nome_arquivo}}</a>
+                                    <span class="texto-preto texto-normal">
+                                        {% if doc.situacao == 'R' %}
+                                            (Reprovada)
+                                        {% elif doc.situacao == 'P' %}
+                                            (Atual)
+                                        {% endif %}
+                                    </span>
+                                </p>
+
+                                {% if doc.situacao == 'R' %}
+                                    <p class="texto-azul texto-negrito">Motivo: <span class="texto-normal texto-preto">{{ doc.motivo }}</span></p>
+                                    <p class="texto-azul texto-negrito">Gestor responsável: <span class="texto-normal texto-preto">{{ doc.adm }}</span></p>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <input type="text" value="{{ nota_id }}" name="nota_id" style="display: none;">
+
+                    {% if nota.nota == '1' or nota.nota == '4' or nota.nota == '5' %}
+                        <div class="formulario-grupo">
+                            <label class="label-campo texto-azul" for="situacao-{{ item.auxilio__id }}">Situação</label>
+                            <select id="situacao-{{ item.auxilio__id }}" name="situacao" class="campo-texto campo-pequeno" data-selecao-situacao required>
+                                <option value="P">Pendente</option>
+                                <option value="A">Aprovado</option>
+                                <option value="R">Reprovado</option>
+                                <option value="N">Em Análise</option>
+                                <option value="C">Em Análise pela Comissão</option>
+                            </select>
+                        </div>
+
+                        <div class="formulario-grupo" data-grupo-diferenca>
+                            <label for="diferenca-{{ item.auxilio__id }}" class="label-campo texto-azul">Diferença</label>
+                            <input class="campo-texto campo-pequeno" type="text" id="diferenca-{{ item.auxilio__id }}" name='diferenca' id="text-reprovado" data-mascara="moeda"/>
+                        </div>
+
+                        <div class="formulario-grupo" data-grupo-motivo>
+                            <label for="motivo-{{ item.auxilio__id }}" class="label-campo texto-azul">Motivo</label>
+                            <textarea class="campo-area" name="motivo" id="motivo-{{ item.auxilio__id }}" minlength="15"></textarea>
+                        </div>
+
+                        <div class="container-botoes">
+                            <button type="submit" class="botao botao--azul">Salvar</button>
+                        </div>
+
+                    {% elif nota.nota == '2' %}
+                        <div class="container-detalhes">
+                            <p class="texto-azul texto-negrito">Aprovado por: <span class="texto-preto texto-normal">{{ nota.adm_nota }}</span></p>
+                        </div>
+                    {% endif %}
+                </form>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>

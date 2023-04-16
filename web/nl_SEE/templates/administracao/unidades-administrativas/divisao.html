@@ -1,0 +1,84 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} {{ unidade.nome }} {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/administracao/unidades-administrativas/unidades.css' %}">
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/administracao/unidades-administrativas/divisao.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:index' %}">Administração</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:unidades-administrativas' %}">Unidades</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:diretoria' %}?id={{ diretoria.id }}">{{ diretoria.nome }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:departamento' %}?id={{ departamento.id }}">{{ departamento.nome }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">{{ unidade.nome }}</span>
+            </nav>
+
+            {% include 'partials/unidade-administrativa/_unidade-dados.html' %}
+
+            <h2 class="titulo-pagina texto-azul">Núcleos</h2>
+
+            {% if permissao.editar == 1 %}
+                <div class="container-botoes-nucleos">
+                    <a href="{% url 'administracao:nucleo-formulario' %}?id={{ unidade.id }}">
+                        <button class="botao botao--azul">Adicionar</button>
+                    </a>
+                </div>
+            {% endif %}
+
+            {% if possui_nucleos %}
+                <div class="lista-nucleos lista-menus">
+                    {% for nucleo in nucleos %}
+                            <div class="menu-pai nucleo" data-accordeon-pai="{{ nucleo.id }}-{{ nucleo.sigla }}" data-accordeon-filho="{{ divisao.id }}-{{ divisao.sigla }}" data-accordeon-ativo="false">
+                                <a href="{% url 'administracao:nucleo' %}?id={{ nucleo.id }}">
+                                    <h3 class="texto-medio texto-azul">{{ nucleo.nome }}</h3>
+                                </a>
+
+                                <spam class="icone icone-medio icone-azul">expand_more</spam>
+                            </div>
+
+                            {% for centro in centros %}
+                                {% if centro.hierarquia == nucleo.id %}
+                                    <div class="menu-pai menu-filho centro" data-accordeon-pai="{{ centro.id }}-{{ centro.sigla }}" data-accordeon-filho="{{ nucleo.id }}-{{ nucleo.sigla }}" data-accordeon-ativo="false">
+                                        <a href="{% url 'administracao:centro' %}?id={{ centro.id }}">
+                                            <h3 class="texto-medio texto-azul">{{ centro.nome }}</h3>
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+                <p class=" texto-preto mensagem-sem-nucleos">Esta unidade não possui departamentos cadastrados.</p>
+            {% endif %}
+
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/controlaMenuAccordeon.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,120 @@
+ {% extends 'partials/_base.html' %}
+
+{% block title %} {{ contrato.numero_contrato }} {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/terceirizacao/servidor/servidor-contrato-perfil.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'terceirizacao:index' %}">Terceirização</a>
+                <span class="texto-azul">&#62;</span>
+
+                {% if lotacao %}
+                    <a class="  texto-azul" href="{% url 'terceirizacao:lotacoes' %}">Lotação</a>
+                    <span class="texto-azul">&#62;</span>
+                {% else %}
+                    <a class="  texto-azul" href="{% url 'terceirizacao:servidores' %}">Terceirizados</a>
+                    <span class="texto-azul">&#62;</span>
+                {% endif %}
+
+                <a class="  texto-azul" href="{% url 'terceirizacao:servidor-perfil' %}?id={{ servidor.id }}">{{ servidor }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Contrato n° {{ contrato.numero_contrato }}</span>
+            </nav>
+
+            <div class="container-surface">
+                <div class="container-detalhes">
+                    <p class=" texto-azul texto-negrito">Tipo de contrato: <span class="texto-preto texto-normal">{{ contrato.tipo_contrato }}</span></p>
+                    <p class=" texto-azul texto-negrito">Nº do contrato: <span class="texto-preto texto-normal">{{ contrato.numero_contrato }}</span></p>
+
+                    {% if ultima_ocorrencia and ultima_ocorrencia.status == 1%}
+                        <p class=" texto-azul texto-negrito"> Tipo de Ocorrencia funcional: <span class="texto-preto texto-normal">{{ ultima_ocorrencia.tipo_ocorrencia|upper }}</span></p>
+
+                        {% if ultima_ocorrencia.substituto %}
+                            <p class=" texto-azul texto-negrito"> Nome do Substituto: <span class="texto-preto texto-normal">{{ ultima_ocorrencia.substituto|upper }}</span></p>
+                        {% else %}
+                            <p class=" texto-azul texto-negrito"> Nome do Substituto: <span class="texto-preto texto-normal">NÃO INFORMADO</span></p>
+
+                        {% endif %}
+
+                    {% endif %}
+                    <a class="link" href="{% url 'terceirizacao:contrato-perfil' %}?id_contrato={{ contrato.id }}">Visualizar contrato</a>
+
+                    <p class=" texto-azul texto-negrito container-detalhes-bloco">Nome da empresa: <span class="texto-preto texto-normal">{{ empresa.nome }}</span></p>
+                    <p class=" texto-azul texto-negrito">CNPJ da empresa: <span class="texto-preto texto-normal">{{ empresa.cnpj }}</span></p>
+                    <p class=" texto-azul texto-negrito">Nº SEI: <span class="texto-preto texto-normal">{{ contrato.numero_sei }}</span></p>
+
+                    <p class=" texto-azul texto-negrito container-detalhes-bloco">Objeto: <span class="texto-preto texto-normal">{{ contrato.objeto|upper }}</span></p>
+
+                    <p class=" texto-azul texto-negrito container-detalhes-bloco">Início da vigência: <span class="texto-preto texto-normal">{{ contrato.data_inicio }}</span></p>
+                    {% if ultimo_contrato %}
+                        {% comment %} <p class=" texto-azul texto-negrito">Término da vigência: <span class="texto-preto texto-normal">{{ contrato.data_termino }}</span></p> {% endcomment %}
+                        <p class=" texto-azul texto-negrito">Término da vigência (Aditivo): <span class="texto-preto texto-normal">{{ ultimo_contrato.data_termino }}</span></p>
+                    {% else %}
+                        <p class=" texto-azul texto-negrito">Término da vigência: <span class="texto-preto texto-normal">{{ contrato.data_termino }}</span></p>
+                    {% endif %}
+
+                    {% if ultimo_contrato %}
+                        <p class=" texto-azul texto-negrito container-detalhes-bloco">Valor Global Inicial ({{ contrato.meses_vigencia }} Meses) <span class="texto-preto texto-normal">{{ contrato.valor_total }}</span></p>
+                        <p class=" texto-azul texto-negrito">Valor Global (Aditivo - {{ ultimo_contrato.meses_vigencia }} Meses): <span class="texto-preto texto-normal">{{ ultimo_contrato.valor_total }}</span></p>
+                    {% else %}
+                        <p class=" texto-azul texto-negrito container-detalhes-bloco">Valor mensal: <span class="texto-preto texto-normal">{{ contrato.valor_total }}</span></p>
+                        <p class=" texto-azul texto-negrito">Valor Global ({{ contrato.meses_vigencia }} Meses): <span class="texto-preto texto-normal">{{ contrato.valor_global }}</span></p>
+                    {% endif %}
+
+                    {% if contrato.empenho %}
+                        <p class=" texto-azul texto-negrito container-detalhes-bloco">Empenho: <span class="texto-preto texto-normal">{{ contrato.empenho }}</span></p>
+                    {% endif %}
+
+                    <p class=" texto-azul texto-negrito">Situação: <span class="texto-preto texto-normal">{{ contrato.situacao }}</span></p>
+                    {% for fonte in fontes %}
+                        <p class=" texto-azul texto-negrito">Fonte de recurso: <span class="texto-preto texto-normal">{{ fonte }}</span></p>
+                    {% endfor %}
+                </div>
+
+                {% if permissao.editar == 1 and finalizar_contrato == 1 %}
+                    <div class="container-botoes">
+                        <a href="{% url 'terceirizacao:finalizar-contrato' %}?id_contrato={{ ultima_lotacao.id }}&finalizar=True">
+                            <button class="botao botao--azul">Finalizar Contrato</button>
+                        </a>
+                    </div>
+                {% endif %}
+
+            </div>
+
+            <div class="container-surface-servidor container-surface">
+                <nav class="container-navegacao-surface">
+                    <ul class="navegacao-surface-lista">
+                        <li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul navegacao-surface-item-ativo" data-nav-aba="lotacoes">Lotações</li>
+
+                        <li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul " data-nav-aba="ocorrencia">Ocorrências Funcionais</li>
+                    </ul>
+                </nav>
+
+                {% include 'terceirizacao/servidor/partials/_servidor-contrato-lotacoes.html' %}
+                {% include 'terceirizacao/servidor/partials/_servidor-ocorrencia-funcional.html' %}
+
+
+            </div>
+            {% comment %} <div class="container-contrato container-surface">
+                {% include 'terceirizacao/servidor/partials/_servidor-contrato-lotacoes.html' %}
+            </div> {% endcomment %}
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/controlaNavegacaoSurface.js' %}"></script>
+{% endblock %}

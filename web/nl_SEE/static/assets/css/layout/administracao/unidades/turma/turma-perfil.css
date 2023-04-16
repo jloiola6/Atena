@@ -1,0 +1,28 @@
+/* Estiização da página de perfil de uma unidade educacional */
+
+.container-surface-turma, .container-surface-grade{
+    margin-top: 24px;
+}
+
+.container-turma-dados{
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    margin-top: 16px;
+}
+
+.container-surface-turma .container-botoes{
+    margin-top: 16px;
+}
+
+.tabela-aluno-smartphone{
+    display: none;
+}
+
+.container-grade-lista{
+    margin-top: 16px;
+}
+
+.container-surface-grade .container-botoes{
+    margin-top: 24px;
+}

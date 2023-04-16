@@ -1,0 +1,84 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Perfil de usuário {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/usuario/usuario-perfil.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'usuario:index' %}">Usuários</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">{{ usuario }}</span>
+            </nav>
+
+            <div class="container-surface-usuario container-surface">
+                <h2 class="texto-medio texto-azul">{{ usuario.nome }}</h2>
+
+                <div class="container-usuario-dados">
+                    <p class=" texto-azul texto-negrito titulo">CPF: <span class="texto-preto texto-normal">{{ usuario.cpf }}</span></p>
+                    <p class=" texto-azul texto-negrito texto">E-mail: <span class="texto-preto texto-normal">{{ usuario.email }}</span></p>
+                    <p class=" texto-azul texto-negrito texto">Login: <span class="texto-preto texto-normal">{{ usuario.login }}</span></p>
+                </div>
+
+                <a href="{% url 'usuario:usuario-formulario' %}?id_usuario={{ usuario.id }}">
+                    <button class="botao botao--azul botao-editar-permissoes">Editar</button>
+                </a>
+            </div>
+
+            <h2 class="titulo-pagina texto-azul">Permissões</h2>
+
+            {% if not aplicacoes %}
+                <p class="texto-preto descricao">Este usuário ainda não possui nenhuma permissão cadastrada.</p>
+            {% endif %}
+            <div class="container-botoes">
+                <a href="{% url 'usuario:usuario-permissoes' %}?id_usuario={{ usuario.id }}"><button class="botao botao--azul botao-editar-permissoes">Adicionar</button></a>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="container-botoes">
+                        <button class="botao botao--azul botao-editar-permissoes" name="btn-adicionar-tudo" value="adicionar-tudo">Adicionar todas permissões</button>
+                        <button class="botao botao--vermelho botao-editar-permissoes" name="btn-remover-tudo" value="remover-tudo">Remover todas permissões</button>
+                    </div>
+                </form>
+            </div>
+            {% for aplicacao in aplicacoes %}
+                <div class="lista-permissoes lista-menus">
+                    <div class="menu-pai aplicacao" data-accordeon-pai="{{ aplicacao.id }}-{{ aplicacao.nome }}" data-accordeon-ativo="false">
+                        <h3 class="texto-medio texto-azul">{{ aplicacao.nome }}</h3>
+                        <span class="icone icone-medio icone-azul">expand_more</span>
+                    </div>
+
+                    {% for permissao in permissoes %}
+                        {% if permissao.servico.aplicacao == aplicacao %}
+                            <div class=" menu-pai menu-filho servico" data-accordeon-pai="{{ permissao.servico.id }}" data-accordeon-filho="{{ aplicacao.id }}-{{ aplicacao.nome }}" data-accordeon-ativo="false">
+                                {% if permissao.servico.id != 7 %}
+                                    <a href="{% url 'usuario:editar-permissao' %}?id_permissao={{ permissao.id }}">
+                                        <h3 class="texto-medio texto-azul">{{ permissao.servico.nome }}</h3>
+                                    </a>
+                                {% else %}
+                                    <h3 class="texto-medio texto-azul">{{ permissao.servico.nome }}</h3>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/controlaMenuAccordeon.js' %}"></script>
+
+{% endblock %}

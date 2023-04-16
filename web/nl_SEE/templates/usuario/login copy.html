@@ -1,0 +1,71 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <title> Atena - Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" href="{% static 'assets/img/icone-aba.png' %}">
+
+        <!-- Arquivos CSS de base -->
+        <link rel="stylesheet"  href="{% static 'assets/css/base/reset.css' %}"/>
+        <link rel="stylesheet"  href="{% static 'assets/css/base/base.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/base/cores.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/base/texto.css' %}">
+
+
+        <!-- Arquivos CSS de componentes -->
+        <link rel="stylesheet"  href="{% static 'assets/css/module/inputs.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/module/botoes.css' %}">
+
+        <!-- Arquivos de CSS para responsividade de componentes -->
+        <link rel="stylesheet" href="{% static 'assets/css/module/responsivo/inputs-responsivo.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/module/responsivo/botoes-responsivo.css' %}">
+
+
+        <!-- Arquivos CSS de layouts de páginas -->
+        <link rel="stylesheet"  href="{% static 'assets/css/layout/usuario/login.css' %}">
+
+        <!-- Arquivos de CSS para responsividades de páginas -->
+        <link rel="stylesheet" href="{% static 'assets/css/layout/usuario/responsivo/login-responsivo.css' %}">
+
+        {% comment %} <link rel="stylesheet"  href="{% static 'assets/css/base/devatena.css' %}"> {% endcomment %}
+
+    </head>
+
+    <body>
+        <main class="main-login">
+            <div class="container-login">
+
+                <div class="">
+                    <img class="logo-atena" src="{% static 'assets/img/logo-login-atena.svg' %}" alt="Logtipo ATENA">
+                </div>
+
+                <form class="formulario-login" method="POST">
+                    {% csrf_token %}
+
+                    <input class="campo-texto campo-texto-login " name="user" type="text" placeholder="Usuário" required>
+
+                    <input class="campo-texto campo-texto-login " name="password" type="password" placeholder="Senha" required>
+
+                    {% if erro %}
+                        <span class="texto-branco">&#10060 {{ erro }}</span>
+                    {% endif %}
+
+                    <div class="container-botoes">
+                        <button class="botao botao--verde" type="submit">Entrar</button>
+                    </div>
+                </form>
+
+                <div class="container-imagens-login">
+                    <img class="logo-see" src="{% static 'assets/img/logo-login.svg' %}" alt="Logotipo SEE">
+                    <img class="brasao-login" src="{% static 'assets/img/brasao-login.svg' %}" alt="Brasão">
+                </div>
+            </div>
+        </main>
+
+    </body>
+</html>

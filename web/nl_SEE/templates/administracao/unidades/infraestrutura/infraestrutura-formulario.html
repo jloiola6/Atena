@@ -1,0 +1,465 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Cadastro de Infraestrutura {% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'administracao:index' %}" class=" texto-azul">Administração</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'administracao:unidades_educacionais' %}" class=" texto-azul">Unidades</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'administracao:unidade-perfil' %}?inep={{ escola.cod_inep }}" class=" texto-azul">{{ escola.nome_escola }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'administracao:infraestrutura-perfil' endereco.id %}" class=" texto-azul">Infraestrutura</a>
+                <span class="texto-azul">&#62;</span>
+
+                {% if edicao %}
+
+                    <span class="  texto-azul">Editar Infraestrutura</span>
+                {% else %}
+                    <span class="  texto-azul">Cadastro de Infraestrutura</span>
+                {% endif %}
+
+            </nav>
+
+            {% if edicao %}
+                <h1 class="titulo-pagina texto-azul">Editar Infraestrutura</h1>
+            {% else %}
+                <h1 class="titulo-pagina texto-azul">Cadastro de Infraestrutura</h1>
+            {% endif %}
+
+            <p class="descricao texto-preto">Insira os detalhes da infraestrutura</p>
+
+            <form class="container-surface" method="POST">
+                {% csrf_token %}
+
+                <nav class="container-navegacao-surface">
+                    <ul class="navegacao-surface-lista">
+                        <li class="navegacao-surface-item navegacao-surface-item-ativo">
+                            <span class="texto-azul">Infraestrutura Geral</span>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo">Fornece água potável para consumo</label>
+                    <fieldset id="fieldset-agua-potavel">
+                        {% if infraestrutura.agua_potavel == 'Sim' or not edicao %}
+                            <input type="radio" name="fieldset-agua-potavel" value="Sim" id="radio-sim" checked>
+                            <label class="texto-preto" for="radio-sim">Sim</label>
+                        {% else %}
+                            <input type="radio" name="fieldset-agua-potavel" value="Sim" id="radio-sim">
+                            <label class="texto-preto" for="radio-sim">Sim</label>
+                        {% endif %}
+
+                        {% if infraestrutura.agua_potavel == 'Não' %}
+                            <input type="radio" name="fieldset-agua-potavel" value="Não" id="radio-nao" checked>
+                            <label class="texto-preto" for="radio-nao">Não</label>
+                        {% else %}
+                            <input type="radio" name="fieldset-agua-potavel" value="Não" id="radio-nao">
+                            <label class="texto-preto" for="radio-nao">Não</label>
+                        {% endif %}
+                    </fieldset>
+                </div>
+
+                <div class="formulario-grupo" data-grupo-check>
+                    <label class="texto-azul label-campo">Local de funcionamento</label>
+
+                    <div>
+                        {% if 'Prédio Escolar' in local_funcionamento %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-1" value="Prédio Escolar" id="checkbox-predio" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-1" value="Prédio Escolar" id="checkbox-predio">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-predio">Prédio Escolar</label>
+                    </div>
+
+                    <div>
+                        {% if 'Galpão/Rancho/Paiol/Barracão' in local_funcionamento %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-2" value="Galpão/Rancho/Paiol/Barracão" id="checkbox-galpao" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-2" value="Galpão/Rancho/Paiol/Barracão" id="checkbox-galpao">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-galpao">Galpão / Rancho / Paiol / Barracão</label>
+                    </div>
+
+                    <div>
+                        {% if 'Unidade de atendimento socioeducativo' in local_funcionamento %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-3" value="Unidade de atendimento socioeducativo" id="checkbox-socioeducativo" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-3" value="Unidade de atendimento socioeducativo" id="checkbox-socioeducativo">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-socioeducativo">Unidade de atendimento socioeducativo</label>
+                    </div>
+
+                    <div>
+                        {% if 'Unidade Prisional' in local_funcionamento %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-4" value="Unidade Prisional" id="checkbox-prisional" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-4" value="Unidade Prisional" id="checkbox-prisional">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-prisional">Unidade Prisional</label>
+                    </div>
+
+                    <div>
+                        {% if 'Sala(s) em outra escola' in local_funcionamento %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-5" value="Sala(s) em outra escola" id="checkbox-outra-escola" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-5" value="Sala(s) em outra escola" id="checkbox-outra-escola">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-outra-escola">Sala(s) em outra escola</label>
+                    </div>
+
+                    <div>
+                        {% if 'Outros' in local_funcionamento %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-6" value="Outros" id="checkbox-outros" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-6" value="Outros" id="checkbox-outros">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-outros">Outros</label>
+                    </div>
+                </div>
+
+                <div class="formulario-grupo" data-grupo-check>
+                    <label class="texto-azul label-campo">Abastecimento de água</label>
+
+                    <div>
+                        {% if 'Rede pública' in abastecimento_agua %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-7" value="Rede pública" id="checkbox-agua-rede-publica" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-7" value="Rede pública" id="checkbox-agua-rede-publica">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-agua-rede-publica">Rede pública</label>
+                    </div>
+
+                    <div>
+                        {% if 'Poço artesiano' in abastecimento_agua %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-8" value="Poço artesiano" id="checkbox-agua-artesiano" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-8" value="Poço artesiano" id="checkbox-agua-artesiano">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-agua-artesiano">Poço artesiano</label>
+                    </div>
+
+                    <div>
+                        {% if 'Cacimba/cisterna/poço' in abastecimento_agua %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-9" value="Cacimba/cisterna/poço" id="checkbox-agua-cacimba" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-9" value="Cacimba/cisterna/poço" id="checkbox-agua-cacimba">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-agua-cacimba">Cacimba / cisterna / poço</label>
+                    </div>
+
+                    <div>
+                        {% if 'Fonte/rio/igarapé/riacho/córrego' in abastecimento_agua %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-10" value="Fonte/rio/igarapé/riacho/córrego" id="checkbox-agua-rio" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-10" value="Fonte/rio/igarapé/riacho/córrego" id="checkbox-agua-rio">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-agua-rio">Fonte / rio / igarapé / riacho / córrego</label>
+                    </div>
+
+                    <div>
+                        {% if 'Não há abastecimento de água' in abastecimento_agua %}
+                            <input type="checkbox" data-checkbox="NA" name="fieldset-local-11" value="Não há abastecimento de água" id="checkbox-agua-sem-abastecimento" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="NA" name="fieldset-local-11" value="Não há abastecimento de água" id="checkbox-agua-sem-abastecimento">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-agua-sem-abastecimento">Não há abastecimento de água</label>
+                    </div>
+                </div>
+
+                <div class="formulario-grupo" data-grupo-check>
+                    <label class="texto-azul label-campo">Fonte de energia elétrica</label>
+
+                    <div>
+                        {% if 'Rede pública' in fonte_energia %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-12" value="Rede pública" id="checkbox-energia-rede-publica" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-12" value="Rede pública" id="checkbox-energia-rede-publica">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-energia-rede-publica">Rede pública</label>
+                    </div>
+
+                    <div>
+                        {% if 'Fontes de energia renováveis ou alternativas (gerador, eólico, solar, outras)' in fonte_energia %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-13" value="Fontes de energia renováveis ou alternativas (gerador, eólico, solar, outras)" id="checkbox-energia-fontes-energias" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-13" value="Fontes de energia renováveis ou alternativas (gerador, eólico, solar, outras)" id="checkbox-energia-fontes-energias">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-energia-fontes-energias">Fontes de energia renováveis ou alternativas (gerador, eólico, solar, outras)</label>
+                    </div>
+
+                    <div>
+                        {% if 'Gerador movido a combustível fóssil' in fonte_energia %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-14" value="Gerador movido a combustível fóssil" id="checkbox-energia-gerador" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-14" value="Gerador movido a combustível fóssil" id="checkbox-energia-gerador">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-energia-gerador">Gerador movido a combustível fóssil</label>
+                    </div>
+
+                    <div>
+                        {% if 'Não há energia elétrica' in fonte_energia %}
+                            <input type="checkbox" data-checkbox="NA" name="fieldset-local-15" value="Não há energia elétrica" id="checkbox-energia-sem-energia" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="NA" name="fieldset-local-15" value="Não há energia elétrica" id="checkbox-energia-sem-energia">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-energia-sem-energia">Não há energia elétrica</label>
+                    </div>
+                </div>
+
+                <div class="formulario-grupo" data-grupo-check>
+                    <label class="texto-azul label-campo">Esgotamento sanitário</label>
+
+                    <div>
+                        {% if 'Rede pública' in rede_esgoto %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-16" value="Rede pública" id="checkbox-sanitario-rede-pubica" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-16" value="Rede pública" id="checkbox-sanitario-rede-pubica">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-sanitario-rede-pubica">Rede pública</label>
+                    </div>
+
+                    <div>
+                        {% if 'Fossa séptica' in rede_esgoto %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-17" value="Fossa séptica" id="checkbox-sanitario-septica" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-17" value="Fossa séptica" id="checkbox-sanitario-septica">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-sanitario-septica">Fossa séptica</label>
+                    </div>
+
+                    <div>
+                        {% if 'Fossa rudimentar/comum' in rede_esgoto %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-18" value="Fossa rudimentar/comum" id="checkbox-sanitario-rudimentar" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-18" value="Fossa rudimentar/comum" id="checkbox-sanitario-rudimentar">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-sanitario-rudimentar">Fossa rudimentar / comum</label>
+                    </div>
+
+                    <div>
+                        {% if 'Não há esgotamento sanitário' in rede_esgoto %}
+                            <input type="checkbox" data-checkbox="NA" name="fieldset-local-19" value="Não há esgotamento sanitário" id="checkbox-sanitario-sem-segotamento" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="NA" name="fieldset-local-19" value="Não há esgotamento sanitário" id="checkbox-sanitario-sem-segotamento">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-sanitario-sem-segotamento">Não há esgotamento sanitário</label>
+                    </div>
+                </div>
+
+                <div class="formulario-grupo" data-grupo-check>
+                    <label class="texto-azul label-campo">Destinação do lixo</label>
+
+                    <div>
+                        {% if 'Serviço de coleta' in destinacao_lixo %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-20" value="Serviço de coleta" id="checkbox-lixo-coleta" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-20" value="Serviço de coleta" id="checkbox-lixo-coleta">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-lixo-coleta">Serviço de coleta</label>
+                    </div>
+
+                    <div>
+                        {% if 'Queima' in destinacao_lixo %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-21" value="Queima" id="checkbox-lixo-queima" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-21" value="Queima" id="checkbox-lixo-queima">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-lixo-queima">Queima</label>
+                    </div>
+
+                    <div>
+                        {% if 'Enterra' in destinacao_lixo %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-22" value="Enterra" id="checkbox-lixo-enterra" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-22" value="Enterra" id="checkbox-lixo-enterra">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-lixo-enterra">Enterra</label>
+                    </div>
+
+                    <div>
+                        {% if 'Leva uma destinação final licenciada pelo poder público' in destinacao_lixo %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-23" value="Leva uma destinação final licenciada pelo poder público" id="checkbox-lixo-destinacao" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-23" value="Leva uma destinação final licenciada pelo poder público" id="checkbox-lixo-destinacao">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-lixo-destinacao">Leva uma destinação final licenciada pelo poder público</label>
+                    </div>
+
+                    <div>
+                        {% if 'Descarta em outra área' in destinacao_lixo %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-24" value="Descarta em outra área" id="checkbox-lixo-outra-area" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-24" value="Descarta em outra área" id="checkbox-lixo-outra-area">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-lixo-outra-area">Descarta em outra área</label>
+                    </div>
+                </div>
+
+                <div class="formulario-grupo" data-grupo-check>
+                    <label class="texto-azul label-campo">Tratamento do lixo / resíduos</label>
+
+                    <div>
+                        {% if 'Separamento do lixo/resíduos' in tratamento_lixo %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-25" value="Separamento do lixo/resíduos" id="checkbox-tratamento-separamento" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-25" value="Separamento do lixo/resíduos" id="checkbox-tratamento-separamento">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-tratamento-separamento">Separamento do lixo / resíduos</label>
+                    </div>
+
+                    <div>
+                        {% if 'Reaproveitamento/reutilização' in tratamento_lixo %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-26" value="Reaproveitamento/reutilização" id="checkbox-tratamento-reaproveitamento" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-26" value="Reaproveitamento/reutilização" id="checkbox-tratamento-reaproveitamento">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-tratamento-reaproveitamento">Reaproveitamento / reutilização</label>
+                    </div>
+
+                    <div>
+                        {% if 'Reciclagem' in tratamento_lixo %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-27" value="Reciclagem" id="checkbox-tratamento-reciclagem" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-27" value="Reciclagem" id="checkbox-tratamento-reciclagem">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-tratamento-reciclagem">Reciclagem</label>
+                    </div>
+
+                    <div>
+                        {% if 'Não faz tratamento' in tratamento_lixo %}
+                            <input type="checkbox" data-checkbox="NA" name="fieldset-local-28" value="Não faz tratamento" id="checkbox-tratamento-sem-tratamento" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="NA" name="fieldset-local-28" value="Não faz tratamento" id="checkbox-tratamento-sem-tratamento">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-tratamento-sem-tratamento">Não faz tratamento</label>
+                    </div>
+                </div>
+
+                <div class="formulario-grupo" data-grupo-check>
+                    <label class="texto-azul label-campo">Recursos de acessibilidade</label>
+
+                    <div>
+                        {% if 'Corrimão e guarda-corpos' in recurso_acessibilidade %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-29" value="Corrimão e guarda-corpos" id="checkbox-acessibilidade-corrimao" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-29" value="Corrimão e guarda-corpos" id="checkbox-acessibilidade-corrimao">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-acessibilidade-corrimao">Corrimão e guarda-corpos</label>
+                    </div>
+
+                    <div>
+                        {% if 'Elevador' in recurso_acessibilidade %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-30" value="Elevador" id="checkbox-acessibilidade-elevador" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-30" value="Elevador" id="checkbox-acessibilidade-elevador">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-acessibilidade-elevador">Elevador</label>
+                    </div>
+
+                    <div>
+                        {% if 'Piso táteis' in recurso_acessibilidade %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-31" value="Piso táteis" id="checkbox-acessibilidade-pisos" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-31" value="Piso táteis" id="checkbox-acessibilidade-pisos">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-acessibilidade-pisos">Piso táteis</label>
+                    </div>
+
+                    <div>
+                        {% if 'Portas com vão livre de no mínimo 80 cm' in recurso_acessibilidade %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-32" value="Portas com vão livre de no mínimo 80 cm" id="checkbox-acessibilidade-80cm" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-32" value="Portas com vão livre de no mínimo 80 cm" id="checkbox-acessibilidade-80cm">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-acessibilidade-80cm">Portas com vão livre de no mínimo 80 cm</label>
+                    </div>
+
+                    <div>
+                        {% if 'Rampas' in recurso_acessibilidade %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-33" value="Rampas" id="checkbox-acessibilidade-rampas" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-33" value="Rampas" id="checkbox-acessibilidade-rampas">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-acessibilidade-rampas">Rampas</label>
+                    </div>
+
+                    <div>
+                        {% if 'Sinalização sonora' in recurso_acessibilidade %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-34" value="Sinalização sonora" id="checkbox-acessibilidade-sonora" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-34" value="Sinalização sonora" id="checkbox-acessibilidade-sonora">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-acessibilidade-sonora">Sinalização sonora</label>
+                    </div>
+
+                    <div>
+                        {% if 'Sinalização tátil' in recurso_acessibilidade %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-35" value="Sinalização tátil" id="checkbox-acessibilidade-tatil" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-35" value="Sinalização tátil" id="checkbox-acessibilidade-tatil">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-acessibilidade-tatil">Sinalização tátil</label>
+                    </div>
+
+                    <div>
+                        {% if 'Sinalização visual (piso, paredes)' in recurso_acessibilidade %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-36" value="Sinalização visual (piso, paredes)" id="checkbox-acessibilidade-visual" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="padrao" name="fieldset-local-36" value="Sinalização visual (piso, paredes)" id="checkbox-acessibilidade-visual">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-acessibilidade-visual">Sinalização visual (piso, paredes)</label>
+                    </div>
+
+                    <div>
+                        {% if 'Nenhum dos recursos de acessibilidade listados' in recurso_acessibilidade %}
+                            <input type="checkbox" data-checkbox="NA" name="fieldset-local-37" value="Nenhum dos recursos de acessibilidade listados" id="checkbox-acessibilidade-nenhum" checked>
+                        {% else %}
+                            <input type="checkbox" data-checkbox="NA" name="fieldset-local-37" value="Nenhum dos recursos de acessibilidade listados" id="checkbox-acessibilidade-nenhum">
+                        {% endif %}
+                        <label class="texto-preto" for="checkbox-acessibilidade-nenhum">Nenhum dos recursos de acessibilidade listados</label>
+                    </div>
+                </div>
+
+                <div class="container-botoes">
+                    {% if edicao %}
+                        <button class="botao botao--azul" data-modal-abrir="confirmar" data-botao-cadastrar>Editar</button>
+                    {% else %}
+                        <button class="botao botao--azul" data-modal-abrir="confirmar" data-botao-cadastrar>Cadastrar</button>
+                    {% endif %}
+                </div>
+
+                <div class="modal oculto" data-modal="confirmar">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                        <p class="texto-preto descricao">Tem certeza que deseja cadastrar a infraestrutura na unidade {{ escola.nome_escola }}?</p>
+
+                        <div class="container-botoes">
+                            <button class="botao--verde botao" type="submit">Salvar</button>
+                            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/layout/administracao/infraestrutura-formulario/controlaCampos.js' %}"></script>
+{% endblock %}

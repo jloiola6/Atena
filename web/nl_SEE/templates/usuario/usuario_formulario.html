@@ -1,0 +1,90 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Cadastro de Usuário {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/usuario/usuario-formulario.css' %}">
+{% endblock %}
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class=" texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a  class=" texto-azul" href="{% url 'usuario:index' %}">Usuários</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a  class=" texto-azul" href="{% url 'usuario:usuario-perfil' %}?id_usuario={{ usuario.id }}">{{ usuario.nome }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class=" texto-azul">Edição de Usuário</span>
+            </nav>
+
+            <h1 class="titulo-pagina titulo texto-azul">Editar Usuário</h2>
+
+            <form class="container-surface container-formulario-usuario" method="POST">
+                {% csrf_token %}
+
+                <h2 class="texto-medio texto-azul">Dados do Usuário</h2>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-nome">Nome</label>
+                    <input class="campo-texto campo-grande" type="text" value="{{ usuario.nome }}" name="nome" id="campo-nome" autocomplete="off" readonly>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-cpf">CPF</label>
+                    <input class="campo-texto campo-pequeno" type="number" value="{{ usuario.cpf }}" name="cpf" id="campo-cpf" data-mascara="cpf" autocomplete="off" readonly>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-email">Email</label>
+                    <input class="campo-texto campo-medio" type="email" value="{{ usuario.email }}" name="email" id="campo-email"  autocomplete="off" readonly>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-login">Login</label>
+                    <input class="campo-texto campo-pequeno" type="text" value="{{ usuario.login }}" name="login" id="campo-login"  autocomplete="off" readonly>
+                </div>
+
+                <div class="formulario-grupo">
+                    <h2 class="texto-medio texto-azul">Situação</h2>
+
+                    <fieldset id="fieldset-usuario-situacao">
+                        {%if usuario.status == 'Ativo'%}
+                            <input type="radio" name="fieldset-usuario-situacao" value="Ativo" id="ativo" checked>
+                            <label class=" texto-azul" for="ativo">Ativo</label>
+                        {% else %}
+                            <input type="radio" name="fieldset-usuario-situacao" value="Ativo" id="ativo">
+                            <label class=" texto-azul" for="ativo">Ativo</label>
+                        {% endif %}
+
+                        {% if usuario.status == 'Inativo' %}
+                            <input type="radio" name="fieldset-usuario-situacao" value="Inativo" id="inativo" checked>
+                            <label class=" texto-azul" for="inativo">Inativo</label>
+                        {% else %}
+                            <input type="radio" name="fieldset-usuario-situacao" value="Inativo" id="inativo">
+                            <label class=" texto-azul" for="inativo">Inativo</label>
+                        {% endif %}
+
+<!--
+                        <input type="radio" name="fieldset-usuario-situacao" id="pendente">
+                        <label class=" texto-azul" for="pendente">Pendente</label> -->
+                    </fieldset>
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao botao--verde" type="submit" >Salvar</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type='module'></script>
+{% endblock %}

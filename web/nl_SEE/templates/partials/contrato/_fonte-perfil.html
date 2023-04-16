@@ -1,0 +1,25 @@
+{% comment %}
+    Esta partial contém um container com o perfil de fonte de um contrato
+    Feita para evitar a repetição código em perfis de contrato nos módulos de ADMINISTRAÇÃO, TECNOLOGIA e TERCEIRIZAÇÃO -->
+{% endcomment %}
+
+<div class="surface-fonte container-surface">
+    <div class="fonte-dados">
+        <h1 class="texto-medio texto-azul">Fonte de Recurso</h1>
+        <p class=" texto-azul texto-negrito">Contrato N°: <span class="texto-preto texto-normal">{{ contrato.numero_contrato }}</span></p>
+        <p class=" texto-azul texto-negrito">Tipo de fonte: <span class="texto-preto texto-normal">{{ fonte }}</span></p>
+    </div>
+</div>
+
+<div class="surface-fonte container-surface">
+    <nav class="container-navegacao-surface">
+        <ul class="navegacao-surface-lista">
+            <li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul navegacao-surface-item-ativo" data-nav-aba="empenho">
+                <span class="texto-azul">Empenho</span>
+            </li>
+        </ul>
+    </nav>
+
+    {% include 'partials/contrato/partials/_contrato-empenho.html' %}
+    
+</div>

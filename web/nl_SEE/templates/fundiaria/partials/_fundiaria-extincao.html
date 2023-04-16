@@ -1,0 +1,21 @@
+<div class="fundiaria-extincao oculto" data-nav-container="extincao">
+    {% if extincoes %}
+        <div class="extincao-resumo">
+            <h3 class="texto-medio texto-azul">Dados de Extinção</h3>
+            <p class=" texto-azul texto-negrito">Resolução de extinção: <span class="texto-preto texto-normal">{{ extincoes.decreto_extincao }}</span></p>
+            <p class=" texto-azul texto-negrito">Data de extinção: <span class="texto-preto texto-normal">{{ extincoes.data_extincao }}</span></p>
+            <p class=" texto-azul texto-negrito">Data de paralisação: <span class="texto-preto texto-normal">{{ extincoes.data_paralizacao }}</span></p>
+            <p class=" texto-azul texto-negrito">Escola guardiã: <span class="texto-preto texto-normal">{{ extincoes.escola_guardia }}</span></p>
+        </div>
+    {% else %}
+        <h2 class="texto-medio texto-preto">Sem dados de extinção cadastrados</h2>
+    {% endif %}
+
+    {% if not extincoes %}
+        <div class="container-botoes">
+            <a href="{% url 'fundiaria:extincao-formulario' %}?id_fundiaria={{ fundiaria.id }}">
+                <button class="botao botao--azul">Adicionar</button>
+            </a>
+        </div>
+    {% endif %}
+</div>

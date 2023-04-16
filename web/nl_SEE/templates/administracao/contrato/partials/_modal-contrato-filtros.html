@@ -1,0 +1,66 @@
+
+<div class="modal oculto" data-modal="filtros">
+    <form id="modal-conteudo" class="modal-conteudo" method="GET">
+        <div class="modal-filtros-titulo">
+            <h2 class="texto-grande texto-negrito texto-azul">Filtros</h2>
+        </div>
+
+        <p class="descricao  texto-preto">Insira os filtros que deseja aplicar</p>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-gestor">Gestores</label>
+            <select data-selecao2  name="gestor" id="campo-gestor" class="campo-texto campo-grande">
+                <option value=""></option>
+                {% for gestor in gestores %}
+                    {% if gestor.gestor_titular %}
+                        <option value="{{ gestor.gestor_titular }}">{{ gestor.gestor_titular }}</option>
+                    {% endif %}
+                    {% if gestor.gestor_substituto %}
+                        <option value="{{ gestor.gestor_substituto }}">{{ gestor.gestor_substituto }}</option>
+                    {% endif %}
+                    {% if gestor.fiscal_titular %}
+                        <option value="{{ gestor.fiscal_titular }}">{{ gestor.fiscal_titular }}</option>
+                    {% endif %}
+                    {% if gestor.fiscal_substituto %}
+                        <option value="{{ gestor.fiscal_substituto }}">{{ gestor.fiscal_substituto }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-gestor-substituto">Gestor Substituto</label>
+            <select data-selecao2  name="gestor_substituto" id="campo-gestor-substituto" class="campo-texto campo-grande">
+                <option value=""></option>
+                {% for gestor_substituto in gestores_substituto %}
+                    <option value="{{ gestor_substituto.gestor_substituto }}">{{ gestor_substituto.gestor_substituto }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-fiscal-titular">Fiscal Titular</label>
+            <select name="fiscal_titular" id="campo-fiscal-titular" class="campo-texto campo-grande">
+                <option value=""></option>
+                {% for fiscal_titular in fiscais_titular %}
+                    <option value="{{ fiscal_titular.fiscal_titular }}">{{ fiscal_titular.fiscal_titular }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-fiscal-substituto">Fiscal Substituto</label>
+            <select name="fiscal_substituto" id="campo-fiscal-substituto" class="campo-texto campo-grande">
+                <option value=""></option>
+                {% for fiscal_substituto in fiscais_substituto %}
+                    <option value="{{ fiscal_substituto.fiscal_substituto }}">{{ fiscal_substituto.fiscal_substituto }}</option>
+                {% endfor %}
+            </select>
+        </div> -->
+
+        <div class="container-botoes">
+            <button type="" class="botao botao--verde">Filtrar</button>
+        </div>
+
+    </form>
+</div>

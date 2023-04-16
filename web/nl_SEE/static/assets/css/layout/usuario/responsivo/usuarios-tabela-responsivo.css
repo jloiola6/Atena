@@ -1,0 +1,43 @@
+/* Configuração da responsividade da tabela de usuarios */
+
+.tabela-usuarios-tablet, .tabela-usuarios-smartphone{
+    display: none;
+}
+
+@media screen and (max-width: 882px){
+    .tabela-usuarios.tabela-usuarios-pendentes, .tabela-usuarios-smartphone{
+        display: none;
+    }
+
+    .tabela-usuarios-tablet.tabela-usuarios-pendentes{
+        display: block;
+    }
+
+    .tabela-usuarios-pendentes th{
+        width: 30%;
+    }
+}
+
+@media screen and (max-width: 768px){
+    .tabela-usuarios, .tabela-usuarios-smartphone{
+        display: none;
+    }
+
+    .tabela-usuarios-tablet{
+        display: block;
+    }
+}
+
+@media screen and (max-width: 571px){
+    .tabela-usuarios, .tabela-usuarios-tablet, .tabela-usuarios-tablet.tabela-usuarios-pendentes{
+        display: none;
+    }
+
+    .tabela-usuarios-smartphone{
+        display: block;
+    }
+    
+    .tabela-usuarios-smartphone th{
+        width: 100%;
+    }
+}

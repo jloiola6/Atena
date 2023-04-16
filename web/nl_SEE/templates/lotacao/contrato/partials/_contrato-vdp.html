@@ -1,0 +1,39 @@
+
+<div class="oculto" data-nav-container="vdp">
+    {% if vdps %}
+        <table class="tabela tabela-contrato-itens">
+            <thead>
+                <tr>
+                    <th class="">Período</th>
+                    <th class="">Verifícação</th>
+                    <th class="coluna-centralizada">Valor Bruto</th>
+                    <th class="coluna-centralizada">Valor Líquido</th>
+                </tr>
+            </thead>
+                {% for vdp in vdps %}
+                    <tr>
+                        <td>{{ vdp.ano_periodo }}</td>
+                        <td>{{ vdp.ano_verificacao }}</td>
+                        {% if permissao_VDP %}
+                            <td class="coluna-centralizada">{{ vdp.valor_bruto }}</td>
+                            <td class="coluna-centralizada">{{ vdp.valor_liquido }}</td>
+                        {% else %}
+                            <td class="coluna-centralizada">R$ *******</td>
+                            <td class="coluna-centralizada">R$ *******</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h3 class="texto-medio texto-preto">Sem Prêmio adicionada.</h3>
+    {% endif %}
+
+    {% if permissao_VDP == 1 and id_contrato %}
+        <div class="container-botoes">
+            <a href="{% url 'lotacao:vdp-formulario' %}?id_contrato={{ contrato.id }}">
+                <button class="botao botao--azul">Adicionar</button>
+            </a>
+        </div>
+    {% endif %}
+</div>

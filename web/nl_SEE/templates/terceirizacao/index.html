@@ -1,0 +1,73 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Terceirização {% endblock %}
+
+{% load static %}
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+
+<main>
+    <div class="container">
+        <nav class="container-navegacao">
+            <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+            <span class="texto-azul">&#62;</span>
+
+            <span class="  texto-azul">Terceirização</span>
+        </nav>
+
+        <h1 class="titulo-pagina texto-azul">Terceirização</h1>
+
+        <div class="container-cards">
+            {% if 9 in permissoes %}
+                <a href="{% url 'terceirizacao:servidores' %}">
+                    <div class="card-menu">
+                        {% include 'partials/icones-cards/terceirizacao/terceirizados.svg' %}
+                        <h3 class="card-titulo">Terceirizados</h3>
+                    </div>
+                </a>
+            {% endif %}
+
+            {% if 16 in permissoes %}
+                <a href="{% url 'terceirizacao:contratos' %}">
+                    <div class="card-menu" >
+                        {% include 'partials/icones-cards/terceirizacao/contratos.svg' %}
+                        <h3 class="card-titulo">Contratos</h3>
+                    </div>
+                </a>
+            {% endif %}
+
+            {% if 17 in permissoes %}
+                <a href="{% url 'terceirizacao:lotacoes' %}">
+                    <div class="card-menu" >
+                        {% include 'partials/icones-cards/terceirizacao/lotacoes.svg' %}
+                        <h3 class="card-titulo">Lotações</h3>
+                    </div>
+                </a>
+            {% endif %}
+
+            {% if 18 in permissoes %}
+                <a href="{% url 'terceirizacao:vagas' %}">
+                    <div class="card-menu">
+                        {% include 'partials/icones-cards/terceirizacao/central-vagas.svg' %}
+                        <h3 class="card-titulo">Central de Vagas</h3>
+                    </div>
+                </a>
+            {% endif %}
+
+            {% if 35 in permissoes %}
+                <a href="{% url 'terceirizacao:registro' %}">
+                    <div class="card-menu" >
+                        {% include 'partials/icones-cards/terceirizacao/registro.svg' %}
+                        <h3 class="card-titulo">Registro</h3>
+                    </div>
+                </a>
+            {% endif %}
+        </div>
+
+    </div>
+</main>
+
+{% include 'partials/_rodape.html' %}
+
+{% endblock %}

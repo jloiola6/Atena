@@ -1,0 +1,67 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="google-map">
+    <div class="modal-conteudo">
+        <div class="container-unidade__titulo">
+            {% include 'partials/unidade-educacional/icones/localizacao.svg' %}
+
+            <h2 class="texto-medio texto-azul">Localização</h2>
+        </div>
+
+        {% if endereco.google_map %}
+            <div data-container-mapa>
+                <span data-mapa>{{ endereco.google_map }}</span>
+            </div>
+
+            <div class="container-botoes">
+                <button class="botao botao--azul" data-botao-editar-mapa>Editar</button>
+            </div>
+
+            <div class="container-mapa-edicao oculto" data-container-editar-mapa>
+                <p class="texto-preto">Siga as instruções para cadastrar o mapa da unidade</p>
+
+                <ul class="lista">
+                    <li class="texto-preto">Entre em <a class="link" href="https://www.google.com.br/maps" target="_blank">Google Maps</a></li>
+                    <li class=" texto-preto">Selecione a localização da Unidade</li>
+                    <li class=" texto-preto">Selecione a opção "Compartilhar"</li>
+                    <li class=" texto-preto">Selecione a opção "Incorporar um mapa"</li>
+                    <li class=" texto-preto">Clique em "COPIAR HTML"</li>
+                    <li class=" texto-preto">Cole o código no campo abaixo e clique em "Salvar"</li>
+                </ul>
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <input type="text" name="google_map" class="campo-texto campo-grande" required>
+
+                    <div class="container-botoes">
+                        <button class="botao botao--verde" type="submit">Salvar</button>
+                        <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        {% else %}
+            <p class="texto-preto">Siga as instruções para cadastrar o mapa da unidade</p>
+
+            <ul class="lista">
+                <li class="texto-preto">Entre em <a class="link" href="https://www.google.com.br/maps" target="_blank">Google Maps</a></li>
+                <li class=" texto-preto">Selecione a localização da Unidade</li>
+                <li class=" texto-preto">Selecione a opção "Compartilhar"</li>
+                <li class=" texto-preto">Selecione a opção "Incorporar um mapa"</li>
+                <li class=" texto-preto">Clique em "COPIAR HTML"</li>
+                <li class=" texto-preto">Cole o código no campo abaixo e clique em "Salvar"</li>
+            </ul>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <input type="text" name="google_map" class="campo-texto campo-grande" required>
+
+                <div class="container-botoes">
+                    <button class="botao botao--verde" type="submit">Salvar</button>
+                    <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                </div>
+            </form>
+        {% endif %}
+    </div>
+</div>

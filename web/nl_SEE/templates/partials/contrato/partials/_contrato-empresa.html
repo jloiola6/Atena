@@ -1,0 +1,108 @@
+{% comment %}
+    Esta partial contém um container com os dados da empresa de um contrato
+    Feita para evitar a repetição código em perfis de contrato nos módulos de ADMINISTRAÇÃO, TECNOLOGIA e TERCEIRIZAÇÃO
+{% endcomment %}
+
+<div class="contrato-empresa oculto" data-nav-container="empresa">
+    <h3 class="texto-azul texto-medio">Endereço da empresa</h3>
+    <div class="contrato-empresa-dados">
+
+        <p class="texto-azul texto-negrito">UF:
+            <spam class="texto-normal texto-preto">{{ empresa.uf }}</spam>
+        </p>
+
+        <p class="texto-azul texto-negrito">Município
+            <spam class="texto-normal texto-preto">{{ empresa.municipio }}</spam>
+        </p>
+
+        <p class="texto-azul texto-negrito">CEP:
+            <spam class="texto-normal texto-preto">{{ empresa.cep }}</spam>
+        </p>
+
+        <p class="texto-azul texto-negrito">Rua:
+            <spam class="texto-normal texto-preto">{{ empresa.rua }}</spam>
+        </p>
+
+        <p class="texto-azul texto-negrito">Número:
+            <spam class="texto-normal texto-preto">{{ empresa.numero }}</spam>
+        </p>
+
+        <p class="texto-azul texto-negrito">Bairro:
+            <spam class="texto-normal texto-preto">{{ empresa.bairro }}</spam>
+        </p>
+
+        <p class="texto-azul texto-negrito">Telefone:
+            <spam class="texto-normal texto-preto">{{ empresa.telefone }}</spam>
+        </p>
+
+        <p class="texto-azul texto-negrito">E-mail:
+            <spam class="texto-normal texto-preto">{{ empresa.email }}</spam>
+        </p>
+    </div>
+
+    {% if responsavel %}
+        <h3 class="texto-azul texto-medio contrato-empresa-dados-subtitulo">Dados do responsável</h3>
+        <div class="contrato-empresa-dados">
+
+            <p class="texto-azul texto-negrito">Nome:
+                <spam class="texto-normal texto-preto">{{ responsavel.nome }}</spam>
+            </p>
+
+            <p class="texto-azul texto-negrito">CPF:
+                <spam class="texto-normal texto-preto">{{ responsavel.cpf }}</spam>
+            </p>
+
+            <p class="texto-azul texto-negrito">RG:
+                <spam class="texto-normal texto-preto">{{ responsavel.rg }}</spam>
+            </p>
+
+            <p class="texto-azul texto-negrito">Orgão:
+                <spam class="texto-normal texto-preto">{{ responsavel.orgao }}</spam>
+            </p>
+        </div>
+
+        <h3 class="texto-azul texto-medio contrato-empresa-dados-subtitulo">Endereço do responsável</h3>
+        <div class="contrato-empresa-dados">
+
+            <p class="texto-azul texto-negrito">UF:
+                <spam class="texto-normal texto-preto">{{ responsavel.uf }}</spam>
+            </p>
+
+            <p class="texto-azul texto-negrito">Município:
+                <spam class="texto-normal texto-preto">{{ responsavel.municipio }}</spam>
+            </p>
+
+            <p class="texto-azul texto-negrito">CEP:
+                <spam class="texto-normal texto-preto">{{ responsavel.cep }}</spam>
+            </p>
+
+            <p class="texto-azul texto-negrito">Rua:
+                <spam class="texto-normal texto-preto">{{ responsavel.rua }}</spam>
+            </p>
+
+            <p class="texto-azul texto-negrito">Número:
+                <spam class="texto-normal texto-preto">{{ responsavel.numero }}</spam>
+            </p>
+
+            <p class="texto-azul texto-negrito">Bairro:
+                <spam class="texto-normal texto-preto">{{ responsavel.bairro }}</spam>
+            </p>
+        </div>
+    {% else %}
+
+        {% if permissao.editar == 1 %}
+            <div class="container-botoes">
+                {% if aplicacao == 'Administração' %}
+                    <a href="{% url 'administracao:responsavel-formulario' %}?id_contrato={{ contrato.id }}">
+                {% elif aplicacao == 'Tecnologia' %}
+                    <a href="{% url 'tecnologia:responsavel-formulario' %}?id_contrato={{ contrato.id }}">
+                {% elif aplicacao == 'Terceirização' %}
+                    <a href="{% url 'terceirizacao:responsavel-formulario' %}?id_contrato={{ contrato.id }}">
+                {% endif %}
+
+                    <button class="botao botao--azul">Adicionar Responsável</button>
+                </a>
+            </div>
+        {% endif %}
+    {% endif %}
+</div>

@@ -1,0 +1,112 @@
+{% load static %}
+
+
+<div class="servidor-lotacoes oculto" data-nav-container="lotacoes">
+
+    {% if servidor_lotacoes %}
+        <div class="container-cards-simples">
+            {% for lotacao in lotacoes %}
+                {% if lotacao.status == 1 or lotacao.status == 0 %}
+                    <div class="card-simples card-lotacao">
+
+                        <div class="card-simples__descricao">
+                            {% if lotacao.unidade_escolar %}
+                                <h4 class="card-simples__titulo texto-azul">{{ lotacao.unidade_escolar__escola__nome_escola }}</h4>
+                            {% else %}
+                                <h4 class="card-simples__titulo texto-azul">{{ lotacao.unidade_adm__nome }}</h4>
+                            {% endif %}
+
+                            <p class="texto-preto ">Servidor SEE</p>
+                        </div>
+
+                        <div class="card-simples__descricao">
+                            <p class=" texto-azul texto-negrito">Função: <span class="texto-preto texto-normal">{{ lotacao.funcao }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ lotacao.data_inicio }}</span></p>
+
+                            {% if lotacao.data_termino %}
+                                <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ lotacao.data_termino }}</span></p>
+                            {% endif %}
+
+                            {% if lotacao.status == 1 %}
+                                <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">Ativo</span></p>
+                            {% elif lotacao.status == 0 %}
+                                <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">Inativo</span></p>
+
+                                {% if lotacao.motivo %}
+                                    <p class=" texto-azul texto-negrito">Motivo: <span class="texto-preto texto-normal">{{ lotacao.motivo }}</span></p>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+
+                        {% if lotacao.autorizador %}
+                            <p class="texto-preto"><b class="texto-azul">Autorizado por: </b>{{ lotacao.autorizador }}</p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% elif servidor_contrato_terceirizado %}
+        <div class="container-cards-simples">
+            {% for lotacao in contrato_lotacao %}
+                <div class="card-simples card-lotacao">
+                    <div class="card-simples__descricao">
+                        {% if lotacao.endereco__escola__nome_escola != None %}
+                            <h4 class="card-simples__titulo texto-azul">{{ lotacao.endereco__escola__nome_escola }}</h4>
+                        {% else %}
+                            <h4 class="card-simples__titulo texto-azul">{{ lotacao.unidade_administrativa__nome }}</h4>
+                        {% endif %}
+
+                        <p class="texto-preto ">Servidor Terceirizado</p>
+                    </div>
+
+                    <div class="card-simples__descricao">
+                        <p class=" texto-azul texto-negrito">Número do item: <span class="texto-preto texto-normal">{{ lotacao.item__numero_item }}</span></p>
+                        <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ lotacao.data_inicio }}</span></p>
+                        <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ lotacao.data_termino }}</span></p>
+
+                        {% if lotacao.status == 1 %}
+                            <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">Ativo</span></p>
+                        {% else %}
+                            <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">Inativo</span></p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="texto-preto texto-medio">Este servidor não possui nenhuma lotação cadastrada.</p>
+    {% endif %}
+
+    {% if lotacoes_lotus %}
+            <div class="container-cards-simples">
+                {% for lotacao in lotacoes_lotus %}
+                    <div class="card-simples card-lotacao">
+                        <div class="card-titulo-imagem">
+                            <h4 class="card-simples__titulo texto-azul">{{ lotacao.unidiade_lotacao }}</h4>
+                            <img src="{% static 'assets/img/lotus.png' %}">
+                        </div>
+                        <p class="texto-preto ">Servidor SEE</p>
+
+                        <div class="card-simples__descricao">
+                            <p class=" texto-azul texto-negrito">Função: <span class="texto-preto texto-normal">{{ lotacao.funcao }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ lotacao.data_inicio }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ lotacao.data_termino }}</span></p>
+                            <p class=" texto-azul texto-negrito">Status:
+                                <span class="texto-preto texto-normal">
+                                    {% if lotacao.status %}
+                                        Ativo
+                                    {% else %}
+                                        Inativo
+                                    {% endif %}
+                                </span>
+                            </p>
+
+                        </div>
+
+                        <p class="descricao texto-cinza texto-negrito">Dados importados via Lotus</p>
+                    </div>
+                {% endfor %}
+            </div>
+    {% endif %}
+
+</div>

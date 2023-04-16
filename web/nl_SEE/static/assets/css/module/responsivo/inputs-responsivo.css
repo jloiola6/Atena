@@ -1,0 +1,14 @@
+@media screen and (max-width: 768px){
+    .campo-texto{
+        height: 48px;
+        width: 100%;
+    }
+
+    .campo-area{
+        height: 368px;
+    }
+}
+
+@media screen and (max-width: 425px){
+
+}

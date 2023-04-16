@@ -1,0 +1,27 @@
+/* Estilização da página de perfil do professor de uma turma */
+
+/* CONTAINER DE DADOS */
+.container-surface-dados{
+    margin-top: 16px;
+}
+
+.professor-dados{
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+    row-gap: 8px;
+}
+
+/* CONTAINER DE TURMAS */
+.container-surface-turmas{
+    margin-top: 24px;
+}
+
+/* CONTAINER DE DISCIPLINAS */
+.container-surface-disciplinas{
+    margin-top: 24px;
+}
+
+.professor-disciplina{
+    margin-top: 16px;
+}

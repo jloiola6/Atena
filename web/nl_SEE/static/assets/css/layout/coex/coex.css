@@ -1,0 +1,15 @@
+/* Estiização da página de unidades educacionais */
+
+.formulario-filtro-indigena{
+    display: none;
+}
+
+.container-unidades-busca, .container-unidades-busca .container-botoes{
+    margin-top: 16px;
+}
+
+.modal-filtros-titulo{
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}

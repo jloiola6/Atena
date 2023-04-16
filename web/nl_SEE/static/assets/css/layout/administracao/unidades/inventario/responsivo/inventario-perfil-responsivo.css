@@ -1,0 +1,29 @@
+/* Estilização da página de perfil de um grupo de itens no invetário */
+
+@media screen and (max-width: 768px){
+    .tabela-inventario, .tabela-inventario-smartphone{
+        display: none;
+    }
+
+    .tabela-inventario-tablet{
+        display: block;
+    }
+
+    .tabela-inventario-tablet th{
+        width: 25%;
+    }
+}
+
+@media screen and (max-width: 570px) {
+    .tabela-inventario, .tabela-inventario-tablet{
+        display: none;
+    }
+
+    .tabela-inventario-smartphone{
+        display: block;
+    }
+
+    .tabela-inventario-smartphone th{
+        width: 1%;
+    }
+}

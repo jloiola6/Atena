@@ -1,0 +1,5 @@
+/* Estilização da página de servidores tercirizados */
+
+.container-terceirizados-busca, .container-terceirizados-busca .container-botoes{
+    margin-top: 16px;
+}

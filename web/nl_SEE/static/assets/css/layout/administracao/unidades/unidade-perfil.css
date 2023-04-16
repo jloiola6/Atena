@@ -1,0 +1,71 @@
+/* Estiização da página de perfil de uma unidade educacional */
+
+/* MAPA */
+.container-mapa-edicao{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* TURMAS */
+.card--turma{
+    --largura: calc((100% / 4) - .5rem);
+    flex-basis: var(--largura);
+}
+
+/* INFRAESTRUTURA */
+.card--dependencia{
+    --largura: calc((100% / 3) - .5rem);
+    flex-basis: var(--largura);
+}
+
+/* SERVIDORES */
+.servidores-gestores{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.servidores-resumo-titulo{
+    margin-top: 24px;
+}
+
+.servidores-resumo{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+/* INVENTÁRIO */
+
+.card--item{
+    flex-basis: calc((100% - 1rem) / 4);
+}
+/* .inventario-tipo{
+    margin-top: 16px;
+}
+
+.container-inventario-lista{
+    margin-top: 16px;
+    width: 100%;
+}
+
+.card-inventario-logo-titulo{
+    align-items: center;
+    display: flex;
+    gap: 8px;
+} */
+
+/* ORGANIZAÇÃO ESCOLAR */
+.organizacao-resumo{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.organizacao-resumo .link{
+    margin-top: 8px;
+}

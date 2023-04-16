@@ -1,0 +1,97 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+    Constulta de Terceirizados
+{% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/terceirizacao/servidor/servidor-consulta.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'terceirizacao:index' %}">Terceirização</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'terceirizacao:servidores' %}">Terceirizados</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Consultar Terceirizado</span>
+
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Consultar Terceirizado</h1>
+
+            <p class="descricao  texto-preto">Verifique se o terceirizado já existe na base de dados</p>
+
+            <div class="container-surface container-terceirizado-consulta" method="POST">
+
+                <nav class="container-navegacao-surface">
+                    <ul class="navegacao-surface-lista">
+                        <li class="navegacao-surface-item navegacao-surface-item-ativo" data-form-aba="consulta">
+                            <span class="texto-azul ">Consulta</span>
+                        </li>
+                    </ul>
+                </nav>
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <div data-form-container="consulta" >
+                        <div class="formulario-grupo">
+                            <label class="texto-azul label-campo" for="campo-matricula">CPF do servidor</label>
+                            {% if servidor %}
+                                <input class="campo-texto campo-pequeno" type="text" value="{{ cpf }}" name="cpf" id="campo-matricula" placeholder="Ex: 000.000.000-00" required autocomplete="off" maxlength="15" data-mascara="cpf" data-campo-cpf>
+                            {% else %}
+                                <input class="campo-texto campo-pequeno" type="text" value="" name="cpf" id="campo-matricula" placeholder="Ex: 000.000.000-00" required autocomplete="off" maxlength="15" data-mascara="cpf" data-campo-cpf>
+                            {% endif %}
+                        </div>
+
+                        <p class="oculto texto-vermelho  consulta-mensagem-erro" data-mensagem-erro>CPF inválido, verifique o valor digitado!</p>
+
+                        <div class="container-botoes">
+                            <button type="submit" disabled class="botao botao--azul" data-botao-consulta>Consultar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    {% if servidor %}
+        <div class="modal" data-modal="confimar">
+            <div class="modal-conteudo modal-confirmacao">
+                <h3 class="texto-medio texto-azul texto-negrito">Servidor já cadastrado</h3>
+                    <p class="texto-preto descricao">Acessar o perfil do servidor?</p>
+
+                    <div class="container-botoes">
+                        <a href="{% url 'terceirizacao:servidor-perfil' %}?id={{ servidor.id }}">
+                            <button class="botao botao--azul">Abrir perfil</button>
+                        </a>
+                        <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                    </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/module/select2.js' %}"></script>
+    <script src="{% static 'assets/js/module/controlaNavegacaoFormulario.js' %}"></script>
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type='module'></script>
+
+    <script src="{% static 'assets/js/layout/terceirizacao/servidor-consulta/validaCpf.js' %}"></script>
+
+{% endblock %}

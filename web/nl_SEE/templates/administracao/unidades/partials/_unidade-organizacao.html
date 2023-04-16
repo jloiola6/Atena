@@ -1,0 +1,29 @@
+<div class="oculto" data-nav-container="organizacao">
+    {% if organizacao %}
+        <h3 class="texto-medio texto-azul texto-negrito">RESUMO</h3>
+
+        <div class="organizacao-resumo">
+            <p class=" texto-azul texto-negrito">Site / Blog: <span class="texto-preto texto-normal">{{ organizacao.site }}</span></p>
+            <!-- <p class=" texto-azul texto-negrito">Língua Ministrada: <span class="texto-preto texto-normal">{{ organizacao.lingua_ministrada }}</span></p> -->
+            <p class=" texto-azul texto-negrito">Compartilha espaços para atividades regulares: <span class="texto-preto texto-normal">{{ organizacao.espacos_escola_comunidade }}</span></p>
+            <p class=" texto-azul texto-negrito">Utiliza espaços para atividades regulares: <span class="texto-preto texto-normal">{{ organizacao.espacos_entorno }}</span></p>
+            <p class=" texto-azul texto-negrito">Educação Escolar Indígena: <span class="texto-preto texto-normal">{{ organizacao.educacao_indigena }}</span></p>
+            <p class=" texto-azul texto-negrito">Projeto político pedagógico atualizado no último ano: <span class="texto-preto texto-normal">{{ organizacao.pedagogia_atualizada }}</span></p>
+            <p class=" texto-azul texto-negrito">Possui processo seletivo: <span class="texto-preto texto-normal">{{ organizacao.processo_seletivo }}</span></p>
+
+            <a href="{% url 'administracao:organizacao-perfil' %}?id={{ escola.id }}" class="link">Veja mais</a>
+        </div>
+
+    {% else %}
+        <span class="texto-medio texto-preto">Esta unidade ainda não possui dados de Organização Escolar</span>
+    {% endif %}
+
+
+    {% if permissao.editar == 1 %}
+        <div class="container-menu-tabela">
+            <a href="{% url 'administracao:organizacao-formulario' %}?id={{ escola.id }}">
+                <button class="botao botao--azul">Adicionar</button>
+            </a>
+        </div>
+    {% endif %}
+</div>

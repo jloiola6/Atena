@@ -1,0 +1,67 @@
+{% load static %}
+<div class="modal oculto" data-modal="descricao_notebook">
+    <div id="modal-conteudo" class="modal-conteudo">
+        <h2 class="texto-grande texto-negrito texto-azul">Formulário de devolução</h2>
+
+        <form method="POST" data-formulario-exportacao>
+            {% csrf_token %}
+            <div class="formulario-grupo">
+                <label>Descrição do Notebook (Nota Fiscal)</label>
+                <textarea name="descricao_notebook" id="" class="campo-texto campo-area" maxlength="300" required></textarea>
+            </div>
+
+            <div class="formulario-grupo">
+                <label>Motivo da Devolução</label>
+                <textarea name="motivo_devolucao" id="" class="campo-texto campo-area" maxlength="300" required></textarea>
+            </div>
+
+            <div class="formulario-grupo">
+                <label>Caixa do Notebook</label>
+                <div>
+                    <input type="radio" name="caixa_notebook" id="caixa-sim" value="1" checked>
+                    <label class=" texto-preto" for="caixa-sim">Sim</label>
+                    <input type="radio" name="caixa_notebook" id="caixa-nao" value="0">
+                    <label class=" texto-preto" for="caixa-nao">Não</label>
+                </div>
+            </div>
+
+            <div class="formulario-grupo">
+                <label>Nota Fiscal</label>
+                <div>
+                    <input type="radio" name="nota_notebook" id="nota-sim" value="1" checked>
+                    <label class=" texto-preto" for="nota-sim">Sim</label>
+                    <input type="radio" name="nota_notebook" id="nota-nao" value="0">
+                    <label class=" texto-preto" for="nota-nao">Não</label>
+                </div>
+            </div>
+
+            <div class="formulario-grupo">
+                <label>Notebook</label>
+                <div>
+                    <input type="radio" name="notebook" id="not-sim" value="1" checked>
+                    <label class=" texto-preto" for="not-sim">Sim</label>
+                    <input type="radio" name="notebook" id="not-nao" value="0">
+                    <label class=" texto-preto" for="not-nao">Não</label>
+                </div>
+            </div>
+
+            <div class="formulario-grupo">
+                <label>Carregador</label>
+                <div>
+                    <input type="radio" name="carregador" id="carregador-sim" value="1" checked>
+                    <label class=" texto-preto" for="carregador-sim">Sim</label>
+                    <input type="radio" name="carregador" id="carregador-nao" value="0">
+                    <label class=" texto-preto" for="carregador-nao">Não</label>
+                </div>
+                <div>
+                    <span id="msg" class="texto-vermelho texto-negrito oculto">O notebook e carregador são obrigatórios para realizar a devolução</span>
+                </div>
+            </div>
+
+            <div class="container-botoes">
+                <button class="botao--azul botao" name="exportar-devolucao" id="btn-exportar" value="exportar-devolucao" type="submit">Exportar</button>
+            </div>
+        </form>
+
+    </div>
+</div>

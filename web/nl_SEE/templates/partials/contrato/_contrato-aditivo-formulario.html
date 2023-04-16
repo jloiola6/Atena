@@ -1,0 +1,140 @@
+{% comment %}
+    Esta partial contém um container com o formulário de contrato aditivo
+    Feita para evitar a repetição código em perfis de contrato nos módulos de ADMINISTRAÇÃO, TECNOLOGIA e TERCEIRIZAÇÃO -->
+{% endcomment %}
+
+<form class="container-surface formulario-contrato-aditivo" method="POST" data-contrato-tipo="{{ contrato.tipo_contrato }}">
+
+    {% csrf_token %}
+
+    <h2 class="texto-medio texto-azul">Data e itens do contrato</h2>
+
+    {% if tipo == 'Aditivo' %}
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-inicio-vigencia">Data final do contrato</label>
+            <input class="campo-texto campo-medio" type="date" value="{{ data_final }}" name="data" id="campo-inicio-vigencia" min="{{ data_termino }}" max="{{ data_final }}" required data-final-contrato data-aditivo-tipo="{{ tipo }}">
+        </div>
+    {% else %}
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-inicio-vigencia">Data inicio do contrato</label>
+            <input class="campo-texto campo-medio" type="date" name="data" id="campo-inicio-vigencia" max="{{ data_termino }}" value="{{ data_termino }}" required data-final-contrato data-aditivo-tipo="{{ tipo }}">
+        </div>
+    {% endif %}
+
+    {% for item in itens %}
+        <div>
+            <div class="contrato-item-grupo-campos">
+                <div class="formulario-grupo oculto">
+                    <label class="texto-azul label-campo" for="campo-numero_item">Id</label>
+                    <input class="campo-texto campo-item-numero" type="text" value="{{ item.id }}" name="id{{ item.id }}" id="campo-numero_item" autocomplete="off" readonly>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-numero_item">N° do item</label>
+                    <input class="campo-texto" type="text" value="{{ item.numero_item }}" name="numero_item{{ item.id }}" id="campo-numero_item" maxlength="3" autocomplete="off" data-mascara="numero" readonly>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-numero_lote">N° do Lote</label>
+                    <input class="campo-texto" type="text" value="{{ item.numero_lote }}" name="numero_lote{{ item.id }}" id="campo-numero_lote" maxlength="3" autocomplete="off" data-mascara="numero" readonly>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-quantidade">Quantidade</label>
+
+                    {% if contrato.tipo_contrato != 'Postos de trabalho - Limpeza' %}
+                        {% if tipo == 'Supressao' %}
+                            <input class="campo-texto" type="number" value="{{ item.quantidade }}" name="quantidade{{ item.id }}" min="1" max='{{ item.quantidade }}'  id="campo-quantidade" maxlength="9" autocomplete="off" data-mascara="numero" data-qtd-item>
+                        {% elif tipo == 'Readequacao' %}
+                            <input class="campo-texto" type="number" value="{{ item.quantidade }}" name="quantidade{{ item.id }}" min="{{ item.quantidade }}"  id="campo-quantidade" maxlength="9" autocomplete="off" data-mascara="numero" data-qtd-item>
+                        {% else %}
+                            <input class="campo-texto" type="text" value="{{ item.quantidade }}" name="quantidade{{ item.id }}" id="campo-quantidade" maxlength="9" autocomplete="off" data-mascara="numero" data-qtd-item>
+                        {% endif %}
+                    {% else %}
+                        <input class="campo-texto" type="text" value="{{ item.quantidade }}" name="quantidade{{ item.id }}" id="campo-quantidade" maxlength="9" autocomplete="off" data-qtd-item readonly>
+                    {% endif %}
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-valor_unitario">Valor unitário</label>
+                    <input class="campo-texto" type="text" value="{{ item.valor_unitario }}" name="valor_unitario{{ item.id }}" id="campo-valor_unitario" maxlength="30" autocomplete="off" data-mascara="moeda" data-unitario-item>
+                </div>
+
+                {% if contrato.tipo_contrato == 'Postos de trabalho' or contrato.tipo_contrato == 'Postos de trabalho - Vigilância Armada' %}
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-remuneracao">Remuneração</label>
+                        <input class="campo-texto campo-item-valor" type="text" value="{{ item.remuneracao }}" name="remuneracao{{ item.id }}" id="campo-remuneracao" maxlength="30" autocomplete="off" data-mascara="moeda" >
+                    </div>
+                {% endif %}
+
+                {% if contrato.tipo_contrato == 'Postos de trabalho - Limpeza' %}
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-numero_lote">M² contratada</label>
+                        <input class="campo-texto " type="text" value="{{ item.metragem_contratada }}" name="item.metragem_contratada{{ item.id }}" id="campo-numero_lote" maxlength="3" autocomplete="off" data-mascara="numero" readonly data-metragem-contratada>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-metragem">M² mensal</label>
+
+                        {% if tipo == 'Supressao' %}
+                            <input class="campo-texto " type="number" value="{{ item.metragem_mensal }}"  min="1" max='{{ item.metragem_mensal }}' name="metragem_mensal{{ item.id }}" id="campo-metragem" maxlength="9" autocomplete="off" data-mascara="numero" data-metragem-item>
+                        {% elif tipo == 'Readequacao' %}
+                            <input class="campo-texto " type="number" value="{{ item.metragem_mensal }}"  min="{{ item.metragem_mensal }}" name="metragem_mensal{{ item.id }}" id="campo-metragem" maxlength="9" autocomplete="off" data-mascara="numero" data-metragem-item>
+                        {% else %}
+                            <input class="campo-texto " type="text" value="{{ item.metragem_mensal }}" name="metragem_mensal{{ item.id }}" id="campo-metragem" maxlength="9" autocomplete="off" data-mascara="numero" data-metragem-item>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-valor_total">Valor total</label>
+                    <input class="campo-texto" type="text" value="{{ item.valor_total }}" name="valor_total{{ item.id }}" id="campo-valor_total" maxlength="30" autocomplete="off" data-mascara="moeda" data-total-item readonly>
+                </div>
+            </div>
+
+            <div class="contrato-item-grupo-campos">
+                <div class="formulario-grupo grupo-descricao">
+                    <label class="texto-azul label-campo" for="campo-descricao">Descrição</label>
+                    <textarea id="campo-descricao" name="descricao{{ item.id }}" class="campo-texto campo-area item-descricao" maxlength="300" autocomplete="off" readonly>{{ item.descricao }}</textarea>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-valor_total">Situação</label>
+
+                    <fieldset id="fieldset-item-ativo{{ item.numero_item }}" class="fieldset-item">
+                        <input type="radio" name="fieldset-item-ativo{{ item.numero_item }}" value="1" id="item-ativo{{ item.numero_item }}" data-radio-ativo checked>
+                        <label for="item-ativo{{ item.numero_item }}" data-label-ativo>Ativo</label>
+
+                        {% if tipo in tipo_inativar and item.vagas > 0 %}
+                            <input type="radio" name="fieldset-item-ativo{{ item.numero_item }}" value="0" id="item-inativo{{ item.numero_item }}" data-inativar-item>
+                            <label for="item-inativo{{ item.numero_item }}">Inativo</label>
+                        {% endif %}
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="formulario-grupo">
+        <label for="campo-valor-total" class="label-campo texto-azul">Valor global</label>
+        <input id="campo-valor-total" name="valor_total" type="text" class="campo-texto campo-pequeno" required data-mascara="moeda" data-valor-global readonly>
+    </div>
+
+    <input type="text" readonly name="meses_vigencia" class="oculto" data-contrato-vigencia>
+
+    <div class="container-botoes">
+        <button class="botao botao--azul" data-modal-abrir="confirmar">Cadastrar</button>
+    </div>
+
+    <div class="modal oculto" data-modal="confirmar">
+        <div class="modal-conteudo modal-confirmacao">
+            <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+            <p class="texto-preto descricao">Tem certeza que deseja cadastrar o aditivo no contrato?</p>
+
+            <div class="container-botoes">
+                <button class="botao--verde botao" type="submit">Salvar</button>
+                <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+            </div>
+        </div>
+    </div>
+</form>

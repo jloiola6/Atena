@@ -1,0 +1,28 @@
+/* Estilização do perfil de uma turma */
+
+.aluno-pendente{
+    color: var(--texto-vermelho);
+}
+
+.aluno-parcial{
+    color: var(--texto-amarelo);
+}
+
+.aluno-finalizado{
+    color: var(--texto-verde);
+}
+
+/* RESPONSIVIDADE */
+.tabela-aluno--smartphone{
+    display: none;
+}
+
+@media screen and (max-width: 474px){
+    .tabela-aluno{
+        display: none;
+    }
+
+    .tabela-aluno--smartphone{
+        display: block;
+    }
+}

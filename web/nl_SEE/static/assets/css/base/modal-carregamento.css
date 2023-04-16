@@ -1,0 +1,31 @@
+/* Estilização do modal de carregamento */
+
+@keyframes spin-carregamento{
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+}
+
+.modal-carregamento{
+    align-items: center;
+    /* animation: var(--main-animation); */
+    background-color: var(--cor-fundo);
+    box-sizing: border-box;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    left: 0;
+    overflow: auto;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+}
+
+    .spinner-carregamento{
+        animation: spin-carregamento 2s ease-in-out infinite;
+        aspect-ratio: 1;
+        border: 10px #10418361 solid;
+        border-top-color: var(--cor-azul);
+        border-radius: 50%;
+        width: 100px;
+    }

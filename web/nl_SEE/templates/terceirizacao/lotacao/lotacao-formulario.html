@@ -1,0 +1,163 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+    Cadastrar Lotacão
+{% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+
+                    <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                    <span class="texto-azul">&#62;</span>
+
+                    <a class="  texto-azul" href="{% url 'lotacao:index' %}">Lotação</a>
+                    <span class="texto-azul">&#62;</span>
+
+                    <a class="  texto-azul" href="{% url 'lotacao:lotacoes' %}">Lotacoes</a>
+                    <span class="texto-azul">&#62;</span>
+
+                    <a class="  texto-azul" href="{% url 'lotacao:servidor-perfil' %}?id={{ servidor.id }}">{{ servidor.nome }}</a>
+                    <span class="texto-azul">&#62;</span>
+
+                    <a class="  texto-azul" href="{% url 'lotacao:contrato-perfil' %}?id_contrato={{ contrato.id }}">Contrato n° {{ contrato.numero_contrato }}</a>
+                    <span class="texto-azul">&#62;</span>
+
+                {% if edicao %}
+                    <span class="  texto-azul">Editar Lotacão</span>
+                {% else %}
+                    <span class="  texto-azul">Cadastrar Lotacão</span>
+                {% endif %}
+
+            </nav>
+
+            {% if edicao %}
+                <h1 class="titulo-pagina texto-azul">Editar Lotacão</h1>
+            {% else %}
+                <h1 class="titulo-pagina texto-azul">Cadastrar Lotacão</h1>
+            {% endif %}
+
+            <p class="descricao  texto-preto">Insira os dados da Lotacão</p>
+
+            <form class="container-surface container-formulario-lotacao" method="POST">
+                {% csrf_token %}
+
+                <h2 class="texto-azul texto-medio">Dados do Lotacão</h2>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-servidor">Servidor</label>
+                    <input class="campo-texto campo-grande" type="text" value="{{ servidor }}" name="servidor" id="campo-servidor" readonly autocomplete="off">
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-contrato">Contrato</label>
+                    <input class="campo-texto campo-grande" type="text" value="{{ contrato.digito }}" name="contrato" id="campo-contrato" readonly autocomplete="off">
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="label-campo texto-azul" for="fieldset-tipo-unidade">Tipo de Unidade</label>
+                    <fieldset id="fieldset-tipo-unidade">
+                        <input type="radio" name="fieldset-tipo-unidade" value="adm" id="radio-adm" checked data-radio-unidade>
+                        <label class="texto-preto" for="radio-adm">Unidade Administrativa</label>
+
+                        <input type="radio" name="fieldset-tipo-unidade" value="escolar" id="radio-escolar" data-radio-unidade>
+                        <label class="texto-preto" for="radio-escolar">Unidade Escolar</label>
+                    </fieldset>
+                </div>
+
+                <div class="formulario-grupo" data-selecao-escola>
+                    <label class="texto-azul label-campo" for="campo-unidade-escolar">Unidade Escolar</label>
+                    <select data-selecao2  name="escolar" id="campo-unidade-escolar" class="campo-texto campo-grande">
+                        {% for endereco in endrecos %}
+                            <option value="{{ endereco.id }}">{{ endereco }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="formulario-grupo" data-selecao-administrativa>
+                    <label class="texto-azul label-campo" for="campo-unidade-admnistrativa">Unidade Administrativa</label>
+                    <select data-selecao2  name="administrativa" id="campo-unidade-admnistrativa" class="campo-texto campo-grande">
+                        {% for adm in unidades_administrativas %}
+                            <option value="{{ adm.id }}">{{ adm }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-memorando">N° do Memorando</label>
+                    <input class="campo-texto campo-pequeno" type="text" value="{{ lotacao.numero_memorando }}" name="numero_memorando" id="campo-memorando" placeholder="Ex: 12345678" required autocomplete="off" maxlength="15">
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-funcao">Função</label>
+                    <input class="campo-texto campo-grande" type="text" value="{{ lotacao.funcao }}" name="funcao" id="campo-funcao" placeholder="Ex: CHEFE DE DIVISÃO" autocomplete="off">
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-ch">Carga Horária</label>
+                    <input class="campo-texto campo-pequeno" type="text" value="{{ lotacao.carga_horaria }}" name="carga_horaria" id="campo-ch" placeholder="Ex: 8" autocomplete="off" maxlength="2">
+                </div>
+
+                <!-- <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-subconta">Subconta</label>
+                    <input class="campo-texto campo-pequeno" type="text" value="{{ lotacao.subconta }}" name="subconta" id="campo-subconta" placeholder="Ex: 8" autocomplete="off" maxlength="3">
+                </div> -->
+
+                <!-- <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-observacao">Observacao</label>
+                    <input class="campo-texto campo-grande" type="text" value="{{ lotacao.observacao }}" name="observacao" id="campo-observacao" placeholder="Ex: 8" autocomplete="off" maxlength="3">
+                </div> -->
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-convocacao">Data Início</label>
+                    <input class="campo-texto campo-medio" type="date" value="{{ lotacao.data_inicio }}" name="inicio" id="campo-convocacao" required>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-contratacao">Data Término</label>
+                    <input class="campo-texto campo-medio" type="date" value="{{ lotacao.data_Lotacão }}" name="termino" id="campo-convocacao" required>
+                </div>
+
+                <div class="container-botoes">
+                    {% if edicao %}
+                        <button class="botao botao--azul" data-modal-abrir="confirmar">Editar</button>
+                    {% else %}
+                        <button class="botao botao--azul" data-modal-abrir="confirmar">Cadastrar</button>
+                    {% endif %}
+                </div>
+
+                <div class="modal" data-modal="confirmar">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                            <p class="texto-preto descricao">Tem certeza que deseja salvar o novo Lotacão?</p>
+
+                            <div class="container-botoes">
+                                {% if edicao %}
+                                    <button class="botao--verde botao" type="submit">Editar</button>
+                                {% else %}
+                                    <button class="botao--verde botao" type="submit">Cadastrar</button>
+                                {% endif %}
+                                <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                            </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/select2.js' %}"></script>
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+
+    <script src="{% static 'assets/js/layout/lotacao/lotacao-formulario/controlaCampos.js' %}"></script>
+
+{% endblock %}

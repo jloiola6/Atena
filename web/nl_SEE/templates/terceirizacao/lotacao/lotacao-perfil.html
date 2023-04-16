@@ -1,0 +1,101 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} {{ servidor.nome }} {% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:index' %}">Lotação</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:servidores' %}">Servidores</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">{{ servidor.nome }}</span>
+            </nav>
+
+            <div class="container-surface-servidor container-surface">
+                <h1 class="texto-medio texto-azul">{{ servidor.nome }}</h1>
+
+                <div class="servidor-dados">
+                    <p class=" texto-azul texto-negrito">Matrícula: <span class="texto-preto texto-normal">{{ servidor.matricula }}</span></p>
+                    <p class=" texto-azul texto-negrito">CPF: <span class="texto-preto texto-normal">{{ cpf }}</span></p>
+                    <p class=" texto-azul texto-negrito">Data de Nascimento: <span class="texto-preto texto-normal">{{ servidor.data_nascimento }}</span></p>
+                    <p class=" texto-azul texto-negrito">Gênero: <span class="texto-preto texto-normal">{{ servidor.sexo }}</span></p>
+                    <p class=" texto-azul texto-negrito">Nacionalidade: <span class="texto-preto texto-normal">{{ servidor.nacionalidade }}</span></p>
+                    <p class=" texto-azul texto-negrito">Naturalidade (estado): <span class="texto-preto texto-normal">{{ servidor.uf }}</span></p>
+                    <p class=" texto-azul texto-negrito">Naturalidade (município): <span class="texto-preto texto-normal">{{ servidor.naturalidade }}</span></p>
+                </div>
+
+                <h2 class="texto-medio texto-azul titulo-endereco-servidor">Endereço</h2>
+
+                <div class="servidor-endereco">
+                    <p class=" texto-azul texto-negrito texto">Município: <span class="texto-preto texto-normal">{{ servidor_endereco.municipio }}</span></p>
+                    <p class=" texto-azul texto-negrito texto">Regional: <span class="texto-preto texto-normal">{{ servidor_endereco.regiao }}</span></p>
+                    <p class=" texto-azul texto-negrito texto">CEP: <span class="texto-preto texto-normal">{{ servidor_endereco.cep }}</span></p>
+                    <p class=" texto-azul texto-negrito texto">Rua: <span class="texto-preto texto-normal">{{ servidor_endereco.rua }}</span></p>
+                    <p class=" texto-azul texto-negrito texto">Numero: <span class="texto-preto texto-normal">{{ servidor_endereco.numero }}</span></p>
+                    <p class=" texto-azul texto-negrito texto">Bairro: <span class="texto-preto texto-normal">{{ servidor_endereco.bairro }}</span></p>
+                    <p class=" texto-azul texto-negrito texto">Complemento: <span class="texto-preto texto-normal">{{ servidor_endereco.complemento }}</span></p>
+                </div>
+
+                <h2 class="texto-medio texto-azul titulo-contatos-servidor">Contatos</h2>
+
+                <div class="servidor-contatos">
+                    {% for contato in servidor_contato %}
+                        {% if contato.tipo_contato == 'C' %}
+                            <p class=" texto-azul texto-negrito texto">Celular: <span class="texto-preto texto-normal">{{ contato.contato }}</span></p>
+                        {% elif contato.tipo_contato == 'T' %}
+                            <p class=" texto-azul texto-negrito texto">Telefone: <span class="texto-preto texto-normal">{{ contato.contato }}</span></p>
+                        {% elif contato.tipo_contato == 'E' %}
+                            <p class=" texto-azul texto-negrito texto">Email: <span class="texto-preto texto-normal">{{ contato.contato }}</span></p>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+
+                        <h2 class="texto-medio texto-azul titulo-financeiro-servidor">Dados financeiros</h2>
+
+                <div class="servidor-financeiro">
+                    <p class=" texto-azul texto-negrito texto">Instituição: <span class="texto-preto texto-normal">{{ servidor_banco.instituicao }}</span></p>
+                    <p class=" texto-azul texto-negrito texto">Tipo de conta: <span class="texto-preto texto-normal">{{ servidor_banco.tipo_conta }}</span></p>
+                    <p class=" texto-azul texto-negrito texto">Agência: <span class="texto-preto texto-normal">{{ servidor_banco.agencia }}</span></p>
+                    <p class=" texto-azul texto-negrito texto">Conta: <span class="texto-preto texto-normal">{{ servidor_banco.conta }}</span></p>
+                </div>
+            </div>
+
+            <div class="container-surface-servidor container-surface">
+                <nav class="container-navegacao-surface">
+                    <ul class="navegacao-surface-lista">
+                        <li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul navegacao-surface-item-ativo" data-nav-aba="contratos">Contratos</li>
+
+                        <li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul" data-nav-aba="lotacoes">Lotações</li>
+
+                        <li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul" data-nav-aba="escolaridade">Escolaridade</li>
+
+                        <li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul" data-nav-aba="documentos">Documentos</li>
+                    </ul>
+                </nav>
+
+                {% include 'lotacao/servidor/partials/_servidor-contratos.html' %}
+                {% include 'lotacao/servidor/partials/_servidor-lotacoes.html' %}
+                {% include 'lotacao/servidor/partials/_servidor-escolaridade.html' %}
+                {% include 'lotacao/servidor/partials/_servidor-documentos.html' %}
+
+            </div>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/controlaNavegacaoSurface.js' %}"></script>
+    <!-- <script src="{% static 'assets/js/layout/administracao/unidade-perfil/controlaNavegacao.js' %}"></script> -->
+    <!-- <script src="{% static 'assets/js/layout/administracao/unidade-perfil/controlaMapa.js' %}"></script> -->
+{% endblock %}

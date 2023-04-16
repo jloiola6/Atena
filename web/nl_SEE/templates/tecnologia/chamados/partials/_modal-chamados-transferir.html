@@ -1,0 +1,26 @@
+<div class="modal oculto" data-modal="transferir">
+    <form id="modal-conteudo" class="modal-conteudo" method="POST">
+        {% csrf_token %}
+        <div class="modal-filtros-titulo">
+            <h2 class="texto-grande texto-negrito texto-azul">TRANSFERIR CHAMADO</h2>
+            <p class=" texto-preto descricao">Tranferir chamados para outro técnico.</p>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-tecnico">Atribuir Técnico</label>
+
+            <select data-selecao2 name="tecnico" id="campo-tecnico" class="campo-texto campo-grande">
+                <option></option>
+                {% for tecnico in lista_tecnicos %}
+                    <option value="{{ tecnico.0 }}">{{ tecnico.1 }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="container-botoes">
+            <input class="oculto" type="text" name='btn-transferir' value="Transferido">
+            <button type="submit" class="botao botao--verde" id="btnSave">Salvar</button>
+            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+        </div>
+    </form>
+</div>

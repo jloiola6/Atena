@@ -1,0 +1,64 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="filtros-autorizacao">
+    <form id="modal-conteudo" class="modal-conteudo" method="GET">
+        <div class="modal-filtros-titulo">
+            <h2 class="texto-grande texto-negrito texto-azul">Filtros</h2>
+        </div>
+
+        <p class="descricao  texto-preto">Insira os filtros que deseja aplicar</p>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-unidade-adm">Unidade Administrativa</label>
+            <select name="unidade-adm" id="campo-unidade-adm" class="campo-texto campo-grande">
+                <option></option>
+                {% for adm in unidade_adm %}
+                    {% if adm.unidade_adm__sigla != None and adm.adm.unidade_adm__sigla != '' %}
+                        <option value="{{ adm.unidade_adm__nome }}">{{ adm.unidade_adm__sigla }} - {{ adm.unidade_adm__nome }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-unidade-escolar">Unidade Escolar</label>
+            <select data-selecao2  name="unidade-escolar" id="campo-unidade-escolar" class="campo-texto campo-grande">
+                <option></option>
+                {% for escola in unidade_escolar %}
+                    {% if escola.unidade_escolar__escola__nome_escola != None and escola.unidade_escolar__escola__nome_escola != '' %}
+                        <option value="{{ escola.unidade_escolar__escola__nome_escola }}"> {{ escola.unidade_escolar__escola__nome_escola }} </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-unidade-escolar">Tecnico</label>
+            <select data-selecao2  name="tecnico" id="campo-tecnico" class="campo-texto campo-grande">
+                <option></option>
+                {% for tecnico in tecnicos %}
+                    {% if tecnico.tecnico != None and tecnico.tecnico != '' %}
+                        <option value="{{ tecnico.tecnico }}"> {{ tecnico.tecnico }} </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo">Município</label>
+            <select data-selecao2 name="municipio" class="campo-texto campo-medio">
+                <option></option>
+                {% for municipio in lista_municipios %}
+                    <option value="{{ municipio }}">{{ municipio }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="container-botoes">
+            <button type="" class="botao botao--verde">Filtrar</button>
+        </div>
+
+    </form>
+</div>
+
+<script src="{% static 'assets/js/module/select2.js' %}"></script>

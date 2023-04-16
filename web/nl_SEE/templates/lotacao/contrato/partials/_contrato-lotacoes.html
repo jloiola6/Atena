@@ -1,0 +1,153 @@
+{% load static %}
+
+<div class="contrato-lotacoes" data-nav-container="lotacoes">
+    {% for lotacao in lotacoes %}
+        {% if lotacao.status %}
+            <details class="dropdown dropdown--borda dropdown--lotacao-ativa">
+        {% else %}
+            <details class="dropdown dropdown--borda dropdown--lotacao-inativa">
+        {% endif %}
+
+            {% if lotacao.unidade_escolar %}
+                <summary>{{ lotacao.unidade_escolar }}</summary>
+            {% elif lotacao.unidade_adm %}
+                <summary>{{ lotacao.unidade_adm }}</summary>
+            {% elif lotacao.orgao_cedido %}
+                <summary>{{ lotacao.orgao_cedido }}</summary>
+            {% else %}
+                <summary>Sem lotação</summary>
+            {% endif %}
+
+            <div class="container-detalhes">
+                {% if lotacao.tipo_lotacao %}
+                    <p class="texto-preto"><b class="texto-azul">Tipo de lotação: </b>{{ lotacao.tipo_lotacao }}</p>
+                {% endif %}
+
+                {% if lotacao.numero_sei %}
+                    <p class="texto-preto"><b class="texto-azul">Nº SEI: </b>{{ lotacao.numero_sei }}</p>
+                {% endif %}
+                
+                {% if lotacao.funcao %}
+                    <p class="texto-preto"><b class="texto-azul">Função: </b>{{ lotacao.funcao }}</p>
+                {% endif %}
+
+                {% if lotacao.disciplinas %}
+                    <p class="texto-preto"><b class="texto-azul">Disciplina: </b>{{ lotacao.disciplinas }}</p>
+                {% endif %}
+                
+                {% if lotacao.tipo_lotacao != 'Sem Lotação' %}
+                    <p class="texto-preto"><b class="texto-azul">Carga Horária: </b>{{ lotacao.carga_horaria }}h</p>
+                {% endif %}
+
+                <p class="texto-preto"><b class="texto-azul">Data de início: </b>{{ lotacao.data_inicio }}</p>
+
+                {% if lotacao.data_termino %}
+                    <p class="texto-preto"><b class="texto-azul">Data de término: </b>{{ lotacao.data_termino }}</p>
+                {% endif %}
+
+                {% if lotacao.observacoes %}
+                    <p class="texto-preto"><b class="texto-azul">Observações: </b>{{ lotacao.observacoes }}</p>
+                {% endif %}
+                
+                {% if lotacao.status %}
+                    <p class="texto-preto"><b class="texto-azul">Status: </b>Ativo</p>
+                {% else %}
+                    <p class="texto-preto"><b class="texto-azul">Status: </b>Inativo</p>
+                    <p class="texto-preto"><b class="texto-azul">Motivo: </b>{{ lotacao.motivo }}</p>
+                {% endif %}
+                
+                {% if lotacao.turmas %}
+                    <table class="tabela">
+                        <thead>
+                            <tr>
+                                <th>Turma</th>
+
+                                {% if lotacao.funcao == 'Professor(a)' %}
+                                    <th>Disciplina / Rota</th>
+                                {% endif %}
+
+                                <th>Turno</th>
+                                <th>Etapa</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for turma in lotacao.turmas %}
+                                <tr class="linha-desabilitada">
+                                    <td>{{ turma.turma }}</td>
+                                    
+                                    {% if lotacao.funcao == 'Professor(a)' %}
+                                        {% if turma.disciplina %}
+                                            <td>{{ turma.disciplina }}</td>
+                                        {% elif turma.rota %}
+                                            <td>{{ turma.rota }}</td>
+                                        {% endif %}
+                                    {% endif %}
+
+                                    <td>{{ turma.turma.turno }}</td>
+                                    <td>{{ turma.turma.etapa }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+                
+                {% if lotacao.alunos %}
+                    <table class="tabela">
+                        <thead>
+                            <tr>
+                                <th>Aluno</th>
+                                <th>Turma</th>
+                                <th>Turno</th>
+                                <th>Etapa</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for aluno in lotacao.alunos %}
+                                <tr class="linha-desabilitada">
+                                    <td>{{ aluno.aluno }}</td>
+                                    <td>{{ aluno.turma }}</td>
+                                    <td>{{ aluno.turma.turno }}</td>
+                                    <td>{{ aluno.turma.etapa }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+
+            <div class="container-botoes">
+                {% if 7 in permissoes %}
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <button class="botao botao--vermelho" type="submit" name="btn-excluir" value="{{ lotacao.id }}">Excluir lotação</button>
+                    </form>
+                {% endif %}
+                
+                {% if permissao.imprimir == 1 and lotacao.tipo_lotacao %}
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <button class="botao botao--azul" type="submit" name="btn-exportar-memorando" value="{{ lotacao.id }}">Exportar</button>
+                    </form>
+                {% endif %}
+
+                {% if lotacao.status == 1 and permissao.imprimir == 1 %}
+                    <a href="{% url 'lotacao:finalizar-contrato' %}?id_lotacao={{ lotacao.id }}">
+                        <button class="botao botao--azul">Finalizar lotação</button>
+                    </a>
+                {% endif %}
+            </div>
+        </details>
+    {% empty %}
+        <p class="texto-preto">Este contrato não possui lotações associadas</p>
+    {% endfor %}
+
+    {% if permissao_lotacao %}
+        <div class="container-botoes">
+            <button class="botao botao--azul" data-modal-abrir="adicionar-lotacao">Adicionar</button>
+        </div>
+    {% endif %}
+</div>

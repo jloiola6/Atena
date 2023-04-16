@@ -1,0 +1,26 @@
+
+@media screen and (max-width: 1024px){
+    .modal{
+        padding-inline: 2rem;
+    }
+
+    .modal .modal-conteudo{
+        width: 100%;
+    }
+}
+
+/* @media screen and (max-width: 768px){
+    .modal-conteudo{
+        width: 80%;
+    }
+} */
+
+@media screen and (max-width: 425px){
+    .modal{
+        padding-inline: 1rem;
+    }
+
+    .modal .modal-conteudo{
+        padding: 40px 24px;
+    }
+}

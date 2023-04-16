@@ -1,0 +1,40 @@
+<div class="links-dados" data-nav-container="links">
+    <div class="container-detalhes">
+        <p class=" texto-azul texto-negrito">Fornecedor: <span class="texto-preto texto-normal">{{ link.fornecedor }}</span></p>
+        <p class=" texto-azul texto-negrito">N° Circuito: <span class="texto-preto texto-normal">{{ link.circuito }}</span></p>
+
+        {% if link.autenticacao %}
+            <p class=" texto-azul texto-negrito">Autenticação: <span class="texto-preto texto-normal">{{ link.autenticacao }}</span></p>
+        {% endif %}
+
+        <p class=" texto-azul texto-negrito ">Tipo de alocação: <span class="texto-preto texto-normal">{{ link.tipo }}</span></p>
+        <p class=" texto-azul texto-negrito ">Fonte: <span class="texto-preto texto-normal">{{ link.fonte }}</span></p>
+        <p class=" texto-azul texto-negrito">Operadora: <span class="texto-preto texto-normal">{{ link.operadora }}</span></p>
+        <p class=" texto-azul texto-negrito">Tipo de Banda: <span class="texto-preto texto-normal">{{ link.tipo_banda }}</span></p>
+        <p class=" texto-azul texto-negrito">Velocidade: <span class="texto-preto texto-normal">{{ link.velocidade }}</span></p>
+        <p class=" texto-azul texto-negrito">Data de Ativação: <span class="texto-preto texto-normal">{{ link.data_ativo }}</span></p>
+        <p class=" texto-azul texto-negrito">IP LAN: <span class="texto-preto texto-normal">{{ link.iplan }}</span></p>
+        <p class=" texto-azul texto-negrito">IP WAN: <span class="texto-preto texto-normal">{{ link.ipwan }}</span></p>
+
+        {% for firewall in firewalls %}
+            <p class=" texto-azul texto-negrito">IP Firewall: <span class="texto-preto texto-normal">{{ firewall.ip_firewall }}</span></p>
+        {% endfor %}
+
+
+        <p class=" texto-azul texto-negrito container-detalhes-bloco">Observação: <span class="texto-preto texto-normal">{{ link.observacao }}</span></p>
+
+        <p class=" texto-azul texto-negrito container-detalhes-bloco">Status: <span class="texto-preto texto-normal">{{ link.status }}</span></p>
+        {% if link.status == 'INATIVO' %}
+            <p class=" texto-azul texto-negrito">Usuário: <span class="texto-preto texto-normal">{{ link.user_inativou }}</span></p>
+            <p class=" texto-azul texto-negrito">Data de Inativação: <span class="texto-preto texto-normal">{{ link.data_inativo }}</span></p>
+            <p class=" texto-azul texto-negrito">Motivo: <span class="texto-preto texto-normal">{{ link.motivo }}</span></p>
+        {% endif %}
+
+        <div class="container-botoes" >
+            {% if link.status == 'ATIVO' %}
+                <a href="{% url 'tecnologia:link-formulario' %}?id={{ link.id }}"><button class="botao botao--azul">Editar</button></a>
+                <a class="link" href="{% url 'tecnologia:inativar-link' %}?id={{ link.id }}"><button class="botao botao--azul">Inativar</button></a>
+            {% endif %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,121 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Home {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/index.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <h1 class="titulo-pagina texto-azul">Home</h1>
+
+            <div class="container-cards">
+                {% if 4 in permissoes %}
+                    <a href="{% url 'atena:index' %}">
+                        <div class="card-menu card-menu-atena">
+                            {% include 'partials/icones-cards/index/atena.svg' %}
+
+                            <h3 class="card-titulo ">Atena</h3>
+                        </div>
+                    </a>
+                {% endif %}
+
+                <a href="{% url 'core:perfil' %}">
+                    <div class="card-menu card-menu-atena">
+                        {% include 'partials/icones-cards/index/meu-perfil.svg' %}
+
+                        <h3 class="card-titulo ">Meu Perfil</h3>
+                    </div>
+                </a>
+
+                {% if 1 in permissoes %}
+                    <a href="{% url 'administracao:index' %}">
+                        <div class="card-menu">
+                            {% include 'partials/icones-cards/index/administracao.svg' %}
+
+                            <h2 class="card-titulo">Administração</h2>
+                        </div>
+                    </a>
+                {% endif %}
+
+                {% if 10 in permissoes %}
+                    <a href="{% url 'coex:index' %}">
+                        <div class="card-menu">
+                            {% include 'partials/icones-cards/index/coex.svg' %}
+
+                            <h2 class="card-titulo">COEX</h2>
+                        </div>
+                    </a>
+                {% endif %}
+
+                {% if 5 in permissoes %}
+                    <a href="{% url 'lotacao:index' %}">
+                        <div class="card-menu">
+                            {% include 'partials/icones-cards/index/lotacao.svg' %}
+
+                            <h2 class="card-titulo">Gestão de Pessoas</h2>
+                        </div>
+                    </a>
+                {% endif %}
+
+                {% if 2 in permissoes %}
+                    <a href="{% url 'dinem:index' %}">
+                        <div class="card-menu">
+                            {% include 'partials/icones-cards/index/nem.svg' %}
+
+                            <h2 class="card-titulo">N.E.M.</h2>
+                        </div>
+                    </a>
+                {% endif %}
+
+                {% if 9 in permissoes %}
+                    <a href="{% url 'fundiaria:index' %}">
+                        <div class="card-menu">
+                            {% include 'partials/icones-cards/index/fundiaria.svg' %}
+
+                            <h2 class="card-titulo">Regularização Fundiária</h2>
+                        </div>
+                    </a>
+                {% endif %}
+
+                {% if 8 in permissoes %}
+                    <a href="{% url 'tecnologia:index' %}">
+                        <div class="card-menu">
+                            {% include 'partials/icones-cards/index/tecnologia.svg' %}
+
+                            <h2 class="card-titulo">Tecnologia</h2>
+                        </div>
+                    </a>
+                {% endif %}
+
+                {% if 6 in permissoes %}
+                    <a href="{% url 'terceirizacao:index' %}">
+                        <div class="card-menu">
+                            {% include 'partials/icones-cards/index/terceirizacao.svg' %}
+
+                            <h2 class="card-titulo">Terceirização</h2>
+                        </div>
+                    </a>
+                {% endif %}
+
+                {% if 3 in permissoes %}
+                    <a href="{% url 'usuario:index' %}">
+                        <div class="card-menu">
+                            {% include 'partials/icones-cards/index/usuarios.svg' %}
+
+                            <h2 class="card-titulo">Usuários</h2>
+                        </div>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+{% endblock %}

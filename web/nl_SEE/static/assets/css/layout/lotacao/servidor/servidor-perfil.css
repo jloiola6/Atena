@@ -1,0 +1,40 @@
+/* Estilização da tela de perfil de um servidor */
+
+/* .container-surface-servidor{
+    margin-top: 24px;
+} */
+
+/* Estilização da página Meu Perfil */
+
+.container-servidor__titulo{
+    align-items: center;
+    display:flex;
+    gap: .5rem;
+}
+
+/* .servidor-contratos, .servidor-escolaridade, .servidor-documentos{
+    margin-top: 16px;
+} */
+
+
+.servidor-lotacoes .container-cards-simples > a, .servidor-contratos .container-cards-simples > a, .servidor-documentos .container-cards-simples > .card-simples{
+    flex-basis: 100%;
+}
+
+.servidor-escolaridade .card-simples__descricao > a, .servidor-escolaridade .card-simples__descricao >, .servidor-documentos .card-simples__descricao > .container-botoes{
+    margin-top: 8px;
+}
+
+.servidor-escolaridade .card-simples:hover{
+    background-color: var(--surface-color);
+}
+
+.card-lotacao{
+    width: 100%;
+}
+
+.card-titulo-imagem{
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}

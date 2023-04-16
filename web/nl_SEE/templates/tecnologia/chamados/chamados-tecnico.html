@@ -1,0 +1,209 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Meus Chamados {% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/tecnologia/chamados/chamados-tecnico.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'tecnologia:index' %}" class=" texto-azul">Tecnologia</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'tecnologia:chamados' %}" class=" texto-azul">Chamados</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Meus Chamados</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Meus Chamados</h1>
+
+            {% if chamados_tecnico %}
+                {% if chamados_tecnico_internos %}
+                    <h3 class="texto-medio texto-azul descricao">Internos</h3>
+
+                    <table class="tabela">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Setor</th>
+                                <th>Município</th>
+                                <th>Abertura</th>
+                                <th>Situação</th>
+                            </tr>
+                        </thead>
+
+                        <tbody data-tabela-link="{% url 'tecnologia:chamado-perfil' %}?id=">
+                            {% for chamado in chamados_tecnico %}
+                                {% if chamado.tipo_chamado == 'Interno' %}
+                                    <tr data-tabela-link-chave="{{ chamado.id }}&perfil=tecnico">
+                                        <td>{{ chamado.id }}</td>
+
+                                        {% if chamado.endereco_escola %}
+                                            <td>{{ chamado.endereco_escola.escola }}</td>
+                                        {% else %}
+                                            <td>{{ chamado.unidade_administrativa.nome }}</td>
+                                        {% endif %}
+
+                                        {% if chamado.tipo_unidade == 'Unidade Escolar' %}
+                                            <td>{{ chamdo.endereco_escola.municipio }}</td>
+                                        {% else %}
+                                            <td>Rio Branco</td>
+                                        {% endif %}
+
+                                        <td>{{ chamado.data_abertura }}</td>
+                                        <td>{{ chamado.situacao }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+
+                {% if chamados_tecnico_externos %}
+                    <h3 class="texto-medio texto-azul externos-titulo">Externos</h3>
+
+                    <table class="tabela">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Setor</th>
+                                <th>Município</th>
+                                <th>Abertura</th>
+                                <th>Situação</th>
+                            </tr>
+                        </thead>
+
+                        <tbody data-tabela-link="{% url 'tecnologia:chamado-perfil' %}?id=">
+                            {% for chamado in chamados_tecnico %}
+                                {% if chamado.tipo_chamado == 'Externo' %}
+                                    <tr data-tabela-link-chave="{{ chamado.id }}&perfil=tecnico">
+                                        <td>{{ chamado.id }}</td>
+
+                                        {% if chamado.endereco_escola %}
+                                            <td>{{ chamado.endereco_escola.escola }}</td>
+                                        {% else %}
+                                            <td>{{ chamado.unidade_administrativa.nome }}</td>
+                                        {% endif %}
+
+                                        {% if chamado.tipo_unidade == 'Unidade Escolar' %}
+                                            <td>{{ chamado.endereco_escola.municipio }}</td>
+                                        {% else %}
+                                            <td>Rio Branco</td>
+                                        {% endif %}
+
+                                        <td>{{ chamado.data_abertura }}</td>
+                                        <td>{{ chamado.situacao }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            {% else %}
+                <p class="texto-preto descricao">Nenhum chamado atribuído</p>
+            {% endif %}
+
+            {% if chamados_orfaos %}
+                <h2 class="titulo-pagina texto-azul">Chamados Orfãos</h2>
+
+                {% if chamados_orfaos_internos %}
+                    <h3 class="texto-medio texto-azul descricao">Internos</h3>
+
+                    <table class="tabela">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Setor</th>
+                                <th>Município</th>
+                                <th>Abertura</th>
+                                <th>Situação</th>
+                            </tr>
+                        </thead>
+
+                        <tbody data-tabela-link="{% url 'tecnologia:chamado-perfil' %}?id=">
+                            {% for chamado in chamados_orfaos_internos %}
+                                <tr data-tabela-link-chave="{{ chamado.id }}&perfil=tecnico">
+                                    <td>{{ chamado.id }}</td>
+
+                                    {% if chamado.endereco_escola != None %}
+                                        <td>{{ chamado.endereco_escola.escola }}</td>
+                                    {% else %}
+                                        <td>{{ chamado.unidade_administrativa.nome }}</td>
+                                    {% endif %}
+
+                                    {% if chamado.tipo_unidade == 'Unidade Escolar' %}
+                                        <td>{{ chamado.endereco_escola.municipio }}</td>
+                                    {% else %}
+                                        <td>Rio Branco</td>
+                                    {% endif %}
+
+                                    <td>{{ chamado.data_abertura }}</td>
+                                    <td>{{ chamado.situacao }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+
+                {% if chamados_orfaos_externos %}
+                    <h3 class="texto-medio texto-azul descricao">Externos</h3>
+
+                    <table class="tabela">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Setor</th>
+                                <th>Município</th>
+                                <th>Abertura</th>
+                                <th>Situação</th>
+                            </tr>
+                        </thead>
+
+                        <tbody data-tabela-link="{% url 'tecnologia:chamado-perfil' %}?id=">
+                            {% for chamado in chamados_orfaos_externos %}
+                                <tr data-tabela-link-chave="{{ chamado.id }}&perfil=tecnico">
+                                    <td>{{ chamado.id }}</td>
+
+                                    {% if chamado.endereco_escola != None %}
+                                        <td>{{ chamado.endereco_escola.escola }}</td>
+                                    {% else %}
+                                        <td>{{ chamado.unidade_administrativa.nome }}</td>
+                                    {% endif %}
+
+                                    {% if chamado.tipo_unidade == 'Unidade Escolar' %}
+                                        <td>{{ chamado.endereco_escola.municipio }}</td>
+                                    {% else %}
+                                        <td>Rio Branco</td>
+                                    {% endif %}
+
+                                    <td>{{ chamado.data_abertura }}</td>
+                                    <td>{{ chamado.situacao }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+
+            {% endif %}
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/linkTabela.js' %}"></script>
+{% endblock %}

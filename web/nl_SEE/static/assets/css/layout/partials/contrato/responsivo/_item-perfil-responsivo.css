@@ -1,0 +1,64 @@
+/* RESPONSIVIDADE DA TABELA DE POSTOS DE TRABALHO */
+
+@media screen and (max-width: 768px){
+    .item-descricao{
+        width: 100%;
+    }
+}
+
+.tabela-item-postos-smartphone{
+    display: none;
+}
+
+@media screen and (max-width: 465px){
+    .tabela-item-postos{
+        display: none;
+    }
+
+    .tabela-item-postos-smartphone{
+        display: block;
+    }
+}
+
+
+/* RESPONSIVIDADE DA TABELA DE SERVIDORES */
+
+.tabela-item-servidores-smartphone{
+    display: none;
+}
+
+@media screen and (max-width: 553px){
+    .tabela-item-servidores{
+        display: none;
+    }
+
+    .tabela-item-servidores-smartphone{
+        display: block;
+    }
+}
+
+/* RESPONSIVIDADE DA TABELA DE LINKS */
+
+.tabela-links-tablet, .tabela-links-smartphone{
+    display: none;
+}
+
+@media screen and (max-width: 992px){
+    .tabela-links, .tabela-links-smartphone{
+        display: none;
+    }
+
+    .tabela-links-tablet{
+        display: block;
+    }
+}
+
+@media screen and (max-width: 619px){
+    .tabela-links, .tabela-links-tablet{
+        display: none;
+    }
+
+    .tabela-links-smartphone{
+        display: block;
+    }
+}

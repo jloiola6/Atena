@@ -1,0 +1,12 @@
+.card-chamado{
+    width: 100%;
+}
+
+.tabela-chamados--tablet, .tabela-chamados--smartphone{
+    display: none;
+}
+
+
+@media screen and (max-width: 606px) {
+
+}

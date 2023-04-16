@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-bt">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ATUALIZAÇÃO DE LOTAÇÃO - GERAL</title>
+    </head>
+    <body>
+
+        <header>
+            <table>
+                <tr>
+                    <th><img id="img1" src="{{ url_logo }}" alt=""></th>
+                    <th class="direita"><img id="img2" src="{{ url_atena }}" alt="Logo"></th>
+                </tr>
+            </table>
+        </header>
+        <hr>
+        <br>
+        <table class="tabela-titulo">
+            <tr>
+                <th class="titulo">RELATÓRIO DE ATUALIZAÇÃO DE LOTAÇÃO - COMPLETO</th>
+            </tr>
+        </table>
+        <table class="tabela-atualizacao">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th class="cpf">CPF</th>
+                    <th class="digito">Dígito</th>
+                    <th>Unidade Lotação</th>
+                    <th>Unidade Servidor</th>
+                    <th class="data">Data/Hora Atualização</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for atualizacao in atualizacoes %}
+                    <tr>
+                        <td>{{ atualizacao.lotacao.contrato.servidor.nome }}</td>
+                        <td>{{ atualizacao.lotacao.contrato.servidor.cpf }}</td>
+                        <td>{{ atualizacao.lotacao.contrato.digito }}</td>
+
+                        {% if atualizacao.lotacao.unidade_adm %}
+                            <td>{{ atualizacao.lotacao.unidade_adm }}</td>
+                        {% else %}
+                            <td>{{ atualizacao.lotacao.unidade_escolar }}</td>
+                        {% endif %}
+
+                        {% if atualizacao.alteracao_lotacao == 1 %}
+                            {% if atualizacao.unidade_adm %}
+                                <td>{{ atualizacao.unidade_adm }}</td>
+                            {% else %}
+                                <td>{{ atualizacao.unidade_escolar }}</td>
+                            {% endif %}
+                        {% else %}
+                            {% if atualizacao.lotacao.unidade_adm %}
+                                <td>{{ atualizacao.lotacao.unidade_adm }}</td>
+                            {% else %}
+                                <td>{{ atualizacao.lotacao.unidade_escolar }}</td>
+                            {% endif %}
+                        {% endif %}
+
+                        <td>{{ atualizacao.data_atualizacao }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+
+    <style>
+        @page{
+            size: landscape;
+            margin: 1cm;
+        }
+
+        #img1{
+            width: 100%;
+            height: auto;
+        }
+
+        #img2{
+            width: 120px;
+            height: auto;
+        }
+
+        .direita{
+            text-align: right;
+        }
+
+        .tabela-titulo{
+            border: 1px solid black;
+            text-align: center;
+            padding: 4px;
+            padding-top: 6px;
+        }
+
+        .tabela-atualizacao{
+            border: 1px solid black;
+            text-align: center;
+            padding: 4px;
+            font-size: 12px;
+            font-family: sans-serif;
+            padding-top: 6px;
+        }
+
+        .titulo{
+            font-size: 14px;
+            font-family: sans-serif;
+            font-weight: bold;
+        }
+
+        .cpf{
+            width: 8%;
+        }
+
+        .data{
+            width: 18%;
+        }
+
+        .digito{
+            width: 5%;
+        }
+
+        .texto{
+            text-align: justify;
+            font-family: sans-serif;
+            font-size: 12px;
+        }
+
+        .centralizado{
+            text-align: center;
+            font-size: 12px;
+            font-family: sans-serif;
+        }
+
+    </style>
+</html>

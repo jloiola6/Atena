@@ -1,0 +1,86 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Link {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/partials/unidade-educacional/_unidade-perfil.css' %}">
+    <!-- <link rel="stylesheet"  href="{% static 'assets/css/layout/partials/unidade-educacional/_unidade-dados.css' %}"> -->
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/tecnologia/links/link-perfil.css' %}">
+{% endblock %}
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+
+<main>
+    <div class="container">
+        <nav class="container-navegacao">
+            <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'tecnologia:index' %}" class=" texto-azul">Tecnologia</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'tecnologia:links-tabela' %}" class=" texto-azul">Links</a>
+            <span class="texto-azul">&#62;</span>
+
+            {% if link.tipo == 'Unidade Educacional' %}
+                <span class="  texto-azul">{{ link.unidade_educacional }}</span>
+            {% else %}
+                <span class="  texto-azul">{{ link.departamento }}</span>
+            {% endif %}
+        </nav>
+
+        {% if link.tipo == 'Unidade Educacional' %}
+            {% include "partials/unidade-educacional/_unidade-perfil.html" %}
+            {% comment %}{% include "partials/unidade-educacional/_unidade-dados.html" %}{% endcomment %}
+        {% else %}
+            {% include "tecnologia/links/partials/_departamento-perfil.html" %}
+        {% endif %}
+
+        <div class="container-surface">
+            <nav class="container-navegacao-surface">
+                <ul class="navegacao-surface-lista">
+
+                    <li class="navegacao-surface-item navegacao-surface-item-ativo navegacao-surface-item-selecionavel" data-nav-aba="links">
+                        <span class="texto-azul ">Dados do Link</span>
+                    </li>
+
+                    {% if link.fornecedor == 'SEE' %}
+                        <li class="navegacao-surface-item navegacao-surface-item-selecionavel" data-nav-aba="contrato">
+                            <span class="texto-azul ">Contrato</span>
+                        </li>
+                    {% endif %}
+
+                    <li class="navegacao-surface-item navegacao-surface-item-selecionavel" data-nav-aba="localizacao">
+                        <span class="texto-azul ">Localização</span>
+                    </li>
+
+                    {% if links_mudancas|length > 0 %}
+                        <li class="navegacao-surface-item navegacao-surface-item-selecionavel" data-nav-aba="historico">
+                            <span class="texto-azul ">Histórico do Link</span>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+
+            {% include 'tecnologia/links/partials/_tecnologia-links.html'  %}
+            {% include 'tecnologia/links/partials/_tecnologia-contrato.html'  %}
+            {% include 'tecnologia/links/partials/_tecnologia-localizacao.html'  %}
+
+            {% if links_mudancas|length > 0 %}
+                {% include 'tecnologia/links/partials/_tecnologia-historico.html'  %}
+            {% endif %}
+
+        </div>
+    </div>
+</main>
+
+{% include 'partials/_rodape.html' %}
+
+<script src="{% static 'assets/js/module/controlaNavegacaoSurface.js' %}"></script>
+<script src="{% static 'assets/js/layout/administracao/unidade-perfil/controlaMapa.js' %}"></script>
+<script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+
+{% endblock %}

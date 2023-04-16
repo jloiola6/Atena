@@ -1,0 +1,23 @@
+.tabela-unidades-tablet, .tabela-unidades-smartphone{
+    display: none;
+}
+
+@media screen and (max-width: 599px) {
+    .tabela-unidades, .tabela-unidades-smartphone{
+        display: none;
+    }
+
+    .tabela-unidades-tablet{
+        display: block;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .tabela-unidades, .tabela-unidades-tablet{
+        display: none;
+    }
+
+    .tabela-unidades-smartphone{
+        display: block;
+    }
+}

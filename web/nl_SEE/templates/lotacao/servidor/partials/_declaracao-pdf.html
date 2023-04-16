@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-bt">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Declaração de Acumulo de cargo público</title>
+    </head>
+
+    <body>
+        <header>
+            <table>
+                <tr>
+                    <th><img id="img1" src="{{ url_logo }}" width = '550px' alt="Cabecalho"></th>
+                    <th class="direita"><img id="img2" src="{{ url_atena }}" width = '120px' alt="Logo Atena"></th>
+                    <!-- <th><img id="img2" src="C:\Users\joao.soares\Documents\code\Atena\nl_SEE\static\assets\img\divisao-lotacao.png"alt="Cabecalho"></th>
+                    <th><img id="img1" src="C:\Users\joao.soares\Documents\code\Atena\nl_SEE\static\assets\img\ATENA-AZUL.svg" alt="Logo Atena"></th> -->
+                </tr>
+            </table>
+        </header>
+        <hr>
+
+        <div>
+            <br>
+            <section>
+                <h1>DECLARAÇÃO DE ACUMULO DE CARGO PÚBLICO</h1>
+            </section>
+            <span>
+                Eu, <b>{{servidores.nome}}</b>, portador(a) do CPF nº <b>{{servidores.cpf}}</b> declaro, para
+                fins do contido nos incisos XVI e XVII do art. 37 de Constituição Federal de 1988 com redação determinada
+                pelas Emendas Constitucionais nº 19 e 20 de 1998, que:
+            </span>
+            <br><br>
+            <span>
+                (  ) Percebo <b>APOSENTADORIA</b> relativa ao cargo de ____________________________________,
+                pertencente à estrutura do órgão ____________________________________.
+            </span>
+            <br><br>
+            <span>
+                (  ) <b>NÃO MANTENHO</b> outro vínculo empregatício em caráter permanente ou temporário com qualquer
+                entidade pública ou federal, estadual ou municipal, que impeça minha admissão ao quadro de servidores
+                públicos da Secretaria de Estado de Educação e Esporte. Caso venha a assumir vínculo, nestas condições,
+                assumo o compromisso de comunicar esta secretaria no prazo máximo de 5 (cinco) dias.
+            </span>
+            <br><br>
+            <span>
+                (  ) <b>MANTENHO</b> vínculo público, exercendo o cargo de ____________________________________,
+                pertencente à estrutura do órgão ____________________________________, sujeito(a) a carga horária de
+                _____ horas semanais, que cumpro nos dias e horários abaixo descriminados conforme declaração anexa
+                expedida por ____________________________________.
+
+            </span>
+            <br><br><br>
+            <table>
+                <tr class="centralizado">
+                    <td class="tabela"><b>Dias</b></td>
+                    <td class="tabela"><b>Horários</b></td>
+                </tr>
+                <tr>
+                    <td class="invisivel tabela">a</td>
+                    <td class="invisivel tabela">a</td>
+                </tr>
+                <tr>
+                    <td class="invisivel tabela">a</td>
+                    <td class="invisivel tabela">a</td>
+                </tr>
+                <tr>
+                    <td class="invisivel tabela">a</td>
+                    <td class="invisivel tabela">a</td>
+                </tr>
+                <tr>
+                    <td class="invisivel tabela">a</td>
+                    <td class="invisivel tabela">a</td>
+                </tr>
+            </table>
+            <br>
+            <p class="centralizado">Por ser verdade firmamos o presente.</p>
+            <p class="centralizado">{{data.date}}</p>
+            <br><br><br>
+
+            <div >
+                <table class="centralizado">
+                    <tr>
+                        <td>
+                            <p class="centralizado">___________________________________________</p>
+                            <p class="centralizado"><b>{{ servidores.nome }}</b></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        </div>
+
+    </body>
+
+    <style>
+
+        body{
+            font-size: 14px;
+        }
+        #img1{
+            width: 120px;
+            height: auto;
+        }
+
+        .direita{
+            text-align: right;
+        }
+
+        p{
+            text-align: justify;
+        }
+
+        .tabela {
+            border: #333333 1px solid;
+            padding:2px 0px;
+        }
+
+        .invisivel{
+                color: white;
+            }
+
+        .centralizado{
+            text-align: center;
+        }
+    </style>
+</html>

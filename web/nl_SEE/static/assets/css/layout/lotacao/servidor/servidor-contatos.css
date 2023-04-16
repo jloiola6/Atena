@@ -1,0 +1,14 @@
+/* Estilização da página de edição de contatos de um servidor */
+
+.container-formulario-servidor-contatos{
+    margin-top: 16px;
+}
+
+.container-formulario-servidor-contatos .container-botoes{
+    margin-top: 16px;
+}
+
+.container-contato-edicao{
+    display: flex;
+    gap: 8px;
+}

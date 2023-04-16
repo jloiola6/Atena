@@ -1,0 +1,84 @@
+<!-- ADICIONAR REQUIRED -->
+
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+    Inativar Link
+{% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/terceirizacao/contrato/finalizar-contrato.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:index' %}">Tecnologia</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:links-tabela' %}">Links</a>
+                <span class="texto-azul">&#62;</span>
+
+                {% if link.tipo == 'Unidade Educacional' %}
+                    <a class="  texto-azul" href="{% url 'tecnologia:link-perfil' %}?id={{ link.id }}">{{ unidade_educacional.nome_escola }}</a>
+                    <span class="texto-azul">&#62;</span>
+                {% else %}
+                    <a class="  texto-azul" href="{% url 'tecnologia:link-perfil' %}?id={{ link.id }}">{{ departamento.nome }}</a>
+                    <span class="texto-azul">&#62;</span>
+                {% endif %}
+
+                <span class="  texto-azul">Inativar link</span>
+            </nav>
+
+            <form class="container-surface container-formulario-inativar-link" method="POST">
+                {% csrf_token %}
+
+                <h1 class="texto-medio texto-azul">Inativar link</h1>
+                <p class="descricao texto-preto">Preencha o formulário para inativar o link. Preencha os dados</p>
+
+                <div class="formulario-grupo">
+                    <label for="campo-numero-contrato" class="texto-azul label-campo">Contrato</label>
+                    <input id="campo-numero-contrato" type="text" class="campo-texto campo-pequeno" readonly value="N° {{ contrato.numero_contrato }}">
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-data-inativo">Data de inativação</label>
+                    <input id="campo-data-inativo" name='data_inativo' type="date" class="campo-pequeno campo-texto" required>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label for="campo-texto-motivo" class="texto-azul label-campo">Motivo</label>
+                    <textarea name="motivo" id="campo-texto-motivo" class="campo-texto campo-area" required></textarea>
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao botao--azul" data-modal-abrir="confirmar">Salvar</button>
+                </div>
+
+                <div class="modal oculto" data-modal="confirmar">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                        <p class="texto-preto descricao">Tem certeza que deseja inativar o link?</p>
+
+                        <div class="container-botoes">
+                            <button class="botao--verde botao" type="submit">Salvar</button>
+                            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+
+{% endblock %}

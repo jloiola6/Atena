@@ -1,0 +1,302 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Usuários {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/usuario/index.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/layout/usuario/responsivo/index-responsivo.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Usuários</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Usuários</h1>
+
+            <div class="container-surface container-usuario-busca">
+                <h2 class="texto-medio texto-azul">Buscar</h2>
+
+                <form class="formulario" method="GET">
+                    <div class="formulario-grupo">
+                        <input id="campo-nome" name="nome_usuario" type="text" class="campo-texto campo-grande" placeholder="Nome" maxlength="70">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <input id="campo-cpf" name="cpf" type="text" class="campo-texto campo-pequeno" placeholder="CPF" data-mascara="cpf">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <input id="campo-email" name="email" type="text" class="campo-texto campo-medio" placeholder="E-mail" maxlength="60">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <input id="campo-usuario" name="usuario" type="text" class="campo-texto campo-medio" placeholder="Usuário" maxlength="50">
+                    </div>
+
+                    <div class="container-botoes">
+                        <button class="botao botao--azul">Buscar</button>
+                        <button data-modal-abrir="filtros" class="botao botao--azul">Filtros</button>
+
+                        <a href="{% url 'usuario:usuario-perfil' %}?id_usuario={{ meu_usuario.id }}">
+                            <button type="button" class="botao botao--azul">Meu Usuário</button>
+                        </a>
+                    </div>
+                </form>
+            </div>
+
+            <table class="tabela tabela-usuarios">
+                <thead>
+                    <tr>
+                        <th class=""> Id</th>
+                        <th class="">Nome</th>
+                        <th class="">CPF</th>
+                        <th class="">Email</th>
+                        <th class="">Usuário</th>
+                    </tr>
+                </thead>
+
+                <tbody data-tabela-link="{% url 'usuario:usuario-perfil' %}?id_usuario=">
+                    {% for usuario in usuarios %}
+                        <tr data-tabela-link-chave={{ usuario.id }} >
+                            <td>{{ usuario.id }}</td>
+                            <td>{{ usuario.nome }}</td>
+                            <td>{{ usuario.cpf }}</td>
+                            <td>{{ usuario.email }}</td>
+                            <td>{{ usuario.login }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td class="coluna-paginacao" colspan="5">
+                            <div class="container-paginacao">
+                                <div>
+                                    <span class="texto-negrito texto-azul">TOTAL:</span>
+                                    <span>{{quantidade_usuarios}}</span>
+                                </div>
+
+                                <div>
+                                    {% if usuarios.has_previous %}
+                                        <a class="" href="{% url 'usuario:index' %}?page=1">
+                                            <button class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'usuario:index' %}?page={{ usuarios.previous_page_number }}">
+                                            <button class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% endif %}
+
+                                    <span class="">
+                                        {{ usuarios.number }} de {{ usuarios.paginator.num_pages }}
+                                    </span>
+
+                                    {% if usuarios.has_next %}
+                                        <a class="" href="{% url 'usuario:index' %}?page={{ usuarios.next_page_number }}">
+                                            <button class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'usuario:index' %}?page={{ usuarios.paginator.num_pages }}">
+                                            <button class="botao-paginacao">last_page</button>
+                                        </a>
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">last_page</button>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <table class="tabela tabela-usuarios-tablet">
+                <thead>
+                    <tr>
+                        <th class="">Id</th>
+                        <th class="">Nome</th>
+                        <th class="">Email</th>
+                        <th class="">Login</th>
+                    </tr>
+                </thead>
+
+                <tbody data-tabela-link="{% url 'usuario:usuario-perfil' %}?id_usuario=">
+                    {% for usuario in usuarios %}
+                        <tr data-tabela-link-chave={{ usuario.id }} >
+                            <td>{{ usuario.id }}</td>
+                            <td>{{ usuario.nome }}</a></td>
+                            <td>{{ usuario.email }}</td>
+                            <td>{{ usuario.login }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td class="coluna-paginacao" colspan="4">
+                            <div class="container-paginacao">
+                                <div>
+                                    <span class="texto-negrito texto-azul">TOTAL:</span>
+                                    <span>{{quantidade_usuarios}}</span>
+                                </div>
+
+                                <div>
+                                    {% if usuarios.has_previous %}
+                                        <a class="" href="{% url 'usuario:index' %}?page=1">
+                                            <button class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'usuario:index' %}?page={{ usuarios.previous_page_number }}">
+                                            <button class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% endif %}
+
+                                    <span class="">
+                                        {{ usuarios.number }} de {{ usuarios.paginator.num_pages }}
+                                    </span>
+
+                                    {% if usuarios.has_next %}
+                                        <a class="" href="{% url 'usuario:index' %}?page={{ usuarios.next_page_number }}">
+                                            <button class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'usuario:index' %}?page={{ usuarios.paginator.num_pages }}">
+                                            <button class="botao-paginacao">last_page</button>
+                                        </a>
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">last_page</button>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+
+            <table class="tabela tabela-usuarios-smartphone">
+
+                <thead>
+                    <tr>
+                        <th class="oculto"> Id</th>
+                        <th class="">Nome</th>
+                        <th class="">Usuário</th>
+                    </tr>
+                </thead>
+
+                <tbody data-tabela-link="{% url 'usuario:usuario-perfil' %}?id_usuario=">
+                    {% for usuario in usuarios %}
+                        <tr data-tabela-link-chave={{ usuario.id }} >
+                            <td class="oculto">{{ usuario.id }}</td>
+                            <td>{{ usuario.nome }}</a></td>
+                            <td>{{ usuario.login }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td class="coluna-paginacao" colspan="2">
+                            <div class="container-paginacao">
+                                <div>
+                                    <span class="texto-negrito texto-azul">TOTAL:</span>
+                                    <span>{{quantidade_usuarios}}</span>
+                                </div>
+
+                                <div>
+                                    {% if usuarios.has_previous %}
+                                        <a class="" href="{% url 'usuario:index' %}?page=1">
+                                            <button class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'usuario:index' %}?page={{ usuarios.previous_page_number }}">
+                                            <button class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% endif %}
+
+                                    <span class="">
+                                        {{ usuarios.number }} de {{ usuarios.paginator.num_pages }}
+                                    </span>
+
+                                    {% if usuarios.has_next %}
+                                        <a class="" href="{% url 'usuario:index' %}?page={{ usuarios.next_page_number }}">
+                                            <button class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'usuario:index' %}?page={{ usuarios.paginator.num_pages }}">
+                                            <button class="botao-paginacao">last_page</button>
+                                        </a>
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">last_page</button>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <p class="link-pre-cadastrados"><a href="{% url 'usuario:pre-cadastrados' %}" class="link">Abrir usuários pré cadastrados</a></p>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    {% include 'usuario/partials/_modal-usuario-filtros.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/module/linkTabela.js' %}"></script>
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+
+{% endblock %}

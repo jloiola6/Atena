@@ -1,0 +1,184 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Cadastro de Departamento {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/administracao/unidades-administrativas/unidade-administrativa-formulario.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:index' %}">Administração</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:unidades-administrativas' %}">Unidades</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:diretoria' %}?id={{ diretoria.id }}">{{ diretoria.nome }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Cadastro de Departamento</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Cadastro de Departamento</h1>
+            <p class=" texto-preto descricao">Insira os dados do departamento</p>
+
+            <form class="container-surface container-formulario-unidade-administrativa" method="POST">
+                {% csrf_token %}
+
+                <nav class="container-navegacao-surface">
+                    <ul class="navegacao-surface-lista">
+                        <li class="navegacao-surface-item navegacao-surface-item-ativo" data-form-aba="dados">
+                            <span class="texto-azul">Dados</span>
+                        </li>
+
+                        <li class="navegacao-surface-item" data-form-aba="endereco">
+                            <span class="texto-azul">Endereço</span>
+                        </li>
+
+                        <li class="navegacao-surface-item" data-form-aba="contato">
+                            <span class="texto-azul">Contato</span>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="formulario-unidade-administrativa" data-form-container="dados">
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo">Diretoria</label>
+
+                        <input type="text" class="campo-texto campo-medio" value="{{ diretoria.nome }}" readonly>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label for="unidade-formulario-nome" class="texto-azul label-campo">Nome</label>
+
+                        <input type="text" name="nome" id="unidade-formulario-nome" class="campo-texto campo-medio" placeholder="Insira o nome do departamento" maxlength="100" autocomplete="off" required>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label for="unidade-formulario-sigla" class="texto-azul label-campo">Sigla</label>
+
+                        <input type="text" name="sigla" id="unidade-formulario-sigla" class="campo-texto campo-medio" placeholder="Insira a sigla do departamento" maxlength="10" autocomplete="off" required>
+                    </div>
+
+                    <div class="container-botoes">
+                        <button class="botao botao--azul" data-form-botao="endereco">Avançar</button>
+                    </div>
+                </div>
+
+                <div class="formulario-unidade-administrativa oculto" data-form-container="endereco">
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="unidade-formulario-sede">Unidade localizada na sede</label>
+
+                        <fieldset id="unidade-formulario-sede">
+                            <input type="radio" name="unidade-formulario-sede" id="unidade-sede-sim" value="sim" checked data-unidade-sede>
+                            <label class="texto-preto" for="unidade-sede-sim">Sim</label>
+
+                            <input type="radio" name="unidade-formulario-sede" id="unidade-sede-nao" value="nao" data-unidade-sede>
+                            <label class="texto-preto" for="unidade-sede-nao">Não</label>
+                        </fieldset>
+                    </div>
+
+                    <div class="formulario-grupo" data-formulario-endereco>
+                        <label for="unidade-formulario-municipio" class="texto-azul label-campo">Município</label>
+
+                        <select class="campo-texto campo-medio" name="municipio" id="unidade-formulario-municipio" data-selecao-municipio>
+                            {% for municipio in municipios %}
+                                <option>{{ municipio.nome }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="formulario-grupo" data-formulario-endereco>
+                        <label for="unidade-formulario-regiao" class="texto-azul label-campo">Regional</label>
+
+                        <input type="text" name="regiao" id="unidade-formulario-regiao" class="campo-texto campo-medio" autocomplete="off" readonly data-campo-regional>
+                    </div>
+
+                    <div class="formulario-grupo" data-formulario-endereco>
+                        <label for="unidade-formulario-cep" class="texto-azul label-campo">CEP</label>
+
+                        <input type="text" name="cep" id="unidade-formulario-cep" class="campo-texto campo-medio" placeholder="Ex: 69000-00" maxlength="8" data-mascara="cep" autocomplete="off" required>
+                    </div>
+
+                    <div class="formulario-grupo" data-formulario-endereco>
+                        <label for="unidade-formulario-rua" class="texto-azul label-campo">Rua</label>
+
+                        <input type="text" name="rua" id="unidade-formulario-rua" class="campo-texto campo-medio" placeholder="Ex: Isaura Parente" autocomplete="off" required>
+                    </div>
+
+                    <div class="formulario-grupo" data-formulario-endereco>
+                        <label for="unidade-formulario-numero" class="texto-azul label-campo">Número</label>
+
+                        <input type="text" name="numero" id="unidade-formulario-numero" class="campo-texto campo-medio" placeholder="Ex: 200" data-mascara = 'numero' autocomplete="off" required>
+                    </div>
+
+                    <div class="formulario-grupo" data-formulario-endereco>
+                        <label for="unidade-formulario-bairro" class="texto-azul label-campo">Bairro</label>
+
+                        <input type="text" name="bairro" id="unidade-formulario-bairro" class="campo-texto campo-medio" placeholder="Ex: Bosque" autocomplete="off" required>
+                    </div>
+
+                    <div class="formulario-grupo" data-formulario-endereco>
+                        <label for="unidade-formulario-complemento" class="texto-azul label-campo">Complemento</label>
+
+                        <input type="text" name="complemento" id="unidade-formulario-complemento" class="campo-texto campo-grande" autocomplete="off">
+                    </div>
+
+                    <div class="container-botoes">
+                        <button class="botao botao--azul" data-form-botao="dados">Voltar</button>
+                        <button class="botao botao--azul" data-form-botao="contato">Avançar</button>
+                    </div>
+                </div>
+
+                <div class="formulario-unidade-administrativa oculto" data-form-container="contato">
+                    <div class="formulario-grupo">
+                        <label for="unidade-formulario-telefone" class="texto-azul label-campo">Telefone</label>
+                        <input type="text" name="telefone" id="unidade-formulario-telefone" class="campo-texto campo-medio" placeholder="Ex: 68 3123-133" data-mascara="telefone" autocomplete="off">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label for="unidade-formulario-email" class="texto-azul label-campo">E-mail</label>
+                        <input type="text" name="email" id="unidade-formulario-email" class="campo-texto campo-medio" placeholder="Ex: departamento@exemplo.com" autocomplete="off">
+                    </div>
+
+                    <div class="container-botoes">
+                        <button class="botao botao--azul" data-form-botao="endereco">Voltar</button>
+                        <button class="botao botao--azul" data-modal-abrir="confirmar">Cadastrar</button>
+                    </div>
+
+                    <div class="modal oculto" data-modal="confirmar">
+                        <div class="modal-conteudo modal-confirmacao">
+                            <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                            <p class="texto-preto descricao">Tem certeza que deseja cadastrar o departamento em {{ diretoria.nome }}?</p>
+
+                            <div class="container-botoes">
+                                <button class="botao--verde botao" type="submit">Salvar</button>
+                                <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/module/controlaNavegacaoFormulario.js' %}"></script>
+
+    <script src="{% static 'assets/js/layout/administracao/unidade-administrativa-formulario/controlaEndereco.js' %}"></script>
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type='module'></script>
+{% endblock %}

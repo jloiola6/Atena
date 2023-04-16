@@ -1,0 +1,54 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="exportar">
+    <form id="modal-conteudo" class="modal-conteudo" method="POST">
+        {% csrf_token %}
+        <h2 class="texto-grande texto-negrito texto-azul">Exportar dados</h2>
+        <p class="descricao texto-preto ">Insira o formato e campos que deseja exportar</p>
+
+        <div class="formulario-grupo">
+            <h3 class="texto-medio texto-azul">Formato</h3>
+
+            <fieldset id="exportar-fieldset-formatos">
+                <input type="radio" name="exportar-fieldset-formatos" value="excel" id="radio-excel" checked>
+                <label class="texto-preto" for="radio-excel">Excel</label>
+
+                <input type="radio" name="exportar-fieldset-formatos" value="pdf" id="radio-pdf">
+                <label class="texto-preto" for="radio-pdf">PDF</label>
+            </fieldset>
+        </div>
+
+        <div class="formulario-grupo">
+            <h3 class="texto-medio texto-azul">Campos</h3>
+
+            <div>
+                <input type="checkbox" name="contrato" id="exportar-campo-contrato" checked>
+                <label class="texto-preto" for="exportar-campo-contrato">N° contrato</label>
+            </div>
+
+            <div>
+                <input type="checkbox" name="empresa" id="exportar-campo-empresa" checked>
+                <label class="texto-preto" for="exportar-campo-empresa">Empresa</label>
+            </div>
+
+            <div>
+                <input type="checkbox" name="data_vigente" id="exportar-campo-data-vigente" checked>
+                <label class="texto-preto" for="exportar-campo-data-vigente">Data Vigente</label>
+            </div>
+
+            <div>
+                <input type="checkbox" name="valor_total" id="exportar-campo-valor-total" checked>
+                <label class="texto-preto" for="exportar-campo-valor-total">Valor Total</label>
+            </div>
+
+            <div>
+                <input type="checkbox" name="situacao" id="exportar-campo-situacao" checked>
+                <label class="texto-preto" for="exportar-campo-situacao">Situação</label>
+            </div>
+        </div>
+
+        <div class="container-botoes">
+            <button type="POST" class="botao botao--verde">Exportar</button>
+        </div>
+    </form>
+</div>

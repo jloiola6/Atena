@@ -1,0 +1,22 @@
+@media screen and (max-width: 768px){
+    .container-dividido-escola{
+        flex-direction: column;
+        row-gap: 16px;
+    }
+
+    .unidade-rua{
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 959px) {
+    .card-documento{
+        flex-grow: 1;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .card-documento{
+        flex-basis: 100%;
+    }
+}

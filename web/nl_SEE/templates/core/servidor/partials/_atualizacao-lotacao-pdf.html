@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-bt">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TERMO DE ATUALIZAÇÃO DE LOTAÇÃO</title>
+    </head>
+    {% if atualizacao.lotacao_id %}
+
+    <body>
+
+        <header>
+            <table>
+                <tr>
+                    <th><img id="img1" src="{{ url_logo }}" alt=""></th>
+                    <th class="direita"><img id="img2" src="{{ url_atena }}" alt="Logo"></th>
+                </tr>
+            </table>
+        </header>
+        <hr>
+        <br><br>
+        <h1 class="titulo">TERMO DE ATUALIZAÇÃO DE LOTAÇÃO</h1>
+        <br>
+        <div class="texto">
+
+            <p> Eu, <b>{{ atualizacao.lotacao.contrato.servidor.nome }}</b>, CPF <b>{{ atualizacao.lotacao.contrato.servidor.cpf }}</b>, contrato dígito <b>{{ atualizacao.lotacao.contrato.digito }}</b>, de acordo com a Divisão de Lotação encontro-me lotado(a) na Unidade
+            {% if atualizacao.lotacao.unidade_adm %}
+               <b>{{ atualizacao.lotacao.unidade_adm }}</b>.
+            {% else %}
+               <b>{{ atualizacao.lotacao.unidade_escolar }}</b>.
+            {% endif %}
+
+            Afim de atualizar a minha lotação junto a Divisão de Lotação, declaro está lotado(a) na Unidade
+
+            {% if atualizacao.alteracao_lotacao == 1 %}
+                {% if atualizacao.unidade_adm %}
+                    <b>{{ atualizacao.unidade_adm }}</b>.
+                {% else %}
+                    <b>{{ atualizacao.unidade_escolar }}</b>.
+                {% endif %}
+            {% else %}
+                {% if atualizacao.lotacao.unidade_adm %}
+                    <b>{{ atualizacao.lotacao.unidade_adm }}</b>.
+                {% else %}
+                    <b>{{ atualizacao.lotacao.unidade_escolar }}</b>.
+                {% endif %}
+            {% endif %}
+            </p>
+
+        </div>
+        <br><br><br>
+        <div >
+            <table class="centralizado">
+                <tr>
+                    <td>
+                        <p class="centralizado"><b>{{ atualizacao.lotacao.contrato.municipio }} - Acre</b></p>
+                        <p class="centralizado"><b>Data de Atualização: {{ atualizacao.data_atualizacao }}</b></p>
+                    </td>
+                    <!-- <td>
+                        <p class="centralizado">___________________________________________</p>
+                        <p class="centralizado texto">{{data.date}}</p>
+                    </td> -->
+                </tr>
+            </table>
+        </div>
+    </body>
+
+    {% else %}
+
+        <body>
+
+            <header>
+                <table>
+                    <tr>
+                        <th><img id="img1" src="{{ url_logo }}" alt=""></th>
+                        <th class="direita"><img id="img2" src="{{ url_atena }}" alt="Logo"></th>
+                    </tr>
+                </table>
+            </header>
+            <hr>
+            <br><br>
+            <h1 class="titulo">TERMO DE ATUALIZAÇÃO DE LOTAÇÃO</h1>
+            <br>
+            <div class="texto">
+
+                <p> Eu, <b>{{ atualizacao.terceirizado.servidor.nome }}</b>, CPF <b>{{ atualizacao.terceirizado.servidor.cpf }}</b>, contrato de número <b>{{ atualizacao.terceirizado.item.numero_item }}</b>, de acordo com a Divisão de Lotação encontro-me lotado(a) na Unidade
+                {% if atualizacao.terceirizado.unidade_administrativa %}
+                <b>{{ atualizacao.terceirizado.unidade_administrativa.nome }}</b>.
+                {% else %}
+                <b>{{ atualizacao.unidade_escolar.nome_escola }}</b>.
+                {% endif %}
+
+                Afim de atualizar a minha lotação junto a Divisão de Lotação, declaro está lotado(a) na Unidade
+
+                {% if atualizacao.alteracao_lotacao == 1 %}
+                    {% if atualizacao.unidade_adm %}
+                        <b>{{ atualizacao.unidade_adm.nome }}</b>.
+                    {% else %}
+                        <b>{{ atualizacao.unidade_escolar.nome_escola }}</b>.
+                    {% endif %}
+                {% else %}
+                    {% if atualizacao.terceirizado.unidade_administrativa %}
+                        <b>{{ atualizacao.terceirizado.unidade_administrativa }}</b>.
+                    {% else %}
+                        <b>{{ atualizacao.unidade_escolar.nome_escola }}</b>.
+                    {% endif %}
+                {% endif %}
+                </p>
+
+            </div>
+            <br><br><br>
+            <div>
+                <table class="centralizado">
+                    <tr>
+                        <td>
+                            {% if atualizacao.unidade_escolar is not None or atualizacao.unidade_adm is not None %}
+                                {% if atualizacao.unidade_escolar is not None %}
+                                    <p class="centralizado"><b>{{ muni }} - Acre</b></p>
+                                {% else %}
+                                    <p class="centralizado"><b>{{ atualizacao.unidade_adm.endereco.municipio }} - Acre</b></p>
+                                {% endif %}
+                            {% else %}
+                                {% if atualizacao.terceirizado.unidade_administrativa %}
+                                    <p class="centralizado"><b>{{ atualizacao.terceirizado.unidade_administrativa.endereco.municipio }} - Acre</b></p>
+                                {% else %}
+                                    <p class="centralizado"><b>nem tanto - Acre</b></p>
+                                {% endif %}
+                            {% endif %}
+                            <p class="centralizado"><b>Data de Atualização: {{ atualizacao.data_atualizacao }}</b></p>
+                        </td>
+                        <!-- <td>
+                            <p class="centralizado">___________________________________________</p>
+                            <p class="centralizado texto">{{data.date}}</p>
+                        </td> -->
+                    </tr>
+                </table>
+            </div>
+        </body>
+
+    {% endif %}
+    <style>
+        #img1{
+            width: 100%;
+            height: auto;
+        }
+
+        #img2{
+            width: 120px;
+            height: auto;
+        }
+
+        .direita{
+            text-align: right;
+        }
+
+        .titulo{
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .texto{
+            text-align: justify;
+            font-family: sans-serif;
+            font-size: 12px;
+        }
+
+        .centralizado{
+            text-align: center;
+            font-size: 12px;
+            font-family: sans-serif;
+        }
+
+    </style>
+</html>

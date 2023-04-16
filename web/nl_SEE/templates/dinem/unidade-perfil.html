@@ -1,0 +1,72 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} {{ escola.nome_escola }} {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/partials/unidade-educacional/_unidade-perfil.css' %}">
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/dinem/unidade-perfil.css' %}">
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/dinem/responsivo/unidade-perfil-responsivo.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'dinem:index' %}">N.E.M.</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">{{ escola.nome_escola }}</span>
+            </nav>
+
+            {% if possui_anexo and id_endereco == None %}
+                <div class="container-surface-unidade container-surface">
+                    <h1 class="texto-medio texto-azul">Esta unidade possui anexo</h1>
+                    <h1 class="descricao texto-preto">Selecione o Endereço que deseja acessar</h1>
+
+                    {% for endereco in enderecos %}
+                        <p class="unidade-link-endereco">
+                            <a href="{% url 'dinem:unidade-perfil' %}?inep={{ escola.cod_inep }}&id_endereco={{ endereco.id }}" class="link">
+                                {% if endereco.tipo == 'S' %}
+                                    Rua {{ endereco.rua }} - {{endereco.numero  }}, Bairro {{ endereco.bairro }} (SEDE)
+                                {% else %}
+                                    Rua {{ endereco.rua }} - {{endereco.numero  }}, Bairro {{ endereco.bairro }} (ANEXO)
+                                {% endif %}
+                            </a>
+                        </p>
+                    {% endfor %}
+                </div>
+            {% else %}
+
+                {% include 'partials/unidade-educacional/_unidade-perfil.html' %}
+
+                <div class="container-surface-unidade container-surface">
+                    <nav class="container-navegacao-surface">
+                        <ul class="navegacao-surface-lista">
+                            <li class="navegacao-surface-item navegacao-surface-item-ativo navegacao-surface-item-selecionavel" data-nav-aba="turmas">
+                                <span class="texto-azul ">Turmas ({{ quantidade_turmas }})</span>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    {% include 'dinem/partials/_unidade-turmas.html'  %}
+
+                </div>
+            {% endif %}
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/module/controlaNavegacaoSurface.js' %}"></script>
+
+    <script src="{% static 'assets/js/layout/partials/unidade-educacional/_unidade-perfil/controlaMapa.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,5 @@
+/* Estilização da tela de edição de endereço de um servidor */
+
+.formulario-servidor-endereco, .formulario-servidor-endereco .container-botoes{
+    margin-top: 16px;
+}

@@ -1,0 +1,18 @@
+{% load static %}
+
+<div class="oculto" data-nav-container="decretos">
+    <div class="container-cards-simples">
+        {% for decreto in decretos %}
+            <div class="card-simples card-documento" data-documento-resultado="{{ decreto.descricao }}">
+                <div class="card-simples__descricao">
+                    <p title="{{decreto.descricao}}" class=" texto-azul texto-negritos">Descrição: <span class="texto-preto texto-normal">{{ decreto.descricao }}</span></p>
+                    <p class=" texto-azul texto-negritos">Formato: <span class="texto-preto texto-normal">{{ decreto.formato }}</span></p>
+                </div>
+
+                <a class="link" href="{% url 'core:index' %}{{decreto.caminho}}" target="_blank">Abrir</a>
+            </div>
+        {% empty %}
+            <p class="texto-preto " data-sem-documentos>Nenhum decreto de desapropriação cadastrado</p>
+        {% endfor %}
+    </div>
+</div>

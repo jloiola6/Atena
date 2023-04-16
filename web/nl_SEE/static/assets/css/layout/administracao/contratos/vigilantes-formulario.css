@@ -1,0 +1,10 @@
+/* Estilização do formulário de vigilantes */
+
+.formulario-vigilantes, .formulario-vigilantes .container-botoes{
+    margin-top: 1rem;
+}
+
+.grupo-vigilante{
+    display: flex;
+    gap: .5rem;
+}

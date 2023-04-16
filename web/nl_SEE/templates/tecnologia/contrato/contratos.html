@@ -1,0 +1,296 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Contratos da Tecnologia {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/tecnologia/contrato/contratos.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/layout/tecnologia/contrato/responsivo/contratos-responsivo.css' %}">
+{% endblock %}
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+
+<main>
+    <div class="container">
+        <nav class="container-navegacao">
+            <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'tecnologia:index' %}" class=" texto-azul">Tecnologia</a>
+            <span class="texto-azul">&#62;</span>
+
+            <span class="  texto-azul">Contratos</span>
+        </nav>
+
+        <h1 class="titulo-pagina texto-azul">Contratos</h1>
+
+        <div class="container-surface container-contratos-busca">
+            <h2 class="texto-medio texto-azul">Buscar contrato</h2>
+
+            <form class="formulario" method="GET">
+                <div class="formulario-grupo">
+                    <input type="text" name="numero_contrato" class="campo-texto campo-pequeno" placeholder="N° do contrato" data-mascara="contrato">
+                </div>
+
+                <div class="formulario-grupo">
+                    <input type="text" name="numero_sei" class="campo-texto campo-grande" placeholder="Número do SEI" data-mascara="sei">
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao botao--azul">Buscar</button>
+                    <button class="botao botao--azul" data-modal-abrir="filtros">Filtros</button>
+                    {% if permissao.imprimir == 1 %}
+                        <button class="botao botao--azul" data-modal-abrir="exportar">Exportar</button>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+
+        <table class="tabela tabela-contratos">
+            <thead>
+                <tr>
+                    <th>N° Contrato</th>
+                    <th>Empresa</th>
+                    <th>Data vigente</th>
+                    <th>Valor total</th>
+                    <th>Situacao</th>
+                </tr>
+            </thead>
+
+            <tbody data-tabela-link="{% url 'tecnologia:contrato-perfil' %}?id_contrato=" >
+                {% for contrato in contratos %}
+                    <tr data-tabela-link-chave="{{ contrato.id }}">
+                        <td>{{ contrato.numero_contrato }}</td>
+                        <td>{{ contrato.empresa.nome }}</td>
+                        <td>{{ contrato.data_inicio }}</td>
+                        <td>{{ contrato.valor_total }}</td>
+                        <td>{{ contrato.situacao }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td class="coluna-paginacao" colspan="5">
+                        <div class="container-paginacao">
+                            <div>
+                                <span class="texto-negrito texto-azul">TOTAL:</span>
+                                <span>{{ quantidade_contratos }}</span>
+                            </div>
+
+                            <div>
+                                {% if contratos.has_previous %}
+                                    <a class="" href="{% url 'tecnologia:contratos' %}?page=1">
+                                        <button class="botao-paginacao">first_page</button>
+                                    </a>
+
+                                    <a class="" href="{% url 'tecnologia:contratos' %}?page={{ contratos.previous_page_number }}">
+                                        <button class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">first_page</button>
+                                    </a>
+
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% endif %}
+
+                                <span class="">
+                                    {{ contratos.number }} de {{ contratos.paginator.num_pages }}
+                                </span>
+
+                                {% if contratos.has_next %}
+                                    <a class="" href="{% url 'tecnologia:contratos' %}?page={{ contratos.next_page_number }}">
+                                        <button class="botao-paginacao">navigate_next</button>
+                                    </a>
+
+                                    <a class="" href="{% url 'tecnologia:contratos' %}?page={{ contratos.paginator.num_pages }}">
+                                        <button class="botao-paginacao">last_page</button>
+                                    </a>
+
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_next</button>
+                                    </a>
+
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">last_page</button>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <table class="tabela tabela-contratos-tablet">
+            <thead>
+                <tr>
+                    <th>N° Contrato</th>
+                    <th>Empresa</th>
+                    <th>Valor total</th>
+                    <th>Situacao</th>
+                </tr>
+            </thead>
+
+            <tbody data-tabela-link="{% url 'tecnologia:contrato-perfil' %}?id_contrato=" >
+                {% for contrato in contratos %}
+                    <tr data-tabela-link-chave="{{ contrato.id }}">
+                        <td>{{ contrato.numero_contrato }}</td>
+                        <td>{{ contrato.empresa.nome }}</td>
+                        <td>{{ contrato.valor_total }}</td>
+                        <td>{{ contrato.situacao }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td class="coluna-paginacao" colspan="5">
+                        <div class="container-paginacao">
+                            <div>
+                                <span class="texto-negrito texto-azul">TOTAL:</span>
+                                <span>{{ quantidade_contratos }}</span>
+                            </div>
+
+                            <div>
+                                {% if contratos.has_previous %}
+                                    <a class="" href="{% url 'tecnologia:contratos' %}?page=1">
+                                        <button class="botao-paginacao">first_page</button>
+                                    </a>
+
+                                    <a class="" href="{% url 'tecnologia:contratos' %}?page={{ contratos.previous_page_number }}">
+                                        <button class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">first_page</button>
+                                    </a>
+
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% endif %}
+
+                                <span class="">
+                                    {{ contratos.number }} de {{ contratos.paginator.num_pages }}
+                                </span>
+
+                                {% if contratos.has_next %}
+                                    <a class="" href="{% url 'tecnologia:contratos' %}?page={{ contratos.next_page_number }}">
+                                        <button class="botao-paginacao">navigate_next</button>
+                                    </a>
+
+                                    <a class="" href="{% url 'tecnologia:contratos' %}?page={{ contratos.paginator.num_pages }}">
+                                        <button class="botao-paginacao">last_page</button>
+                                    </a>
+
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_next</button>
+                                    </a>
+
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">last_page</button>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <table class="tabela tabela-contratos-smartphone">
+            <thead>
+                <tr>
+                    <th>N° Contrato</th>
+                    <th>Empresa</th>
+                    <th>Situacao</th>
+                </tr>
+            </thead>
+
+            <tbody data-tabela-link="{% url 'tecnologia:contrato-perfil' %}?id_contrato=" >
+                {% for contrato in contratos %}
+                    <tr data-tabela-link-chave="{{ contrato.id }}">
+                        <td>{{ contrato.numero_contrato }}</td>
+                        <td>{{ contrato.empresa.nome }}</td>
+                        <td>{{ contrato.situacao }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td class="coluna-paginacao" colspan="3">
+                        <div class="container-paginacao">
+                            <div>
+                                <span class="texto-negrito texto-azul">TOTAL:</span>
+                                <span>{{ quantidade_contratos }}</span>
+                            </div>
+
+                            <div>
+                                {% if contratos.has_previous %}
+                                    <a class="" href="{% url 'tecnologia:contratos' %}?page=1">
+                                        <button class="botao-paginacao">first_page</button>
+                                    </a>
+
+                                    <a class="" href="{% url 'tecnologia:contratos' %}?page={{ contratos.previous_page_number }}">
+                                        <button class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">first_page</button>
+                                    </a>
+
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% endif %}
+
+                                <span class="">
+                                    {{ contratos.number }} de {{ contratos.paginator.num_pages }}
+                                </span>
+
+                                {% if contratos.has_next %}
+                                    <a class="" href="{% url 'tecnologia:contratos' %}?page={{ contratos.next_page_number }}">
+                                        <button class="botao-paginacao">navigate_next</button>
+                                    </a>
+
+                                    <a class="" href="{% url 'tecnologia:contratos' %}?page={{ contratos.paginator.num_pages }}">
+                                        <button class="botao-paginacao">last_page</button>
+                                    </a>
+
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_next</button>
+                                    </a>
+
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">last_page</button>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</main>
+
+{% include 'tecnologia/contrato/partials/_modal-filtro-contrato.html' %}
+{% include 'partials/_rodape.html' %}
+
+{% include 'tecnologia/contrato/partials/_modal-contrato-exportar.html' %}
+
+<script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+<script src="{% static 'assets/js/module/linkTabela.js' %}"></script>
+<script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+
+{% endblock %}

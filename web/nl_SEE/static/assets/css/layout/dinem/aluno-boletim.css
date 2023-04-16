@@ -1,0 +1,29 @@
+/* Arquivo de estilo da página de boletim de um aluno */
+
+.formulario-aluno-formacao-geral, .formulario-aluno-parte-diversificada{
+    animation: var(--main-animation);
+}
+
+.formulario-aluno-parte-diversificada{
+    display: none;
+}
+
+.container-aluno-situacao{
+    margin-top: 24px;
+}
+
+    .container-aluno-situacao .container-botoes{
+        margin-top: 16px;
+    }
+
+    .situacao-transferido-salvar{
+        display: none;
+    }
+
+.container-formulario-boletim{
+    margin-top: 24px;
+}
+
+    .container-formulario-boletim .container-botoes{
+        margin-top: 24px;
+    }

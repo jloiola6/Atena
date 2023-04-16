@@ -1,0 +1,21 @@
+/* Arquivo de estilo da página de perfil do aluno */
+
+
+    .container-dados-aluno{
+        display: flex;
+        flex-direction: column;
+        margin-top: 16px;
+        row-gap: 8px;
+    }
+
+    .container-surface-aluno .container-botoes{
+        margin-top: 16px;
+    }
+
+    .container-pendencias-aluno{
+        margin-top: 16px;
+    }
+
+    .container-surface-boletim .container-botoes{
+        margin-top: 24px;
+    }

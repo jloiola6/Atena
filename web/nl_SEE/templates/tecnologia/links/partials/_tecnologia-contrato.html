@@ -1,0 +1,11 @@
+<div class="contrato-dados oculto" data-nav-container="contrato">
+    <p class=" texto-azul texto-negrito">Tipo de contrato: <span class="texto-preto texto-normal">{{ contrato.tipo_contrato|upper }}</span></p>
+    <p class=" texto-azul texto-negrito">Nº Contrato: <span class="texto-preto texto-normal">{{ contrato.numero_contrato }}</span></p>
+    <p class=" texto-azul texto-negrito contrato-objeto">Item do contrato: <span class="texto-preto texto-normal">{{ link.item.numero_item }} - {{ link.item.descricao }}</span></p>
+    <p class=" texto-azul texto-negrito contrato-objeto">Valor unitário: <span class="texto-preto texto-normal">{{ link.item.valor_unitario }}</span></p>
+    <p class=" texto-azul texto-negrito">Nome da empresa: <span class="texto-preto texto-normal">{{ empresa.nome|upper }}</span></p>
+    <p class=" texto-azul texto-negrito">CNPJ da empresa: <span class="texto-preto texto-normal">{{ empresa.cnpj }}</span></p>
+    <p class=" texto-azul texto-negrito">Nº SEI: <span class="texto-preto texto-normal">{{ contrato.numero_sei }}</span></p>
+    <p class=" texto-azul texto-negrito">Nº Documento (SEI): <span class="texto-preto texto-normal">{{ contrato.documento_sei }}</span></p>
+    <p class=" texto-azul texto-negrito contrato-objeto contrato-dados-bloco">Objeto: <span class="texto-preto texto-normal">{{ contrato.objeto|upper }}</span></p>
+</div>

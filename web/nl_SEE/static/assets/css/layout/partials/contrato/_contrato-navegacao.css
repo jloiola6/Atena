@@ -1,0 +1,53 @@
+/* Estilização da partial de navegação de um contrato */
+
+.surface-contrato-navegacao{
+    margin-top: 24px;
+}
+
+.surface-contrato-navegacao > div[data-nav-container], .surface-contrato-navegacao .container-botoes{
+    margin-top: 16px;
+}
+
+    /* Itens do contrato */
+    .tabela-contrato-itens .coluna-direita{
+        width: 15%;
+    }
+
+    .item-com-vagas{
+        background-color: var(--secondary-color-hover);
+        border-radius: 50%;
+        margin: auto;
+        height: 16px;
+        width: 16px;
+    }
+    
+    .item-sem-vagas{
+        background-color: var(--error-color-hover);
+        border-radius: 50%;
+        margin: auto;
+        height: 16px;
+        width: 16px;
+    }
+
+    /* Termos aditivos do contrato */
+    .contrato-aditivo{
+        counter-reset: section;
+    }
+    
+    .contrato-aditivo-numero::before{
+        counter-increment: section;
+        content: counter(section);
+    }
+
+
+    /* Empresa do contrato */
+    .contrato-empresa-dados-subtitulo{
+        margin-top: 16px;
+    }
+    
+    .contrato-empresa-dados{
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 8px;
+    }

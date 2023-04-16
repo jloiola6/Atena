@@ -1,0 +1,76 @@
+{% comment %}
+    Esta partial contém um container com os dados de um contrato
+    Feita para evitar a repetição código em perfis de contrato nos módulos de ADMINISTRAÇÃO, TECNOLOGIA e TERCEIRIZAÇÃO -->
+{% endcomment %}
+
+<div class="surface-contrato container-surface">
+    <div class="container-detalhes">
+        <p class=" texto-azul texto-negrito">Tipo de contrato: <span class="texto-preto texto-normal">{{ contrato.tipo_contrato|upper }}</span></p>
+        <p class=" texto-azul texto-negrito">Nº do contrato: <span class="texto-preto texto-normal">{{ contrato.numero_contrato }}</span></p>
+        <p class=" texto-azul texto-negrito">Nome da empresa: <span class="texto-preto texto-normal">{{ empresa.nome|upper }}</span></p>
+        <p class=" texto-azul texto-negrito">CNPJ da empresa: <span class="texto-preto texto-normal">{{ empresa.cnpj }}</span></p>
+        <p class=" texto-azul texto-negrito">Nº SEI: <span class="texto-preto texto-normal">{{ contrato.numero_sei }}</span></p>
+        <p class=" texto-azul texto-negrito">Nº Documento (SEI): <span class="texto-preto texto-normal">{{ contrato.documento_sei }}</span></p>
+
+        <p class=" texto-azul texto-negrito container-detalhes-bloco">Objeto: <span class="texto-preto texto-normal">{{ contrato.objeto|upper }}</span></p>
+
+        <p class=" texto-azul texto-negrito container-detalhes-bloco">Início da vigência: <span class="texto-preto texto-normal">{{ contrato.data_inicio }}</span></p>
+
+        {% if ultimo_contrato %}
+            <p class=" texto-azul texto-negrito">Término da vigência (Aditivo): <span class="texto-preto texto-normal">{{ ultimo_contrato.data_termino }}</span></p>
+        {% else %}
+            <p class=" texto-azul texto-negrito">Término da vigência: <span class="texto-preto texto-normal">{{ contrato.data_termino }}</span></p>
+        {% endif %}
+
+        {% if ultimo_contrato %}
+            <p class=" texto-azul texto-negrito container-detalhes-bloco">Valor Global Inicial ({{ contrato.meses_vigencia }} Meses) <span class="texto-preto texto-normal">{{ contrato.valor_total }}</span></p>
+            <p class=" texto-azul texto-negrito">Valor Global (Aditivo - {{ ultimo_contrato.meses_vigencia }} Meses): <span class="texto-preto texto-normal">{{ ultimo_contrato.valor_total }}</span></p>
+        {% else %}
+            <p class=" texto-azul texto-negrito container-detalhes-bloco">Valor mensal: <span class="texto-preto texto-normal">{{ contrato.valor_total }}</span></p>
+            <p class=" texto-azul texto-negrito">Valor Global ({{ contrato.meses_vigencia }} Meses): <span class="texto-preto texto-normal">{{ contrato.valor_global }}</span></p>
+        {% endif %}
+
+        {% if contrato.empenho %}
+            <p class=" texto-azul texto-negrito container-detalhes-bloco">Empenho: <span class="texto-preto texto-normal">{{ contrato.empenho }}</span></p>
+            <p class=" texto-azul texto-negrito">Situação: <span class="texto-preto texto-normal">{{ contrato.situacao|upper }}</span></p>
+        {% else %}
+            <p class=" texto-azul texto-negrito container-detalhes-bloco">Situação: <span class="texto-preto texto-normal">{{ contrato.situacao|upper }}</span></p>
+        {% endif %}
+
+        {% for fonte in fontes %}
+            <p class=" texto-azul texto-negrito">Fonte de recurso:
+                {% if aplicacao == 'Administração' %}
+                    <a class="link" href="{% url 'administracao:fonte-perfil'%}?id_fonte={{fonte.id}}">{{ fonte }}</a>
+                {% elif aplicacao == 'Tecnologia' %}
+                    <a class="link" href="{% url 'tecnologia:fonte-perfil'%}?id_fonte={{fonte.id}}">{{ fonte }}</a>
+                {% elif aplicacao == 'Terceirização' %}
+                    <a class="link" href="{% url 'terceirizacao:fonte-perfil'%}?id_fonte={{fonte.id}}">{{ fonte }}</a>
+                {% endif %}
+            </p>
+        {% endfor %}
+
+        {% if permissao.editar == 1 and fontes_restantes|length > 0 and aplicacao == 'Administração' %}
+            <div class="container-botoes">
+                <a href="{% url 'administracao:fonte-formulario' %}?id_contrato={{ contrato.id }}">
+                    <button class="botao botao--azul">Adicionar Fonte</button>
+                </a>
+            </div>
+        {% endif %}
+
+        {% if permissao.editar == 1 and fontes_restantes|length > 0 and aplicacao == 'Tecnologia' %}
+            <div class="container-botoes">
+                <a href="{% url 'tecnologia:fonte-formulario' %}?id_contrato={{ contrato.id }}">
+                    <button class="botao botao--azul">Adicionar Fonte</button>
+                </a>
+            </div>
+        {% endif %}
+
+        {% if permissao.editar == 1 and fontes_restantes|length > 0 and aplicacao == 'Terceirização' %}
+            <div class="container-botoes">
+                <a href="{% url 'terceirizacao:fonte-formulario' %}?id_contrato={{ contrato.id }}">
+                    <button class="botao botao--azul">Adicionar Fonte</button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>

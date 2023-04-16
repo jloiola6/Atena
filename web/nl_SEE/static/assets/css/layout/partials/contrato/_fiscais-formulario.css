@@ -1,0 +1,5 @@
+/* Estilização da página de cadastro de fiscais */
+
+.formulario-fiscais, .formulario-fiscais .container-botoes, .formulario-fiscais-subtitulo{
+    margin-top: 16px;
+}

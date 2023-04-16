@@ -1,0 +1,41 @@
+{% load static %}
+
+<div class="servidor-documentos oculto" data-nav-container="documentos">
+    {% comment %} <div class="container-cards-simples">
+        <div class="card-simples ">
+            <h4 class="card-simples__titulo texto-azul">RG</h4>
+
+            <div class="card-simples__descricao">
+                <p class=" texto-azul texto-negrito">Número: <span class="texto-preto texto-normal">12******</span></p>
+                <p class=" texto-azul texto-negrito">Data de emissão: <span class="texto-preto texto-normal">17/03/2022</span></p>
+                <p class=" texto-azul texto-negrito">Orgão Emissor: <span class="texto-preto texto-normal">SEPC</span></p>
+                <a href="#" class="link">Abrir documento</a>
+
+                <div class="container-botoes">
+                    <button class="botao botao--azul">Editar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-simples ">
+            <h4 class="card-simples__titulo texto-azul">TÍTULO ELEITORAL</h4>
+
+            <div class="card-simples__descricao">
+                <p class=" texto-azul texto-negrito">Número: <span class="texto-preto texto-normal">00*****</span></p>
+                <p class=" texto-azul texto-negrito">Data de emissão: <span class="texto-preto texto-normal">17/03/1999</span></p>
+                <p class=" texto-azul texto-negrito">Numero: <span class="texto-preto texto-normal">0000000000</span></p>
+                <p class=" texto-azul texto-negrito">Zona: <span class="texto-preto texto-normal">0000</span></p>
+                <p class=" texto-azul texto-negrito">Seção: <span class="texto-preto texto-normal">0000</span></p>
+
+                <div class="container-botoes">
+                    <button class="botao botao--azul">Editar</button>
+                </div>
+            </div>
+        </div>
+    </div> {% endcomment %}
+    {% if permissao.editar == 1 %}
+        <div class="container-botoes">
+            <button class="botao botao--azul" disabled>Adicionar</button>
+        </div>
+    {% endif %}
+</div>

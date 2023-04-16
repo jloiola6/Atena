@@ -1,0 +1,45 @@
+<form class="container-surface" method="POST">
+    {% csrf_token %}
+
+    <nav class="container-navegacao-surface">
+        <ul class="navegacao-surface-lista">
+            <li class="navegacao-surface-item navegacao-surface-item-ativo">
+                <span class="texto-azul">Switch</span>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="formulario-grupo">
+        <label for="campo-patrimonio">Patrimônio</label>
+        <input class="campo-texto campo-medio" type="text" id="campo-patrimonio" name="patrimonio" maxlength="30" required>
+    </div>
+
+    <div class="formulario-grupo">
+        <label for="campo-rj45">Quantidade de portas RJ-45</label>
+        <input class="campo-texto campo-medio" type="number" id="campo-rj45" name="rj45" min="1" required>
+    </div>
+
+    <div class="formulario-grupo">
+        <label for="campo-sfp">Quantidade de portas SFP</label>
+        <input class="campo-texto campo-medio" type="number" id="campo-sfp" name="sfp" min="1" required>
+    </div>
+
+    <div class="formulario-grupo">
+        <label for="campos-fonte-integrada">Fonte Integrada</label>
+
+        <fieldset id="campos-fonte-integrada">
+            <input type="radio" id="fonte-sim" name="fonte" value="Sim" checked>
+            <label for="fonte-sim" class="texto-preto">Sim</label>
+
+            <input type="radio" id="fonte-nao" name="fonte" value="Não">
+            <label for="fonte-nao" class="texto-preto">Não</label>
+        </fieldset>
+    </div>
+
+    <div class="formulario-grupo">
+        <label for="campo-watts">Potência (Watts)</label>
+        <input class="campo-texto campo-medio" type="text" id="campo-watts" name="watts" maxlength="100" required>
+    </div>
+
+    {% include 'administracao/unidades/inventario/item-formulario/partials/_modal-confirmacao.html' %}
+</form>

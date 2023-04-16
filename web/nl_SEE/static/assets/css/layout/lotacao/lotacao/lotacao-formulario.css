@@ -1,0 +1,65 @@
+/* Estilização da página de formulário de lotação */
+
+div[data-container-enturmacao]{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+div[data-grupo-turma] > div{
+    display: flex;
+    gap: .5rem
+}
+
+.grupo-aluno > div{
+    display: inline;
+}
+
+/* Estilização do modal de preview */
+
+body.modo-escuro .modal-preview{
+    background-color: #FFFFFF;
+}
+
+.modal-preview{
+    font-size: 0.875rem;
+    width: 1024px;
+}
+
+    .modal-preview *:not(.botao){
+        font-family: sans-serif;
+    }
+
+.preview-cabecalho{
+    display: flex;
+    justify-content: space-between;
+}
+
+    .preview-brasao, .preview-logo{
+        max-height: 3rem;
+        width: auto;
+    }
+
+.preview-tabela{
+    width: 100%;
+}
+
+    .preview-tabela tr{
+        height: 2rem;
+    }
+
+    .preview-tabela th{
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .preview-tabela th, .preview-tabela td{
+        border: 1px solid black;
+        vertical-align: middle;
+        padding: .5rem;
+        width: 50%;
+    }
+
+    .preview-tabela td > p:not(:first-child){
+        margin-top: .5rem;
+    }

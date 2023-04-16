@@ -1,0 +1,61 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="auxilio-{{ solicitacao.id }}">
+    <div id="modal-conteudo" class="modal-conteudo ">
+        <h2 class="texto-medio texto-negrito texto-azul">Solicitação de Auxílio</h2>
+
+        <div class="container-detalhes">
+            {% for item in solicitacoes %}
+                {% if item.id == solicitacao.id%}
+                    <p class="texto-azul texto-negrito">Servidor: <span class="texto-preto texto-normal">{{ item.usuario__nome }}</span></p>
+                    <p class="texto-azul texto-negrito">CPF: <span class="texto-preto texto-normal">{{ item.usuario__cpf }}</span></p>
+                    <p class="texto-azul texto-negrito">E-mail: <span class="texto-preto texto-normal">{{ item.usuario__email }}</span></p>
+                    <p class="texto-azul texto-negrito">Cargo: <span class="texto-preto texto-normal">{{ item.usuario__cargo }}</span></p>
+                    <p class="texto-azul texto-negrito">Lotação: <span class="texto-preto texto-normal">{{ item.usuario__lotacao__nome }}</span></p>
+                    <p class="texto-azul texto-negrito">Município: <span class="texto-preto texto-normal">{{ item.usuario__lotacao__municipio }}</span></p>
+
+                    {% if item.situacao == 'R' %}
+                        <p class="texto-azul texto-negrito">Situação: <span class="texto-preto texto-normal">Reprovado</span></p>
+                        <p class="texto-azul texto-negrito">Motivo: <span class="texto-preto texto-normal">{{ item.motivo }}</span></p>
+                    {% elif item.situacao == 'A' %}
+                        <p class="texto-azul texto-negrito">Aprovado por: <span class="texto-preto texto-normal">{{ item.adm }}</span></p>
+                        <p class="texto-azul texto-negrito">Data de Aprovação: <span class="texto-preto texto-normal">{{item.dataEntrega}}</span></p>
+                        {% if devolucao %}
+                            <form method="POST">
+                                {% csrf_token %}
+                                <div class="container-botoes">
+                                    <button type="POST" class="botao botao--verde" name="exportar-devolucao" value="exportar-devolucao">Exportar Termo de Devolução</button>
+                                </div>
+                                <button type="submit" id="salvar" value='devolucao' name='devolucao'>Cadastrar devolução</button>
+                            </form>
+                        {% endif %}
+                    {% else %}
+                        <form method="POST" data-modal-formulario>
+                            {% csrf_token %}
+                            <input type="text" value="{{ item.id }}" name="auxilio_id" style="display: none;">
+
+                            <div class="formulario-grupo">
+                                <label for="situacao-{{ item.id }}" class="label-campo texto-azul">Situação</label>
+
+                                <select id="situacao-{{ item.id }}" name="situacao" class="campo-texto campo-grande" id="situacao" label="teste" title="Nome" data-toggle="tooltip" data-selecao-situacao>
+                                    <option value="P">Pendente</option>
+                                    <option value="A">Aprovado</option>
+                                    <option value="R">Reprovado</option>
+                                </select>
+                            </div>
+
+                            <div class="formulario-grupo oculto" data-grupo-motivo>
+                                <label for="motivo-{{ item.id }}" class="label-campo texto-azul">Motivo</label>
+                                <textarea  class="campo-texto campo-area" type="text" id="motivo-{{ item.id }}" name='motivo' placeholder="Motivo da reprovação" minlength="15"></textarea>
+                            </div>
+
+                            <div class="container-botoes">
+                                <button type="submit" id="salvar" class="botao botao--azul">Salvar</button>
+                            </div>
+                        </form>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>

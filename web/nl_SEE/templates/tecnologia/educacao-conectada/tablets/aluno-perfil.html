@@ -1,0 +1,79 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Tablets {% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:index' %}">Tecnologia</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:educacao-conectada' %}">Educação Conectada</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:escolas' %}">Tablets</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:escola-perfil' aluno.aluno_turma.turma.endereco.escola.id %}">{{ aluno.aluno_turma.turma.endereco.escola }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:turma-perfil' aluno.aluno_turma.turma.id %}">{{ aluno.aluno_turma.turma }}</a>
+
+                <span class="  texto-azul"></span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">{{ aluno.aluno_turma.aluno }}</h1>
+
+            <form class="container-surface container-formulario-servidor" method="post">
+                {% csrf_token %}
+
+                <nav class="container-surface-navegacao">
+                    <ul class="navegacao-surface-lista">
+                        <li class="navegacao-surface-item navegacao-surface-item-ativo">Dados do Tablet</li>
+                    </ul>
+                </nav>
+
+                <div class="formulario-grupo inicio">
+                    <label for="imei-tablet">IMEI TABLET</label>
+                    <input class="campo-texto campo-grande" type="text" value="{{aluno.serial_tablet}}" name="imei-tablet" id="imei-tablet">
+                </div>
+                
+                <div class="formulario-grupo espaco">
+                    <label for="patrimonio">Patrimônio</label>
+                    <input class="campo-texto campo-grande" type="text" value="{{aluno.imei_tablet}}" name="patrimonio" id="patrimonio">
+                </div>
+
+                <div class="formulario-grupo espaco">
+                    <label for="chip">EAN Chip</label>
+                    <input class="campo-texto campo-grande" type="text" value="{{aluno.serial_chip}}" name="chip" id="chip">
+                </div>
+
+                <div class="formulario-grupo espaco">
+                    <label for="status">Status</label>
+
+                    <select name="status" id="status" class="campo-grande campo-texto">
+                        <option value="0">Entrega Pendente</option>
+                        <option value="1">Entregue a Escola</option>
+                        <option value="2">Finalizado</option>
+                    </select>
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao--verde botao" type="submit">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+
+    {% include 'partials/_rodape.html' %}
+{% endblock %}

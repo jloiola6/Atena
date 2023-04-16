@@ -1,0 +1,73 @@
+{% comment %}
+    Esta partial contém um container com o formulário de empenho da fonte de um contrato
+    Feita para evitar a repetição código em perfis de contrato nos módulos de ADMINISTRAÇÃO, TECNOLOGIA e TERCEIRIZAÇÃO -->
+{% endcomment %}
+
+<form class="container-surface formulario-empenho" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <nav class="container-navegacao-surface">
+        <ul class="navegacao-surface-lista">
+            <li class="navegacao-surface-item navegacao-surface-item-ativo" data-form-aba="fonte">
+                <span class="texto-azul">Empenho</span>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="" data-form-container="dados">
+
+        <div class="formulario-grupo" data-selecao-administrativa>
+            <label class="texto-azul label-campo" for="campo-tipo">Tipo</label>
+            <select name="tipo" id="campo-tipo" class="campo-texto campo-pequeno">
+                <option value="Produto">Produto</option>
+                <option value="Serviço">Serviço</option>
+            </select>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-numero_empenho">N° do empenho</label>
+            <input class="campo-texto campo-grande" type="text" value="" name="numero_empenho" id="campo-numero_empenho" placeholder="Ex: 0000000000/0000"  autocomplete="off" data-mascara="empenho" required>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-data_emissao">Data de emissão</label>
+            <input class="campo-texto campo-medio" type="date" value="" name="data_emissao" id="campo-data_emissao" required>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-cod_orcamentario">Código orçamentário</label>
+            <input class="campo-texto campo-medio" type="text" value="" name="cod_orcamentario" id="campo-cod_orcamentario" placeholder=""  autocomplete="off" maxlength="40" required>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-cod_despesa">Código despesa</label>
+            <input class="campo-texto campo-medio" type="text" value="" name="cod_despesa" id="campo-cod_despesa" placeholder=""  autocomplete="off" maxlength="20" required>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-valor">Valor</label>
+            <input class="campo-texto campo-medio" type="text" value="" name="valor" id="campo-valor"  autocomplete="off" data-mascara="moeda" required>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-arquivo">Insira o documento (.PDF)</label>
+            <input class="campo-arquivo" id="campo-arquivo" type="file" accept=".pdf" name="arquivo">
+        </div>
+
+        <div class="container-botoes">
+            <button class="botao botao--azul" data-modal-abrir="confirmar">Salvar</button>
+        </div>
+    </div>
+
+    <div class="modal oculto" data-modal="confirmar">
+        <div class="modal-conteudo modal-confirmacao">
+            <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+            <p class="texto-preto descricao">Tem certeza que deseja cadastrar o empenho?</p>
+
+            <div class="container-botoes">
+                <button class="botao--verde botao" type="submit">Salvar</button>
+                <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+            </div>
+        </div>
+    </div>
+</form>

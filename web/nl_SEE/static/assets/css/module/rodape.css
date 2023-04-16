@@ -1,0 +1,56 @@
+.rodape{
+	background-color: #303440;
+	margin-top: 2rem;
+}
+
+.rodape-container{
+	align-items: center;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: space-between;
+	margin: auto;
+	padding-block: 2rem;
+	width: 1200px;
+}
+
+.rodape-logo{
+	height: auto;
+	max-width: 240px;
+}
+
+.container-saiba-mais{
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	gap: .5rem;
+}
+
+.container-saiba-mais p{
+	text-transform: uppercase;
+}
+
+.container-saiba-mais p:first-child{
+	font-weight: 600;
+	margin-bottom: .5rem;
+}
+
+.rodape-faixa{
+	background-image: linear-gradient(to left, yellow, #54ad33, yellow);
+	height: .25rem;
+}
+
+/* RESPONSIVIDADE */
+@media screen and (max-width: 425px){
+    .rodape-container{
+        align-items: center;
+        flex-direction: column;
+        height: 224px;
+        justify-content: space-between;
+		padding-block: 1.5rem;
+    }
+}
+
+/* MODO ESCURO */
+body.modo-escuro .rodape{
+	background-color: #1E1E1E;
+}

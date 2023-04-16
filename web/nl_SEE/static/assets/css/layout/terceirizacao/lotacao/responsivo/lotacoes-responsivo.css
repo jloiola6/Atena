@@ -1,0 +1,23 @@
+.tabela-lotacoes-terceirizados-tablet, .tabela-lotacoes-terceirizados-smartphone{
+    display: none;
+}
+
+@media screen and (max-width: 569px){
+    .tabela-lotacoes-terceirizados, .tabela-lotacoes-terceirizados-smartphone{
+        display: none;
+    }
+    
+    .tabela-lotacoes-terceirizados-tablet{
+        display: block;
+    }
+}
+
+@media screen and (max-width: 470px){
+    .tabela-lotacoes-terceirizados, .tabela-lotacoes-terceirizados-tablet{
+        display: none;
+    }
+    
+    .tabela-lotacoes-terceirizados-smartphone{
+        display: block;
+    }
+}

@@ -1,0 +1,84 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} {{ escola.nome_escola }} {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/fundiaria/galeria-imagens.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/layout/fundiaria/responsivo/galeria-imagens-responsivo.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    {% include 'partials/_cabecalho.html' %}
+<main>
+    <div class="container">
+        <nav class="container-navegacao">
+            <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'fundiaria:index' %}" class=" texto-azul">Fundiária</a>
+            <span class="texto-azul">&#62;</span>
+
+            {% if fundiaria.endereco %}
+                <a  class=" texto-azul" href="{% url 'fundiaria:unidades-educacionais' %}">Unidades Educacionais</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'fundiaria:fundiaria-perfil' %}?inep={{ escola.cod_inep }}">{{ escola }}</a>
+                <span class="texto-azul">&#62;</span>
+            {% else %}
+                <a  class=" texto-azul" href="{% url 'fundiaria:unidades-adm' %}">Unidades Administrativas</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'fundiaria:fundiaria-perfil' %}?adm={{ unidade.id }}">{{ unidade }}</a>
+                <span class="texto-azul">&#62;</span>
+            {% endif %}
+
+            <span class="  texto-azul">Galeria de Imagens</span>
+        </nav>
+
+        <div class="container-botoes">
+            <a href="{% url 'fundiaria:imagem-formulario' %}?id_fundiaria={{ fundiaria.id }}">
+                <button class="botao botao--azul">Adicionar</button>
+            </a>
+        </div>
+
+        <div class="container-surface container-imagem-busca">
+            <h2 class="texto-medio texto-azul">Buscar Imagem</h2>
+
+            <form class="formulario" method="GET">
+
+                <div class="formulario-grupo oculto">
+                    <input class="campo-texto campo-medio" name="id_fundiaria" value='{{ fundiaria_id }}' type="text" placeholder="Descrição da imagem">
+                </div>
+
+                <div class="formulario-grupo">
+                    <input class="campo-texto campo-medio" name="imagem" type="text" placeholder="Descrição da imagem" data-campo-busca>
+                </div>
+            </form>
+        </div>
+
+        <div class="container-surface-unidade container-surface">
+            <nav class="container-navegacao-surface">
+                <ul class="navegacao-surface-lista">
+
+
+                    <li class="navegacao-surface-item navegacao-surface-item-ativo navegacao-surface-item-selecionavel" data-nav-aba="imagens">
+                        <span class="texto-azul">Imagens</span>
+                    </li>
+                </ul>
+            </nav>
+
+            {% include 'fundiaria/partials/_fundiaria-imagens.html'  %}
+
+            <p class="texto-preto  oculto" data-sem-resultado>Nenhuma imagem encontrada</p>
+        </div>
+</main>
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/layout/fundiaria/galeria-imagens/buscaImagem.js' %}"></script>
+    <script src="{% static 'assets/js/module/controlaNavegacaoSurface.js' %}"></script>
+
+{% endblock %}

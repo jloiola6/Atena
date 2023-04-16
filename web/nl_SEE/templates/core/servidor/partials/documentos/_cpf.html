@@ -1,0 +1,18 @@
+{% load static %}
+
+<div class="oculto" data-nav-container="cpf">
+    <div class="container-cards-simples">
+        {% for dados in cpf %}
+            <div class="card-simples card-documento" data-documento-resultado="{{ dados.descricao }}">
+                <div class="card-simples__descricao">
+                    <p title="{{dados.descricao}}" class=" texto-azul texto-negritos">Descrição: <span class="texto-preto texto-normal">{{ dados.descricao }}</span></p>
+                    <p class=" texto-azul texto-negritos">Formato: <span class="texto-preto texto-normal">{{ dados.formato }}</span></p>
+                </div>
+
+                <a class="link" href="{% url 'core:index' %}{{dados.caminho}}" target="_blank">Abrir</a>
+            </div>
+        {% empty %}
+            <p class="texto-preto " data-sem-documentos>Nenhuma CPF cadastrado</p>
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,101 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} {{ unidade.nome }} {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/administracao/unidades-administrativas/unidades.css' %}">
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/administracao/unidades-administrativas/diretoria.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:index' %}">Administração</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:unidades-administrativas' %}">Unidades</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">{{ unidade.nome }}</span>
+            </nav>
+
+            {% include 'partials/unidade-administrativa/_unidade-dados.html' %}
+
+            <h2 class="titulo-pagina texto-azul">Departamentos</h2>
+
+            {% if permissao.editar == 1 %}
+                <div class="container-botoes-departamentos">
+                    <a href="{% url 'administracao:departamento-formulario' %}?id={{ unidade.id }}">
+                        <button class="botao botao--azul">Adicionar</button>
+                    </a>
+                </div>
+            {% endif %}
+
+
+            {% if possui_departamentos %}
+                {% for departamento in departamentos %}
+                    <div class="lista-departamentos lista-menus">
+                        <div class="menu-pai departamento" data-accordeon-pai="{{ departamento.id }}-{{ departamento.sigla }}" data-accordeon-ativo="false">
+                            <a href="{% url 'administracao:departamento' %}?id={{ departamento.id }}">
+                                <h3 class="texto-medio texto-azul">{{ departamento.nome }}</h3>
+                            </a>
+
+                            <spam class="icone icone-medio icone-azul">expand_more</spam>
+                        </div>
+
+                        {% for divisao in divisoes %}
+                            {% if divisao.hierarquia == departamento.id %}
+                                <div class="menu-pai menu-filho divisao" data-accordeon-pai="{{ divisao.id }}-{{ divisao.sigla }}" data-accordeon-filho="{{ departamento.id }}-{{ departamento.sigla }}" data-accordeon-ativo="false">
+                                    <a href="{% url 'administracao:divisao' %}?id={{ divisao.id }}">
+                                        <h3 class="texto-medio texto-azul">{{ divisao.nome }}</h3>
+                                    </a>
+
+                                    <spam class="icone icone-medio icone-azul">expand_more</spam>
+                                </div>
+
+                                {% for nucleo in nucleos %}
+                                    {% if nucleo.hierarquia == divisao.id %}
+                                        <div class="menu-pai menu-filho nucleo" data-accordeon-pai="{{ nucleo.id }}-{{ nucleo.sigla }}" data-accordeon-filho="{{ divisao.id }}-{{ divisao.sigla }}" data-accordeon-ativo="false">
+                                            <a href="{% url 'administracao:nucleo' %}?id={{ nucleo.id }}">
+                                                <h3 class="texto-medio texto-azul">{{ nucleo.nome }}</h3>
+                                            </a>
+
+                                            <spam class="icone icone-medio icone-azul">expand_more</spam>
+                                        </div>
+
+                                        {% for centro in centros %}
+                                            {% if centro.hierarquia == nucleo.id %}
+                                                <div class="menu-pai menu-filho centro" data-accordeon-pai="{{ centro.id }}-{{ centro.sigla }}" data-accordeon-filho="{{ nucleo.id }}-{{ nucleo.sigla }}" data-accordeon-ativo="false">
+                                                    <a href="{% url 'administracao:centro' %}?id={{ centro.id }}">
+                                                        <h3 class="texto-medio texto-azul">{{ centro.nome }}</h3>
+                                                    </a>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+
+            {% else %}
+                <p class=" texto-preto mensagem-sem-departamentos">Esta unidade não possui departamentos cadastrados.</p>
+            {% endif %}
+        </div>
+
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/controlaMenuAccordeon.js' %}"></script>
+{% endblock %}

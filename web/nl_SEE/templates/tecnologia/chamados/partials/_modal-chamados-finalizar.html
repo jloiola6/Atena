@@ -1,0 +1,19 @@
+<div class="modal oculto" data-modal="finalizar">
+    <form id="modal-conteudo" class="modal-conteudo" method="POST">
+        {% csrf_token %}
+        <div class="modal-filtros-titulo">
+            <h2 class="texto-grande texto-negrito texto-azul">FINALIZAR CHAMADO</h2>
+        </div>
+
+        <div class="formulario-grupo">
+            <label for="descricao" class="label-campo texto-azul">Atividades Realizadas:</label>
+            <textarea class="campo-texto campo-area" name="atividades-realizadas"></textarea>
+        </div>
+
+        <div class="container-botoes">
+            <input class="oculto" type="text" name='btn-finalizar' value="Finalizado">
+            <button type="submit" class="botao botao--verde" id="btnSave">Finalizar</button>
+            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+        </div>
+    </form>
+</div>

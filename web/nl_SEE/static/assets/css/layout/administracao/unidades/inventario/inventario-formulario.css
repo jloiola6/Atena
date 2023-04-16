@@ -1,0 +1,5 @@
+/* Estilização do formulário de cadastro de item no inventário */
+
+.container-formulario-inventario, .container-formulario-inventario .container-botoes{
+    margin-top: 16px;
+}

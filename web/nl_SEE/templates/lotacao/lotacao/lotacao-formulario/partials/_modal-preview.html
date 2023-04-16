@@ -1,0 +1,151 @@
+{% load static %}
+
+{% block css_layout%}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/lotacao/lotacao/modal-preview.css' %}">
+{% endblock %}
+
+
+<div class="modal oculto" data-modal="confirmar">
+    <div class="modal-conteudo modal-preview">
+        <div class="preview-cabecalho">
+            <img class="preview-brasao" src="{% static 'assets/img/divisao-lotacao.png' %}">
+
+            <img class="preview-logo" src="{% static 'assets/img/ATENA - AZUL.svg' %}">
+        </div>
+
+        <hr>
+
+        <div class="container-detalhes">
+            <p class="texto-negrito paragrafo">MEMO/NLRB/SEE/N°: XXXXX/XXX</p>
+            <p class="texto-negrito paragrafo">Do(a): XXXX - XXXXXXXXXXXXXX</p>
+            <p class="texto-negrito paragrafo" data-preview-orgao>Para: XXXXXXX</p>
+            <p class="texto-negrito paragrafo">Assunto: LOTAÇÃO DE PESSOAS</p>
+            <p class="texto-negrito paragrafo">Data: XXXXXXXXXXXXXXX</p>
+
+            {% if tipo_lotacao != "Sem Lotação" %}
+                <p class="texto-preto">Apresentamos a Vossa Senhoria o(a) Senhor(a) abaixo que, a partir desta data deverá exercer a função de {{ funcao }}.</p>
+            {% endif %}
+        </div>
+
+
+        <table class="preview-tabela">
+            {% if contrato.tipo_contrato != 'PERMUTA' %}
+                <tr>
+                    <th>Matrícula:</th>
+                    <td>{{ servidor.matricula }} - {{ contrato.digito }}</td>
+                </tr>
+            {% endif %}
+
+            <tr>
+                <th>Nome:</th>
+                <td>{{ servidor }}</td>
+            </tr>
+
+            <tr>
+                <th>Tipo de Lotação:</th>
+                <td>{{ tipo_lotacao }}</td>
+            </tr>
+
+            <tr>
+                <th>Cargo:</th>
+                <td>{{ contrato.cargo }}</td>
+            </tr>
+
+            <tr>
+                <th>Subconta:</th>
+                <td data-preview-subconta></td>
+            </tr>
+
+            {% if tipo_lotacao != "Sem Lotação" %}
+                <tr>
+                    <th>Função:</th>
+                    <td>{{ funcao }}</td>
+                </tr>
+            {% endif %}
+
+            {% if tipo_unidade == 'escolar' %}
+                {% if funcao == 'Professor(a) AEE' or funcao == 'Coordenador(a) Pedagógico(a) de Anos' or funcao == 'Professor(a)'  %}
+                    <tr>
+                        <th>DISCIPLINA | TURNO | SERIES(turmas):</th>
+                        <td data-preview-turmas></td>
+                    </tr>
+                {% elif funcao == 'Atendente Pessoal' or funcao == 'Atendimento Domiciliar' or funcao == 'Interprete' or funcao == 'Mediador' or funcao == 'Professor(a) Brailista' %}
+                    <tr>
+                        <th>Alunos:</th>
+                        <td data-preview-alunos></td>
+                    </tr>
+                {% endif %}
+            {% endif %}
+
+            {% if tipo_unidade == 'adm' and funcao == 'Professor(a)' %}
+                <tr>
+                    <th>Disciplina:</th>
+                    <td data-preview-disciplina></td>
+                </tr>
+            {% endif %}
+
+            {% if funcao == 'Diretor(a) Escolar' or funcao == 'Coordenador(a) Administrativo de Escolas' or funcao == 'Coordenador(a) de Ensino Escolar' or funcao == 'Secretário(a) Escolar' %}
+                <tr>
+                    <th>Portaria: </th>
+                    <td data-preview-portaria ></td>
+                </tr>
+                <tr>
+                    <th>Doe da portaria: </th>
+                    <td data-preview-doe-portaria></td>
+                </tr>
+
+            {% endif %}
+
+            {% if tipo_lotacao != 'Sem Lotação' %}
+                <tr>
+                    <th>C.H. Semanal:</th>
+                    <td data-preview-ch></td>
+                </tr>
+            {% endif %}
+
+            {% if tipo_lotacao != 'Cedido' and tipo_lotacao != 'Permuta' and tipo_lotacao != 'Sem Lotação' %}
+                {% if 'Professor' not in funcao and funcao != 'Mediador' and funcao != 'Atendente Pessoal' and funcao != 'Interprete' and funcao != 'Coordenador(a) Pedagógico(a) de Anos' or tipo_unidade == 'adm' %}
+                    <tr>
+                        <th>Turno:</th>
+                        <td data-preview-turno></td>
+                    </tr>
+                {% endif %}
+            {% endif %}
+
+            <tr>
+                <th>Data de Início:</th>
+                <td data-preview-data-inicio></td>
+            </tr>
+
+            {% if tipo_lotacao != 'Sem Lotação' %}
+                {% if contrato.tipo_contrato == 'EFETIVO' or contrato.tipo_contrato == 'IRREGULAR RJU' or contrato.tipo_contrato == 'NÃO-ESTÁVEIS - SERVIDOR-RJU' %}
+                    {% if tipo_lotacao != 'Contrato' %}
+                        <tr>
+                            <th>Data de Término:</th>
+                            <td data-preview-data-finalizacao></td>
+                        </tr>
+                    {% endif %}
+                {% else %}
+                    <tr>
+                        <th>Data de Término:</th>
+                        <td data-preview-data-finalizacao></td>
+                    </tr>
+                {% endif %}
+            {% endif %}
+
+        </table>
+
+
+
+        <p class="preview-observacao texto-negrito">Observações:</p>
+        <p class="" data-preview-observacao></p>
+
+        <p class="preview-aviso status-oculto"> Já existe um memorando para autorização com esses dados! </p>
+
+        <div class="container-botoes">
+            <button class="botao--verde botao" type="submit" id="botao-salvar">Cadastrar</button>
+            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,31 @@
+
+<div class="oculto" data-nav-container="gratificacao">
+    {% if vdps %}
+        <div class="container-cards-simples contrato-lotacoes">
+            {% for gratificacao in gratificacoes %}
+                <div class="card-simples card-gratificacao">
+                    <div class="card-simples__descricao">
+                        <p class=" texto-azul texto-negrito">Gratificação de Atividade Interna (GAE): <span class="texto-preto texto-normal">{{ gratificacao.porcentagem }}</span></p>
+                        <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ gratificacao.data_inicio }}</span></p>
+                        <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ gratificacao.data_termino }}</span></p>
+                        {% if gratificacao.status == 1 %}
+                            <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">Ativo</span></p>
+                        {% else %}
+                            <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">Inativo</span></p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <h3 class="texto-medio texto-preto">Sem gratificação adicionada.</h3>
+    {% endif %}
+
+    {% if permissao.editar == 1 and id_contrato %}
+        <div class="container-botoes">
+            <a href="{% url 'lotacao:gratificacao-formulario' %}?id_contrato={{ contrato.id }}">
+                <button class="botao botao--azul">Adicionar</button>
+            </a>
+        </div>
+    {% endif %}
+</div>

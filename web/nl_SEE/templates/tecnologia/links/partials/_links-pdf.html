@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html lang="pt-bt">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Exportar Links</title>
+    </head>
+    <body>
+        <header>
+            <table>
+                <tr>
+                    <th><img id="img2" src="{{ url_logo }}" alt=""></th>
+                    <th class="direita"><img id="img3" src="{{ url_atena }}" alt="Logo" style="width:120px;height:auto;"></th>
+                    <!-- <th><img id="img2" src="C:\Users\joao.soares\Documents\code\Atena\nl_SEE\static\assets\img\divisao-infraestrutura-redes.png" alt=""></th>
+                    <th><img id="img3" src="C:\Users\joao.soares\Documents\code\Atena\nl_SEE\static\assets\img\ATENA-AZUL.svg" alt="Logo" style="width:120px;height:auto;"></th> -->
+                </tr>
+            </table>
+        </header>
+
+        <hr>
+
+        <table>
+            <tr>
+                <th class="dados">Total de Links: {{ total }}</th>
+                <th></th>
+                <th></th>
+                <th class="dados">Exportado por {{nome}} dia {{data}}</th>
+            </tr>
+        </table>
+        <table class="tabela tabela-links">
+            <thead>
+                <tr>
+                    <th class="">Nº Circuito</th>
+                    <th class="">Nº Contrato</th>
+                    <th class="">Nº Item</th>
+                    <th class="">Unidade / Departamento</th>
+                    <th class="">Tipo</th>
+                    <th class="">Fornecedor</th>
+                    <th class="">Operadora</th>
+                    <th class="">Tipo de Banda</th>
+                    <th class="">MB/s</th>
+                    <th class="">Fonte (RP)</th>
+                    <th class="">Valor Unitário </th>
+                    <th class="">Status</th>
+                    <th class="">IP Firewall</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for link in exportar %}
+                    {% if link.ip_firewall %}
+                        <tr>
+                            <td>{{ link.link__circuito }}</td>
+                            {% if link.link__item__contrato__numero_contrato != None %}
+                                <td>{{ link.link__item__contrato__numero_contrato }}</td>
+                                <td>{{ link.link__item__numero_item }}</td>
+                            {% else %}
+                                <td>Sem contrato</td>
+                                <td>Sem contrato</td>
+                            {% endif %}
+
+                            {% if link.link__tipo == 'Unidade Educacional' %}
+                                <td>{{ link.link__unidade_educacional__escola__cod_inep }} - {{ link.link__unidade_educacional__escola__nome_escola }}</td>
+                            {% else %}
+                                <td>{{ link.link__departamento__sigla }} - {{ link.link__departamento__nome }}</td>
+                            {% endif %}
+
+                            <td>{{ link.link__tipo }}</td>
+                            <td>{{ link.link__fornecedor }}</td>
+                            <td>{{ link.link__operadora }}</td>
+                            <td>{{ link.link__tipo_banda }}</td>
+                            <td>{{ link.link__velocidade }}</td>
+                            <td>{{ link.link__fonte }}</td>
+
+                            {% if link.link__item__valor_unitario != None %}
+                                <td>{{ link.link__item__valor_unitario }}</td>
+                            {% else %}
+                                <td>Sem contrato</td>
+                            {% endif %}
+
+                            <td>{{ link.link__status }}</td>
+                            <td>{{ link.ip_firewall }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td>{{ link.circuito }}</td>
+                            {% if link.item__contrato__numero_contrato != None %}
+                                <td>{{ link.item__contrato__numero_contrato }}</td>
+                                <td>{{ link.item__numero_item }}</td>
+                            {% else %}
+                                <td>Sem contrato</td>
+                                <td>Sem contrato</td>
+                            {% endif %}
+
+                            {% if link.tipo == 'Unidade Educacional' %}
+                            <td>{{ link.unidade_educacional__escola__cod_inep }} - {{ link.unidade_educacional__escola__nome_escola }}</td>
+                            {% else %}
+                            <td>{{ link.departamento__sigla }} - {{ link.departamento__nome }}</td>
+                            {% endif %}
+
+                            <td>{{ link.tipo }}</td>
+                            <td>{{ link.fornecedor }}</td>
+                            <td>{{ link.operadora }}</td>
+                            <td>{{ link.tipo_banda }}</td>
+                            <td>{{ link.velocidade }}</td>
+                            <td>{{ link.fonte }}</td>
+
+                            {% if link.item__valor_unitario != None %}
+                                <td>{{ link.item__valor_unitario }}</td>
+                            {% else %}
+                                <td>Sem contrato</td>
+                            {% endif %}
+
+                            <td>{{ link.status }}</td>
+                            <td>Não Informado</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <!-- <div>
+            <span class="texto-negrito texto-azul">TOTAL:</span>
+            <span>{{quantidade_links}}</span>
+        </div> -->
+
+        <style>
+            @page{
+                size: landscape;
+                margin: 0.7cm;
+            }
+            .tabela-links{
+                border: 1px solid black;
+                text-align: center;
+                padding: 6px;
+            }
+
+            .tabela-links th{
+                font-size: 12px;
+            }
+
+            .tabela-links td{
+                font-size: 10px;
+            }
+
+            h1{
+                margin: 0;
+            }
+
+            #img2{
+                width: 100%;
+                height: auto;
+            }
+
+            #img3{
+                width: 120px;
+                height: auto;
+            }
+
+            .direita{
+                text-align: right;
+            }
+
+            .cabecalho{
+                font-size: 16px;
+                font-family: sans-serif;
+                text-align: center;
+            }
+
+            .texto1{
+                padding-top: 18px;
+            }
+
+            .texto2{
+                padding-bottom: 4px;
+            }
+
+            .dados{
+                padding-top: 8px;
+            }
+
+        </style>
+
+    </body>
+</html>

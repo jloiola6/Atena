@@ -1,0 +1,138 @@
+{% extends 'partials/_base.html' %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block title %} Cadastrar Escolaridade {% endblock %}
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:index' %}">Gestão de Pessoas</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:servidores' %}">Servidores</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:servidor-perfil' %}?id={{ servidor.id }}">{{ servidor.nome }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Cadastrar Escolaridade</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">CADASTRAR ESCOLARIDADE</h1>
+
+            {% comment %}
+            <form class="container-surface" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+
+                <h2 class="texto-medio texto-azul">Dados da Formação</h2>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-formacao">Formação</label>
+                    <select name="formacao" id="campo-formacao" class="campo-texto campo-pequeno" data-selecao-formacao>
+                        {% for formacao in formacoes %}
+                            <option value="{{ formacao }}" >{{ formacao }}</option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+
+                <div class="formulario-grupo" data-container-escola>
+                    <label class="texto-azul label-campo" for="campo-instituicao">Instituição de Ensino</label>
+
+                    <div data-selecao-escola>
+                        <select data-selecao2 name="select_escola">
+                            {% for escola in escolas %}
+                                <option>{{ escola }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <input data-nova-escola type="text" class="campo-texto campo-grande" placeholder="Insira o nome da escola" name="escola">
+
+                    <fieldset id="fieldset-escola">
+                        <input type="radio" name="fieldset-escola" value="existente" id="etnia-cadastrada" checked data-radio-escola-existente>
+                        <label class="texto-preto" for="etnia-cadastrada">Já cadastrada</label>
+
+                        <input type="radio" name="fieldset-escola" id="etnia-nova" value="nova" data-radio-escola-nova>
+                        <label class="texto-preto" for="etnia-nova">Nova escola</label>
+                    </fieldset>
+                </div>
+
+                <div data-container-superior>
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-instituicao">Instituição de Ensino</label>
+
+                        <select data-selecao2 name="instituicao" id="campo-instituicao">
+                            {% for universidade in universidades %}
+                                <option value="{{ universidade.sigla }} - {{ universidade.nome }} - {{ universidade.uf }}">{{ universidade.sigla }} - {{ universidade.nome }} - {{ universidade.uf }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-curso">Curso</label>
+
+                        <select data-selecao2 name="curso" id="campo-curso">
+                            {% for curso in cursos %}
+                                <option value="{{ curso }}">{{ curso }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="label-campo texto-azul" for="fieldset-tipo-unidade">Situação</label>
+
+                        <fieldset id="fieldset-situacao">
+                            <input type="radio" name="fieldset-situacao" value="Concluído" id="radio-concluido" checked data-radio-concluido>
+                            <label class="texto-preto" for="radio-concluido">Concluído</label>
+
+                            <input type="radio" name="fieldset-situacao" value="Cursando" id="radio-cursando" data-radio-cursando>
+                            <label class="texto-preto" for="radio-cursando">Cursando</label>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="formulario-grupo" data-grupo-conclusao>
+                    <label class="texto-azul label-campo" for="campo-conclusao">Data de conclusão</label>
+                    <input class="campo-texto campo-pequeno" type="date" name="conclusao" id="campo-conclusao" maxlength="30">
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao botao--azul" data-modal-abrir="confirmar">Cadastrar</button>
+                </div>
+
+                <div class="modal oculto" data-modal="confirmar">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                        <p class="texto-preto descricao">Tem certeza que deseja cadastrar os dados de escolaridade?</p>
+
+                        <div class="container-botoes">
+                            <button class="botao--verde botao" type="submit">Salvar</button>
+                            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            {% endcomment %}
+
+            {% include 'partials/escolaridade/_cadastro-escolaridade.html' %}
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/module/select2.js' %}"></script>
+
+    <script src="{% static 'assets/js/layout/partials/escolaridade/controlaCampos.js' %}"></script>
+{% endblock %}

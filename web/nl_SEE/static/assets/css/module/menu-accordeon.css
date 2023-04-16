@@ -1,0 +1,37 @@
+/* Estilização de menus no formato accordeon */
+
+.lista-menus{
+    border: var(--borda-padrao);
+}
+
+.menu-pai{
+    align-items: center;
+    background-color: var(--surface-color);
+    border-left-width: 12px;
+    box-sizing: border-box;
+    display: flex;
+    height: 64px;
+    justify-content: space-between;
+    padding: 0 16px;
+    transition: 0.3s;
+}
+
+    .menu-pai .icone{
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .accordeon-expandir-ativo{
+        transform: rotate(180deg);
+    }
+
+    .menu-pai-ativo{
+        border-left-width: 24px;
+    }
+
+.menu-filho{
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    transition: 0.3s;
+}

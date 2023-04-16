@@ -1,0 +1,96 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Título da Página {% endblock %}
+
+{% load static %}
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+
+<main>
+    <div class="container">
+
+        <form class="container-surface">
+            <h2 class="texto-medio texto-azul">Formulário Simples</h2>
+
+            <div class="formulario-grupo">
+                <label class="label-campo texto-azul" for="campo-nome">Nome</label>
+                <input class="campo-texto campo-grande" id="campo-nome" type="text"  maxlength="100" placeholder="Ex: Érick Fernandes do Nascimento" required>
+            </div>
+
+            <div class="formulario-grupo">
+                <label class="label-campo texto-azul" for="campo-cpf">CPF</label>
+                <input class="campo-texto campo-pequeno" id="campo-cpf" type="text" data-mascara="cpf" placeholder="Ex: 000.000.000-00" required>
+            </div>
+
+            <div class="formulario-grupo">
+                <label class="label-campo texto-azul" for="campo-nascimento">Data de Nascimento</label>
+                <input class="campo-texto campo-pequeno" id="campo-nascimento" type="date" required>
+            </div>
+
+            <div class="formulario-grupo">
+                <label class="label-campo texto-azul" for="campo-contato">Contato (opcional)</label>
+                <input class="campo-texto campo-medio" id="campo-contato" type="text" data-mascara="telefone" placeholder="Ex: (00) 00000-0000">
+            </div>
+
+            <div class="container-botoes">
+                <button class="botao botao--verde" type="submit">Salvar</button>
+            </div>
+        </form>
+
+        <form class="container-surface">
+            <nav class="container-navegacao-surface">
+                <ul class="navegacao-surface-lista">
+                    <li class="navegacao-surface-item navegacao-surface-item-ativo texto-azul" data-form-aba="dados">Dados</li>
+                    <li class="navegacao-surface-item texto-azul" data-form-aba="contato">Contato</li>
+                </ul>
+            </nav>
+
+            <div data-form-container="dados">
+                <div class="formulario-grupo">
+                    <label class="label-campo texto-azul" for="campo-nome2">Nome</label>
+                    <input class="campo-texto campo-grande" id="campo-nome2" type="text" maxlength="100" placeholder="Ex: Érick Fernandes do Nascimento" required>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="label-campo texto-azul" for="campo-cpf2">CPF</label>
+                    <input class="campo-texto campo-pequeno" id="campo-cpf2" type="text" data-mascara="cpf" placeholder="Ex: 000.000.000-00" required>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="label-campo texto-azul" for="campo-nascimento2">Data de Nascimento</label>
+                    <input class="campo-texto campo-pequeno" id="campo-nascimento2" type="date" required>
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao botao--azul" data-form-botao="contato">Avançar</button>
+                </div>
+            </div>
+
+            <div class="oculto" data-form-container="contato">
+                <div class="formulario-grupo">
+                    <label class="label-campo texto-azul" for="campo-contato1">Contato 1</label>
+                    <input class="campo-texto campo-medio" id="campo-contato1" type="text" data-mascara="telefone" placeholder="Ex: (00) 00000-0000" required>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="label-campo texto-azul" for="campo-contato2">Contato 2 (opcional)</label>
+                    <input class="campo-texto campo-medio" id="campo-contato2" type="text" data-mascara="telefone" placeholder="Ex: (00) 00000-0000">
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao botao--azul" data-form-botao="dados">Voltar</button>
+                    <button class="botao botao--verde" type="submit">Salvar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+{% include 'partials/_rodape.html' %}
+
+<script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+<script src="/static/assets/js/module/controlaNavegacaoFormulario.js"></script>
+<script src="{% static 'assets/js/module/validaFormulario.js' %}"></script>
+
+{% endblock %}

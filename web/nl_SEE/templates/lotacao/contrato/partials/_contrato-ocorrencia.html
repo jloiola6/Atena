@@ -1,0 +1,216 @@
+{% load static %}
+<div class="oculto" data-nav-container="ocorrencia">
+
+        {% if ocorrencias_lotus %}
+            <div class="container-cards-simples contrato-lotacoes">
+                {% for ocorrencia in ocorrencias_lotus %}
+                    <div class="card-simples card-lotacao">
+                        <h4 class="card-simples__titulo texto-azul">{{ ocorrencia.tipo }}<img align="right" src="{% static 'assets/img/lotus.png' %}" alt="Lotus"></h4>
+                        <div class="card-simples__descricao">
+                            <p class=" texto-azul texto-negrito">Descrição: <span class="texto-preto texto-normal">{{ ocorrencia.documento }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ ocorrencia.data_fim }}</span></p>
+                        </div>
+                        <p class="descricao texto-cinza texto-negrito">Dados importados via Lotus</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+
+        {% if ocorrencias %}
+        <div class="container-cards-simples contrato-lotacoes">
+            {% for ocorrencia in ocorrencias %}
+                <div class="card-simples card-lotacao">
+                    <h4 class="card-simples__titulo texto-azul">{{ ocorrencia.tipo_ocorrencia }}</h4>
+
+                    <div class="card-simples__descricao">
+                        {% if ocorrencia.tipo_ocorrencia == 'AFASTAMENTO PARA ACOMPANHAR O CÔNJUGE' %}
+                            <p class=" texto-azul texto-negrito">Portaria: <span class="texto-preto texto-normal">{{ ocorrencia.portaria }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ ocorrencia.data_termino }}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'AFASTAMENTO PARA ESTUDO FORA DO ESTADO (COM ÔNUS)' %}
+                            <p class=" texto-azul texto-negrito">Portaria: <span class="texto-preto texto-normal">{{ ocorrencia.portaria }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'APOSENTADORIA' %}
+                            <p class=" texto-azul texto-negrito">Portaria: <span class="texto-preto texto-normal">{{ ocorrencia.portaria }}</span></p>
+                            <p class=" texto-azul texto-negrito">D.O.E: <span class="texto-preto texto-normal">{{ ocorrencia.doe }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'ATESTADO MEDICO' %}
+                            <p class=" texto-azul texto-negrito">C.I.D: <span class="texto-preto texto-normal">{{ ocorrencia.cid }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ ocorrencia.data_termino }}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'AUXÍLIO DOENÇA' %}
+                            <p class=" texto-azul texto-negrito">Nº SEI: <span class="texto-preto texto-normal">{{ ocorrencia.sei }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ ocorrencia.data_termino }}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'CESSÃO COM ÔNUS' %}
+                            <p class=" texto-azul texto-negrito">Decreto: <span class="texto-preto texto-normal">{{ ocorrencia.decreto }}</span></p>
+                            <p class=" texto-azul texto-negrito">D.O.E: <span class="texto-preto texto-normal">{{ ocorrencia.doe }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'CESSÃO SEM ÔNUS' %}
+                            <p class=" texto-azul texto-negrito">Decreto: <span class="texto-preto texto-normal">{{ ocorrencia.decreto }}</span></p>
+                            <p class=" texto-azul texto-negrito">D.O.E: <span class="texto-preto texto-normal">{{ ocorrencia.doe }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'DEMISSÃO' %}
+                            <p class=" texto-azul texto-negrito">P.A.D: <span class="texto-preto texto-normal">{{ ocorrencia.pad }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'EXONERAÇÃO' %}
+                            <p class=" texto-azul texto-negrito">Decreto: <span class="texto-preto texto-normal">{{ ocorrencia.decreto }}</span></p>
+                            <p class=" texto-azul texto-negrito">D.O.E: <span class="texto-preto texto-normal">{{ ocorrencia.doe }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'EXONERAÇÃO A PEDIDO' %}
+                            <p class=" texto-azul texto-negrito">Decreto: <span class="texto-preto texto-normal">{{ ocorrencia.decreto }}</span></p>
+                            <p class=" texto-azul texto-negrito">D.O.E: <span class="texto-preto texto-normal">{{ ocorrencia.doe }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'FALECIMENTO' %}
+                            <p class=" texto-azul texto-negrito">Registro de óbito: <span class="texto-preto texto-normal">{{ ocorrencia.registro_obito }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de falecimento: <span class="texto-preto texto-normal">{{ ocorrencia.data_falecimento }}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'FÉRIAS' %}
+                            <p class=" texto-azul texto-negrito">Ano: <span class="texto-preto texto-normal">{{ ocorrencia.ano_exercicio }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ ocorrencia.data_termino }}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'LAUDO MÉDICO DEFINITIVO DE FUNÇÃO' %}
+                            <p class=" texto-azul texto-negrito">Laudo / Nº requisição: <span class="texto-preto texto-normal">{{ ocorrencia.laudo_requisicao }}</span></p>
+                            <p class=" texto-azul texto-negrito">Nº SEI: <span class="texto-preto texto-normal">{{ ocorrencia.sei }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'LICENÇA ACOMPANHANTE' %}
+                            <p class=" texto-azul texto-negrito">Laudo / Nº requisição: <span class="texto-preto texto-normal">{{ ocorrencia.laudo_requisicao }}</span></p>
+                            <p class=" texto-azul texto-negrito">Nº SEI: <span class="texto-preto texto-normal">{{ ocorrencia.sei }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'LICENÇA ADOÇÃO' %}
+                            <p class=" texto-azul texto-negrito">Portaria: <span class="texto-preto texto-normal">{{ ocorrencia.portaria }}</span></p>
+                            <p class=" texto-azul texto-negrito">parecer: <span class="texto-preto texto-normal">{{ ocorrencia.parecer }}</span></p>
+                            <p class=" texto-azul texto-negrito">Nº SEI: <span class="texto-preto texto-normal">{{ ocorrencia.sei }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ ocorrencia.data_termino}}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'LICENÇA CASAMENTO' %}
+                            <p class=" texto-azul texto-negrito">folha: <span class="texto-preto texto-normal">{{ ocorrencia.folha }}</span></p>
+                            <p class=" texto-azul texto-negrito">livro: <span class="texto-preto texto-normal">{{ ocorrencia.livro }}</span></p>
+                            <p class=" texto-azul texto-negrito">termo: <span class="texto-preto texto-normal">{{ ocorrencia.termo }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de expedicao: <span class="texto-preto texto-normal">{{ ocorrencia.data_expedicao }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ ocorrencia.data_termino }}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'LICENÇA MATERNIDADE' %}
+                            <p class=" texto-azul texto-negrito">Nº SEI: <span class="texto-preto texto-normal">{{ ocorrencia.sei }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ ocorrencia.data_termino }}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'LICENÇA PARA ATIVIDADE POLITICA' %}
+                            <p class=" texto-azul texto-negrito">parecer: <span class="texto-preto texto-normal">{{ ocorrencia.parecer }}</span></p>
+                            <p class=" texto-azul texto-negrito">Portaria: <span class="texto-preto texto-normal">{{ ocorrencia.portaria }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'LICENÇA PARA DESEMPENHO DE MANDATO CLASSISTA' %}
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ ocorrencia.data_termino }}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'LICENÇA PARA EXERCÍCIO DE MANDATO ELETIVO' %}
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ ocorrencia.data_termino }}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'LICENÇA PARA INTERESSE PARTICULAR (SEM ÔNUS)' %}
+                            <p class=" texto-azul texto-negrito">parecer: <span class="texto-preto texto-normal">{{ ocorrencia.parecer }}</span></p>
+                            <p class=" texto-azul texto-negrito">Nº SEI: <span class="texto-preto texto-normal">{{ ocorrencia.sei }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ ocorrencia.data_termino}}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'LICENÇA PARA MANDATO ELEITORAL' %}
+                        <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+                        <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ ocorrencia.data_termino }}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'LICENÇA PARA TRATAMENTO DE SAÚDE' %}
+                            <p class=" texto-azul texto-negrito">Nº SEI: <span class="texto-preto texto-normal">{{ ocorrencia.sei }}</span></p>
+                            <p class=" texto-azul texto-negrito">Laudo / Requisição: <span class="texto-preto texto-normal">{{ ocorrencia.laudo_requisicao }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ ocorrencia.data_termino }}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'LICENÇA PATERNIDADE' %}
+                            <p class=" texto-azul texto-negrito">Nº SEI: <span class="texto-preto texto-normal">{{ ocorrencia.sei }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ ocorrencia.data_termino }}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'LICENÇA PRÊMIO' %}
+                            <p class=" texto-azul texto-negrito">Portaria: <span class="texto-preto texto-normal">{{ ocorrencia.portaria }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ ocorrencia.data_termino }}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'READEQUAÇÃO - LEI NALUH' %}
+                            <p class=" texto-azul texto-negrito">Parecer: <span class="texto-preto texto-normal">{{ ocorrencia.parecer }}</span></p>
+                            <p class=" texto-azul texto-negrito">Nº SEI: <span class="texto-preto texto-normal">{{ ocorrencia.sei }}</span></p>
+                            <p class=" texto-azul texto-negrito">Ano: <span class="texto-preto texto-normal">{{ ocorrencia.ano_exercicio }}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'RECLUSÃO' %}
+                            <p class=" texto-azul texto-negrito">Portaria: <span class="texto-preto texto-normal">{{ ocorrencia.portaria }}</span></p>
+                            <p class=" texto-azul texto-negrito">Sentença: <span class="texto-preto texto-normal">{{ ocorrencia.sentenca }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'REDUÇÃO DE CARGA HORÁRIA' %}
+                            <p class=" texto-azul texto-negrito">Laudo / Requisição: <span class="texto-preto texto-normal">{{ ocorrencia.laudo_requisicao }}</span></p>
+                            <p class=" texto-azul texto-negrito">parecer: <span class="texto-preto texto-normal">{{ ocorrencia.parecer }}</span></p>
+                            <p class=" texto-azul texto-negrito">Nº SEI: <span class="texto-preto texto-normal">{{ ocorrencia.sei }}</span></p>
+
+                        {% elif ocorrencia.tipo_ocorrencia == 'LAUDO MÉDICO TEMPORÁRIO' %}
+                            <p class=" texto-azul texto-negrito">Laudo / Requisição: <span class="texto-preto texto-normal">{{ ocorrencia.laudo_requisicao }}</span></p>
+                            <p class=" texto-azul texto-negrito">Nº SEI: <span class="texto-preto texto-normal">{{ ocorrencia.sei }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ ocorrencia.data_termino }}</span></p>
+                        {% endif %}
+
+                        <p class=" texto-azul texto-negrito">Observação: <span class="texto-preto texto-normal">{{ ocorrencia.observacao }}</span></p>
+
+
+                        {% if ocorrencia.status == 1 %}
+                            <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">Ativo</span></p>
+                        {% else %}
+                            <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">Inativo</span></p>
+                        {% endif %}
+
+                        <!-- {% if permissao_VF %}
+                            <div class="container-botoes">
+                                {% if not id_contrato_lotus and ocorrencia.status == 1%}
+                                    <a href="{% url 'lotacao:ocorrencia-formulario' %}?id_contrato={{ contrato.id }}&id_ocorrencia={{ ocorrencia.id }}">
+                                        <button class="botao botao--azul">Editar</button>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        {% endif %} -->
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if not ocorrencias_lotus and not ocorrencias %}
+            <h3 class="texto-medio texto-preto">Sem ocorrência funcional adicionada.</h3>
+        {% endif %}
+
+        {% if permissao_VF %}
+        <div class="container-botoes">
+            {% if not id_contrato_lotus %}
+                <a href="{% url 'lotacao:ocorrencia-formulario' %}?id_contrato={{ contrato.id }}">
+                    <button class="botao botao--azul">Adicionar</button>
+                </a>
+            {% endif %}
+        </div>
+        {% endif %}
+
+</div>

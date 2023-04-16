@@ -1,0 +1,57 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Servidores {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/administracao/unidades/servidores/servidores.css' %}">
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/administracao/unidades/servidores/responsivo/servidores-responsivo.css' %}">
+{% endblock %}
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+
+<main>
+    <div class="container">
+        <nav class="container-navegacao">
+            <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'administracao:index' %}" class=" texto-azul">Administracao</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'administracao:unidades_educacionais' %}" class=" texto-azul">Unidades</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'administracao:unidade-perfil' %}?inep={{ escola.cod_inep }}" class=" texto-azul">{{ escola.nome_escola }}</a>
+            <span class="texto-azul">&#62;</span>
+
+            <span class="  texto-azul">Servidores</span>
+        </nav>
+
+        <h1 class="titulo-pagina texto-azul">Servidores</h1>
+
+        <div class="container-surface container-surface-gestores">
+            <h2 class="texto-medio texto-azul">Gestores</h2>
+
+            <div class="unidade-gestores">
+                <p class=" texto-azul texto-negrito">Diretor(a): <span class="texto-preto texto-normal">{{ diretor }}</span></p>
+                <p class=" texto-azul texto-negrito">Coordenador(a) Pedagógico: <span class="texto-preto texto-normal">{{ pedagogico }}</span></p>
+                <p class=" texto-azul texto-negrito">Coordenador(a) de Ensino: <span class="texto-preto texto-normal">{{ ensino }}</span></p>
+                <p class=" texto-azul texto-negrito">Coordenador(a) administrativo: <span class="texto-preto texto-normal">{{ administrativo }}</span></p>
+                <p class=" texto-azul texto-negrito">Secretario(a) escolar: <span class="texto-preto texto-normal">{{ secretario }}</span></p>
+            </div>
+
+        </div>
+
+        {% include 'administracao/unidades/partials/_servidores-servidores-enturmados.html' %}
+        {% include 'administracao/unidades/partials/_servidores-servidores-see.html' %}
+        {% include 'administracao/unidades/partials/_servidores-servidores-terceirizados.html' %}
+    </div>
+</main>
+
+{% include 'partials/_rodape.html' %}
+<script src="{% static 'assets/js/module/linkTabela.js' %}"></script>
+<script src="{% static 'assets/js/layout/administracao/unidade-perfil/controlaMenusTurmas.js' %}"></script>
+{% endblock %}

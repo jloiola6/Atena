@@ -1,0 +1,60 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Item {{ item.numero_item }} {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/tecnologia/contrato/contrato-aditivo-perfil.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/layout/tecnologia/contrato/responsivo/contrato-aditivo-perfil-responsivo.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:index' %}">Tecnologia</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:contratos' %}">Contratos</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:contrato-perfil' %}?id_contrato={{ contrato.id }}">Contrato nº {{ contrato.numero_contrato }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Aditivo</span>
+            </nav>
+
+            <div class="container-surface-aditivo container-surface">
+                <h1 class="texto-medio texto-azul">Contrato Aditivo</h1>
+
+                <div class="aditivo-dados">
+                    <p class=" texto-azul texto-negrito">Início: <span class="texto-preto texto-normal">{{ contrato_aditivo.data_inicio }}</span></p>
+                    <p class=" texto-azul texto-negrito">Fim: <span class="texto-preto texto-normal">{{ contrato_aditivo.data_termino }}</span></p>
+                    <p class=" texto-azul texto-negrito">Novo valor total: <span class="texto-preto texto-normal">{{ contrato_aditivo.valor_total }}</span></p>
+                </div>
+
+            </div>
+
+            <div class="container-surface-contrato-item container-surface">
+                <nav class="container-navegacao-surface">
+                    <ul class="navegacao-surface-lista">
+                        <li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul navegacao-surface-item-ativo" data-nav-aba="itens">Itens</li>
+                    </ul>
+                </nav>
+
+                {% include 'tecnologia/contrato/partials/_item-contrato-aditivo.html' %}
+
+            </div>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/controlaNavegacaoSurface.js' %}"></script>
+{% endblock %}

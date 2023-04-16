@@ -1,0 +1,28 @@
+{% load static %}
+<div class="servidor-contratos oculto" data-nav-container="registro">
+
+    {% if tecnicos %}
+        <div class="container-cards-simples">
+
+            {% for tecnico in tecnicos %}
+                <div class="card-simples card-chamado">
+                    <h4 class="card-simples__titulo texto-azul">Atendimento {{ tecnico.situacao|lower }}</h4>
+                    <div class="card-simples__descricao">
+                        <p class=" texto-azul texto-negrito paragrafo">Técnico: <span class="texto-preto texto-normal">{{ tecnico.user_tecnico }}</span></p>
+                        <p class=" texto-azul texto-negrito paragrafo">Data Inicio: <span class="texto-preto texto-normal">{{ tecnico.data_inicio }}</span></p>
+
+                        {% if tecnico.data_fim %}
+                            <p class=" texto-azul texto-negrito paragrafo">Data Fim: <span class="texto-preto texto-normal">{{ tecnico.data_fim }}</span></p>
+                        {% endif %}
+
+                        {% if tecnico.motivo %}
+                            <p class=" texto-azul texto-negrito paragrafo">Descrição: <span class="texto-preto texto-normal">{{ tecnico.motivo }}</span></p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="texto-preto ">Este chamado não possui nenhum registro.</p>
+    {% endif %}
+</div>

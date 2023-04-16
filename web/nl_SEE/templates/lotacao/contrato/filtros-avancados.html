@@ -1,0 +1,228 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Filtros Avançados {% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/lotacao/contrato/contrato-filtros.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{% include 'partials/_cabecalho.html' %}
+
+<main>
+    <div class="container">
+        <nav class="container-navegacao">
+            <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'lotacao:index' %}" class=" texto-azul">Gestão de Pessoas</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'lotacao:contratos' %}" class=" texto-azul">Contratos</a>
+            <span class="texto-azul">&#62;</span>
+
+            <span class="  texto-azul">Filtros Avançados</span>
+        </nav>
+
+        <h1 class="titulo-pagina texto-azul">Filtros Avançados</h1>
+
+
+        <form method="GET">
+            <div class="lista-menus">
+                <div class="menu-pai" data-accordeon-pai="cargo" data-accordeon-ativo="false">
+                    <h2 class="texto-medio texto-azul">Cargo</h2>
+
+                    <span class="icone icone-medio icone-azul">expand_more</span>
+                </div>
+
+                <div class="menu-pai menu-filho" data-accordeon-filho="cargo">
+                    <div class="formulario-grupo container-cargos">
+                        <div>
+                            <input type="checkbox" id="campo-cargo-todos" data-selecao-tudo>
+                            <label for="campo-cargo-todos" class="texto-preto">Selecionar todos</label>
+                        </div>
+
+                        {% for item in cargos %}
+                            <div>
+                                <input type="checkbox" name="cargo-{{ item.cargo__id }}" id="cargo-{{ item.cargo__id }}">
+                                <label class="texto-preto" for="cargo-{{ item.cargo__id }}">{{ item.cargo__nome }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            {% comment %} <div class="lista-menus">
+                <div class="menu-pai" data-accordeon-pai="ch" data-accordeon-ativo="false">
+                    <h2 class="texto-medio texto-azul">Carga horária</h2>
+
+                    <span class="icone icone-medio icone-azul">expand_more</span>
+                </div>
+
+                <div class="menu-pai menu-filho" data-accordeon-filho="ch">
+                    <div class="formulario-grupo">
+                        <div>
+                            <input type="checkbox" id="campo-carga-todos" data-selecao-tudo>
+                            <label for="campo-carga-todos" class="texto-preto">Selecionar todas</label>
+                        </div>
+
+                        {% for carga in cargas_horarias %}
+                            <div>
+                                <input type="checkbox" name="carga-{{carga.cargo__carga_horaria}}" id="carga-{{carga.cargo__carga_horaria}}">
+                                <label for="carga-{{carga.cargo__carga_horaria}}">{{carga.cargo__carga_horaria}}H</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div> {% endcomment %}
+
+            <div class="lista-menus">
+                <div class="menu-pai" data-accordeon-pai="tipo" data-accordeon-ativo="false">
+                    <h2 class="texto-medio texto-azul">Tipo de Contrato</h2>
+
+                    <span class="icone icone-medio icone-azul">expand_more</span>
+                </div>
+
+                <div class="menu-pai menu-filho" data-accordeon-filho="tipo">
+                    <div class="formulario-grupo">
+                        <div>
+                            <input type="checkbox" id="campo-tipo-todos"data-selecao-tudo>
+                            <label for="campo-tipo-todos" class="texto-preto">Selecionar todos</label>
+                        </div>
+
+                        {% for tipo in tipos_contratos %}
+                            <div>
+                                <input type="checkbox" name="tipo-{{tipo.cargo__tipo}}" id="tipo-{{ tipo.cargo__tipo }}">
+                                <label class="texto-preto" for="tipo-{{ tipo.cargo__tipo }}">{{ tipo.cargo__tipo }}</label>
+                            </div>
+                        {% endfor %}
+                        <div>
+                            <input type="checkbox" name="tipo-PARECER" id="campo-PARECER">
+                            <label class="texto-preto" for="campo-PARECER">PARECER</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lista-menus">
+                <div class="menu-pai" data-accordeon-pai="disciplina_convocacao" data-accordeon-ativo="false">
+                    <h2 class="texto-azul texto-medio">Disciplina de Convocação</h2>
+
+                    <span class="icone icone-medio icone-azul">expand_more</span>
+                </div>
+
+                <div class="menu-pai menu-filho" data-accordeon-filho="disciplina_convocacao">
+                    <div class="formulario-grupo">
+                        <div>
+                            <input type="checkbox" id="campo-disciplina_convocacao" data-selecao-tudo>
+                            <label for="campo-disciplina_convocacao" class="texto-preto" >Selecionar todos</label>
+                        </div>
+
+                        {% for disciplina in disciplina_convocacao %}
+                            <div>
+                                <input type="checkbox" name="disciplina_convocacao-{{ disciplina.disciplina_convocacao__id }}" id="disciplina_convocacao-{{ disciplina.disciplina_convocacao__id }}">
+                                <label class="texto-preto" for="disciplina_convocacao-{{ disciplina.disciplina_convocacao__id }}">{{ disciplina.disciplina_convocacao__nome }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="lista-menus">
+                <div class="menu-pai" data-accordeon-pai="diario_homologacao" data-accordeon-ativo="false">
+                    <h2 class="texto-azul texto-medio">Diário de Homologação</h2>
+
+                    <span class="icone icone-medio icone-azul">expand_more</span>
+                </div>
+
+                <div class="menu-pai menu-filho" data-accordeon-filho="diario_homologacao">
+                    <div class="formulario-grupo">
+                        <div>
+                            <input type="checkbox" id="campo-diario_homologacao" data-selecao-tudo>
+                            <label for="campo-diario_homologacao" class="texto-preto" >Selecionar todos</label>
+                        </div>
+
+                        {% for diario in diario_homologacao %}
+                            <div>
+                                <input type="checkbox" name="diario_homologacao-{{ diario.diario_homologacao }}" id="diario_homologacao-{{ diario.diario_homologacao }}">
+                                <label class="texto-preto" for="diario_homologacao-{{ diario.diario_homologacao }}">{{ diario.diario_homologacao }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="lista-menus">
+                <div class="menu-pai" data-accordeon-pai="situacao" data-accordeon-ativo="false">
+                    <h2 class="texto-azul texto-medio">Situação</h2>
+
+                    <span class="icone icone-medio icone-azul">expand_more</span>
+                </div>
+
+                <div class="menu-pai menu-filho" data-accordeon-filho="situacao">
+                    <div class="formulario-grupo">
+                        <div>
+                            <input type="checkbox" id="campo-situacao-todos" data-selecao-tudo>
+                            <label for="campo-situacao-todos" class="texto-preto" >Selecionar todos</label>
+                        </div>
+
+                        {% for situacao in situacoes %}
+                            <div>
+                                <input type="checkbox" name="situacao-{{ situacao.situacao }}" id="situacao-{{ situacao.situacao }}">
+                                <label class="texto-preto" for="situacao-{{ situacao.situacao }}">{{ situacao.situacao}}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="lista-menus">
+                <div class="menu-pai" data-accordeon-pai="municipios" data-accordeon-ativo="false">
+                    <h2 class="texto-azul texto-medio">Município</h2>
+
+                    <span class="icone icone-medio icone-azul">expand_more</span>
+                </div>
+
+                <div class="menu-pai menu-filho" data-accordeon-filho="municipios">
+                    <div class="formulario-grupo">
+                        <div>
+                            <input type="checkbox" id="campo-municipios-todos" data-selecao-tudo>
+                            <label for="campo-municipios-todos" class="texto-preto" >Selecionar todos</label>
+                        </div>
+
+                        {% for municipio in municipios %}
+                            <div>
+                                <input type="checkbox" name="municipio-{{ municipio.municipio }}" id="municipio-{{ forloop.counter0 }}">
+                                <label class="texto-preto" for="municipio-{{ forloop.counter0 }}">{{ municipio.municipio }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-botoes">
+                <button class="botao botao--azul">Filtrar</button>
+            </div>
+        </form>
+    </div>
+</main>
+
+{% include 'partials/_rodape.html' %}
+{% include 'lotacao/contrato/partials/_modal-contrato-filtros.html' %}
+
+<script src="{% static 'assets/js/module/linkTabela.js' %}"></script>
+<script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+<script src="{% static 'assets/js/module/mascaras.js' %}" type='module'></script>
+
+<script src="{% static 'assets/js/layout/lotacao/contrato-filtros/controlaMenusFiltros.js' %}"></script>
+<script src="{% static 'assets/js/layout/lotacao/contrato-filtros/controlaCampos.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,150 @@
+{% load static %}
+
+
+<div class="servidor-lotacoes" data-nav-container="lotacoes">
+
+    {% if servidor_lotacoes %}
+        {% if lotacoes_lotus %}
+            <div class="container-cards-simples">
+                {% for lotacao in lotacoes_lotus %}
+                    <div class="card-simples card-lotacao">
+                        <div class="card-titulo-imagem">
+                            <h3 class="card-simples__titulo texto-azul">{{ lotacao.unidiade_lotacao }}</h3>
+                            <img src="{% static 'assets/img/lotus.png' %}">
+                        </div>
+                        <p class="texto-preto ">Servidor SEE</p>
+
+                        <div class="card-simples__descricao">
+                            <p class=" texto-azul texto-negrito">Função: <span class="texto-preto texto-normal">{{ lotacao.funcao }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ lotacao.data_inicio }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ lotacao.data_termino }}</span></p>
+                            <p class=" texto-azul texto-negrito">Status:
+                                <span class="texto-preto texto-normal">
+                                    {% if lotacao.status %}
+                                        Ativo
+                                    {% else %}
+                                        Inativo
+                                    {% endif %}
+                                </span>
+                            </p>
+
+                        </div>
+
+                        <p class="descricao texto-cinza texto-negrito">Dados importados via Lotus</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="container-cards-simples">
+            {% for lotacao in lotacoes %}
+                {% if lotacao.status == 1 %}
+                    <div class="card-simples card-lotacao">
+
+                        <div class="card-simples__descricao">
+                            {% if lotacao.unidade_escolar %}
+                                <h3 class="card-simples__titulo texto-azul">{{ lotacao.unidade_escolar__escola__nome_escola }}</h3>
+                            {% else %}
+                                <h3 class="card-simples__titulo texto-azul">{{ lotacao.unidade_adm__nome }}</h3>
+                            {% endif %}
+
+                            <p class="texto-preto ">Servidor SEE</p>
+                        </div>
+
+                        <div class="card-simples__descricao">
+                            <p class=" texto-azul texto-negrito">Dígito: <span class="texto-preto texto-normal">{{ lotacao.contrato__digito }}</span></p>
+                            <p class=" texto-azul texto-negrito">Função: <span class="texto-preto texto-normal">{{ lotacao.funcao }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ lotacao.data_inicio }}</span></p>
+
+                            {% if lotacao.data_termino %}
+                                <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ lotacao.data_termino }}</span></p>
+                            {% endif %}
+
+                            {% if lotacao.status == 1 %}
+                                <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">Ativo</span></p>
+                            {% elif lotacao.status == 0 %}
+                                <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">Inativo</span></p>
+
+                                {% if lotacao.motivo %}
+                                    <p class=" texto-azul texto-negrito">Motivo: <span class="texto-preto texto-normal">{{ lotacao.motivo }}</span></p>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+
+                        {% if lotacao.autorizador %}
+                            <p class="texto-preto"><b class="texto-azul">Autorizado por: </b>{{ lotacao.autorizador }}</p>
+                        {% endif %}
+
+
+                        {% for verificacao in verificacoes %}
+                            {% if lotacao.id == verificacao.lotacao.id %}
+                                <b class="texto-preto">Lotação verificada </b>
+                                <p class="texto-cinza descricao">{{ verificacao.data_atualizacao }}</p>
+
+                                <div class="container-botoes">
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <button class="botao--azul botao" name="btn-exportar-termo-lotacao" value="exportar-termo-{{ lotacao.id }}">Exportar</button>
+                                    </form>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if lotacao.status == 1 and lotacao.id not in id_verificacoes %}
+                            <div class="container-botoes">
+                                <button class="botao botao--secundario" data-modal-abrir="lotacao-{{ lotacao.id }}">Verificar Lotação</button>
+                            </div>
+                        {% endif %}
+
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% elif servidor_contrato_terceirizado %}
+        <div class="container-cards-simples">
+            {% for lotacao in contrato_lotacao %}
+                <div class="card-simples card-lotacao">
+                    <div class="card-simples__descricao">
+                        {% if lotacao.endereco__escola__nome_escola != None %}
+                            <h3 class="card-simples__titulo texto-azul">{{ lotacao.endereco__escola__nome_escola }}</h3>
+                        {% else %}
+                            <h3 class="card-simples__titulo texto-azul">{{ lotacao.unidade_administrativa__nome }}</h3>
+                        {% endif %}
+
+                        <p class="texto-preto ">Servidor Terceirizado</p>
+                    </div>
+
+                    <div class="card-simples__descricao">
+                        <p class=" texto-azul texto-negrito">Número do item: <span class="texto-preto texto-normal">{{ lotacao.item__numero_item }}</span></p>
+                        <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ lotacao.data_inicio }}</span></p>
+                        <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ lotacao.data_termino }}</span></p>
+
+                        {% if lotacao.status == 1 %}
+                            <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">Ativo</span></p>
+                        {% else %}
+                            <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">Inativo</span></p>
+                        {% endif %}
+                    </div>
+
+                    {% if lotacao.status == 1 and not existe %}
+                        <div class="container-botoes">
+                            <button class="botao botao--secundario" data-modal-abrir="lotacao-terc-{{ lotacao.id }}">Verificar Lotação</button>
+                        </div>
+                    {% else %}
+                        <b class="texto-preto">Lotação verificada </b>
+                        <p class="texto-cinza descricao">{{ data_verificacao }}</p>
+                        <div class="container-botoes">
+                            <form method="POST">
+                                {% csrf_token %}
+                                <button class="botao--azul botao" name="btn-exportar-termo-lotacao" value="exportar-termo-{{ lotacao.id }}">Exportar</button>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="texto-preto texto-medio">Este servidor não possui nenhuma lotação cadastrada.</p>
+    {% endif %}
+
+</div>

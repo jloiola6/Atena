@@ -1,0 +1,218 @@
+{% comment %}
+    Esta partial contém um container com os servidores de um item
+    Feita para evitar a repetição código em perfis de contrato nos módulos de ADMINISTRAÇÃO, TECNOLOGIA e TERCEIRIZAÇÃO
+{% endcomment %}
+
+<div class="item-servidores" data-nav-container="servidores">
+    {% if quantidade_servidores > 0 %}
+        <table class="tabela tabela-item-servidores">
+            <thead>
+                <tr>
+                    <th>Nome {{ aplicacao }}</th>
+                    <th>CPF</th>
+                    <th>Lotação</th>
+                    <th>Municipio</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for servidor in servidores %}
+                    <tr class="linha-desabilitada">
+                        <td>{{ servidor.servidor.nome|upper }}</td>
+                        <td>{{ servidor.servidor.cpf }}</td>
+                        {% if servidor.unidade_administrativa %}
+                            <td>{{ servidor.unidade_administrativa|upper }}</td>
+                        {% else %}
+                            <td>{{ servidor.endereco|upper }}</td>
+                        {% endif %}
+                        <td>{{ servidor.endereco.municipio|upper }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td class="coluna-paginacao" colspan="4">
+                        <div class="container-paginacao">
+                            <div>
+                                <span class="texto-negrito texto-azul">Vagas restantes:</span>
+                                {% if contrato.tipo_contrato == 'Postos de trabalho - Limpeza' %}
+                                    <span class="texto-normal texto-preto">{{ item.metragem_disponivel }}m²</span>
+                                {% else %}
+                                    <span class="texto-normal texto-preto">{{ vagas_restantes }}</span>
+                                {% endif %}
+                            </div>
+                            <div>      
+                                {% if servidores.has_previous %}
+                                    {% if aplicacao == 'Administração' %}
+                                        <a class="" href="{% url 'administracao:item-perfil' %}?{{ gets_primeira }}">
+                                    {% elif aplicacao == 'Terceirização' %}
+                                        <a class="" href="{% url 'terceirizacao:item-perfil' %}?{{ gets_primeira }}">
+                                    {% endif %}
+
+                                            <button class="botao-paginacao">first_page</button>
+                                        </a>
+                                    
+                                    {% if aplicacao == 'Administração' %}
+                                        <a class="" href="{% url 'administracao:item-perfil' %}?{{ gets_anterior }}">
+                                    {% elif aplicacao == 'Terceirização' %}
+                                        <a class="" href="{% url 'terceirizacao:item-perfil' %}?{{ gets_anterior }}">
+                                    {% endif %}
+
+                                            <button class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                {% else %}
+                                    <a class="" href="">
+                                        <button disabled class="botao-paginacao">first_page</button>
+                                    </a>
+                                    
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% endif %}
+                                
+                                <span class="">
+                                    {{ servidores.number }} de {{ servidores.paginator.num_pages }}
+                                </span>
+
+                                {% if servidores.has_next %}
+                                    {% if aplicacao == 'Administração' %}
+                                        <a class="" href="{% url 'administracao:item-perfil' %}?{{ gets_proxima }}">
+                                    {% elif aplicacao == 'Terceirização' %}
+                                        <a class="" href="{% url 'terceirizacao:item-perfil' %}?{{ gets_proxima }}">
+                                    {% endif %}
+                                        
+                                            <button class="botao-paginacao">navigate_next</button>
+                                        </a>
+                                    
+                                    {% if aplicacao == 'Administração' %}
+                                        <a class="" href="{% url 'administracao:item-perfil' %}?{{ gets_ultima }}">
+                                    {% elif aplicacao == 'Terceirização' %}
+                                        <a class="" href="{% url 'terceirizacao:item-perfil' %}?{{ gets_ultima }}">
+                                    {% endif %}
+                                        
+                                            <button class="botao-paginacao">last_page</button>
+                                        </a>
+                                
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_next</button>
+                                    </a>
+                                    
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">last_page</button>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <table class="tabela tabela-item-servidores-smartphone">
+            <thead>
+                <tr>
+                    <th>Nome {{ aplicacao }}</th>
+                    <th>Lotação</th>
+                    <th>Municipio</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for servidor in servidores %}
+                    <tr class="linha-desabilitada">
+                        <td>{{ servidor.servidor.nome }}</td>
+                        {% if servidor.unidade_administrativa %}
+                            <td>{{ servidor.unidade_administrativa }}</td>
+                        {% else %}
+                            <td>{{ servidor.endereco }}</td>
+                        {% endif %}
+                        <td>{{ servidor.endereco.municipio }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td class="coluna-paginacao" colspan="3">
+                        <div class="container-paginacao">
+                            <div>
+                                <span class="texto-negrito texto-azul">Vagas restantes:</span>
+                                {% if contrato.tipo_contrato == 'Postos de trabalho - Limpeza' %}
+                                    <span class="texto-normal texto-preto">{{ item.metragem_disponivel }}m²</span>
+                                {% else %}
+                                    <span class="texto-normal texto-preto">{{ vagas_restantes }}</span>
+                                {% endif %}
+                            </div>
+                            <div>      
+                                {% if servidores.has_previous %}
+                                    {% if aplicacao == 'Administração' %}
+                                        <a class="" href="{% url 'administracao:item-perfil' %}?{{ gets_primeira }}">
+                                    {% elif aplicacao == 'Terceirização' %}
+                                        <a class="" href="{% url 'terceirizacao:item-perfil' %}?{{ gets_primeira }}">
+                                    {% endif %}
+
+                                            <button class="botao-paginacao">first_page</button>
+                                        </a>
+                                    
+                                    {% if aplicacao == 'Administração' %}
+                                        <a class="" href="{% url 'administracao:item-perfil' %}?{{ gets_anterior }}">
+                                    {% elif aplicacao == 'Terceirização' %}
+                                        <a class="" href="{% url 'terceirizacao:item-perfil' %}?{{ gets_anterior }}">
+                                    {% endif %}
+
+                                            <button class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                {% else %}
+                                    <a class="" href="">
+                                        <button disabled class="botao-paginacao">first_page</button>
+                                    </a>
+                                    
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% endif %}
+                                
+                                <span class="">
+                                    {{ servidores.number }} de {{ servidores.paginator.num_pages }}
+                                </span>
+
+                                {% if servidores.has_next %}
+                                    {% if aplicacao == 'Administração' %}
+                                        <a class="" href="{% url 'administracao:item-perfil' %}?{{ gets_proxima }}">
+                                    {% elif aplicacao == 'Terceirização' %}
+                                        <a class="" href="{% url 'terceirizacao:item-perfil' %}?{{ gets_proxima }}">
+                                    {% endif %}
+                                        
+                                            <button class="botao-paginacao">navigate_next</button>
+                                        </a>
+                                    
+                                    {% if aplicacao == 'Administração' %}
+                                        <a class="" href="{% url 'administracao:item-perfil' %}?{{ gets_ultima }}">
+                                    {% elif aplicacao == 'Terceirização' %}
+                                        <a class="" href="{% url 'terceirizacao:item-perfil' %}?{{ gets_ultima }}">
+                                    {% endif %}
+                                        
+                                            <button class="botao-paginacao">last_page</button>
+                                        </a>
+                                
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_next</button>
+                                    </a>
+                                    
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">last_page</button>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    {% else %}
+        <h2 class="texto-medio texto-preto">Nenhum servidor lotado neste item do contrato.</h2>
+    {% endif %}
+</div>

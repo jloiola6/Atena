@@ -1,0 +1,5 @@
+/* Estilização do contrato de empenho */
+
+.formulario-empenho, .formulario-empenho .container-botoes{
+    margin-top: 16px;
+}

@@ -1,0 +1,153 @@
+{% load static %}
+
+{% if servidor_lotacoes %}
+    {% for lotacao in lotacoes %}
+        {% if lotacao.status == 1 %}
+            <div class="modal oculto" data-modal="lotacao-{{ lotacao.id }}">
+                <div class="modal-conteudo">
+                    <h4 class="texto-medio texto-azul">Verificar Lotação</h4>
+
+                    <p class="texto-preto descricao">Confira a sua unidade </p>
+
+                    <p class="texto-preto">
+                        <b class="texto-azul">Unidade: </b>
+                        {% if lotacao.unidade_escolar__escola__nome_escola %}
+                            {{ lotacao.unidade_escolar__escola__nome_escola }}
+                        {% elif lotacao.unidade_adm__nome %}
+                            {{ lotacao.unidade_adm__nome }}
+                        {% endif %}
+                    </p>
+
+                    <form method="POST" data-formulario-confirmacao>
+                        {% csrf_token %}
+
+                        <input type="hidden" value="{{ lotacao.id }}" name="lotacao">
+
+                        <div class="formulario-grupo">
+                            <label for="campo-situacao-{{ lotacao.id }}">Situação</label>
+
+                            <fieldset id="campo-situacao-{{ lotacao.id }}">
+                                <input type="radio" name="confirma-situacao" id="radio-sim-{{ lotacao.id }}" checked data-radio-situacao-correta value="correta">
+                                <label class="texto-preto" for="radio-sim-{{ lotacao.id }}">Lotação Correta</label>
+
+                                <input type="radio" name="confirma-situacao" id="radio-nao-{{ lotacao.id }}" data-radio-situacao-incorreta value="incorreta">
+                                <label class="texto-preto" for="radio-nao-{{ lotacao.id }}">Lotação Incorreta</label>
+                            </fieldset>
+                        </div>
+
+
+                        <div class="formulario-grupo" data-grupo-tipo-unidade>
+                            <label for="campo-tipo-unidade-{{ lotacao.id }}">Tipo de Unidade</label>
+
+                            <fieldset id="campo-tipo-unidade-{{ lotacao.id }}">
+                                <input type="radio" name="tipo-unidade" id="radio-escola-{{ lotacao.id }}" checked data-radio-tipo-unidade-escolar value="escolar">
+                                <label class="texto-preto" for="radio-escola-{{ lotacao.id }}">Unidade Escolar</label>
+
+                                <input type="radio" name="tipo-unidade" id="radio-adm-{{ lotacao.id }}" data-radio-tipo-unidade-adm value="adm">
+                                <label class="texto-preto" for="radio-adm-{{ lotacao.id }}">Unidade Administrativa</label>
+                            </fieldset>
+                        </div>
+
+                        <div class="formulario-grupo" data-grupo-escola>
+                            <label for="campo-unidade-escolar-{{ lotacao.id }}">Unidade Escolar</label>
+
+                            <select class="campo-texto campo-grande" name="unidade-escolar" id="campo-unidade-escolar-{{ lotacao.id }}" data-selecao2>
+                                {% for unidade in unidades_educacionais %}
+                                    <option value="{{ unidade.id }}">{{ unidade.nome_escola }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="formulario-grupo" data-grupo-adm>
+                            <label for="campo-unidade-adm-{{ lotacao.id }}">Unidade Administrativa</label>
+
+                            <select class="campo-texto campo-grande" name="unidade-adm" id="campo-unidade-adm-{{ lotacao.id }}" data-selecao2>
+                                {% for unidade in unidades_adm %}
+                                    <option value="{{ unidade.id }}">{{ unidade.nome }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="container-botoes">
+                            <button class="botao botao--verde" type="submit">Salvar</button>
+                            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% elif servidor_contrato_terceirizado %}
+    {% for lotacao in contrato_lotacao %}
+        {% if lotacao.status == 1 %}
+            <div class="modal oculto" data-modal="lotacao-terc-{{ lotacao.id }}">
+                <div class="modal-conteudo">
+                    <h4 class="texto-medio texto-azul">Verificar Lotação</h4>
+
+                    <p class="texto-preto descricao">Confira a sua unidade </p>
+
+                    <p class="texto-preto">
+                        <b class="texto-azul">Unidade: {{ lotacao_atual }}</b>
+                    </p>
+
+                    <form method="POST" data-formulario-confirmacao>
+                        {% csrf_token %}
+
+                        <input type="hidden" value="{{ lotacao.id }}" name="lotacao">
+                        <input type="hidden" value="terceirizado" name="terceirizado">
+
+                        <div class="formulario-grupo">
+                            <label for="campo-situacao-{{ lotacao.id }}">Situação</label>
+
+                            <fieldset id="campo-situacao-{{ lotacao.id }}">
+                                <input type="radio" name="confirma-situacao" id="radio-sim-{{ lotacao.id }}" checked data-radio-situacao-correta value="correta">
+                                <label class="texto-preto" for="radio-sim-{{ lotacao.id }}">Lotação Correta</label>
+
+                                <input type="radio" name="confirma-situacao" id="radio-nao-{{ lotacao.id }}" data-radio-situacao-incorreta value="incorreta">
+                                <label class="texto-preto" for="radio-nao-{{ lotacao.id }}">Lotação Incorreta</label>
+                            </fieldset>
+                        </div>
+
+
+                        <div class="formulario-grupo" data-grupo-tipo-unidade>
+                            <label for="campo-tipo-unidade-{{ lotacao.id }}">Tipo de Unidade</label>
+
+                            <fieldset id="campo-tipo-unidade-{{ lotacao.id }}">
+                                <input type="radio" name="tipo-unidade" id="radio-escola-{{ lotacao.id }}" checked data-radio-tipo-unidade-escolar value="escolar">
+                                <label class="texto-preto" for="radio-escola-{{ lotacao.id }}">Unidade Escolar</label>
+
+                                <input type="radio" name="tipo-unidade" id="radio-adm-{{ lotacao.id }}" data-radio-tipo-unidade-adm value="adm">
+                                <label class="texto-preto" for="radio-adm-{{ lotacao.id }}">Unidade Administrativa</label>
+                            </fieldset>
+                        </div>
+
+                        <div class="formulario-grupo" data-grupo-escola>
+                            <label for="campo-unidade-escolar-{{ lotacao.id }}">Unidade Escolar</label>
+
+                            <select class="campo-texto campo-grande" name="unidade-escolar" id="campo-unidade-escolar-{{ lotacao.id }}" data-selecao2>
+                                {% for unidade in unidades_educacionais %}
+                                    <option value="{{ unidade.id }}">{{ unidade.nome_escola }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="formulario-grupo" data-grupo-adm>
+                            <label for="campo-unidade-adm-{{ lotacao.id }}">Unidade Administrativa</label>
+
+                            <select class="campo-texto campo-grande" name="unidade-adm" id="campo-unidade-adm-{{ lotacao.id }}" data-selecao2>
+                                {% for unidade in unidades_adm %}
+                                    <option value="{{ unidade.id }}">{{ unidade.nome }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="container-botoes">
+                            <button class="botao botao--verde" type="submit">Salvar</button>
+                            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}

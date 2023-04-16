@@ -1,0 +1,27 @@
+.tabela-usuarios-tablet, .tabela-usuarios-smartphone{
+    display: none;
+}
+
+@media screen and (max-width: 833px) {
+    .tabela-usuarios-tablet{
+        display: block;
+    }
+
+    .tabela-usuarios, .tabela-usuarios-smartphone{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 645px){
+    .tabela-usuarios-smartphone{
+        display: block;
+    }
+
+    .tabela-usuarios, .tabela-usuarios-tablet{
+        display: none;
+    }
+
+    .tabela-usuarios-smartphone th{
+        width: 1%;
+    }
+}

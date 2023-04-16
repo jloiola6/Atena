@@ -1,0 +1,112 @@
+<form method="POST" enctype="multipart/form-data" class="container-surface">
+    {% csrf_token %}
+
+    <nav class="container-navegacao-surface">
+        <ul class="navegacao-surface-lista">
+            <li class="navegacao-surface-item navegacao-surface-item-ativo">
+                <span class="texto-azul">Dados</span>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="formulario-grupo">
+        <label for="campo-titulo" class="texto-azul label-campo">Formação</label>
+
+        <select name="formacao" id="campo-titulo" class="campo-texto campo-pequeno" data-selecao-formacao>
+            {% for formacao in formacoes %}
+                <option value="{{ formacao }}">{{ formacao }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="formulario-grupo" data-container-escola>
+        <label class="texto-azul label-campo" for="campo-instituicao">Instituição de Ensino</label>
+
+        <div data-selecao-escola>
+            <select data-selecao2 name="select_escola">
+                {% for escola in escolas %}
+                    <option>{{ escola }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div data-container-magisterio>
+        <div class="formulario-grupo" >
+            <label class="texto-azul label-campo" for="campo-instituicao">Instituição de Ensino</label>
+
+            <div data-selecao-escola>
+                <select data-selecao2 name="select_escola_magisterio">
+                    {% for escola in escolas %}
+                        <option>{{ escola }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="formulario-grupo">
+                <label class="texto-azul label-campo" for="campo-curso-magisterio">Curso</label>
+
+                <select data-selecao2 name="curso_magisterio" id="campo-curso-magisterio">
+                    {% for curso in cursos_magisterio %}
+                        <option value="{{ curso }}">{{ curso }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="formulario-grupo" data-container-superior>
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-instituicao">Instituição de Ensino</label>
+
+            <select data-selecao2 name="instituicao" id="campo-instituicao">
+                {% for universidade in universidades %}
+                    <option value="{{ universidade.sigla }} - {{ universidade.nome }} - {{ universidade.uf }}">{{ universidade.sigla }} - {{ universidade.nome }} - {{ universidade.uf }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-curso">Curso</label>
+
+            <select data-selecao2 name="curso" id="campo-curso">
+                {% for curso in cursos %}
+                    <option value="{{ curso }}">{{ curso }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="label-campo texto-azul" for="fieldset-tipo-unidade">Situação</label>
+
+            <fieldset id="fieldset-situacao">
+                <input type="radio" name="fieldset-situacao" value="Concluído" id="radio-concluido" checked data-radio-concluido>
+                <label class="texto-preto" for="radio-concluido">Concluído</label>
+
+                <input type="radio" name="fieldset-situacao" value="Cursando" id="radio-cursando" data-radio-cursando>
+                <label class="texto-preto" for="radio-cursando">Cursando</label>
+            </fieldset>
+        </div>
+    </div>
+
+    <div class="formulario-grupo" data-grupo-conclusao>
+        <label class="texto-azul label-campo" for="campo-conclusao">Data de conclusão</label>
+        <input class="campo-texto campo-pequeno" type="date" name="conclusao" id="campo-conclusao" maxlength="30">
+    </div>
+
+    <div class="container-botoes">
+        <button class="botao botao--azul" data-modal-abrir="confirmar">Cadastrar</button>
+    </div>
+
+    <div class="modal oculto" data-modal="confirmar">
+        <div class="modal-conteudo modal-confirmacao">
+            <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+            <p class="texto-preto descricao">Tem certeza que deseja cadastrar os dados de escolaridade?</p>
+
+            <div class="container-botoes">
+                <button class="botao--verde botao" type="submit">Salvar</button>
+                <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+            </div>
+        </div>
+    </div>
+</form>

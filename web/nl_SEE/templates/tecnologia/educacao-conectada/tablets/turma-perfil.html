@@ -1,0 +1,183 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} {{ turma }} {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/tecnologia/educacao-conectada/tablets/turma-perfil.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:index' %}">Tecnologia</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:educacao-conectada' %}">Educação Conectada</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:escolas' %}">Tablets</a>
+                <span class="  texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:escola-perfil' turma.endereco.escola.id %}">{{ turma.endereco.escola }}</a>
+                <span class="  texto-azul">&#62;</span>
+
+                <span class="texto-azul">{{ turma }}</span>
+            </nav>
+
+            <div class="container-surface">
+                <h1 class="texto-medio texto-azul">{{ turma.nome }}</h1>
+                <p class="texto-preto descricao">{{ turma.endereco.escola }}</p>
+
+                <div class="container-detalhes">
+                    <p class="texto-preto"><b class="texto-azul">Turno: </b>{{ turma.turno }}</p>
+                    <p class="texto-preto"><b class="texto-azul">Etapa: </b>{{ turma.etapa }}</p>
+                    <p class="texto-preto"><b class="texto-azul">Total de alunos: </b>{{ turma.qtd_alunos }}</p>
+                </div>
+                {% if exportar %}
+                    <form class="container-botoes" method="post">
+                        {% csrf_token %}
+                        <button class="botao botao--azul exportar" name="exportar-aluno-pdf" value="exportar-aluno-pdf">Exportar</button>
+                    </form>
+                {% endif %}
+            </div>
+
+            <!-- <h2 class="texto-azul titulo-pagina">Equipamentos cadastrados</h2> -->
+
+            <div class="container-surface">
+                <h2 class="texto-azul texto-medio">Tablets</h2>
+
+                <div class="container-detalhes">
+                    <div class="container-tablets-status">
+                        <i class="tablet-status tablet--nao-cadastrado"></i>
+                        <p class="texto-preto"><b class="texto-azul">Não cadastrados: </b>{{ tablets_nao_cadastrados }}</p>
+                    </div>
+
+                    <div class="container-tablets-status">
+                        <i class="tablet-status tablet--pendente"></i>
+                        <p class="texto-preto"><b class="texto-azul">Entrega pendente: </b>{{ tablets_pendentes }}</p>
+                    </div>
+
+                    <div class="container-tablets-status">
+                        <i class="tablet-status tablet--entregue"></i>
+                        <p class="texto-preto"><b class="texto-azul">Entregues à escola: </b>{{ tablets_entregues }}</p>
+                    </div>
+
+                    <div class="container-tablets-status">
+                        <i class="tablet-status tablet--finalizado"></i>
+                        <p class="texto-preto"><b class="texto-azul">Finalizados: </b>{{ tablets_finalizados }}</p>
+                    </div>
+                </div>
+
+                {% if tablets_pendentes == qtd_alunos %}
+                    <form class="container-botoes" method="POST">
+                        {% csrf_token %}
+
+                        <button class="botao botao--azul" type="submit" name="entregar">Entregar à escola</button>
+                    </form>
+                {% elif tablets_pendentes < qtd_alunos %}
+                    <div class="container-botoes">
+                        <a href="{% url 'tecnologia:tablet-formulario' turma.id %}">
+                            <button class="botao botao--azul">Abrir Formulário</button>
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <h2 class="texto-azul titulo-pagina">Alunos ({{ qtd_alunos }})</h2>
+
+            <table class="tabela">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Nascimento</th>
+                        <th>Sexo</th>
+                        <th>CAD Único</th>
+                        <th class="coluna-centralizada">Tablet</th>
+                    </tr>
+                </thead>
+
+                    <tbody data-tabela-link="/tecnologia/aluno-perfil/">
+                        {% for aluno in alunos %}
+                                <tr data-tabela-link-chave="{{ aluno.id }}">
+                                    <td>{{ aluno.aluno__nome }}</td>
+                                    <td>{{ aluno.aluno__nascimento }}</td>
+                                    <td>{{ aluno.aluno__sexo }}</td>
+                                    <td>{{ aluno.aluno__bolsa_familia }}</td>
+                                    <td title="{{ aluno.tablet_status_title }}">
+                                        <i class="{{ aluno.tablet_status_classe }}"></i>
+                                    </td>
+                                </tr>
+                        {% endfor %}
+                    </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td class="coluna-paginacao" colspan="5">
+                            <div class="container-paginacao">
+                                <div>
+                                    <span class="texto-negrito texto-azul">TOTAL:</span>
+                                    <span>{{ qtd_alunos }}</span>
+                                </div>
+
+                                <div>
+                                    {% if alunos.has_previous %}
+                                        <a class="" href="{% url 'tecnologia:turma-perfil' id_turma %}?page=1">
+                                            <button class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'tecnologia:turma-perfil' id_turma %}?page={{ alunos.previous_page_number }}">
+                                            <button class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% endif %}
+
+                                    <span class="">
+                                        {{ alunos.number }} de {{ alunos.paginator.num_pages }}
+                                    </span>
+
+                                    {% if alunos.has_next %}
+                                        <a class="" href="{% url 'tecnologia:turma-perfil' id_turma %}?page={{ alunos.next_page_number }}">
+                                            <button class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'tecnologia:turma-perfil' id_turma %}?page={{ alunos.paginator.num_pages }}">
+                                            <button class="botao-paginacao">last_page</button>
+                                        </a>
+
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">last_page</button>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/linkTabela.js' %}"></script>
+{% endblock %}

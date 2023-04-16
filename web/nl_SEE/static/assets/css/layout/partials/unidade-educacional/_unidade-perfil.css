@@ -1,0 +1,50 @@
+/* Estilização da partial de unidade educacional */
+
+.container-unidade__titulo{
+    align-items: center;
+    display: flex;
+    gap: .5rem;
+}
+
+.unidade__etapas{
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+    .unidade__etapa{
+        border: 2px solid var(--cor-azul);
+        border-radius: .5rem;
+        color: var(--texto-azul);
+        padding-block: .25rem;
+        padding-inline: 1rem;
+    }
+
+    .etapa--fundamental{
+        border-color: var(--cor-fundamental);
+    }
+
+    .etapa--medio{
+        border-color: var(--cor-medio);
+    }
+
+
+    .etapa--aee{
+        border-color: var(--cor-aee);
+    }
+
+    .etapa--aprender{
+        border-color: var(--cor-aprender-caminho);
+    }
+
+    .etapa--campo{
+        border-color: var(--cor-caminhos-campo);
+    }
+
+    .etapa--eja{
+        border-color: var(--cor-eja);
+    }
+
+.unidade__mapa{
+    width: 100%;
+}

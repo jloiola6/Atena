@@ -1,0 +1,48 @@
+{% load static %}
+<div data-nav-container="ocorrencia" class="oculto">
+    {% if ocorrencias %}
+        <div class="container-cards-simples contrato-lotacoes">
+            {% for ocorrencia in ocorrencias %}
+                <div class="card-simples card-ocorrencia">
+                    <h4 class="card-simples__titulo texto-azul">{{ ocorrencia.tipo_ocorrencia }}</h4>
+
+                    <div class="card-simples__descricao">
+                        <p class=" texto-azul texto-negrito">Numero do Item: <span class="texto-preto texto-normal">{{ ocorrencia.contrato.item.numero_item}}</span></p>
+                        <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ ocorrencia.data_inicio }}</span></p>
+                        <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ ocorrencia.data_termino }}</span></p>
+                        {% if ocorrencia.substituto %}
+                            <p class=" texto-azul texto-negrito">Substituto: <span class="texto-preto texto-normal">{{ ocorrencia.substituto }}</span></p>
+                        {% else %}
+                            <p class=" texto-azul texto-negrito">Substituto: <span class="texto-preto texto-normal">Não Informado</span></p>
+                        {% endif %}
+                        {% if ocorrencia.status == 1 %}
+                            <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">Ativo</span></p>
+                        {% else %}
+                            <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">Inativo</span></p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <h3 class="texto-medio texto-preto">Sem ocorrências funcionais cadastradas</h3>
+    {% endif %}
+
+    {% if ultima_lotacao.status == 1 %}
+        {% if permissao.editar == 1 %}
+            {% if ultima_ocorrencia == None %}
+                <div class="container-botoes">
+                    <a href="{% url 'terceirizacao:ocorrencia-formulario-terceirizacao' %}?id_contrato={{ id_contrato }}">
+                        <button class="botao botao--azul">Adicionar</button>
+                    </a>
+                </div>
+            {% elif ultima_ocorrencia.status == 0 %}
+                <div class="container-botoes">
+                    <a href="{% url 'terceirizacao:ocorrencia-formulario-terceirizacao' %}?id_contrato={{ id_contrato }}">
+                        <button class="botao botao--azul">Adicionar</button>
+                    </a>
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+</div>

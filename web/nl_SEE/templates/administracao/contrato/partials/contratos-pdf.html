@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="pt-bt">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Exportar Contratos</title>
+    </head>
+    <body>
+        <header>
+            <table>
+                <tr>
+                    <th><img id="img2" src="{{ url_logo }}" alt=""></th>
+                    <th class="direita"><img id="img3" src="{{ url_atena }}" alt="Logo"></th>
+                    <!-- <th><img id="img2" src="C:\Users\joao.soares\Documents\code\Atena\nl_SEE\static\assets\img\contrato_adm.png" alt=""></th>
+                    <th><img id="img3" src="C:\Users\joao.soares\Documents\code\Atena\nl_SEE\static\assets\img\ATENA-AZUL.svg" alt="Logo" style="width:120px;height:auto;"></th> -->
+                </tr>
+            </table>
+        </header>
+
+        <hr>
+
+        <table>
+            <tr>
+                <th class="dados dado-lotacao">Total de Contratos: {{  quantidade_contratos }}</th>
+                <th></th>
+                <th></th>
+                <th class="dados">Exportado por {{ nome }} dia {{ data }}</th>
+            </tr>
+        </table>
+        <table class="tabela tabela-lotacoes">
+            <thead>
+                <tr>
+                    <th class="situacao">Nº CONTRATO</th>
+                    <th class="">EMPRESA</th>
+                    <th class="">TIPO CONTRATO</th>
+                    <th class="">DATA INICIO</th>
+                    <th class="">VALOR GLOBAL</th>
+                    <th class="situacao">SITUAÇÃO</th>
+                    <th class="">GESTOR</th>
+                    <th class="">GESTOR SUBSTITUTO</th>
+                    <th class="">FISCAL</th>
+                    <th class="">FISCAL SUBSTITUTO</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for contrato in contratos %}
+                    <tr>
+                        <td>{{ contrato.contrato.numero_contrato }}</td>
+                        <td>{{ contrato.contrato.empresa.nome }}</td>
+                        <td>{{ contrato.contrato.tipo_contrato }}</td>
+                        <td>{{ contrato.contrato.data_inicio }}</td>
+                        <td>{{ contrato.contrato.valor_total }}</td>
+                        <td>{{ contrato.contrato.situacao }}</td>
+                        <td>{{ contrato.gestor_titular }}</td>
+                        <td>{{ contrato.gestor_substituto }}</td>
+                        <td>{{ contrato.fiscal_titular }}</td>
+                        <td>{{ contrato.fiscal_substituto }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <style>
+            @page{
+                size: landscape;
+                margin: 0.7cm;
+            }
+
+            .tabela-lotacoes{
+                border: 1px solid black;
+                text-align: center;
+                padding: 6px;
+            }
+
+            .tabela-lotacoes th{
+                font-size: 10px;
+            }
+
+            .tabela-lotacoes td{
+                font-size: 10px;
+            }
+
+            h1{
+                margin: 0;
+            }
+
+            #img2{
+                width: 100%;
+                height: auto;
+            }
+
+            #img3{
+                width: 120px;
+                height: auto;
+            }
+
+            .direita{
+                text-align: right;
+            }
+
+            .cabecalho{
+                font-size: 16px;
+                font-family: sans-serif;
+                text-align: center;
+            }
+
+            .texto1{
+                padding-top: 18px;
+            }
+
+            .texto2{
+                padding-bottom: 4px;
+            }
+
+            .dados{
+                padding-top: 8px;
+            }
+
+
+            .ano{
+                width: 75px;
+            }
+
+            .digito{
+                width: 45px;
+            }
+
+            .contrato{
+                width: 100px;
+            }
+
+
+            .dado-lotacao{
+                font-size: 16px;
+            }
+
+            .cpf{
+                width: 80px;
+            }
+
+            .situacao{
+                width: 6%;
+            }
+
+        </style>
+
+    </body>
+</html>

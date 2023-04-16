@@ -1,0 +1,39 @@
+/* Estilização da página de formulário de contrato aditivo */
+
+.container-formulario-contrato-aditivo, .container-formulario-contrato-aditivo .container-botoes{
+    margin-top: 16px;
+}
+
+.container-formulario-contrato-aditivo .fieldset-item{
+    box-sizing: border-box;
+    height: 40px;
+    padding-top: 8px;
+}
+
+.campo-aditivo-item-descricao{
+    width: 144px;
+}
+
+.contrato-item-grupo-campos{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.contrato-item-grupo-campos .formulario-grupo{
+    align-items: center;
+    justify-content: center;
+}
+
+.campo-item-numero{
+    width: 54px;
+}
+
+.campo-item-valor{
+    width: 136px;
+}
+
+.campo-item-descricao{
+    width: 480px;
+}

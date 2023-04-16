@@ -1,0 +1,124 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Cadastro de Disciplina {% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/administracao/unidades/turma/grade-formulario.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:index' %}">Administração</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:unidades_educacionais' %}">Unidades</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:unidade-perfil' %}?inep={{ escola.cod_inep }}">{{ escola.nome_escola }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:turma-perfil' %}?id={{ turma.id }}">{{ turma.nome }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Cadastro de Disciplina</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Cadastro de Disciplina</h1>
+            <p class=" descricao">Insira os dados da Disciplina</p>
+
+            <form class="container-surface container-formulario-grade" method="POST">
+                {% csrf_token %}
+
+                <h2 class="texto-medio texto-azul">Dados da Disciplina</h2>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-nome-turma">Turma</label>
+                    {% if edicao %}
+                        <input class="campo-texto campo-medio" type="text" value="{{ grade.turma.nome }}" id="campo-nome-turma" readonly>
+                    {% else %}
+                        <input class="campo-texto campo-medio" type="text" value="{{ turma.nome }}" id="campo-nome-turma" readonly>
+                    {% endif %}
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo"  for="campo-disciplina">Disciplina</label>
+
+                    <select id="campo-disciplina" name="disciplina" class="campo-texto campo-medio">
+                        {% for disciplina in disciplinas %}
+                            {% if disciplina.id not in disciplinas_existentes %}
+                                {% if disciplina.id == grade.disciplina.id %}
+                                    <option value="{{ disciplina.id }}" selected>{{ disciplina.nome }}</option>
+                                {% else %}
+                                    <option value="{{ disciplina.id }}">{{ disciplina.nome }}</option>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo"  for="campo-professor">Professor</label>
+
+                    <select id="campo-professor" name="professor" data-selecao2 class="campo-grande campo-texto">
+                        {% for professor in professores %}
+                            {% if professor.id == grade.professor %}
+                            <option value="{{ professor.id }}" selected>{{ professor.contrato__servidor__nome }}</option>
+                            {% else %}
+                                <option></option>
+                                <option value="{{ professor.id }}">{{ professor.contrato__servidor__nome }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo"  for="campo-carga-horaria">Carga Horária</label>
+                    <input class="campo-texto campo-pequeno" type="text"  name="carga_horaria" value="{{ grade.carga_horaria }}" id="campo-carga-horaria" placeholder="Ex: 30" required autocomplete="off" maxlength="2" data-mascara = "numero">
+                </div>
+
+                <div class="container-botoes">
+                    {% if edicao == True %}
+                        <button class="botao botao--verde" type="submit">Editar</button>
+
+                        <a class="" href="{% url 'administracao:deletar-grade' %}?id_grade={{ grade.id }}">
+                            <button class="botao botao--vermelho">Excluir</button>
+                        </a>
+                    {% else %}
+                        <button class="botao botao--azul" data-modal-abrir="confirmar">Cadastrar</button>
+                    {% endif %}
+                </div>
+
+                <div class="modal oculto" data-modal="confirmar">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                        <p class="texto-preto descricao">Tem certeza que deseja salvar a disciplina na turma {{ turma.nome }}?</p>
+
+                        <div class="container-botoes">
+                            <button class="botao--verde botao" type="submit">Salvar</button>
+                            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/module/select2.js' %}"></script>
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+{% endblock %}

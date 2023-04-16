@@ -1,0 +1,88 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+    Cadastrar Subconta
+{% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/lotacao/contrato/subconta-formulario.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:index' %}">Gestão de Pessoas</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:lotacoes' %}">Lotações</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:servidor-perfil' %}?id={{ servidor.id }}">{{ servidor.nome }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:contrato-perfil' %}?id_contrato={{ contrato.id }}">Digito n° {{ contrato.digito }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Cadastrar Subconta</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Cadastrar Subconta</h1>
+            <p class="descricao  texto-preto">Insira os dados da subconta</p>
+
+            <form class="container-surface container-subconta-formulario" method="POST">
+                {% csrf_token %}
+
+                <h2 class="texto-azul texto-medio">Cadastrar Subconta</h2>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-sub">Código da subconta</label>
+                    <input class="campo-texto campo-grande" type="text" value="" name="sub" id="campo-sub" autocomplete="off" maxlength="11" required>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-fonte">Fonte</label>
+                    <input class="campo-texto campo-grande" type="text" value="" name="fonte" id="campo-fonte" autocomplete="off" maxlength="50" required>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-situacao">Situação</label>
+                    <input class="campo-texto campo-grande" type="text" value="" name="situacao" id="campo-situacao" autocomplete="off" maxlength="50" required>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-descricao">Descrição</label>
+                    <textarea class="campo-texto campo-area" value="" name="descricao" id="campo-descricao" autocomplete="off" maxlength="200" required></textarea>
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao botao--azul" data-modal-abrir="confirmar">Cadastrar</button>
+                </div>
+
+                <div class="modal oculto" data-modal="confirmar">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                        <p class="texto-preto descricao">Tem certeza que deseja cadastrar a subconta?</p>
+
+                        <div class="container-botoes">
+                            <button class="botao--verde botao" type="submit">Salvar</button>
+                            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+
+{% endblock %}

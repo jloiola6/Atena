@@ -1,0 +1,79 @@
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href= "{% static 'assets/css/layout/lotacao/folha/modal.css' %}">
+{% endblock %}
+
+
+{% for servidor in servidores %}
+    <div class="modal oculto" data-modal="modal-detalhe-lotacao-{{ servidor.id }}">
+        <div class="modal-conteudo">
+
+            <h3 class="texto-medio texto-azul nome-servidor">{{ servidor.servidor__nome }}</h3>
+            <a href="{% url 'lotacao:contrato-perfil' %}?id_contrato={{ servidor.id }}" class="link link-contrato">Abrir contrato do servidor</a>
+            <div class="container-detalhes">
+                <div class="container-detalhes">
+                    {% if servidor.cargo__classe %}
+                        <p class="texto-azul texto-negrito detalhes">Classe: <span class="texto-preto texto-normal detalhes-resultado"><b>{{ servidor.cargo__classe }}</b></span></p>
+                    {% else %}
+                        <p class="texto-azul texto-negrito detalhes">Função: <span class="texto-preto texto-normal detalhes-resultado"><b>{{ servidor.cargo__nome }} - Classe não informada</b></span></p>
+                    {% endif %}
+                    <p class="texto-azul texto-negrito detalhes">Carga Horária: <span class="texto-preto texto-normal detalhes-resultado"><b>{{ servidor.cargo__carga_horaria }} Horas</b></span></p>
+                    <p class="texto-azul texto-negrito detalhes">Tipo de Contrato: <span class="texto-preto texto-normal detalhes-resultado"><b>{{ servidor.cargo__tipo }}</b></span></p>
+                    {% for cargo in cargos %}
+                        {% if cargo.cargo_id == servidor.cargo_id %}
+                            <p class="texto-azul texto-negrito detalhes">Vencimento: <span class="texto-preto texto-normal detalhes-resultado"><b>{{ cargo.valor }}</b></span></p>
+                            <p class="texto-azul texto-negrito detalhes">Referência: <span class="texto-preto texto-normal detalhes-resultado"><b>{{ cargo.ref }}</b></span></p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="lotacaoes-contrato">
+                <h3 class="texto-medio texto-azul nome-servidor">Lotações do contrato</h3>
+
+                {% if servidor.id in contratos_aux %}
+                    <table class="tabela tabela-lotacao-contrato">
+                        <thead>
+                            <tr>
+                                <th>Tipo de Lotação</th>
+                                <th>Carga Horaria</th>
+                                <th>Função</th>
+                                <th>Horas Complementares</th>
+                                <th>Valor Geral</th>
+                            </tr>
+                        </thead>
+                        {% for contrato in contratos %}
+                            {% if contrato.contrato_id  == servidor.id %}
+                                <tbody>
+                                    <tr>
+                                        <td>{{ contrato.tipo_lotacao }}</td>
+                                        <td>{{ contrato.carga_horaria }}</td>
+
+                                        {% if contrato.funcao != None and contrato.funcao != '' %}
+                                            <td>{{ contrato.funcao }}</td>
+                                        {% else %}
+                                            <td>Sem Lotação</td>
+                                        {% endif %}
+                                        <td> <select name="horas-complementares" id="horas-complementares">
+                                                {% for i in ranger %}
+                                                    <option value="{{ i }}" id="{{ i }}">{{ i }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </td>
+                                        <td> R$ 2998</td>
+                                    </tr>
+                                </tbody>
+                            {% endif %}
+                        {% endfor %}
+                    </table>
+
+                {% else %}
+                    <h3>Servidor não possui lotações ativas</h3>
+
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+{% endfor %}

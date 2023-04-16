@@ -1,0 +1,25 @@
+@media screen and (max-width: 768px){
+    .tabela th, .tabela td{
+        padding: 16px 8px;
+    }
+}
+
+@media screen and (max-width: 425px){
+    .container-menu-tabela{
+        flex-direction: column;
+        row-gap: 8px;
+    }
+
+    .container-menu-tabela .botao{
+        width: 100%;
+    }
+
+}
+
+@media screen and (max-width: 372px){
+    .tabela .container-paginacao > div:last-child{
+        gap: 4px;
+
+    }
+
+}

@@ -1,0 +1,402 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+    Cadastrar Lotação
+{% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/lotacao/lotacao/lotacao-formulario.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:index' %}">Gestão de Pessoas</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:lotacoes' %}">Lotações</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:servidor-perfil' %}?id={{ servidor.id }}">{{ servidor.nome }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                {% if contrato.tipo_contrato != 'ESTAGIÁRIO' %}
+                    {% if contrato.digito == None or contrato.digito == '' or contrato.digito == 'Sem dígito' %}
+                        <a class="  texto-azul" href="{% url 'lotacao:contrato-perfil' contrato.id %}">Contrato sem dígito</a>
+                        <span class="texto-azul">&#62;</span>
+                    {% else %}
+                        <a class="  texto-azul" href="{% url 'lotacao:contrato-perfil' contrato.id %}">Digito n° {{ contrato.digito }}</a>
+                        <span class="texto-azul">&#62;</span>
+                    {% endif %}
+                {% else %}
+                    <a class="  texto-azul" href="{% url 'lotacao:contrato-perfil' contrato.id %}">Estagiário</a>
+                    <span class="texto-azul">&#62;</span>
+                {% endif %}
+
+                <span class="  texto-azul">Cadastrar Lotação</span>
+
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Cadastrar Lotação</h1>
+
+            <p class="descricao  texto-preto">Insira os dados da Lotação</p>
+
+            <form class="container-surface container-formulario-lotacao" method="POST">
+                {% csrf_token %}
+                <nav class="container-navegacao-surface">
+                    <ul class="navegacao-surface-lista">
+                        <li class="navegacao-surface-item navegacao-surface-item-ativo" data-form-aba="dados">
+                            <span class="texto-azul ">Dados</span>
+                        </li>
+
+                        {% if tipo_lotacao == 'Contrato' or tipo_lotacao == 'Aula Complementar' or tipo_lotacao == 'Complementação Salarial' or tipo_lotacao == 'Dedicação Exclusiva' %}
+                            {% if tipo_unidade == 'escolar' %}
+                                {% if funcao == 'Professor(a)' %}
+                                    <li class="navegacao-surface-item" data-form-aba="enturmacao">
+                                        <span class="texto-azul ">Enturmação</span>
+                                    </li>
+                                {% elif funcao == 'Atendente Pessoal' or funcao == 'Atendimento Domiciliar' or funcao == 'Interprete' or funcao == 'Mediador' or funcao == 'Professor(a) Brailista' %}
+                                    <li class="navegacao-surface-item" data-form-aba="enturmacao-aee">
+                                        <span class="texto-azul ">Enturmação</span>
+                                    </li>
+
+                                    <li class="navegacao-surfac-item" data-form-aba="alunos-aee">
+                                        <span class="texto-azul">Alunos</span>
+                                    </li>
+                                {% elif funcao == 'Professor(a) AEE' or funcao == 'Coordenador(a) Pedagógico(a) de Anos'%}
+                                    <li class="navegacao-surface-item" data-form-aba="professor-aee">
+                                        <span class="texto-azul ">Enturmação</span>
+                                    </li>
+                                {% endif %}
+                            {% else %}
+
+                                {% if funcao == 'Professor(a)' %}
+                                    <li class="navegacao-surface-item" data-form-aba="enturmacao-adm">
+                                        <span class="texto-azul ">Enturmação</span>
+                                    </li>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+
+                    </ul>
+
+                </nav>
+
+                <div class="formulario-unidade-contatos" data-form-container="dados">
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-servidor">Servidor</label>
+                        <input class="campo-texto campo-grande" type="text" value="{{ servidor }}" name="servidor" id="campo-servidor" readonly autocomplete="off">
+                    </div>
+
+                    {% if contrato.tipo_contrato != 'ESTAGIÁRIO' and contrato.tipo_contrato != 'PERMUTA' and contrato.tipo_contrato != 'CEDIDO' %}
+                        <div class="formulario-grupo">
+                            <label class="texto-azul label-campo" for="campo-contrato">Digito N°</label>
+                            <input class="campo-texto campo-grande" type="text" value="{{ contrato.digito }}" name="contrato" id="campo-contrato" readonly autocomplete="off">
+                        </div>
+                    {% else %}
+                        <div class="formulario-grupo">
+                            <label class="texto-azul label-campo" for="campo-servidor">Tipo de Contrato</label>
+                            <input class="campo-texto campo-grande" type="text" value="{{ contrato.tipo_contrato }}" name="servidor" id="campo-servidor" readonly autocomplete="off">
+                        </div>
+                    {% endif %}
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-tipo-lotacao">Tipo de lotação</label>
+                        <input type="text" class="campo-texto campo-medio" name="tipo_lotacao" id="campo-tipo-lotacao" value="{{ tipo_lotacao }}" readonly>
+                    </div>
+
+                    {% if tipo_lotacao != 'Sem Lotação' and tipo_lotacao != 'Cedido' and tipo_lotacao != 'Permuta' %}
+                        <div class="formulario-grupo">
+                            {% if tipo_unidade == 'escolar' %}
+                                <label for="campo-unidade" class="texto-azul label-campo">Unidade Escolar</label>
+                                {% if unidade.tipo == 'S' %}
+                                    <input type="text" class="campo-texto campo-grande" name="endereco" id="campo-unidade" value="{{ unidade }}" readonly>
+                                {% else %}
+                                    <input type="text" class="campo-texto campo-grande" name="endereco" id="campo-unidade" value="{{ unidade }} - (Anexo {{ unidade.numero_anexo }})" readonly>
+                                {% endif %}
+                            {% else %}
+                                <label for="campo-unidade" class="texto-azul label-campo">Unidade Administrativa</label>
+                                <input type="text" class="campo-texto campo-grande" name="administrativa" id="campo-unidade" value="{{ unidade }}" readonly>
+                            {% endif %}
+                        </div>
+
+                        <div class="formulario-grupo">
+                            {% if tipo_unidade == 'escolar' %}
+                                <label for="campo-funcao" class="texto-azul label-campo">Função</label>
+                                <input type="text" class="campo-texto campo-grande" name="funcao_escolar" id="campo-funcao" value="{{ funcao }}" readonly>
+                            {% else %}
+                                <label for="campo-funcao" class="texto-azul label-campo">Função</label>
+                                <input type="text" class="campo-texto campo-grande" name="funcao_adm" id="campo-funcao" value="{{ funcao }}" readonly>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+
+                    {% if funcao == 'Diretor(a) Escolar' or funcao == 'Coordenador(a) Administrativo de Escolas' or funcao == 'Coordenador(a) de Ensino Escolar' or funcao == 'Secretário(a) Escolar' %}
+                        <div class="formulario-grupo">
+                            <label class="texto-azul label-campo" for="campo-tipo-lotacao">Número da portaria</label>
+                            <input type="text" class="campo-texto campo-medio" name="portaria" id="portaria" placeholder="Ex.: 001/2023" required data-campo-portaria>
+                        </div>
+                        <div class="formulario-grupo">
+                            <label class="texto-azul label-campo" for="doe-portaria">DOE da portaria</label>
+                            <input type="text" class="campo-texto campo-medio" name="doe-portaria" id="doe-portaria" placeholder="Ex.: 00000" required data-campo-doe-portaria>
+                        </div>
+                    {% endif %}
+
+                    {% if tipo_lotacao == 'Cedido' or tipo_lotacao == 'Permuta' %}
+                        <div data-grupo-orgaos class="formulario-grupo">
+                            <label class="texto-azul label-campo" for="campo-orgaos">Órgãos e Entidades</label>
+
+                            <select data-selecao2  name="orgaos" id="campo-orgaos" class="campo-texto campo-grande" data-campo-orgao>
+                                {% for orgao in orgaos %}
+                                    <option value="{{ orgao }}">{{ orgao }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    {% endif %}
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-subconta">Subconta</label>
+
+                        <select data-selecao2  name="subconta" id="campo-subconta" class="campo-texto campo-grande" data-campo-subconta>
+                            {% for sub in subcontas %}
+                            <option value="{{ sub.id }}">{{ sub.sub }} - {{ sub.fonte }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- {% if contrato.tipo_contrato == 'PERMUTA' %}
+                        <div class="formulario-grupo">
+                            <a class="link" href="{% url 'lotacao:subconta-formulario' %}?id_contrato={{ contrato.id }}">Adicionar nova subconta</a>
+                        </div>
+                    {% endif %} -->
+
+                    {% if tipo_lotacao != 'Cedido' and tipo_lotacao != 'Permuta' %}
+                        <div class="formulario-grupo">
+                            <label class="texto-azul label-campo" for="campo-unidade-orgao_origem">Orgão de Origem</label>
+
+                            <select name="orgao_origem" id="campo-orgao_origem" class="campo-texto campo-medio">
+                                <option value="SEE">SEE</option>
+                                <option value="AC">AC</option>
+                                <option value="ACREDATA">ACREDATA</option>
+                                <option value="ACREPREVIDENCIA">ACREPREVIDENCIA</option>
+                                <option value="AGEAC">AGEAC</option>
+                                <option value="ANAC">ANAC</option>
+                                <option value="BANACRE">BANACRE</option>
+                                <option value="CAGEACRE">CAGEACRE</option>
+                                <option value="CASACIVIL">CASACIVIL</option>
+                                <option value="CASMIL">CASMIL</option>
+                                <option value="CBMAC">CBMAC</option>
+                                <option value="CDSA">CDSA</option>
+                                <option value="CGE">CGE</option>
+                                <option value="CILA">CILA</option>
+                                <option value="CODISACRE">CODISACRE</option>
+                                <option value="COHAB">COHAB</option>
+                                <option value="COLONACRE">COLONACRE</option>
+                                <option value="DEPASA">DEPASA</option>
+                                <option value="DERACRE">DERACRE</option>
+                                <option value="DETRAN">DETRAN</option>
+                                <option value="DPE">DPE</option>
+                                <option value="EMATER">EMATER</option>
+                                <option value="FADES">FADES</option>
+                                <option value="FDRHCD">FDRHCD</option>
+                                <option value="FEM">FEM</option>
+                                <option value="FUNBESA">FUNBESA</option>
+                                <option value="FUNDAC">FUNDAC</option>
+                                <option value="FUNDHACRE">FUNDHACRE</option>
+                                <option value="FUNTAC">FUNTAC</option>
+                                <option value="GABGOV">GABGOV</option>
+                                <option value="GABVICE">GABVICE</option>
+                                <option value="IAPEN">IAPEN</option>
+                                <option value="IDAF">IDAF</option>
+                                <option value="IEPTEC">IEPTEC</option>
+                                <option value="IMAC">IMAC</option>
+                                <option value="IMC">IMC</option>
+                                <option value="ISE">ISE</option>
+                                <option value="ITERACRE">ITERACRE</option>
+                                <option value="JUCEAC">JUCEAC</option>
+                                <option value="PCAC">PCAC</option>
+                                <option value="PGE">PGE</option>
+                                <option value="PMAC">PMAC</option>
+                                <option value="PROCON">PROCON</option>
+                                <option value="REPAC">REPAC</option>
+                                <option value="SANACRE">SANACRE</option>
+                                <option value="SEASDHM">SEASDHM</option>
+                                <option value="SECOM">SECOM</option>
+                                <option value="SEDUR">SEDUR</option>
+                                <option value="SEET">SEET</option>
+                                <option value="SEFAZ">SEFAZ</option>
+                                <option value="SEICT">SEICT</option>
+                                <option value="SEINFRA">SEINFRA</option>
+                                <option value="SEJUSP">SEJUSP</option>
+                                <option value="SEMAPI">SEMAPI</option>
+                                <option value="SEME">SEME</option>
+                                <option value="SEPA">SEPA</option>
+                                <option value="SEPLAG">SEPLAG</option>
+                                <option value="SEPLAN">SEPLAN</option>
+                                <option value="SESACRE">SESACRE</option>
+                                <option value="SGA">SGA</option>
+                                <option value="SRPI">SRPI</option>
+                            </select>
+                        </div>
+                    {% endif %}
+
+                    {% if tipo_lotacao == 'Aula Complementar' or tipo_lotacao == 'Dedicação Exclusiva' or tipo_lotacao == 'Complementação Salarial' or tipo_lotacao == 'Permuta' or tipo_lotacao == 'Cedido'%}
+                        <div class="formulario-grupo">
+                            <label for="campo-sei" class="texto-azul label-campo">Nº SEI</label>
+                            <input id="campo-sei" type="text" name="numero_sei" class="campo-texto campo-medio" data-mascara="sei" required>
+                        </div>
+                    {% endif %}
+
+                    {% if tipo_lotacao != 'Cedido' and tipo_lotacao != 'Permuta' and tipo_lotacao != 'Sem Lotação' %}
+                        {% if 'Professor' not in funcao and funcao != 'Mediador' and funcao != 'Atendente Pessoal' and funcao != 'Interprete' and funcao != 'Coordenador(a) Pedagógico(a) de Anos' or tipo_unidade == 'adm' %}
+                            <div class="formulario-grupo" data-selecao-turno>
+                                <label for="fieldset-turno" class="label-campo campo-azul texto-azul">Turno</label>
+
+                                <fieldset id="fieldset-turno">
+                                    <input type="checkbox" value="manha" id="turno-manha" name= 'turno-manha'>
+                                    <label class="texto-azul" for="turno-manha">Manhã</label>
+
+                                    <input type="checkbox" value="tarde" id="turno-tarde" name= 'turno-tarde'>
+                                    <label class="texto-azul" for="turno-tarde">Tarde</label>
+
+                                    <input type="checkbox" value="noite" id="turno-noite" name= 'turno-noite'>
+                                    <label class="texto-azul" for="turno-noite">Noite</label>
+                                </fieldset>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if tipo_lotacao != 'Sem Lotação' %}
+                        <div class="formulario-grupo" data-grupo-ch>
+                            <label class="texto-azul label-campo" for="campo-ch">Carga horária (Horas semanais)</label>
+                            <input class="campo-texto campo-pequeno" type="text" value="{{ lotacao.carga_horaria }}" name="carga_horaria" id="campo-ch" placeholder="Ex: 40" autocomplete="off" maxlength="2" data-mascara="numero" required data-campo-ch>
+                        </div>
+                    {% endif %}
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-convocacao">Data início</label>
+                        <input class="campo-texto campo-pequeno" type="date" value="{{ lotacao.data_inicio }}" name="inicio" id="campo-convocacao" required data-campo-data-inicio>
+                    </div>
+                    {% if tipo_lotacao != 'Sem Lotação' %}
+                        {% if contrato.tipo_contrato == 'EFETIVO' or contrato.tipo_contrato == 'IRREGULAR RJU' or contrato.tipo_contrato == 'NÃO-ESTÁVEIS - SERVIDOR-RJU' %}
+                            {% if tipo_lotacao != 'Contrato'  %}
+                                <div class="formulario-grupo">
+                                    <label class="texto-azul label-campo" for="campo-data-fim">Data de finalização</label>
+                                    <input id="campo-data-fim" name='data_finalizacao' type="date" class="campo-pequeno campo-texto" required data-campo-data-finalizacao>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <div class="formulario-grupo">
+                                <label class="texto-azul label-campo" for="campo-data-fim">Data de finalização</label>
+                                <input id="campo-data-fim" name='data_finalizacao' type="date" class="campo-pequeno campo-texto" required data-campo-data-finalizacao>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-observacao">Observações</label>
+                        <textarea class="campo-texto campo-area" value="{{ lotacao.observacoes }}" name="observacao" id="campo-observacao" maxlength="500" data-campo-observacao></textarea>
+                    </div>
+
+                    <div class="container-botoes">
+                        {% if tipo_lotacao != 'Contrato' and tipo_lotacao != 'Aula Complementar' and tipo_lotacao != 'Complementação Salarial' and tipo_lotacao != 'Dedicação Exclusiva' %}
+                            <button class="botao botao--azul" data-botao-confirmar data-modal-abrir="confirmar">Cadastrar</button>
+                        {% elif tipo_unidade != 'escolar' %}
+
+                            {% if funcao == 'Professor(a)' %}
+                                <button data-form-botao="enturmacao-adm" class="botao botao--azul">Avançar</button>
+                            {% else %}
+                                <button class="botao botao--azul" data-botao-confirmar data-modal-abrir="confirmar">Cadastrar</button>
+                            {% endif %}
+
+                        {% else %}
+                            {% if funcao == 'Professor(a)' %}
+                                <button data-form-botao="enturmacao" class="botao botao--azul">Avançar</button>
+                            {% elif funcao == 'Atendente Pessoal' or funcao == 'Atendimento Domiciliar' or funcao == 'Interprete' or funcao == 'Mediador' or funcao == 'Professor(a) Brailista' %}
+                                <button data-form-botao="enturmacao-aee" class="botao botao--azul">Avançar</button>
+                            {% elif funcao == 'Professor(a) AEE' or funcao == 'Coordenador(a) Pedagógico(a) de Anos' %}
+                                <button data-form-botao="professor-aee" class="botao botao--azul">Avançar</button>
+                            {% else %}
+                                <button class="botao botao--azul" data-botao-confirmar data-modal-abrir="confirmar">Cadastrar</button>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if tipo_lotacao != 'Cedido' and tipo_lotacao != 'Permuta' and tipo_lotacao != 'Sem Lotação' %}
+
+                    {% if tipo_unidade == 'escolar' %}
+
+                        {% if funcao == 'Professor(a)' %}
+                            {% include 'lotacao/lotacao/lotacao-formulario/partials/_container-enturmacao.html' %}
+
+                        {% elif funcao == 'Atendente Pessoal' or funcao == 'Atendimento Domiciliar' or funcao == 'Interprete' or funcao == 'Mediador' or funcao == 'Professor(a) Brailista' %}
+                            {% include 'lotacao/lotacao/lotacao-formulario/partials/_container-enturmacao-aee.html' %}
+                            {% include 'lotacao/lotacao/lotacao-formulario/partials/_container-alunos-aee.html' %}
+
+                        {% elif funcao == 'Professor(a) AEE' or funcao == 'Coordenador(a) Pedagógico(a) de Anos' %}
+                            {% include 'lotacao/lotacao/lotacao-formulario/partials/_container-professor-aee.html' %}
+                        {% endif %}
+                    {% else %}
+
+                        {% if funcao == 'Professor(a)' %}
+                            {% include 'lotacao/lotacao/lotacao-formulario/partials/_container-enturmacao-adm.html' %}
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+
+                {% include 'lotacao/lotacao/lotacao-formulario/partials/_modal-preview.html' %}
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    {% if erro %}
+        {% include 'lotacao/lotacao/lotacao-formulario/partials/_modal-erro.html' %}
+    {% endif %}
+
+    <script src="{% static 'assets/js/module/select2.js' %}"></script>
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/module/controlaNavegacaoFormulario.js' %}"></script>
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type='module'></script>
+    <script src="{% static 'assets/js/module/validaFormulario.js' %}"></script>
+
+    <!-- SCRIPTS DE COMPORTAMENTO -->
+    {% if tipo_lotacao != 'Cedido' and tipo_lotacao != 'Permuta' and tipo_lotacao != 'Sem Lotação' %}
+        {% if tipo_unidade == 'escolar' %}
+            {% if funcao == 'Professor(a)' %}
+                <script src="{% static 'assets/js/layout/lotacao/lotacao-formulario/comportamentos/ModalNovaTurma.js' %}"></script>
+                <script src="{% static 'assets/js/layout/lotacao/lotacao-formulario/comportamentos/controlaEnturmacao.js' %}"></script>
+                <script src="{% static 'assets/js/layout/lotacao/lotacao-formulario/comportamentos/controlaTurmas.js' %}"></script>
+            {% elif funcao == 'Professor(a) AEE' or funcao == 'Coordenador(a) Pedagógico(a) de Anos' %}
+                <script src="{% static 'assets/js/layout/lotacao/lotacao-formulario/comportamentos/ModalNovaTurma.js' %}"></script>
+                <script src="{% static 'assets/js/layout/lotacao/lotacao-formulario/comportamentos/controlaTurmasProfessorAEE.js' %}"></script>
+                <script src="{% static 'assets/js/layout/lotacao/lotacao-formulario/comportamentos/controlaEnturmacaoProfessorAEE.js' %}"></script>
+            {% elif funcao == 'Atendente Pessoal' or funcao == 'Atendimento Domiciliar' or funcao == 'Interprete' or funcao == 'Mediador' or funcao == 'Professor(a) Brailista' %}
+                <script src="{% static 'assets/js/layout/lotacao/lotacao-formulario/comportamentos/ModalNovaTurma.js' %}"></script>
+                <script src="{% static 'assets/js/layout/lotacao/lotacao-formulario/comportamentos/ModalNovoAluno.js' %}"></script>
+                <script src="{% static 'assets/js/layout/lotacao/lotacao-formulario/comportamentos/controlaTurmasAEE.js' %}"></script>
+                <script src="{% static 'assets/js/layout/lotacao/lotacao-formulario/comportamentos/controlaAlunosAEE.js' %}"></script>
+                <script src="{% static 'assets/js/layout/lotacao/lotacao-formulario/comportamentos/adicionaAlunosAEE.js' %}"></script>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+    <!-- SCRIPT PARA CONTROLAR O MODAL DE PRE VISUALIZAÇÃO -->
+    <script src="{% static 'assets/js/layout/lotacao/lotacao-formulario/comportamentos/controlaPreview.js' %}"></script>
+    <!-- <script src="{% static 'assets/js/layout/lotacao/lotacao-formulario/acoes/bloqueiaBotao.js' %}"></script> -->
+
+{% endblock %}

@@ -1,0 +1,76 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <title> Atena - Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" href="{% static 'assets/img/icone-aba.png' %}">
+
+        <!-- Arquivos CSS de base -->
+        <link rel="stylesheet"  href="{% static 'assets/css/base/reset.css' %}"/>
+        <link rel="stylesheet"  href="{% static 'assets/css/base/base.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/base/cores.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/base/tipografia.css' %}">
+
+        <!-- Arquivos CSS de componentes -->
+        <link rel="stylesheet"  href="{% static 'assets/css/module/inputs.css' %}">
+        <link rel="stylesheet"  href="{% static 'assets/css/module/botao.css' %}">
+
+        <!-- Arquivo CSS do layout da páginas -->
+        <link rel="stylesheet"  href="{% static 'assets/css/layout/usuario/login.css' %}">
+
+    </head>
+
+    <body>
+        <div class="container-fundo">
+            <img src="{% static 'assets/img/login/logo-login.svg' %}" alt="Atena 1.5">
+        </div>
+
+        <div class="container-login">
+            <div class="cabecalho-mobile">
+                <img src="{% static 'assets/img/login/logo-cabecalho.svg' %}" alt="Atena 1.5">
+            </div>
+
+            <img class="logo-see" src="{% static 'assets/img/login/logo-see.svg' %}" class="logo-see" alt="Secretaria de Estado de Educação, Cultura e Esportes">
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="formulario-grupo">
+                    <label for="campo-usuario">Usuário</label>
+                    <input class="campo-texto" name="user" type="text" maxlength="50" required>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label for="campo-usuario">Senha</label>
+                    <input class="campo-texto" name="password" type="password" maxlength="40" required>
+                </div>
+
+                {% if erro %}
+                    <span class="mensagem-erro">{{ erro }}</span>
+                {% endif %}
+
+                <div class="container-botoes">
+                    <button class="botao botao--azul" type="submit">Entrar</button>
+                </div>
+            </form>
+
+            <div class="container-logos">
+                <img src="{% static 'assets/img/login/logo-detei.svg' %}" alt="Departamento de Tecnologias Educacionais e da Informação">
+                <img src="{% static 'assets/img/login/logo-governo.svg' %}" alt="Governo do Estado do Acre">
+            </div>
+
+            <div class="container-logos-mobile">
+                <img src="{% static 'assets/img/login/logo-detei-branco.svg' %}" alt="Departamento de Tecnologias Educacionais e da Informação">
+                <img src="{% static 'assets/img/login/logo-see-branco.svg' %}" alt="Secretaria de Estado de Educação, Cultura e Esportes">
+                <img src="{% static 'assets/img/login/logo-governo-branco.svg' %}" alt="Governo do Estado do Acre">
+            </div>
+        </div>
+
+        <script src="{% static 'assets/js/layout/usuario/login/controlaSubmissao.js' %}"></script>
+    </body>
+</html>

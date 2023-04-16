@@ -1,0 +1,33 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="filtros">
+    <form class="modal-conteudo" method="GET">
+        <h2 class="texto-grande texto-azul">Filtros</h2>
+        <p class="descricao  texto-preto">Insira os filtros que deseja aplicar</p>
+
+        <div class="formulario-grupo">
+
+            <h3 class="texto-medio texto-azul">Dados</h3>
+
+            <input class="campo-texto campo-pequeno" type="text" name="page" value="{{ page }}" style="display: none;">
+            <input class="campo-texto campo-pequeno" type="text" name="cod_inep" value="{{ cod_inep }}" placeholder="INEP" data-mascara="numero">
+            <input class="campo-texto campo-grande" type="text" name="nome_unidade" value="{{ nome_unidade }}" placeholder="Nome da Unidade">
+        </div>
+
+        <!-- <h3 class="texto-medio texto-azul">Modalidade de Ensino</h3>
+        {% for modalidade in modalidades %}
+            {% if modalidade.1 in filtros_modalidade %}
+                <input type="checkbox" name="{{ modalidade.1 }}" id="{{ modalidade.0 }}" checked>
+                <label class="texto-preto" for="{{ modalidade.0 }}">{{ modalidade.2 }} </label>
+            {% else %}
+                <input type="checkbox" name="{{ modalidade.1 }}" id="{{ modalidade.0 }}">
+                <label class="texto-preto" for="{{ modalidade.0 }}">{{ modalidade.2 }} </label>
+            {% endif %}
+        {% endfor %} -->
+
+        <div class="container-botoes">
+            <button type="" class="botao botao--verde">Filtrar</button>
+        </div>
+
+    </form>
+</div>

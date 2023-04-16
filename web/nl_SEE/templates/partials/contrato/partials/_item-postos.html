@@ -1,0 +1,311 @@
+{% comment %}
+    Esta partial contém um container com os postos de trabalho de um item
+    Feita para evitar a repetição código em perfis de contrato nos módulos de ADMINISTRAÇÃO, TECNOLOGIA e TERCEIRIZAÇÃO
+{% endcomment %}
+
+<div class="item-servidores" data-nav-container="postos_trabalho">
+    {% if quantidade_postos > 0 %}
+        <table class="tabela tabela-item-postos">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Funcionários</th>
+                    <th>Situação</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for posto in postos %}
+                    <tr data-modal-abrir="posto{{ posto.id }}">
+                        {% if posto.endereco %}
+                            <td>{{ posto.endereco|upper }}</td>
+                        {% else %}
+                            <td>{{ posto.unidade_administrativa|upper }}</td>
+                        {% endif %}
+
+                        <td>{{ posto.vagas_ocupadas }}
+
+                        {% if posto.status == 1 %}
+                            <td>ATIVO</td>
+                        {% else %}
+                            <td>INATIVO</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td class="coluna-paginacao" colspan="3">
+                        <div class="container-paginacao">
+                            <div>
+                                <span class="texto-negrito texto-azul">Vagas Restantes:</span>
+                                <span class="texto-normal texto-preto">{{ vagas_restantes }}</span>
+                            </div>
+                            <div>
+                                {% if postos.has_previous %}
+                                    {% if aplicacao == 'Administração' %}
+                                        <a class="" href="{% url 'administracao:item-perfil' %}?{{ gets_primeira }}">
+                                    {% elif aplicacao == 'Tecnologia' %}
+                                        <a class="" href="{% url 'tecnologia:item-perfil' %}?{{ gets_primeira }}">
+                                    {% elif aplicacao == 'Terceirização' %}
+                                        <a class="" href="{% url 'terceirizacao:item-perfil' %}?{{ gets_primeira }}">
+                                    {% endif %}
+
+                                            <button class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                    {% if aplicacao == 'Administração' %}
+                                        <a class="" href="{% url 'administracao:item-perfil' %}?{{ gets_anterior }}">
+                                    {% elif aplicacao == 'Tecnologia' %}
+                                        <a class="" href="{% url 'tecnologia:item-perfil' %}?{{ gets_anterior }}">
+                                    {% elif aplicacao == 'Terceirização' %}
+                                        <a class="" href="{% url 'terceirizacao:item-perfil' %}?{{ gets_anterior }}">
+                                    {% endif %}
+
+                                        <button class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% else %}
+                                    <a class="" href="">
+                                        <button disabled class="botao-paginacao">first_page</button>
+                                    </a>
+
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% endif %}
+
+                                <span class="">
+                                    {{ postos.number }} de {{ postos.paginator.num_pages }}
+                                </span>
+
+                                {% if postos.has_next %}
+                                    {% if aplicacao == 'Administração' %}
+                                        <a class="" href="{% url 'administracao:item-perfil' %}?{{ gets_proxima }}">
+                                    {% elif aplicacao == 'Tecnologia' %}
+                                        <a class="" href="{% url 'tecnologia:item-perfil' %}?{{ gets_proxima }}">
+                                    {% elif aplicacao == 'Terceirização' %}
+                                        <a class="" href="{% url 'terceirizacao:item-perfil' %}?{{ gets_proxima }}">
+                                    {% endif %}
+
+                                        <button class="botao-paginacao">navigate_next</button>
+                                    </a>
+
+                                    {% if aplicacao == 'Administração' %}
+                                        <a class="" href="{% url 'administracao:item-perfil' %}?{{ gets_ultima }}">
+                                    {% elif aplicacao == 'Tecnologia' %}
+                                        <a class="" href="{% url 'tecnologia:item-perfil' %}?{{ gets_ultima }}">
+                                    {% elif aplicacao == 'Terceirização' %}
+                                        <a class="" href="{% url 'terceirizacao:item-perfil' %}?{{ gets_ultima }}">
+                                    {% endif %}
+
+                                        <button class="botao-paginacao">last_page</button>
+                                    </a>
+
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_next</button>
+                                    </a>
+
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">last_page</button>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <table class="tabela tabela-item-postos-smartphone">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Situação</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for posto in postos %}
+                    <tr data-modal-abrir="posto{{ posto.id }}">
+                        {% if posto.endereco %}
+                            <td>{{ posto.endereco }}</td>
+                        {% else %}
+                            <td>{{ posto.unidade_administrativa }}</td>
+                        {% endif %}
+
+
+                        {% if posto.status == 1 %}
+                            <td>Ativo</td>
+                        {% else %}
+                            <td>Inativo</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td class="coluna-paginacao" colspan="2">
+                        <div class="container-paginacao">
+                            <div>
+                                <span class="texto-negrito texto-azul">Vagas Restantes:</span>
+                                <span class="texto-normal texto-preto">{{ vagas_restantes }}</span>
+                            </div>
+                            <div>
+                                {% if postos.has_previous %}
+                                    {% if aplicacao == 'Administração' %}
+                                        <a class="" href="{% url 'administracao:item-perfil' %}?{{ gets_primeira }}">
+                                    {% elif aplicacao == 'Tecnologia' %}
+                                        <a class="" href="{% url 'tecnologia:item-perfil' %}?{{ gets_primeira }}">
+                                    {% elif aplicacao == 'Terceirização' %}
+                                        <a class="" href="{% url 'terceirizacao:item-perfil' %}?{{ gets_primeira }}">
+                                    {% endif %}
+
+                                            <button class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                    {% if aplicacao == 'Administração' %}
+                                        <a class="" href="{% url 'administracao:item-perfil' %}?{{ gets_anterior }}">
+                                    {% elif aplicacao == 'Tecnologia' %}
+                                        <a class="" href="{% url 'tecnologia:item-perfil' %}?{{ gets_anterior }}">
+                                    {% elif aplicacao == 'Terceirização' %}
+                                        <a class="" href="{% url 'terceirizacao:item-perfil' %}?{{ gets_anterior }}">
+                                    {% endif %}
+
+                                        <button class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% else %}
+                                    <a class="" href="">
+                                        <button disabled class="botao-paginacao">first_page</button>
+                                    </a>
+
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% endif %}
+
+                                <span class="">
+                                    {{ postos.number }} de {{ postos.paginator.num_pages }}
+                                </span>
+
+                                {% if postos.has_next %}
+                                    {% if aplicacao == 'Administração' %}
+                                        <a class="" href="{% url 'administracao:item-perfil' %}?{{ gets_proxima }}">
+                                    {% elif aplicacao == 'Tecnologia' %}
+                                        <a class="" href="{% url 'tecnologia:item-perfil' %}?{{ gets_proxima }}">
+                                    {% elif aplicacao == 'Terceirização' %}
+                                        <a class="" href="{% url 'terceirizacao:item-perfil' %}?{{ gets_proxima }}">
+                                    {% endif %}
+
+                                        <button class="botao-paginacao">navigate_next</button>
+                                    </a>
+
+                                    {% if aplicacao == 'Administração' %}
+                                        <a class="" href="{% url 'administracao:item-perfil' %}?{{ gets_ultima }}">
+                                    {% elif aplicacao == 'Tecnologia' %}
+                                        <a class="" href="{% url 'tecnologia:item-perfil' %}?{{ gets_ultima }}">
+                                    {% elif aplicacao == 'Terceirização' %}
+                                        <a class="" href="{% url 'terceirizacao:item-perfil' %}?{{ gets_ultima }}">
+                                    {% endif %}
+
+                                        <button class="botao-paginacao">last_page</button>
+                                    </a>
+
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_next</button>
+                                    </a>
+
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">last_page</button>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+        {% if vagas_restantes > 0 %}
+            <div class="container-botoes">
+                {% if aplicacao == 'Administração' %}
+                    <a href="{% url 'administracao:postos-formulario' %}?id_item={{ item.id }}">
+                {% elif aplicacao == 'Tecnologia' %}
+                    <a href="{% url 'tecnologia:postos-formulario' %}?id_item={{ item.id }}">
+                {% elif aplicacao == 'Terceirização' %}
+                    <a href="{% url 'terceirizacao:postos-formulario' %}?id_item={{ item.id }}">
+                {% endif %}
+
+
+                    <button class="botao botao--azul">Adicionar postos</button>
+                </a>
+            </div>
+        {% endif %}
+    {% else %}
+        <h2 class="texto-medio texto-preto">Nenhum posto de trabalhos adicionado neste item do contrato.</h2>
+
+        <div class="container-botoes">
+            {% if aplicacao == 'Administração' %}
+                <a href="{% url 'administracao:postos-formulario' %}?id_item={{ item.id }}">
+            {% elif aplicacao == 'Tecnologia' %}
+                <a href="{% url 'tecnologia:postos-formulario' %}?id_item={{ item.id }}">
+            {% elif aplicacao == 'Terceirização' %}
+                <a href="{% url 'terceirizacao:postos-formulario' %}?id_item={{ item.id }}">
+            {% endif %}
+
+                <button class="botao botao--azul">Adicionar postos</button>
+            </a>
+        </div>
+    {% endif %}
+
+    {% for posto in postos %}
+        <div class="modal oculto" data-modal="posto{{ posto.id }}">
+            <div id="modal-conteudo" class="modal-conteudo">
+                <h3 class="texto-medio texto-azul">Vigilantes cadastrados</h3>
+                {% if posto.endereco %}
+                    <p class=" descricao texto-preto">{{ posto.endereco }}</p>
+                {% else %}
+                    <p class=" descricao texto-preto">{{ posto.unidade_administrativa }}</p>
+                {% endif %}
+
+                <table class="tabela">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% if posto.funcionario1 == None and posto.funcionario2 == None and posto.funcionario3 == None %}
+                            <tr class="linha-desabilitada">
+                                <td>Nenhum Profissional cadastrado neste posto de vigilãncia.</td>
+                            </tr>
+                        {% endif %}
+
+                        {% if posto.funcionario1 %}
+                            <tr class="linha-desabilitada">
+                                <td>{{ posto.funcionario1 }}</td>
+                            </tr>
+                        {% endif %}
+
+                        {% if posto.funcionario2 %}
+                            <tr class="linha-desabilitada">
+                                <td>{{ posto.funcionario2 }}</td>
+                            </tr>
+                        {% endif %}
+
+                        {% if posto.funcionario3 %}
+                            <tr class="linha-desabilitada">
+                                <td>{{ posto.funcionario3 }}</td>
+                            </tr>
+                        {% endif %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endfor %}
+</div>

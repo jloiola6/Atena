@@ -1,0 +1,26 @@
+{% load static %}
+
+<div class="oculto" data-form-container="enturmacao-aee">
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-turma-escola">Turma</label>
+
+        <select name="turma_escolar1" id="campo-turma-escola" class="campo-texto campo-medio" data-selecao-turma-aee>
+            {% for turma in turmas %}
+                <option value="{{ turma.id }}">{{ turma }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="formulario-grupo">
+        <a href="#" class="link" data-link-formulario-turma-aee>Adicionar nova turma</a>
+
+        {% for etapa in etapas %}
+            <span data-escola-etapa="{{ etapa.etapa.id }}">{{ etapa.etapa }}</span>
+        {% endfor %}
+    </div>
+
+    <div class="container-botoes">
+        <button class="botao botao--azul" data-form-botao="dados">Voltar</button>
+        <button class="botao botao--azul" data-form-botao="alunos-aee">Avançar</button>
+    </div>
+</div>

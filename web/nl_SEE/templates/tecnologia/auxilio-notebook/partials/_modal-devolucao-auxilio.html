@@ -1,0 +1,25 @@
+{% load static %}
+<div class="modal oculto" data-modal="devolucao">
+    <div id="modal-conteudo" class="modal-conteudo">
+        <h2 class="texto-grande texto-negrito texto-azul">Formulário de devolução</h2>
+        <div class="container-detalhes">
+            <span class="texto-negrito texto-azul">Código de solicitaçao: <span class="texto-preto texto-normal">{{ auxilio.id }}</span></span>
+            <span class="texto-negrito texto-azul">Servidor: <span class="texto-preto texto-normal">{{ auxilio.usuario__nome }}</span></span>
+            <span class="texto-negrito texto-azul">CPF: <span class="texto-preto texto-normal">{{ auxilio.usuario__cpf }}</span></span>
+            <span class="texto-negrito texto-azul">Nota Fiscal Aprovada: <a class="link" href="{{documento.path_arquivo}}" target="_blank"><span>{{ documento.nome_arquivo }}</span></a></span>
+            <span class="texto-negrito texto-azul">Aprovador: <span class="texto-preto texto-normal">{{ documento.adm }}</span></span>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="formulario-grupo">
+                    <label class="texto-negrito texto-azul label-campo" for="termo">Anexar termo de devolução</label>
+                    <input class="campo-termo texto-azul" id="termo" type="file" name="termo" >
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao--azul botao" name="devolucao" value="devolucao" type="submit">Confirmar</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

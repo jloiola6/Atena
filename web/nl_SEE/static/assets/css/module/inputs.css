@@ -1,0 +1,49 @@
+/* Estilização nos inputs utilizados */
+
+.campo-texto{
+    border: 1px solid #C1C1c1;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    height: 40px;
+    letter-spacing: 1px;
+    padding: 0px 8px;
+    text-decoration: none;
+    transition: 0.5s;
+}
+    .campo-pequeno{
+        width: 180px;
+    }
+
+    .campo-medio{
+        width: 320px;
+    }
+
+    .campo-grande{
+        width: 400px;
+    }
+
+    .campo-area{
+        height: 144px;
+        padding: 8px;
+        width: 480px;
+    }
+
+    .campo-texto:focus, .campo-texto:hover{
+        border: 1px solid var(--cor-azul);
+        outline: 0;
+    }
+
+    .campo-texto:read-only{
+        background-color: #e4e4e4;
+        cursor: initial;
+    }
+
+    select.campo-texto:read-only{
+        background-color: #ffffff;
+    }
+
+.campo-arquivo{
+    cursor: pointer;
+    font-size: 16px;
+}

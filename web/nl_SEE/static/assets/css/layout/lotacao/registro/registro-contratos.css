@@ -1,0 +1,36 @@
+.grupo-datas{
+    display: flex;
+    gap: 16px;
+}
+
+/* RESPONSIVIDADE */
+
+.tabela-lotacoes--tablet{
+    display: none;
+}
+
+.tabela-lotacoes--smartphone{
+    display: none;
+}
+
+@media screen and (max-width: 653px) {
+
+.tabela-lotacoes, .tabela-lotacoes--smartphone{
+        display: none;
+    }
+.tabela-lotacoes--tablet{
+    display: block;
+}
+
+}
+
+@media screen and (max-width: 509px) {
+
+.tabela-lotacoes, .tabela-lotacoes--tablet{
+        display: none;
+    }
+.tabela-lotacoes--smartphone{
+    display: block;
+}
+
+}

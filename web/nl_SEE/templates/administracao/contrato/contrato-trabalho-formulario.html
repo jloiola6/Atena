@@ -1,0 +1,151 @@
+<!-- ADICIONAR REQUIRED -->
+
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+    Cadastro de Contrato
+{% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/administracao/contratos/contrato-formulario.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:index' %}">Administração</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:contratos' %}">Contratos</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Cadastro de Contrato</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Cadastro de Contrato</h1>
+
+            <p class="descricao  texto-preto">Insira os dados do contrato</p>
+
+            <form class="container-surface container-formulario-contrato" method="POST">
+                {% csrf_token %}
+
+                <nav class="container-navegacao-surface">
+                    <ul class="navegacao-surface-lista">
+                        <li class="navegacao-surface-item navegacao-surface-item-ativo" data-form-aba="contrato">
+                            <span class="texto-azul">Contrato</span>
+                        </li>
+
+                        <li class="navegacao-surface-item" data-form-aba="itens">
+                            <span class="texto-azul">Itens</span>
+                        </li>
+
+                    </ul>
+                </nav>
+
+                {% include 'administracao/contrato/partials/_contrato-formulario.html' %}
+
+                <input type="text" class="oculto" value="Postos de trabalho" name="tipo_contrato">
+
+                <div class="formulario-contrato oculto" data-form-container="itens">
+                    <div class="formulario-contrato-itens">
+                        <div>
+                            <div class="formulario-grupo">
+                                <h3 class="texto-medio texto-azul">Item do contrato</h3>
+                            </div>
+
+                            <div class="contrato-item-grupo-campos">
+                                <div class="formulario-grupo">
+                                    <label class="texto-azul label-campo" for="campo-numero_item">N° do item</label>
+                                    <input class="campo-texto" type="text" value="" name="numero_item1" id="campo-numero_item" maxlength="3" autocomplete="off" data-mascara="numero">
+                                </div>
+
+                                <div class="formulario-grupo">
+                                    <label class="texto-azul label-campo" for="campo-numero_lote">N° do Lote</label>
+                                    <input class="campo-texto" type="text" value="" name="numero_lote1" id="campo-numero_lote" maxlength="3" autocomplete="off" data-mascara="numero">
+                                </div>
+
+                                <div class="formulario-grupo">
+                                    <label class="texto-azul label-campo" for="campo-quantidade">Quantidade</label>
+                                    <input class="campo-texto" type="text" value="" name="quantidade1" id="campo-quantidade" maxlength="9" autocomplete="off" data-mascara="numero" data-qtd-item>
+                                </div>
+
+                                <div class="formulario-grupo">
+                                    <label class="texto-azul label-campo" for="campo-remuneracao">Remuneração</label>
+                                    <input class="campo-texto campo-item-valor" type="text" value="" name="remuneracao1" id="campo-remuneracao" maxlength="30" autocomplete="off" data-mascara="moeda" >
+                                </div>
+
+                                <div class="formulario-grupo">
+                                    <label class="texto-azul label-campo" for="campo-valor_unitario">Valor unitário</label>
+                                    <input class="campo-texto" type="text" value="" name="valor_unitario1" id="campo-valor_unitario" maxlength="30" autocomplete="off" data-mascara="moeda" data-unitario-item>
+                                </div>
+
+                                <div class="formulario-grupo">
+                                    <label class="texto-azul label-campo" for="campo-valor_total">Valor total</label>
+                                    <input class="campo-texto" type="text" value="" name="valor_total1" id="campo-valor_total" maxlength="30" autocomplete="off" data-mascara="moeda" data-total-item readonly>
+                                </div>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label class="texto-azul label-campo" for="campo-descricao">Descrição</label>
+                                <textarea maxlength="300" class="campo-area campo-texto item-descricao" name="descricao1" id="campo-descricao"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="container-botoes">
+                            <button class="botao botao--azul" data-botao-adicionar-item>Adicionar</button>
+                        </div>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-valor_total_contrato">Valor mensal do contrato</label>
+                        <input class="campo-texto campo-pequeno" type="text" value="" name="valor_total_contrato" id="campo-valor_total_contrato" autocomplete="off" data-mascara="moeda" data-total-contrato readonly>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-valor_global_contrato">Valor global do contrato</label>
+                        <input class="campo-texto campo-pequeno" type="text" value="" name="valor_global" id="campo-valor_global_contrato" autocomplete="off" data-mascara="moeda" data-global-contrato="" readonly>
+                    </div>
+
+                    <input type="text" readonly class="oculto campo-texto campo-pequeno" name="meses_vigencia" data-campo-vigencia>
+
+                    <div class="container-botoes">
+                        <button class="botao botao--azul" data-form-botao="contrato">Voltar</button>
+                        <button class="botao botao--azul" data-modal-abrir="confirmar">Cadastrar</button>
+                    </div>
+
+                    <div class="modal" data-modal="confirmar">
+                        <div class="modal-conteudo modal-confirmacao">
+                            <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                            <p class="texto-preto descricao">Tem certeza que deseja cadastrar o contrato?</p>
+
+                            <div class="container-botoes">
+                                <button class="botao--verde botao" type="submit">Salvar</button>
+                                <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/select2.js' %}"></script>
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/module/controlaNavegacaoFormulario.js' %}"></script>
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+
+    <script src="{% static 'assets/js/layout/administracao/contrato-trabalho-formulario/controlaCampos.js' %}" type="module"></script>
+{% endblock %}

@@ -1,0 +1,5 @@
+/* Estilização da tela de usuários pré cadastrados */
+
+.tabela-pre-cadastrados-tablet, .tabela-pre-cadastrados-smartphone{
+    display: none;
+}

@@ -1,0 +1,13 @@
+.tabela-lotacao-servidores-smartphone{
+    display: none;
+}
+
+@media screen and (max-width: 573px){
+    .tabela-lotacao-servidores{
+        display: none;
+    }
+
+    .tabela-lotacao-servidores-smartphone{
+        display: block;
+    }
+}

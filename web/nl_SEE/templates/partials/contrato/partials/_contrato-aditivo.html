@@ -1,0 +1,44 @@
+{% comment %}
+    Esta partial contém um container com os aditivos de um contrato
+    Feita para evitar a repetição código em perfis de contrato nos módulos de ADMINISTRAÇÃO, TECNOLOGIA e TERCEIRIZAÇÃO
+{% endcomment %}
+
+<div class="contrato-aditivo oculto" data-nav-container="aditivo">
+    {% if quantidade_contrato_aditivo > 0 %}
+        <table class="tabela">
+            <thead>
+                <tr>
+                    <th>T.A.</th>
+                    <th>Tipo de contrato</th>
+                    <th>Data Término do Aditivo</th>
+                    <th>Valor Global</th>
+                </tr>
+            </thead>
+
+            {% if aplicacao == 'Administração' %}
+                <tbody data-tabela-link="{% url 'administracao:contrato-aditivo-perfil' %}?id_contrato=">
+            {% elif aplicacao == 'Tecnologia' %}
+                <tbody data-tabela-link="{% url 'tecnologia:contrato-aditivo-perfil' %}?id_contrato=">
+            {% elif aplicacao == 'Terceirizção' %}
+                <tbody data-tabela-link="{% url 'terceirizacao:contrato-aditivo-perfil' %}?id_contrato=">
+            {% endif %}
+                {% for contrato in contrato_aditivo %}
+                    <tr data-tabela-link-chave="{{ contrato.id  }}">
+                        <td><span class="contrato-aditivo-numero"></span></td>
+                        <td>{{ contrato.tipo }}</td>
+                        <td>{{ contrato.data_termino }}</td>
+                        <td>{{ contrato.valor_total }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h2 class="texto-medio texto-preto">Este contrato não contém aditivos.</h2>
+    {% endif %}
+
+    <div class="container-botoes">
+        <button class="botao botao--azul" data-modal-abrir="adicionar">Adicionar</button>
+    </div>
+
+    {% include 'partials/contrato/partials/_modal-contrato-tipo.html' %}
+</div>

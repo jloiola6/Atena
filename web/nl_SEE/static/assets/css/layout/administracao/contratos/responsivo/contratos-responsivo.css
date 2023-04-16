@@ -1,0 +1,23 @@
+.tabela-contratos-tablet, .tabela-contratos-smartphone{
+    display: none;
+}
+
+@media screen and (max-width: 623px) {
+    .tabela-contratos, .tabela-contratos-smartphone{
+        display: none;
+    }
+    
+    .tabela-contratos-tablet{
+        display: block;
+    }
+}
+
+@media screen and (max-width: 534px) {
+    .tabela-contratos, .tabela-contratos-tablet{
+        display: none;
+    }
+    
+    .tabela-contratos-smartphone{
+        display: block;
+    }
+}

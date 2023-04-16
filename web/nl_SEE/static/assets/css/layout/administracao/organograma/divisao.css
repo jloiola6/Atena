@@ -1,0 +1,56 @@
+/* Estilização da página de perfil de uma divisao */
+
+.container-surface-divisao{
+    margin-top: 1.5rem;
+}
+
+.container-divisao-dados{
+    display: flex;
+    flex-direction: column;
+    margin-top: .5rem;
+    row-gap: .5rem;
+}
+
+.titulo-endereco-divisao{
+    margin-top: 1rem;
+}
+
+.container-endereco-divisao{
+    display: flex;
+    flex-basis: 50%;
+    flex-direction: column;
+    margin-top: 1rem;
+    row-gap: .5rem;
+}
+
+.container-endereco-divisao .container-botoes{
+    margin-top: .5rem;
+}
+
+.titulo-equipe-divisao{
+    margin-top: 1rem;
+}
+
+.container-equipe-divisao{
+    display: flex;
+    flex-basis: 50%;
+    flex-direction: column;
+    margin-top: 1rem;
+    row-gap: .5rem;
+}
+
+.container-equipe-divisao .link{
+    margin-top: .5rem;
+}
+
+.container-botoes-nucleos{
+    margin-top: 1rem;
+}
+
+.lista-nucleos{
+    margin-top: 1.5rem;
+}
+
+.mensagem-sem-nucleos{
+    margin-top: 1rem;
+}

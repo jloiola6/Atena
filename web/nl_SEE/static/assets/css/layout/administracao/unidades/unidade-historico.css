@@ -1,0 +1,12 @@
+/* Definição do estilo da página de histórico de uma unidade */
+
+.lista-historico{
+    margin-top: 1.5rem;
+}
+
+.menu-historico{
+    gap: 2rem;
+    height: auto;
+    justify-content: flex-start;
+    padding: 1rem;
+}

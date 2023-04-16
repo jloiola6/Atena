@@ -1,0 +1,13 @@
+/* Estilização da página de formulário de organograma */
+
+.container-formulario-unidade-administrativa{
+    margin-top: 1rem;
+}
+
+    .container-formulario-unidade-administrativa .container-botoes{
+        margin-top: 1rem;
+    }
+
+.formulario-unidade-administrativa{
+    animation: var(--main-animation);
+}

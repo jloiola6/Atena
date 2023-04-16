@@ -1,0 +1,75 @@
+/* Estilização dos cards de menu */
+
+.container-cards{
+	display: flex;
+	flex-wrap: wrap;
+	gap: .5rem;
+}
+
+	.container-cards a{
+		--largura: calc((100% / 3) - .5rem);
+		flex-basis: var(--largura);
+	}
+
+	.card-menu{
+		align-items: center;
+		background-color: var(--cor-surface);
+		border: var(--borda-padrao);
+		border-radius: 1rem;
+		box-sizing: border-box;
+		display: flex;
+		gap: 1rem;
+		outline: none;
+		padding-block: 1.5rem;
+		padding-inline: 1rem;
+		transition: .5s;
+	}
+
+		.card-menu > .icone{
+			height: 3rem;
+			width: 3rem;
+		}
+
+		.card-menu > .icone > path{
+			fill: var(--texto-azul);
+			transition: 0.5s;
+		}
+
+		.card-menu > .card-titulo{
+			color: var(--texto-azul);
+			font-weight: 500;
+			font-size: 1.25rem;
+		}
+
+		.card-menu:hover{
+			background-color: var(--cor-surface-hover);
+		}
+
+		.card-menu:hover > .icone > path{
+			fill: var(--cor-azul-hover);
+		}
+
+		.card-menu:hover > .card-titulo{
+			color: var(--cor-azul-hover);
+		}
+
+/* RESPONSIVIDADE */
+@media screen and (max-width: 1024px) {
+	.container-cards a{
+		--largura: calc((100% / 2) - .5rem);
+	}
+}
+
+@media screen and (max-width: 640px) {
+	.container-cards a{
+		--largura: 100%;
+	}
+}
+
+/* MODO ESCURO */
+body.modo-escuro .card-menu:hover > .card-titulo{
+	color: var(--texto-branco);
+}
+body.modo-escuro .card-menu:hover > .icone > path{
+	fill: var(--texto-branco);
+}

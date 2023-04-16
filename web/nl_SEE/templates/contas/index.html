@@ -1,0 +1,50 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Licitação {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Prestação de Contas</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">SISTEMA DE ACOMPANHAMENTO E GESTÃO FINANCEIRA</h1>
+            <div class="container-cards">
+
+                {% if 27 in permissoes %}
+                    <a href="{% url 'coex:comite' %}">
+                        <div class="card-menu">
+                            <span class="icone icone-azul icone-grande">local_atm</span>
+
+                            <h3 class="card-titulo texto-azul">Licitações</h3>
+                        </div>
+                    </a>
+                {% endif %}
+
+                <!-- {% if 27 in permissoes %}
+                    <a href="{% url 'coex:consorcio' %}">
+                        <div class="card-menu">
+                            <span class="icone icone-azul icone-grande">group_add</span>
+
+                            <h3 class="card-titulo texto-azul">Consórcios</h3>
+                        </div>
+                    </a>
+                {% endif %} -->
+
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+{% endblock %}

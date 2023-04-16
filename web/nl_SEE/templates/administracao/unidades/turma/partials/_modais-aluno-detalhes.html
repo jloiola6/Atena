@@ -1,0 +1,21 @@
+{% for aluno in alunos %}
+    <div class="modal oculto" data-modal="aluno-detalhes-{{ aluno.id }}">
+        <div class="modal-conteudo">
+            <h3 class="texto-medio texto-azul">{{ aluno.aluno.nome }}</h3>
+
+            <div class="container-detalhes">
+                <p class="texto-preto"><b class="texto-azul">CPF: </b>{{ aluno.aluno.cpf }}</p>
+                <p class="texto-preto"><b class="texto-azul">INEP: </b>{{ aluno.aluno.cod_inep }}</p>
+                <p class="texto-preto"><b class="texto-azul">Data de nascimento: </b>{{ aluno.aluno.nascimento }}</p>
+                <p class="texto-preto"><b class="texto-azul">Sexo: </b>{{ aluno.aluno.sexo }}</p>
+            </div>
+
+            {% if 7 in permissoes %}
+                <form class="container-botoes" method="POST">
+                    {% csrf_token %}
+                    <button class="botao botao--vermelho" type="submit" name="enturmacao" value="{{ aluno.id }}">Excluir Enturmação</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}

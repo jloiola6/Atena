@@ -1,0 +1,31 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="adicionar-tipo">
+    <div class="modal-conteudo">
+        <h2 class="texto-medio texto-azul">Adicionar serviço</h2>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="formulario-grupo">
+                <label for="campo-tipo" class="texto-azul label-campo">Tipo</label>
+                <!-- <input id="campo-tipo" class="campo-texto campo-pequeno" type="text" name="tipo" maxlength="100" required> -->
+                <select name="tipo" id="campo-tipo" class="campo-texto campo-medio">
+                    {% for tipo in tipos_servico %}
+                        <option value="{{ tipo.tipo }}">{{ tipo.tipo }}</option>
+                    {% endfor %}
+                </select>
+
+            </div>
+
+            <div class="formulario-grupo">
+                <label for="campo-servico" class="texto-azul label-campo">Serviço</label>
+                <input id="campo-servico" class="campo-texto campo-grande" type="text" name="servico" maxlength="100" required>
+            </div>
+
+            <div class="container-botoes">
+                <button class="botao botao--verde" type="submit">Salvar</button>
+            </div>
+        </form>
+    </div>
+</div>

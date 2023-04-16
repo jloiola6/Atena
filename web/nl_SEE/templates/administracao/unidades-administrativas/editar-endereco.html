@@ -1,0 +1,117 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+    {% if edicao %}
+        Editar Unidade
+    {% else %}
+        Cadastro de Unidade
+    {% endif %}
+{% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:index' %}">Administração</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:unidades-administrativas' %}">Unidades</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:diretoria' %}?id={{ unidade.id }}">{{ unidade.nome }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Editar Endereço</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Editar endereço</h1>
+            <p class="descricao  texto-preto">Insira os dados da Unidade</p>
+
+            <form class="container-surface container-formulario-unidade" method="POST">
+                {% csrf_token %}
+                <h2 class="texto-azul texto-medio">Editar Endereço</h2>
+                <div class="formulario-unidade-endereco">
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-municipio">Município</label>
+                        <select id="campo-municipio" name="municipio" class="campo-texto campo-medio" onchange="exibeRegional()">
+                            {% for municipio in municipios %}
+                                {% if municipio == unidade.endereco.municipio %}
+                                    <option value="{{ municipio }}" selected>{{municipio}}</option>
+                                {% else %}
+                                    <option value="{{ municipio }}">{{municipio}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-regiao">Regional</label>
+                        <input id="campo-regional" class="campo-texto campo-pequeno" type="text" value="{{ unidade.endereco.regiao }}" name="regiao" id="campo-regiao" readonly>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-rua">CEP</label>
+                        <input class="campo-texto campo-pequeno" type="text" value="{{ unidade.endereco.cep }}" name="cep" id="campo-cep" maxlength="10" placeholder="Ex: 69908-440" required autocomplete="off" data-mascara="cep">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-rua">Rua</label>
+                        <input class="campo-texto campo-grande" type="text" value="{{ unidade.endereco.rua }}" name="rua" id="campo-rua" placeholder="Ex: José Vasconcelos" required autocomplete="off">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-numero">Numero</label>
+                        <input class="campo-texto campo-pequeno" type="text" value="{{ unidade.endereco.numero }}" name="numero" id="campo-numero" placeholder="Ex: 1710" required autocomplete="off" data-mascara = 'numero'>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-bairro">Bairro</label>
+                        <input class="campo-texto campo-medio" type="text" value="{{ unidade.endereco.bairro }}" name="bairro" id="campo-bairro" placeholder="Ex: Centro" required autocomplete="off">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-complemento">Complemento</label>
+                        <input class="campo-texto campo-grande" type="text" value="{{ unidade.endereco.complemento }}" name="complemento" id="campo-complemento" placeholder='Ex: Ao lado do posto de saúde Dona Maria'>
+                    </div>
+
+                    <div class="container-botoes">
+                        <button data-modal-abrir="confirmar" data-botao-salvar class="botao botao--azul">Salvar</button>
+                    </div>
+                </div>
+
+                <div class="modal oculto" data-modal="confirmar">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                        <p class="texto-preto descricao">Tem certeza que deseja editar o endereço da unidade {{ unidade.nome }}?</p>
+
+                        <div class="container-botoes">
+                            <button class="botao--verde botao" type="submit">Salvar</button>
+                            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="/static/assets/js/module/controlaNavegacaoFormulario.js"></script>
+    <script src="{% static 'assets/js/layout/fundiaria/fundiaria-perfil/controla-campos.js' %}"></script>
+    <script src="{% static 'assets/js/layout/fundiaria/editar-endereco/controlaCamposIndigenas.js' %}"></script>
+    <script src="{% static 'assets/js/module/select2.js' %}"></script>
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type='module'></script>
+{% endblock %}

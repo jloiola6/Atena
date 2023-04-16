@@ -1,0 +1,311 @@
+
+{% extends 'partials/_base.html' %}
+
+{% block title %} Auxílio Notebook {% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block css_layout %}
+
+    <link rel="stylesheet" href="{% static 'assets/css/layout/tecnologia/links/responsivo/tabela-auxilio-responsivo.css' %}">
+
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+
+            <nav class="container-navegacao">
+                <a  class=" texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class=" texto-azul" href="{% url 'tecnologia:index' %}">Tecnologia</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class=" texto-azul" href="{% url 'tecnologia:auxilio-notebook' %}">Auxílio Notebook</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class=" texto-azul">Devolução de Notebook</span>
+            </nav>
+
+
+            <h1 class="titulo-pagina texto-azul">Devolução de Notebook</h1>
+
+            <div class="container-surface">
+                <h2 class="texto-medio texto-azul">Buscar Solicitações</h2>
+
+                <form class="formulario" method="GET">
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-nome">Nome</label>
+                        <input type="text" id="campo-nome" name="nome" class="campo-texto campo-medio">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-unidade-escolar">Unidade Educacional</label>
+                        <select data-selecao2  name="educacional" id="campo-unidade-escolar" class="campo-texto campo-grande">
+                            <option></option>
+                            {% for escola in escolas %}
+                                <option value="{{ escola.id }}">{{ escola.nome }} - {{ escola.municipio }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="container-botoes">
+                        <button class="botao botao--azul">Buscar</button>
+                        <button class="botao botao--azul" data-modal-abrir="filtros">Filtros</button>
+
+                        <!-- {% if permissao.imprimir == 1 %}
+                            <button class="botao botao--azul" data-modal-abrir="exportar">Exportar</button>
+                        {% endif %} -->
+
+                    </div>
+                </form>
+            </div>
+
+            <table class="tabela tabela-links">
+                <thead>
+                    <tr>
+                        <th class="">Nome</th>
+                        <th class="">Unidade</th>
+                        <th class="">Município</th>
+                        <th class="">Situação</th>
+                        {% comment %} <th class="">Data</th> {% endcomment %}
+                    </tr>
+                </thead>
+
+                {% if situacao_devolucao != 'D' %}
+                    <tbody data-tabela-link="/tecnologia/servidor-perfil?id=">
+                        {% for solicitacao in solicitacoes %}
+                            {% if solicitacao.id != None %}
+                                <tr data-tabela-link-chave="{{ solicitacao.id }}">
+                                    <td>{{ solicitacao.usuario__nome }}</td>
+                                    <td>{{ solicitacao.usuario__lotacao__nome }}</td>
+                                    <td>{{ solicitacao.usuario__lotacao__municipio }}</td>
+                                    <td>Aprovado</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                     <tfoot>
+                        <tr>
+                            <td class="coluna-paginacao" colspan="9">
+                                <div class="container-paginacao">
+                                    <div>
+                                        <span class="texto-negrito texto-azul">TOTAL:</span>
+                                        <span>{{ quantidade_solicitacoes.quantidade }}</span>
+
+                                    </div>
+
+                                    <div>
+                                        {% if quantidade_solicitacoes.pg_anterior %}
+                                            <a class="" href="{% url 'tecnologia:devolucao-notebook' %}?{{ gets_primeira }}">
+                                                <button class="botao-paginacao">first_page</button>
+                                            </a>
+
+                                            <a class="" href="{% url 'tecnologia:devolucao-notebook' %}?{{ gets_anterior }}">
+                                                <button class="botao-paginacao">navigate_before</button>
+                                            </a>
+                                        {% else %}
+                                            <a class="" href="#">
+                                                <button disabled class="botao-paginacao">first_page</button>
+                                            </a>
+
+                                            <a class="" href="#">
+                                                <button disabled class="botao-paginacao">navigate_before</button>
+                                            </a>
+                                        {% endif %}
+
+                                        <span class="">
+                                            {{ quantidade_solicitacoes.pg_selecionada }} de {{ quantidade_solicitacoes.pg_total }}
+                                        </span>
+
+                                        {% if quantidade_solicitacoes.pg_proxima %}
+                                            <a class="" href="{% url 'tecnologia:devolucao-notebook' %}?{{ gets_proxima }}">
+                                                <button class="botao-paginacao">navigate_next</button>
+                                            </a>
+
+                                            <a class="" href="{% url 'tecnologia:devolucao-notebook' %}?{{ gets_ultima }}">
+                                                <button class="botao-paginacao">last_page</button>
+                                            </a>
+                                        {% else %}
+                                            <a class="" href="#">
+                                                <button disabled class="botao-paginacao">navigate_next</button>
+                                            </a>
+
+                                            <a class="" href="#">
+                                                <button disabled class="botao-paginacao">last_page</button>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                {% else %}
+                    <tbody data-tabela-link="/tecnologia/servidor-perfil?id=">
+                        {% for row in devolucao_pages %}
+                        <tr data-tabela-link-chave="{{ row.id }}">
+                            <td>{{ row.nome }}</td>
+                            <td>{{ row.lotacao }}</td>
+                            <td>{{ row.municipio }}</td>
+                            <td>Devolvido</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="coluna-paginacao" colspan="9">
+                                <div class="container-paginacao">
+                                    <div>
+                                        <span class="texto-negrito texto-azul">TOTAL:</span>
+                                        <span>{{ quantidade_devolucoes }}</span>
+                                    </div>
+
+                                    <div>
+                                        {% if devolucao_pages.has_previous %}
+                                            <a class="" href="{% url 'tecnologia:devolucao-notebook' %}?{{ gets_primeira }}">
+                                                <button class="botao-paginacao">first_page</button>
+                                            </a>
+
+                                            <a class="" href="{% url 'tecnologia:devolucao-notebook' %}?{{ gets_anterior }}">
+                                                <button class="botao-paginacao">navigate_before</button>
+                                            </a>
+                                        {% else %}
+                                            <a class="" href="#">
+                                                <button disabled class="botao-paginacao">first_page</button>
+                                            </a>
+
+                                            <a class="" href="#">
+                                                <button disabled class="botao-paginacao">navigate_before</button>
+                                            </a>
+                                        {% endif %}
+
+                                        <span class="">
+                                            {{ devolucao_pages.number }} de {{ paginator.num_pages }}
+                                        </span>
+
+                                        {% if devolucao_pages.has_next %}
+                                            <a class="" href="{% url 'tecnologia:devolucao-notebook' %}?{{ gets_proxima }}">
+                                                <button class="botao-paginacao">navigate_next</button>
+                                            </a>
+
+                                            <a class="" href="{% url 'tecnologia:devolucao-notebook' %}?{{ gets_ultima }}">
+                                                <button class="botao-paginacao">last_page</button>
+                                            </a>
+                                        {% else %}
+                                            <a class="" href="#">
+                                                <button disabled class="botao-paginacao">navigate_next</button>
+                                            </a>
+
+                                            <a class="" href="#">
+                                                <button disabled class="botao-paginacao">last_page</button>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                {% endif %}
+            </table>
+
+            <table class="tabela tabela-links--smartphone">
+                <thead>
+                    <tr>
+                        <th class="">Nome</th>
+                        <th class="">Unidade</th>
+                        <th class="">Município</th>
+                    </tr>
+                </thead>
+
+                <tbody data-tabela-link="/tecnologia/servidor-perfil?id=">
+                    {% for solicitacao in solicitacoes %}
+                            <tr data-tabela-link-chave="{{ solicitacao.id }}">
+                            <td>{{ solicitacao.usuario__nome }}</td>
+                            <td>{{ solicitacao.usuario__lotacao__nome }}</td>
+                            <td>{{ solicitacao.usuario__lotacao__municipio }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td class="coluna-paginacao" colspan="9">
+                            <div class="container-paginacao">
+                                <div>
+                                    <span class="texto-negrito texto-azul">TOTAL:</span>
+                                    <span>{{ quantidade_solicitacoes.quantidade }}</span>
+
+                                </div>
+
+                                <div>
+                                    {% if quantidade_solicitacoes.pg_anterior %}
+                                        <a class="" href="{% url 'tecnologia:devolucao-notebook' %}?{{ gets_primeira }}">
+                                            <button class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'tecnologia:devolucao-notebook' %}?{{ gets_anterior }}">
+                                            <button class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% endif %}
+
+                                    <span class="">
+                                        {{ quantidade_solicitacoes.pg_selecionada }} de {{ quantidade_solicitacoes.pg_total }}
+                                    </span>
+
+                                    {% if quantidade_solicitacoes.pg_proxima %}
+                                        <a class="" href="{% url 'tecnologia:devolucao-notebook' %}?{{ gets_proxima }}">
+                                            <button class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'tecnologia:devolucao-notebook' %}?{{ gets_ultima }}">
+                                            <button class="botao-paginacao">last_page</button>
+                                        </a>
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">last_page</button>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+    {% include 'tecnologia/auxilio-notebook/partials/_modal-auxilios-filtros.html' %}
+    {% comment %} {% include 'tecnologia/links/partials/_modal-links-exportar.html' %} {% endcomment %}
+
+    {% for solicitacao in solicitacoes %}
+        {% include 'tecnologia/auxilio-notebook/partials/_modal-detalhes-auxilio.html' %}
+    {% endfor %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/module/select2.js' %}"></script>
+    <script src="{% static 'assets/js/module/linkTabela.js' %}"></script>
+
+    <!-- <script src="{% static 'assets/js/layout/tecnologia/auxilio-notebook/controlaCampos.js' %}"></script> -->
+
+{% endblock %}

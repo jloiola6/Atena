@@ -1,0 +1,29 @@
+/* Configuração da responsividade da tabela de motoristas */
+
+.tabela-motoristas-tablet, .tabela-motoristas-smartphone{
+    display: none;
+}
+
+@media screen and (max-width: 768px){
+    .tabela-motoristas, .tabela-motoristas-smartphone{
+        display: none;
+    }
+
+    .tabela-motoristas-tablet{
+        display: block;
+    }
+
+    .tabela-motoristas-lotacao{
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 425px){
+    .tabela-motoristas, .tabela-motoristas-tablet{
+        display: none;
+    }
+
+    .tabela-motoristas-smartphone{
+        display: block;
+    }
+} 

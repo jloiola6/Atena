@@ -1,0 +1,25 @@
+/* Estilizando as classes */
+
+.tabela-chamados--tablet, .tabela-chamados--smartphone{
+    display: none;
+}
+
+@media screen and (max-width: 607px) {
+    .tabela-chamados--tablet{
+        display: block;
+    }
+
+    .tabela-chamados{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 408px) {
+    .tabela-chamados--smartphone{
+        display: block;
+    }
+
+    .tabela-chamados--tablet{
+        display: none;
+    }
+}

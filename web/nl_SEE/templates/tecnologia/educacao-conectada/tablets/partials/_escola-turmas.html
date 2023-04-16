@@ -1,0 +1,41 @@
+<div data-nav-container>
+    {% if turmas %}
+        {% for etapa in turmas_etapas %}
+            <details class="dropdown dropdown--borda {{ etapa.classe }}">
+                <summary>{{ etapa.etapa__nome }} ({{ etapa.qtd_alunos }} alunos)</summary>
+
+                {% for serie in turmas_series %}
+                    {% if serie.etapa == etapa.etapa__id %}
+                        <details class="dropdown">
+                            <summary>{{ serie.ano_serie }} ({{ serie.qtd_alunos }} alunos)</summary>
+
+                            <div class="container-cards-simples">
+
+                                {% for turma in turmas %}
+                                    {% if turma.qtd_alunos > 0 %}
+                                        {% if turma.etapa.id == etapa.etapa__id and turma.ano_serie == serie.ano_serie %}
+                                            <a href="{% url 'tecnologia:turma-perfil' turma.id %}" class="card--turma">
+                                                <div class="card-simples">
+                                                    <h4 class="card-simples__titulo texto-azul">{{ turma.nome }}</h4>
+
+                                                    <div class="card-simples__descricao">
+                                                        <p class="texto-preto"><b class="texto-azul">Turno: </b>{{ turma.turno }}</p>
+                                                        <p class="texto-preto"><b class="texto-azul">Total de Alunos: </b>{{ turma.qtd_alunos }}</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </details>
+                    {% endif %}
+                {% endfor %}
+            </details>
+        {% endfor %}
+
+        <!-- <a class="link" href="{% url 'administracao:unidade-matriz' endereco.id %}">Abrir Matriz Curricular</a> -->
+    {% else %}
+        <span class="texto-preto">Esta unidade ainda não possui turmas cadastradas no ano letivo de {{ ANO_LETIVO }}.</span>
+    {% endif %}
+</div>

@@ -1,0 +1,160 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Histótico de chamados {% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'core:perfil' %}" class=" texto-azul">{{ servidor.nome }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Histórico de Chamados</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Histórico de Chamados</h1>
+
+            <div class="container-surface container-lotacoes-busca">
+                <h2 class="texto-medio texto-azul">Buscar chamados</h2>
+
+                <form class="formulario" method="GET">
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-servidor-protocolo">Protocolo</label>
+                        <input type="text" name="protocolo" class="campo-texto campo-pequeno">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-servidor-servico">Serviço</label>
+                        <select name="servico" id="campo-servico" class="campo-texto campo-grande">
+                            <option></option>
+                            {% for servico in servico %}
+                                <option value="{{ servico.servico }}">{{ servico.servico }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-servidor-status">Status</label>
+                        <select name="status" id="campo-status" class="campo-texto campo-pequeno">
+                            <option></option>
+                            {% for status in situacao %}
+                                <option value="{{ status.solicitacao__situacao }}">{{ status.solicitacao__situacao }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="container-botoes">
+                        <button type='submit' class="botao botao--azul">Buscar</button>
+                    </div>
+                </form>
+            </div>
+
+            <table class="tabela tabela-chamado">
+                <thead>
+                    <tr>
+                        <th>Protocolo</th>
+                        <th>Serviço</th>
+                        <th>Unidade</th>
+                        <th>Data Abertura</th>
+                        <th>Data Finalização</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for chamado in chamados %}
+                        <tr data-modal-abrir="chamado-{{ chamado.solicitacao.id }}">
+                            <td>{{ chamado.solicitacao.id }}</td>
+                            <td>{{ chamado.servico }}</td>
+
+                            {% if chamado.solicitacao.unidade_administrativa %}
+                                <td>{{ chamado.solicitacao.unidade_administrativa.nome }}</td>
+                            {% else %}
+                                <td>{{ chamado.solicitacao.endereco_escola.escola.nome_escola  }}</td>
+                            {% endif %}
+
+                            <td>{{ chamado.solicitacao.data_abertura }}</td>
+
+                            {% if chamado.solicitacao.data_finalizacao %}
+                                <td>{{ chamado.solicitacao.data_finalizacao }}</td>
+                            {% else %}
+                                <td>Não Finalizado</td>
+                            {% endif %}
+
+                            <td>{{ chamado.solicitacao.situacao }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td class="coluna-paginacao" colspan="6">
+                            <div class="container-paginacao">
+                                <div>
+                                    <span class="texto-negrito texto-azul">TOTAL:</span>
+                                    <span>{{ quantidade_chamados }}</span>
+                                </div>
+
+                                <div>
+                                    {% if chamados.has_previous %}
+                                        <a class="" href="{% url 'core:historico-chamados' %}?{{ gets_primeira }}">
+                                            <button class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'core:historico-chamados' %}?{{ gets_anterior }}">
+                                            <button class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% endif %}
+
+                                    <span class="">
+                                        {{ chamados.number }} de {{ chamados.paginator.num_pages }}
+                                    </span>
+
+                                    {% if chamados.has_next %}
+                                        <a class="" href="{% url 'core:historico-chamados' %}?{{ gets_proxima }}">
+                                            <button class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'core:historico-chamados' %}?{{ gets_ultima }}">
+                                            <button class="botao-paginacao">last_page</button>
+                                        </a>
+
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">last_page</button>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        {% for chamado in chamados %}
+            {% include 'core/servidor/partials/_modal-historico-chamado.html' %}
+        {% endfor %}
+
+    </main>
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/module/select2.js' %}"></script>
+{% endblock %}

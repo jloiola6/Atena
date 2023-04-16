@@ -1,0 +1,88 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Tecnologia{% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Tecnologia</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Tecnologia</h1>
+
+            <div class="container-cards">
+                {% if auxilio_permissao %}
+                    <a href="{% url 'tecnologia:auxilio-notebook' %}">
+                        <div class="card-menu">
+                            {% include 'partials/icones-cards/tecnologia/auxilio-notebook.svg' %}
+
+                            <h2 class="card-titulo">Auxílio Notebook</h2>
+                        </div>
+                    </a>
+                {% endif %}
+
+                {% if chamado_permissao %}
+                    <a href="{% url 'tecnologia:chamados' %}">
+                        <div class="card-menu">
+                            {% include 'partials/icones-cards/tecnologia/chamados.svg' %}
+
+                            <h2 class="card-titulo">Chamados</h2>
+                        </div>
+                    </a>
+                {% endif %}
+
+                {% if 20 in permissoes %}
+                    <a href="{% url 'tecnologia:vagas' %}">
+                        <div class="card-menu">
+                            {% include 'partials/icones-cards/tecnologia/central-vagas.svg' %}
+
+                            <h2 class="card-titulo">Central de Vagas</h2>
+                        </div>
+                    </a>
+                {% endif %}
+
+                {% if 13 in permissoes %}
+                    <a href="{% url 'tecnologia:contratos' %}">
+                        <div class="card-menu">
+                            {% include 'partials/icones-cards/tecnologia/contratos.svg' %}
+
+                            <h2 class="card-titulo">Contratos</h2>
+                        </div>
+                    </a>
+                {% endif %}
+
+
+                {% if 26 in permissoes %}
+                    <a href="{% url 'tecnologia:educacao-conectada' %}">
+                        <div class="card-menu">
+                            {% include 'partials/icones-cards/tecnologia/educacao-conectada.svg' %}
+
+                            <h2 class="card-titulo">Educação Conectada</h2>
+                        </div>
+                    </a>
+                {% endif %}
+
+                {% if 12 in permissoes %}
+                    <a href="{% url 'tecnologia:links-tabela' %}">
+                        <div class="card-menu">
+                            {% include 'partials/icones-cards/tecnologia/links.svg' %}
+
+                            <h2 class="card-titulo">Links</h2>
+                        </div>
+                    </a>
+                {% endif %}
+
+            </div>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+{% endblock %}

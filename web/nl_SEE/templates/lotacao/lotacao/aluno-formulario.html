@@ -1,0 +1,155 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Cadastro de Aluno {% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:index' %}">Gestão de Pessoas</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:lotacoes' %}">Lotações</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:servidor-perfil' %}?id={{ servidor.id }}">{{ servidor.nome }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:contrato-perfil' %}?id_contrato={{ contrato.id }}">Digito n° {{ contrato.digito }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:lotacao-formulario' %}?id_contrato={{ contrato.id }}">Cadastrar Lotação</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Cadastro de Aluno</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Cadastro de Aluno</h1>
+
+            <p class=" texto-preto descricao">Insira os dados do Aluno</p>
+
+            <form class="container-surface container-formulario-aluno" method="POST">
+                {% csrf_token %}
+
+                <h2 class="texto-medio texto-azul">Dados do Aluno</h2>
+
+                <div class="formulario-grupo">
+                    <label for="campo-escola" class="texto-azul label-campo">Escola</label>
+                    <input type="text" name="" id="campo-escola" class="campo-texto campo-grande" value="{{ escola }}" readonly>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-turma">Turma</label>
+                    <input type="text" name="turma" id="campo-turma" class="campo-texto campo-pequeno" value="{{ turma }}" readonly>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label for="organograma-formulario-nome" class="texto-azul label-campo">Nome</label>
+                    <input type="text" name="nome" id="organograma-formulario-nome" class="campo-texto campo-grande" value="{{ aluno.nome }}"  placeholder="Ex: João Pedro Soares" maxlength="100" autocomplete="off" required>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label for="organograma-formulario-CPF" class="texto-azul label-campo">CPF</label>
+                    <input type="text" name="CPF" id="organograma-formulario-CPF" class="campo-texto campo-pequeno" value="{{ aluno.cpf }}" placeholder="Ex: 000.000.000-00" data-mascara="cpf" autocomplete="off" required>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-sexo">Gênero</label>
+                    <select name="sexo" id="campo-sexo" class="campo-texto campo-pequeno">
+                        <option value=""></option>
+                        {% for genero in generos %}
+                            {% if genero.0 == aluno.sexo %}
+                                <option value="{{ genero.0 }}" selected>{{ genero.1 }}</option>
+                            {% else %}
+                                <option value="{{ genero.0 }}">{{ genero.1 }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label for="organograma-formulario-data" class="texto-azul label-campo">Data de nascimento</label>
+                    <input type="date" name="data" id="organograma-formulario-data" value="{{ data_aluno }}" class="campo-texto campo-medio">
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="label-campo texto-azul" for="aluno-pai">Nome completo do pai</label>
+                    <input class="campo-texto campo-grande" name='nome_pai' value='{{ nome_pai }}' id="aluno-pai" type="text" placeholder="Ex: Fábio Santos Moreira">
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="label-campo texto-azul" for="aluno-mae">Nome completo da mãe</label>
+                    <input class="campo-texto campo-grande" name='nome_mae' value='{{ nome_mae }}' id="aluno-mae" type="text" placeholder="Ex: Fabiana Santos Moreira">
+                </div>
+
+                <div class="formulario-grupo" data-selecao-naturalidade>
+                    <label class="label-campo texto-azul" for="aluno-nacionalidade">Nacionalidade</label>
+
+                    <select class="campo-texto campo-pequeno" name="nacionalidade" id="aluno-nacionalidade">
+                        <option value=""></option>
+                        <option value="Brasileiro(a)">Brasileiro(a)</option>
+                        <option value="Estrangeiro(a)">Estrangeiro(a)</option>
+                    </select>
+                </div>
+
+                <div data-naturalidade-brasileira>
+                    <div class="formulario-grupo">
+                        <label class="label-campo texto-azul" for="aluno-naturalidade-estado">Naturalidade (estado)</label>
+
+                        <select id="aluno-naturalidade-estado" name="estado" class="campo-grande campo-texto" data-selecao-estado>
+                            <option value=""></option>
+
+                            {% for estado in estados %}
+                                <option value="{{ estado.sigla }}">{{ estado.nome }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="label-campo texto-azul" for="aluno-naturalidade-municipio">Naturalidade (município)</label>
+
+                        <select id="aluno-naturalidade-municipio" name="naturalidade" class="campo-grande campo-texto" data-selecao-cidade>
+                            <option value=""></option>
+
+                            {% for cidade in cidades %}
+                                {% if cidade.nome == aluno.naturalidade %}
+                                    <option value="{{ cidade.nome }}">{{ cidade.nome }}</option>
+                                {% else %}
+                                    <option value="{{ cidade.nome }}">{{ cidade.nome }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao botao--azul" data-modal-abrir="confirmar">Cadastrar</button>
+                </div>
+
+                <div class="modal oculto" data-modal="confirmar">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                            <p class="texto-preto descricao">Tem certeza que deseja salvar os dados do aluno?</p>
+
+                            <div class="container-botoes">
+                                <button class="botao--verde botao" type="submit">Salvar</button>
+                                <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                            </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type='module'></script>
+{% endblock %}

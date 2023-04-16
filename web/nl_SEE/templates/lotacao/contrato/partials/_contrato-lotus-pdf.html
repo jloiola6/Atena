@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-bt">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Contrato Lotus</title>
+    </head>
+
+    <body>
+        <header>
+            <table>
+                <tr>
+                    <th><img id="img1" src="{{ url_logo }}" width='550px' alt="Cabecalho"></th>
+                    <th class="direita"><img id="img2" src="{{ url_atena }}" width='120px' alt="Logo Atena"></th>
+                    <!-- <th><img id="img2" src="C:\Users\joao.soares\Documents\code\Atena\nl_SEE\static\assets\img\contrato.png" width='550px' alt="Cabecalho"></th>
+                    <th><img id="img1" src="C:\Users\joao.soares\Documents\code\Atena\nl_SEE\static\assets\img\ATENA-AZUL.svg"  width='120px' alt="Logo Atena"></th> -->
+                </tr>
+            </table>
+        </header>
+
+        <hr>
+        <div>
+            <br>
+            <section>
+
+                <div style="text-align: justify;">
+                    <span>
+                        <b>CONTRATO {{contratos.tipo}} DE PRESTAÇÃO DE SERVIÇO Nº {{contratos.matricula}}-{{contratos.digito}}</b>
+                    </span>
+                    <br><br>
+                    <span>
+                        Pelo presente Contrato Individual de Prestação de Serviços <b>{{contratos.tipo_contrato}}</b>, que entre si celebram como partes o Estado do Acre,
+                        representado neste ato pela <b>SECRETARIA DE ESTADO DE EDUCAÇÃO, CULTURA E ESPORTES</b>, inscrita no CNPJ sob o nº 04.033.254/0001-67, com sede na
+                        Rua Rio Grande do Sul, 1907 - Volta Seca, CEP 69.911-018, representada pelo Senhor <b>{{secretario.contrato.servidor.nome}}</b>, Secretário de Estado de Educação,
+                        Cultura e Esportes, CPF nº 753.451.292-15, RG nº 353911 SSP/AC doravante denominado CONTRATANTE, e o(a) Sr(a). <b>{{servidor.nome}},
+                        CPF nº {{servidor.cpf}} e
+                        {% if servidor.rg %}
+                            RG nº {{servidor.rg}},
+                        {% endif %}
+                        Telefone: {{contato.contato}}</b>, a seguir denominado(a) CONTRATADO(A), domiciliado(a)
+                        no(a) <b>{{endereco.rua}}, {{endereco.numero}}, {{endereco.bairro}} no Município de {{endereco.municipio}}</b>, conforme processo seletivo simplificado,
+                        {% if contratos.doe %}
+                            publicado no <b>D.O.E: {{contratos.doe}}</b>,
+                        {% elif contratos.parecer %}
+                            publicado no <b>Parecer: {{contratos.parecer}}</b>,
+                        {% endif %}
+                        convencionam o seguinte:
+                    </span>
+                    <br><br>
+                    <span>
+                        <b>CLÁUSULA PRIMEIRA - DO OBJETO</b>
+                    </span>
+                    <br>
+                    <span>
+                        O(A) CONTRATADO(A) se obriga a prestar seus serviços profissionais no exercício do cargo de <b>{{contratos.cargo}}</b>, no
+                        Ensino Fundamental e/ou Médio, em função de magistério, dispostos no Art. 2º, V, da Lei Complementar nº 67/1999, com redação dada pela Lei
+                        Complementar nº 274/2014, em unidade escolar da Secretaria de Estado de Educação, Cultura e Esporte, em local para o qual for designado.
+                    </span>
+                    <br><br>
+                    <span>
+                        <b>CLÁUSULA SEGUNDA - DO PRAZO</b>
+                    </span>
+                    <br>
+                    <span>
+                        O presente contrato vigorará pelo período de <b>{{contratos.data_inicio}}</b> a <b>{{contratos.data_termino}}</b>, ficando ao término da vigência, rescindido de pleno direito, sem qualquer ônus
+                        para o CONTRATANTE.
+                        O presente contrato poderá, a qualquer tempo, ser rescindido por qualquer das partes, mediante simples comunicação escrita, feita com antecedência
+                        mínima de 30 (trinta) dias, não gerando a rescisão efetuada nos termos deste item, nenhuma obrigação ou direito a indenização de parte a parte,
+                        devendo ser pago, nesse caso, apenas o valor correspondente aos serviços já realizados e ainda não remunerados
+                    </span>
+                    <br><br>
+                    <span>
+                        <b>CLÁUSULA TERCEIRA - DA REMUNERAÇÃO</b>
+                    </span>
+                    <br>
+                    <span>
+                        Os serviços objeto do presente contrato serão remunerados de acordo com o art. 13, §7º, da Lei complementar nº 67, de 29 de junho de 1999, acrescido
+                        pelo artigo 4º, da Lei Complementar nº 144, de 4 de março de 2005 e tabela salarial do grupo Magistério, na vigência deste Contrato.
+                    </span>
+                    <br><br>
+                    <span>
+                        <b>CLÁUSULA QUARTA - DA EFETIVAÇÃO</b>
+                    </span>
+                    <br>
+                    <span>
+                        O presente Contrato considerár-seá efetivado a partir da data de sua assinatura, cabendo ao(à) CONTRATADO(A) fornecer toda a documentação
+                        necessária à formalização de seu Cadastro Funcional.
+                    </span>
+                    <br><br>
+                    <span>
+                        <b>CLÁUSULA QUINTA - DO REGIME E DA EXECUÇÃO</b>
+                    </span>
+                    <br>
+                    <span>
+                        O presente contrato é regido com fundamentos no artigo 37, inciso IX, da Constituição Federal, combinado com o artigo 27, inciso X, da Constituição do
+                        Estado do Acre, e com o art. 2º, incisos VI e VII e demais disposições da Lei Complementar nº 58/98.
+                        O(A) CONTRATADO(A) obriga-se a prestar e a desenvolver os serviços em estreita colaboração com o CONTRATANTE, executando todos os trabalhos
+                        definidos em razão deste contrato.
+                        O(A) CONTRATADO(A) prestará os serviços consoantes as boas técnicas profissionais de sua especialidade, objetivando a melhor eficiência dos
+                        trabalhos, prestando, ao CONTRATANTE, todos os esclarecimentos que este julgar necessários ou que forem solicitados.
+                        O(A) CONTRATADO(A) fica obrigado à reparação de todos e quaisquer danos que porventura der causa, resguardando-se, ao CONTRATANTE o direito
+                        de debitar nos vencimentos do contratado, todas as despesas necessárias ao total ressarcimento dos danos verificados.
+                        O(A) CONTRATADO(A) não poderá exercer outra atividade que não seja a do objeto deste contrato, nem ser colocado à disposição de outro órgão ou
+                        entidade
+                    </span>
+                    <br><br>
+                    <span>
+                        <b>CLÁUSULA SEXTA - DAS RESPONSABILIDADES DAS PARTES</b>
+                    </span>
+                    <br>
+                    <span>
+                        Correrão por conta exclusivamente do(a) CONTRATADO(A) todos os tributos incidentes e as contribuições a que estiver sujeito em razão da execução
+                        deste contrato, exceto as legalmente incidentes sobre a remuneração da pessoa física.
+                        O(A) CONTRATADO(A) fornecerá ao CONTRATADO todos os dados e elementos informativos de que dispuser, necessários à execução dos serviços
+                        contratados.
+                    </span>
+                    <br><br>
+                    <span>
+                        <b>CLÁUSULA SÉTIMA - FORO</b>
+                    </span>
+                    <br>
+                    <span>
+                        Para dirimir quaisquer dúvidas oriundas do presente contrato, fica eleito o Foro da Comarca de {{contratos.municipio}}-Acre, renunciando-se a qualquer outro, por
+                        mais privilegiado que seja.
+                        E por estarem assim justas e contratadas, assinam as partes o presente instrumento.
+                    </span>
+                    <br><br>
+                    <p class="data">
+                        <b>{{endereco.municipio}}, {{data.date}}</b>
+                    </p>
+
+                    <table>
+                        <tr>
+                            <th class="dados">2° Via importada do Lotus por {{ nome }} dia {{ data }}</th>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+    </body>
+    <style>
+        @page{
+            margin: 1cm;
+        }
+
+        body{
+            font-size: 10px;
+        }
+
+
+        p{
+            line-height: 1px;
+        }
+
+        span{
+            text-align: justify;
+
+        }
+
+        .data{
+            margin-left: 250px;
+        }
+
+        .invisivel{
+                color: white;
+            }
+
+        td{
+            text-align: center;
+        }
+
+        .dados{
+            padding-top: 40px;
+        }
+
+        .direita{
+            text-align: right;
+        }
+
+    </style>
+</html>

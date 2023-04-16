@@ -1,0 +1,91 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Matriz Curricular {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/administracao/unidades/matriz/unidade-matriz.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:index' %}">Administração</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:unidades_educacionais' %}">Unidades</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'administracao:unidade-perfil' %}?inep={{ escola.cod_inep }}" class="texto-azul">{{ escola.nome_escola }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Matriz Curricular</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Matriz Curricular</h1>
+
+            {% for etapa in turmas_etapas %}
+                <details class="dropdown dropdown--borda {{ etapa.classe }}">
+                    <summary>{{ etapa.etapa__nome }}</summary>
+
+                    {% for serie in turmas_series %}
+                        {% if serie.etapa == etapa.etapa__id %}
+                            <details class="dropdown">
+                                <summary>{{ serie.ano_serie }}</summary>
+
+                                <div class="container-cards-simples">
+
+                                    {% for turma in turmas %}
+                                        {% if turma.etapa_id == etapa.etapa__id and turma.ano_serie == serie.ano_serie %}
+                                            <div class="card-simples card-simples--selecionavel card--turma" data-modal-abrir="grade-{{ turma.id }}">
+                                                {% if turma.matriz %}
+                                                    <span class="turma__status {{ turma.status_classe }}">{{ turma.status }}</span>
+
+                                                    <h4 class="card-simples__titulo texto-azul">{{ turma.nome }}</h4>
+                                                    <span class="texto-preto texto--12 descricao">{{ turma.matriz__nome }}</span>
+
+                                                    <b class="texto-cinza texto--12">{{ turma.qtd_disciplinas }} disciplinas</b>
+
+                                                    <div class="turma__ch">
+                                                        <div class="ch__progresso">
+                                                            <span class="texto-cinza texto--12">{{ turma.total_ch }}h/{{ turma.total_ch_matriz }}h</span>
+                                                            <span class="texto-cinza texto--12">{{ turma.porcentagem }}%</span>
+                                                        </div>
+
+                                                        <div class="barra-progresso">
+                                                            <div data-progresso="{{ turma.porcentagem }}"></div>
+                                                        </div>
+                                                    </div>
+                                                {% else %}
+                                                    <h4 class="card-simples__titulo texto-azul">{{ turma.nome }}</h4>
+
+                                                    <b class="texto-cinza texto--12 descricao">{{ turma.qtd_disciplinas }} disciplinas</b>
+
+                                                    <span class="texto-preto">Sem matriz cadastrada</span>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </details>
+                        {% endif %}
+                    {% endfor %}
+                </details>
+            {% endfor %}
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    {% include 'administracao/unidades/matriz/partials/_modais-grades.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/module/barraProgresso.js' %}"></script>
+{% endblock %}

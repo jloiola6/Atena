@@ -1,0 +1,26 @@
+/* Estiização da página de perfil de uma unidade educacional */
+
+@media screen and (max-width: 768px){
+    .container-dividido-escola{
+        flex-direction: column;
+        row-gap: 16px;
+    }
+
+    .unidade-rua{
+        width: 100%;
+    }
+
+    .container-turma-lista > a{
+        flex-basis: 45%
+    }
+
+    .card-simples-turma{
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 485px){
+    .container-turma-lista > a{
+        flex-basis: 100%
+    }
+}

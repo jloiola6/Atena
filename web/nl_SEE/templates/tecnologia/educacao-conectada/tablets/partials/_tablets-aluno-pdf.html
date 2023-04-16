@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html lang="pt-bt">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Educação Conectada - Tablets</title>
+    </head>
+    <body>
+        {% for dado in dados %}
+            <header>
+                <table>
+                    <tr>
+                        <!-- <th><img id="img2" src="/home/suporte/Atena/nl_SEE/static/assets/img/detei.png" alt=""></th>
+                        <th><img id="img3" src="/home/suporte/Atena/nl_SEE/static/assets/img/ATENA-AZUL.svg" alt="Logo" style="width:120px;height:auto;"></th> -->
+                        <th><img id="img2" src="{{ url_logo }}" alt=""></th>
+                        <th class="direita"><img id="img3" src="{{ url_atena }}" alt="Logo"></th>
+                    </tr>
+                </table>
+            </header>
+            <hr>
+            <h1 class="titulo">TERMO DE RESPONSABILIDADE - TABLET EDUCACIONAL </h1>
+
+            <br>
+            <div class="texto">
+                <table class="tabela-identificacao">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <b>Aluno(a):</b> {{ dado.aluno_turma__aluno__nome }}
+                            </td>
+                                <td><b>Unidade Escolar:</b> {{ dado.aluno_turma__turma__endereco__escola__nome_escola }}
+                            </td>
+                        </tr>
+                        <tr>
+                            {% if dado.aluno_turma__aluno__nome_responsavel %}
+                                <td>
+                                    <b>Responsável:</b> {{dado.aluno_turma__aluno__nome_responsavel}}
+                                </td>
+                            {% elif dado.aluno_turma__aluno__nome_mae %}
+                                <td>
+                                    <b>Responsável:</b> {{dado.aluno_turma__aluno__nome_mae}}
+                                </td>
+                            {% elif dado.aluno_turma__aluno__nome_pai %}
+                                <td>
+                                    <b>Responsável:</b> {{ dado.aluno_turma__aluno__nome_pai }}
+                                </td>
+                            {% else %}
+                                <td>
+                                    <b>Responsável:</b> __________________________________
+                                </td>
+                            {% endif %}
+                            <td>
+                                <b>Turma:</b> {{ dado.aluno_turma__turma__nome }} - {{ dado.aluno_turma__turma__turno }}
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                {% if dado.cad_unico == 1 %}
+                                    <b>Cadastro Único:</b> Possui
+                                {% else %}
+                                    <b>Cadastro Único:</b> Não Possui
+                                {% endif %}
+                            </td>
+                            <td>
+                                <b>Equipamento:</b> Tablet Multilaser M8"
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Número de Série:</b> {{ dado.serial_tablet }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>EAN Chip:</b> {{ dado.serial_chip }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Patrimônio: {{ dado.imei_tablet }} </b></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <br>
+                <p>Declaro que estou ciente:</p>
+                <div class="conteudo">
+                    <p><b>1.</b> Dos objetivos e princípios da utilização do Tablet Educacional e aceito participar do programa educação conectada.</p>
+                    <p><b>2.</b> Que todos os meus dados pessoais, tais como blogs, facebook, twitter, entre outros, assim como documentos de identificação pessoal, inseridos, serão de minha inteira responsabilidade.</p>
+                    <p><b>3.</b> Que este equipamento é um bem público, integrante do patrimônio da Secretaria de Estado de Educação, Cultura e Esportes (SEE/AC).</p>
+                </div>
+                
+                <br><br>
+
+
+                <div style="text-align: center;">
+                    <table>
+                        <tr>
+                            <td>
+                                <p class="data">Rio Branco - Acre, _______/_______/_________</p>
+                            </td>
+                            
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <br><br><br><br><br><br>
+
+            <div class="assinatura">
+                <table>
+                    <tr>
+                        <td>
+                            <p><b>___________________________________________</b></p>
+                            <p>Assinatura do Responsável</p>
+                        </td>
+                        <td>
+                            <p><b>___________________________________________</b></p>
+                            <p>CPF</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            {% for br in brs %}
+                <br>
+            {% endfor %}
+            <h1 style="text-align: right;">{{ forloop.counter }}</h1>
+        {% endfor %}
+        <style>
+            @page{
+                margin: 1cm;
+            }
+
+            .dados{
+                padding-top: 5px;
+                padding-bottom: 5px;
+            }
+
+            #img2{
+                width: 100%;
+                height: auto;
+            }
+
+            #img3{
+                width: 120px;
+                height: auto;
+            }
+
+            .direita{
+                text-align: right;
+            }
+
+            .titulo{
+                padding-top: 20px;
+                text-align: center;
+                font-family: sans-serif;
+                font-size: 16px;
+            }
+
+            .tabela-identificacao{
+                padding: 2px;
+                font-family:sans-serif;
+                font-size: 12px;
+            }
+
+            .conteudo{
+                padding-left: 20px;
+            }
+
+            .texto{
+                text-align: justify;
+                font-family: sans-serif;
+                font-size: 12px;
+            }
+
+            .assinatura{
+                text-align: center;
+                font-weight: normal;
+                font-size: 10px;
+            }
+            .data{
+                margin-left: 1rem;
+            }
+
+        </style>
+
+    </body>
+</html>

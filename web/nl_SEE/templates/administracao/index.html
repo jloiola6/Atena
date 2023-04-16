@@ -1,0 +1,96 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Administração {% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Administração</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Administração</h1>
+
+            <div class="container-cards">
+                {% if 7 in permissoes %}
+                    <a href="{% url 'administracao:alunos' %}">
+                        <div class="card-menu">
+                            {% include 'partials/icones-cards/administracao/alunos.svg' %}
+
+                            <h2 class="card-titulo">Alunos</h2>
+                        </div>
+                    </a>
+                {% endif %}
+
+                {% if 7 in permissoes %}
+                    <a href="{% url 'administracao:controle-inventario' %}">
+                        <div class="card-menu">
+                            {% include 'partials/icones-cards/administracao/inventario.svg' %}
+
+                            <h2 class="card-titulo">Controle de Inventário</h2>
+                        </div>
+                    </a>
+                {% endif %}
+
+                {% if 7 in permissoes %}
+                    <a href="{% url 'administracao:matrizes' %}">
+                        <div class="card-menu">
+                            {% include 'partials/icones-cards/administracao/matrizes.svg' %}
+
+                            <h2 class="card-titulo">Matrizes</h2>
+                        </div>
+                    </a>
+                {% endif %}
+
+                {% if gestor %}
+                    <a href="{% url 'administracao:unidade-perfil' %}?inep={{ inep }}">
+                        <div class="card-menu">
+                            {% include 'partials/icones-cards/administracao/unidades-educacionais.svg' %}
+
+                            <h2 class="card-titulo">Unidade Educacional</h2>
+                        </div>
+                    </a>
+                {% endif %}
+
+                {% if 1 in permissoes %}
+                    <a href="{% url 'administracao:unidades_educacionais' %}">
+                        <div class="card-menu">
+                            {% include 'partials/icones-cards/administracao/unidades-educacionais.svg' %}
+
+                            <h2 class="card-titulo">Unidades Educacionais</h2>
+                        </div>
+                    </a>
+                {% endif %}
+
+                {% if 2 in permissoes %}
+                    <a href="{% url 'administracao:unidades-administrativas' %}">
+                        <div class="card-menu">
+                            {% include 'partials/icones-cards/administracao/unidades-administrativas.svg' %}
+
+                            <h2 class="card-titulo">Unidades Administrativas</h2>
+                        </div>
+                    </a>
+                {% endif %}
+
+                {% if 10 in permissoes %}
+                <a href="{% url 'administracao:contratos' %}">
+                    <div class="card-menu">
+                        {% include 'partials/icones-cards/administracao/contratos.svg' %}
+
+                        <h2 class="card-titulo">Contratos</h2>
+                    </div>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+{% endblock %}

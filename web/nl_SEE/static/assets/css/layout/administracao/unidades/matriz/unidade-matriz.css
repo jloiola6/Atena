@@ -1,0 +1,51 @@
+/* Estilização da página de matriz escolar */
+
+.card--turma{
+    --largura: calc((100% / 3) - .5rem);
+
+    flex-basis: var(--largura);
+    padding: 1.25rem;
+}
+
+.turma__status{
+
+    border-radius: .25rem;
+    box-sizing: border-box;
+    color: var(--texto-branco);
+    font-size: .75rem;
+    line-height: 1.125rem;
+    padding-block: .25rem;
+    padding-inline: 1rem;
+    width: fit-content;
+}
+
+    .turma__status--disponivel{
+        background-color: var(--cor-azul-hover);
+    }
+
+    .turma__status--completo{
+        background-color: var(--cor-verde-hover);
+    }
+
+    .turma__status--excede{
+        background-color: var(--cor-vermelho-hover);
+    }
+
+    .status--disponivel{
+        background-color: var(--cor-azul-hover);
+    }
+
+    .status--completo{
+        background-color: var(--cor-verde-hover);
+    }
+
+.turma__ch{
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+    .ch__progresso{
+        display: flex;
+        justify-content: space-between;
+    }

@@ -1,0 +1,87 @@
+<div class="container-surface container-surface-departamento">
+    <h2 class="texto-medio texto-azul">Dados</h2>
+
+    <div class="container-unidade-dados">
+        <p class=" texto-azul texto-negrito">
+            Nome:
+            <span class="texto-preto texto-normal">{{ departamento.nome }}</span>
+        </p>
+
+        <p class=" texto-azul texto-negrito">
+            Sigla:
+            <span class="texto-preto texto-normal">{{ departamento.sigla }}</span>
+        </p>
+    </div>
+
+    {% if contem_endereco %}
+        <h2 class="texto-medio texto-azul titulo-endereco-departamento">Endereço</h2>
+        {% if endereco.endereco.numero != '1901' %}
+            <div class="container-unidade-dados">
+                <p class=" texto-azul texto-negrito">
+                    Município:
+                    <span class="texto-preto texto-normal">{{ endereco.endereco.municipio }}</span>
+                </p>
+
+                <p class=" texto-azul texto-negrito">
+                    Regional:
+                    <span class="texto-preto texto-normal">{{ endereco.endereco.regiao }}</span>
+                </p>
+
+                <p class=" texto-azul texto-negrito">
+                    CEP:
+                    <span class="texto-preto texto-normal">{{ endereco.endereco.cep }}</span>
+                </p>
+
+                <p class=" texto-azul texto-negrito">
+                    Rua:
+                    <span class="texto-preto texto-normal">{{ endereco.endereco.rua }}</span>
+                </p>
+
+                <p class=" texto-azul texto-negrito">
+                    Número:
+                    <span class="texto-preto texto-normal">{{ endereco.endereco.numero }}</span>
+                </p>
+
+                <p class=" texto-azul texto-negrito">
+                    Bairro:
+                    <span class="texto-preto texto-normal">{{ endereco.endereco.bairro }}</span>
+                </p>
+
+                <p class=" texto-azul texto-negrito">
+                    Complemento:
+                    <span class="texto-preto texto-normal">{{ endereco.endereco.complemento }}</span>
+                </p>
+            </div>
+        {% else %}
+            <div class="container-endereco-departamento">
+                <p class=" texto-azul texto-negrito">
+                    Esta unidade está localizada na sede.
+                </p>
+            </div>
+        {% endif %}
+    {% endif %}
+
+    <h2 class="texto-medio texto-azul titulo-endereco-departamento">Contatos</h2>
+
+    <div class="container-unidade-dados">
+        <p class=" texto-azul texto-negrito">
+            Telefone:
+
+            {% if departamento.telefone != '' %}
+                <span class="texto-preto texto-normal">{{ departamento.telefone }}</span>
+            {% else %}
+                <span class="texto-preto texto-normal">Não cadastrado</span>
+            {% endif %}
+        </p>
+
+        <p class=" texto-azul texto-negrito">
+            E-mail:
+
+            {% if departamento.email != '' %}
+                <span class="texto-preto texto-normal">{{ departamento.email }}</span>
+            {% else %}
+                <span class="texto-preto texto-normal">Não cadastrado</span>
+            {% endif %}
+        </p>
+    </div>
+</div>

@@ -1,0 +1,68 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Tablets {% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:index' %}">Tecnologia</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:educacao-conectada' %}">Educação Conectada</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Tablets</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Escolas cadastradas</h1>
+
+            <div class="container-botoes">
+                <a href="#">
+                    <button class="botao botao--azul">Adicionar</button>
+                </a>
+            </div>
+
+            <div class="container-surface">
+                <h2 class="texto-medio texto-azul">Buscar unidade</h2>
+
+                <form method="GET">
+                    <div class="formulario-grupo">
+                        <input type="text" class="campo-texto campo-pequeno" name="cod_inep" placeholder="INEP" data-mascara="numero" maxlength="8">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <input type="text" class="campo-texto campo-grande" name="nome_unidade" placeholder="Nome da Unidade">
+                    </div>
+
+                    <div class="container-botoes">
+                        <button class="botao botao--azul">Buscar</button>
+                    </div>
+                </form>
+            </div>
+
+            <table class="tabela">
+                <thead>
+                    <tr>
+                        <th>INEP</th>
+                        <th>Nome</th>
+                        <th>Município</th>
+                        <th>Alunos</th>
+                        <th>Alunos CAD</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </main>
+
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+
+    {% include 'partials/_rodape.html' %}
+{% endblock %}

@@ -1,0 +1,211 @@
+{% comment %}
+    Esta partial contém um container com o formulário de um gestor de um contrato
+    Feita para evitar a repetição código em perfis de contrato nos módulos de ADMINISTRAÇÃO, TECNOLOGIA e TERCEIRIZAÇÃO -->
+{% endcomment %}
+
+<form class="container-surface formulario-gestores" method="POST">
+    {% csrf_token %}
+
+    <h2 class="texto-medio texto-azul">Gestor Titular</h2>
+
+    <div class="formulario-grupo oculto">
+        <label class="texto-azul label-campo" for="campo-numero">Tipo</label>
+        <input class="campo-texto campo-pequeno" type="text" value="Gestor Titular" name="tipo1" id="campo-numero" placeholder="Ex: 000000"  autocomplete="off" maxlength="200">
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo">Nome do servidor</label>
+        <select data-selecao2 name="nome1" class="campo-texto campo-medio">
+            {% for servidor in servidores %}
+                <option value="{{ servidor.contrato__servidor__nome }}">{{ servidor.contrato__servidor__nome }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-numero">N° do Diário Oficial</label>
+        <input class="campo-texto campo-pequeno" type="text" value="" name="doe_gestor_titular" id="campo-numero" placeholder="Ex: 00000000"  autocomplete="off" maxlength="30">
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-numero">N° do Portaria</label>
+        <input class="campo-texto campo-pequeno" type="text" value="" name="portaria_gestor_titular" id="campo-numero" placeholder="Ex: 00000000"  autocomplete="off" maxlength="30">
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-inicio-vigencia">Data da Portaria</label>
+        <input class="campo-texto campo-medio" type="date" value="" name="data_portaria_gestor_titular" id="campo-inicio-vigencia" >
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-inicio-vigencia">Data da Publicação</label>
+        <input class="campo-texto campo-medio" type="date" value="" name="data_publicacao_gestor_titular" id="campo-inicio-vigencia" >
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-inicio-vigencia">Data Início</label>
+        <input class="campo-texto campo-medio" type="date" value="" name="data_inicio_gestor_titular" id="campo-inicio-vigencia" >
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-inicio-vigencia">Data Fim</label>
+        <input class="campo-texto campo-medio" type="date" value="" name="data_termino_gestor_titular" id="campo-inicio-vigencia" >
+    </div>
+
+    <br><br>
+    <h2 class="texto-medio texto-azul formulario-gestores-subtitulo">Gestor Substituto</h2>
+
+    <div class="formulario-grupo oculto">
+        <label class="texto-azul label-campo" for="campo-numero">Tipo</label>
+        <input class="campo-texto campo-pequeno" type="text" value="Gestor Substituto" name="tipo2" id="campo-numero" placeholder="Ex: 00000000"  autocomplete="off" maxlength="200">
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo">Nome do servidor</label>
+        <select data-selecao2 name="nome2" class="campo-texto campo-medio">
+            {% for servidor in servidores %}
+                <option value="{{ servidor.contrato__servidor__nome }}">{{ servidor.contrato__servidor__nome }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-numero">N° do Diário Oficial</label>
+        <input class="campo-texto campo-pequeno" type="text" value="" name="doe_gestor_substituto" id="campo-numero" placeholder="Ex: 00000000"  autocomplete="off" maxlength="30">
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-numero">N° do Portaria</label>
+        <input class="campo-texto campo-pequeno" type="text" value="" name="portaria_gestor_substituto" id="campo-numero" placeholder="Ex: 00000000"  autocomplete="off" maxlength="30">
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-inicio-vigencia">Data da Portaria</label>
+        <input class="campo-texto campo-medio" type="date" value="" name="data_portaria_gestor_substituto" id="campo-inicio-vigencia" >
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-inicio-vigencia">Data da Publicação</label>
+        <input class="campo-texto campo-medio" type="date" value="" name="data_publicacao_gestor_substituto" id="campo-inicio-vigencia" >
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-inicio-vigencia">Data Início</label>
+        <input class="campo-texto campo-medio" type="date" value="" name="data_inicio_gestor_substituto" id="campo-inicio-vigencia" >
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-inicio-vigencia">Data Fim</label>
+        <input class="campo-texto campo-medio" type="date" value="" name="data_termino_gestor_substituto" id="campo-inicio-vigencia" >
+    </div>
+
+    <br><br>
+    <h2 class="texto-medio texto-azul formulario-gestores-subtitulo">Fiscal Titular</h2>
+
+    <div class="formulario-grupo oculto">
+        <label class="texto-azul label-campo" for="campo-numero">Tipo</label>
+        <input class="campo-texto campo-pequeno" type="text" value="Fiscal Titular" name="tipo3" id="campo-numero" placeholder="Ex: 00000000"  autocomplete="off" maxlength="200">
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo">Nome do servidor</label>
+        <select data-selecao2 name="nome3" class="campo-texto campo-medio">
+            {% for servidor in servidores %}
+                <option value="{{ servidor.contrato__servidor__nome }}">{{ servidor.contrato__servidor__nome }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-numero">N° do Diário Oficial</label>
+        <input class="campo-texto campo-pequeno" type="text" value="" name="doe_fiscal_titular" id="campo-numero" placeholder="Ex: 00000000"  autocomplete="off" maxlength="30">
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-numero">N° do Portaria</label>
+        <input class="campo-texto campo-pequeno" type="text" value="" name="portaria_fiscal_titular" id="campo-numero" placeholder="Ex: 00000000"  autocomplete="off" maxlength="30">
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-inicio-vigencia">Data da Portaria</label>
+        <input class="campo-texto campo-medio" type="date" value="" name="data_portaria_fiscal_titular" id="campo-inicio-vigencia" >
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-inicio-vigencia">Data da Publicação</label>
+        <input class="campo-texto campo-medio" type="date" value="" name="data_publicacao_fiscal_titular" id="campo-inicio-vigencia" >
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-inicio-vigencia">Data Início</label>
+        <input class="campo-texto campo-medio" type="date" value="" name="data_inicio_fiscal_titular" id="campo-inicio-vigencia" >
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-inicio-vigencia">Data Fim</label>
+        <input class="campo-texto campo-medio" type="date" value="" name="data_termino_fiscal_titular" id="campo-inicio-vigencia" >
+    </div>
+
+    <br><br>
+    <h2 class="texto-medio texto-azul formulario-gestores-subtitulo">Fiscal Substituto</h2>
+
+    <div class="formulario-grupo oculto">
+        <label class="texto-azul label-campo" for="campo-numero">Tipo</label>
+        <input class="campo-texto campo-pequeno" type="text" value="Fiscal Substituto" name="tipo4" id="campo-numero" placeholder="Ex: 00000000"  autocomplete="off" maxlength="200">
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo">Nome do servidor</label>
+        <select data-selecao2 name="nome4" class="campo-texto campo-medio">
+            {% for servidor in servidores %}
+                <option value="{{ servidor.contrato__servidor__nome }}">{{ servidor.contrato__servidor__nome }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-numero">N° do Diário Oficial</label>
+        <input class="campo-texto campo-pequeno" type="text" value="" name="doe_fiscal_substituto" id="campo-numero" placeholder="Ex: 00000000"  autocomplete="off" maxlength="30">
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-numero">N° do Portaria</label>
+        <input class="campo-texto campo-pequeno" type="text" value="" name="portaria_fiscal_substituto" id="campo-numero" placeholder="Ex: 00000000"  autocomplete="off" maxlength="30">
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-inicio-vigencia">Data da Portaria</label>
+        <input class="campo-texto campo-medio" type="date" value="" name="data_portaria_fiscal_substituto" id="campo-inicio-vigencia" >
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-inicio-vigencia">Data da Publicação</label>
+        <input class="campo-texto campo-medio" type="date" value="" name="data_publicacao_fiscal_substituto" id="campo-inicio-vigencia" >
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-inicio-vigencia">Data Início</label>
+        <input class="campo-texto campo-medio" type="date" value="" name="data_inicio_fiscal_substituto" id="campo-inicio-vigencia" >
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-inicio-vigencia">Data Fim</label>
+        <input class="campo-texto campo-medio" type="date" value="" name="data_termino_fiscal_substituto" id="campo-inicio-vigencia" >
+    </div>
+
+    <div class="container-botoes">
+        <button class="botao botao--azul" data-modal-abrir="confirmar">Cadastrar</button>
+    </div>
+
+    <div class="modal oculto" data-modal="confirmar">
+        <div class="modal-conteudo modal-confirmacao">
+            <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+            <p class="texto-preto descricao">Tem certeza que deseja cadastrar os gestores do contrato?</p>
+
+            <div class="container-botoes">
+                <button class="botao--verde botao" type="submit">Salvar</button>
+                <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+            </div>
+        </div>
+    </div>
+</form>

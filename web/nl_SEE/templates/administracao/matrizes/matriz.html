@@ -1,0 +1,48 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} {{ matriz.nome }} {% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class="texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'administracao:index'%}" class="texto-azul">Administração</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'administracao:matrizes' %}" class="texto-azul">Matrizes</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="texto-azul">{{ matriz.nome }}</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">{{ matriz.nome }}</h1>
+            <p class="texto-preto descricao">{{ matriz.etapa }}</p>
+
+            <table class="tabela">
+                <thead>
+                    <th>Disciplina</th>
+                    <th>Carga Horária</th>
+                </thead>
+
+                <tbody>
+                    {% for disciplina in disciplinas %}
+                        <tr>
+                            <td>{{ disciplina.disciplina }}</td>
+                            <td>{{ disciplina.carga_horaria }}h</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+{% endblock %}

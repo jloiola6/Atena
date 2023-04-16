@@ -1,0 +1,74 @@
+/* Estilização da página de perfil de um contrato */
+
+.container-surface-contrato{
+    margin-top: 24px;
+}
+
+.container-surface-contrato .container-botoes{
+    margin-top: 16px;
+}
+
+.contrato-dados {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+}
+
+    .contrato-dados-bloco{
+        margin-top: 16px;
+    }
+
+.contrato-objeto{
+    line-height: 20px;
+    text-align: justify;
+    width: 60%;
+}
+
+
+.contrato-valor{
+    margin-top: 16px;
+}
+
+.contrato-itens, .contrato-aditivo, .contrato-empresa, .contrato-gestores, .contrato-documentos{
+    margin-top: 16px;
+}
+
+.contrato-itens .tabela .coluna-direita{
+    width: 15%;
+}
+
+.contrato-empresa-dados-subtitulo{
+    margin-top: 16px;
+}
+
+.contrato-empresa-dados{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.contrato-aditivo{
+    counter-reset: section;
+}
+
+.contrato-aditivo-numero::before{
+    counter-increment: section;
+    content: counter(section);
+}
+
+.item-com-vagas{
+    background-color: var(--secondary-color-hover);
+    border-radius: 50%;
+    margin: auto;
+    height: 16px;
+    width: 16px;
+}
+
+.item-sem-vagas{
+    background-color: var(--error-color-hover);
+    border-radius: 50%;
+    margin: auto;
+    height: 16px;
+    width: 16px;
+}

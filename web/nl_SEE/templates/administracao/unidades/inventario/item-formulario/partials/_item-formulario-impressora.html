@@ -1,0 +1,42 @@
+<form class="container-surface" method="POST">
+    {% csrf_token %}
+
+    <nav class="container-navegacao-surface">
+        <ul class="navegacao-surface-lista">
+            <li class="navegacao-surface-item navegacao-surface-item-ativo">
+                <span class="texto-azul">Impressora</span>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="formulario-grupo">
+        <label for="campo-patrimonio">Patrimônio</label>
+        <input class="campo-texto campo-medio" type="text" id="campo-patrimonio" name="patrimonio" maxlength="30" required>
+    </div>
+
+    <div class="formulario-grupo">
+        <label for="campos-impressao">Tipo de Impressão</label>
+
+        <fieldset id="campos-impressao">
+            <input type="radio" id="impressao-preto" name="impressao" value="Preto e Branco" checked>
+            <label for="impressao-preto" class="texto-preto">Preto e Branco</label>
+
+            <input type="radio" id="impressao-colorido" name="impressao" value="Colorido">
+            <label for="impressao-colorido" class="texto-preto">Colorido</label>
+        </fieldset>
+    </div>
+
+    <div class="formulario-grupo">
+        <label for="campos-conectividade">Conectividade</label>
+
+        <fieldset id="campos-conectividade">
+            <input type="checkbox" id="conectividade-wifi" name="conectividade" value="Wi-Fi">
+            <label for="conectividade-wifi" class="texto-preto">Wi-Fi</label>
+
+            <input type="checkbox" id="conectividade-bluetooth" name="conectividade" value="Bluetooth">
+            <label for="conectividade-bluetooth" class="texto-preto">Bluetooth</label>
+        </fieldset>
+    </div>
+
+    {% include 'administracao/unidades/inventario/item-formulario/partials/_modal-confirmacao.html' %}
+</form>

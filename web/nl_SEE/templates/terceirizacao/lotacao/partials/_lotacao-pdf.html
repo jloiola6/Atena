@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <header>
+            <table>
+                <tr>
+                    <td><img class="header--brasao" src="{{ url_logo }}" alt="Logo"></td>
+                    <td></td>
+                    <td class="direita"><img src="{{ url_atena }}" alt="Logo" style="width:120px;height:auto;"></td>
+                    {% comment %} <td><img class="header--brasao" src="C:\Users\joao.soares\Documents\code\Atena\nl_SEE\static\assets\img\servidores-lotados.png" alt="Logo"></td>
+                    <td></td>
+                    <td><img src="C:\Users\joao.soares\Documents\code\Atena\nl_SEE\static\assets\img\ATENA-AZUL.svg" alt="Logo" style="width:120px;height:auto;"></td>  {% endcomment %}
+                </tr>
+            </table>
+
+        </header>
+        <hr>
+        <table>
+            <tr>
+                <th class="dados">Total de contratos: {{ quantidade_lotacoes }}</th>
+                <th></th>
+                <th></th>
+                <th class="dados">Exportado por {{nome}} dia {{data}}</th>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <table class="tabela-lotacao">
+            <thead>
+                <tr>
+                    <th class="titulo">Nº Contrato</th>
+                    <th class="titulo">Nº Item</th>
+                    <th class="titulo">Descrição do item</th>
+                    <th class="titulo">Empresa</th>
+                    <th class="titulo">Servidor</th>
+                    <th class="titulo">Unidade</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lotacao in lotacoes %}
+                    <tr>
+                        {% if lotacao.unidade_administrativa %}
+                            <td>{{ lotacao.item.contrato.numero_contrato }}</td>
+                            <td>{{ lotacao.item.numero_item }}</td>
+                            <td>{{ lotacao.item.descricao }}</td>
+                            <td>{{ lotacao.item.contrato.empresa.nome }}</td>
+                            <td>{{ lotacao.servidor }}</td>
+                            <td>{{ lotacao.unidade_administrativa}}</td>
+                        {% else %}
+                            <td>{{ lotacao.item.contrato.numero_contrato }}</td>
+                            <td>{{ lotacao.item.numero_item }}</td>
+                            <td>{{ lotacao.item.descricao }}</td>
+                            <td>{{ lotacao.item.contrato.empresa.nome }}</td>
+                            <td>{{ lotacao.servidor }}</td>
+                            <td>{{ lotacao.endereco }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </body>
+    <style>
+        @page{
+            size: landscape;
+            margin: 1cm;
+        }
+        .tabela-lotacao{
+            border: 1px solid black;
+            text-align: center;
+            padding: 6px;
+        }
+
+        .direita{
+            text-align: right;
+        }
+
+        header{
+           padding-bottom:30px;
+        }
+            header td{
+                border: #ffffff 1px solid;
+                padding: 0px;
+                height: 100px;
+            }
+
+            .header--brasao{
+                width: auto;
+                height: 100%;
+                position:relative;
+                margin:0px;
+            }
+
+
+        .titulo{
+            font-size: 14px;
+        }
+    </style>
+
+</html>

@@ -1,0 +1,68 @@
+<div class="lista-menus">
+    <div class="menu-pai" data-accordeon-pai="servidores-see" data-accorderon-ativo="false" style="border-left-style: solid; border-left-color: var(--primary-color); border-left-width: 12px;">
+        <h3 class="texto-medio texto-azul">Servidores SEE ({{ qtd_servidores_see }})</h3>
+        <span class="icone icone-medio icone-azul">expand_more</span>
+    </div>
+
+    <div class="menu-pai menu-filho menu-eja" data-accordeon-filho="servidores-see" data-accordeon-pai="sem-enturmacao" data-accorderon-ativo="false" style="border-left-style: solid; border-left-color: var(--primary-color); border-left-width: 12px;">
+        <h4 class="texto-medio texto-azul">Servidores Sem Enturmação ({{ qtd_servidores_see_sem_turma }})</h4>
+        <span class="icone icone-medio icone-azul">expand_more</span>
+    </div>
+
+    <div class="menu-pai menu-filho" data-accordeon-filho="sem-enturmacao" data-accorderon-ativo="false">
+        <table class="tabela tabela-servidores">
+            <thead>
+                <th>Nome</th>
+                <th>Digito</th>
+                <th>Cargo</th>
+                <th>Função</th>
+                <th>Carga horária</th>
+                <th>Tipo</th>
+            </thead>
+            {% for servidor in servidores_see_sem_turma %}
+                {% if servidor.contrato__servidor__nome not in listaServidoresComTurma %}
+                    <tbody>
+                        <tr>
+                            <td>{{ servidor.contrato__servidor__nome }}</td>
+                            <td>{{ servidor.contrato__digito }}</td>
+                            <td>{{ servidor.contrato__cargo__nome }}</td>
+                            <td>{{ servidor.funcao }}</td>
+                            <td>{{ servidor.contrato__cargo__carga_horaria }}h</td>
+                            <td>SEE</td>
+                        </tr>
+                    </tbody>
+                {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="menu-pai menu-filho menu-eja" data-accordeon-filho="servidores-see" data-accordeon-pai="servidores" data-accorderon-ativo="false" style="border-left-style: solid; border-left-color: var(--primary-color); border-left-width: 12px;">
+        <h4 class="texto-medio texto-azul">Servidores ({{ qtd_servidores_see_restantes }})</h4>
+        <span class="icone icone-medio icone-azul">expand_more</span>
+    </div>
+
+    <div class="menu-pai menu-filho" data-accordeon-filho="servidores" data-accorderon-ativo="false">
+        <table class="tabela tabela-servidores">
+            <thead>
+                <th>Nome</th>
+                <th>Digito</th>
+                <th>Cargo</th>
+                <th>Função</th>
+                <th>Carga horária</th>
+                <th>Tipo</th>
+            </thead>
+            {% for servidor in servidores_see_restantes %}
+                <tbody>
+                    <tr>
+                        <td>{{ servidor.contrato__servidor__nome }}</td>
+                        <td>{{ servidor.contrato__digito }}</td>
+                        <td>{{ servidor.contrato__cargo__nome }}</td>
+                        <td>{{ servidor.funcao }}</td>
+                        <td>{{ servidor.contrato__cargo__carga_horaria }}h</td>
+                        <td>SEE</td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+    </div>
+</div>

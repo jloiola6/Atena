@@ -1,0 +1,137 @@
+<div class="oculto" data-nav-container="inventario">
+    {% comment %}
+        {% if possui_dependencias %}
+            {% if possui_inventario %}
+                {% if qtd_eletronicos > 0 %}
+                    <h3 class="texto-medio texto-azul inventario-tipo">Eletrônicos ({{  qtd_eletronicos}})</h3>
+
+                    <div class="container-inventario-lista container-cards-simples">
+                        {% for equipamento in equipamentos_eletronicos %}
+                            <a href="{% url 'administracao:inventario-perfil' %}?id={{ endereco.id }}">
+                                <div class="card-simples">
+                                    <div class="card-inventario-logo-titulo">
+                                        <span class="icone icone-azul icone-medio">{{ equipamento.2}}</span>
+                                        <h4 class="card-simples__titulo texto-azul">{{ equipamento.0 }}</h4>
+                                    </div>
+
+                                    <div class="card-simples__descricao">
+                                        <p class=" texto-azul texto-negrito">Total: <span class="texto-preto texto-normal">{{ equipamento.1}}</span></p>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if qtd_eletrodomesticos > 0 %}
+                    <h3 class="texto-medio texto-azul inventario-tipo">Eletrodomesticos ({{ qtd_eletrodomesticos }})</h3>
+
+                    <div class="container-inventario-lista container-cards-simples">
+                        {% for equipamento in equipamentos_eletrodomesticos %}
+                            <a href="{% url 'administracao:inventario-perfil' %}?id={{ endereco.id }}">
+                                <div class="card-simples">
+                                    <div class="card-inventario-logo-titulo">
+                                        <span class="icone icone-azul icone-medio">{{ equipamento.2}}</span>
+                                        <h4 class="card-simples__titulo texto-azul">{{ equipamento.0 }}</h4>
+                                    </div>
+
+                                    <div class="card-simples__descricao">
+                                        <p class=" texto-azul texto-negrito">Total: <span class="texto-preto texto-normal">{{ equipamento.1}}</span></p>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if qtd_mobilias > 0 %}
+                    <h3 class="texto-medio texto-azul inventario-tipo">Mobílias ({{ qtd_mobilias }})</h3>
+
+                    <div class="container-inventario-lista container-cards-simples">
+                        {% for equipamento in equipamentos_mobilias %}
+                            <a href="{% url 'administracao:inventario-perfil' %}?id={{ endereco.id }}">
+                                <div class="card-simples">
+                                    <div class="card-inventario-logo-titulo">
+                                        <span class="icone icone-azul icone-medio">{{ equipamento.2}}</span>
+                                        <h4 class="card-simples__titulo texto-azul">{{ equipamento.0 }}</h4>
+                                    </div>
+
+                                    <div class="card-simples__descricao">
+                                        <p class=" texto-azul texto-negrito">Total: <span class="texto-preto texto-normal">{{ equipamento.1}}</span></p>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if qtd_insumos > 0 %}
+                    <h3 class="texto-medio texto-azul inventario-tipo">Insumos ({{ qtd_insumos }})</h3>
+
+                    <div class="container-inventario-lista container-cards-simples">
+                        {% for equipamento in equipamentos_insumos %}
+                            <a href="{% url 'administracao:inventario-perfil' %}?id={{ endereco.id }}">
+                                <div class="card-simples">
+                                    <div class="card-inventario-logo-titulo">
+                                        <span class="icone icone-azul icone-medio">{{ equipamento.2}}</span>
+                                        <h4 class="card-simples__titulo texto-azul">{{ equipamento.0 }}</h4>
+                                    </div>
+
+                                    <div class="card-simples__descricao">
+                                        <p class=" texto-azul texto-negrito">Total: <span class="texto-preto texto-normal">{{ equipamento.1}}</span></p>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <div class="container-botoes">
+                    <a class="link" href="{% url 'administracao:inventario-perfil' %}?id={{ endereco.id }}">Acessar invetário completo</a>
+                </div>
+            {% else %}
+                <span class="texto-medio texto-preto">Esta unidade ainda não cotém nenhum item salvo no inventário</span>
+
+                <div class="container-botoes">
+                    <a class="link" href="{% url 'administracao:inventario-formulario' %}?id={{ endereco.id }}"><button class="botao botao--azul">Adicionar</button></a>
+                </div>
+            {% endif %}
+
+        {% else %}
+            <span class="texto-medio texto-preto">Esta unidade ainda não possui dependências físicas cadastradas</span>
+        {% endif %}
+    {% endcomment %}
+
+    {% if dependencias %}
+        {% if itens %}
+            {% for categoria in categorias_itens %}
+                <details class="dropdown">
+                    <summary>{{ categoria.tipo__categoria__nome}}</summary>
+
+                    <div class="container-cards">
+                        {% for tipo in tipos_itens %}
+                            {% if tipo.tipo__categoria == categoria.tipo__categoria %}
+                                <div class="card-simples card--item">
+                                    <h4 class="card-simples__titulo">{{ tipo.tipo__nome }}</h4>
+
+                                    <div class="card-simples__descricao">
+                                        <p class="texto-preto"><b class="texto-azul">Quantidade: </b>{{ tipo.quantidade }}</p>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </details>
+            {% endfor %}
+        {% else %}
+            <span class="texto-preto">Esta unidade ainda não possui itens cadastrados no inventário</span>
+        {% endif %}
+
+        <div class="container-botoes">
+            <button class="botao botao--azul" data-modal-abrir="adicionar-item">Adicionar</button>
+
+            <a href="{% url 'administracao:inventario-perfil' endereco.infraestrutura.id %}" class="link">Inventário Completo</a>
+        </div>
+    {% else %}
+        <span class="texto-preto">Esta unidade ainda não possui dependências físicas cadastradas. Adicione dependências para iniciar o invetário</span>
+    {% endif %}
+</div>

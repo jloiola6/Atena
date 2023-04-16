@@ -1,0 +1,24 @@
+/* Estilização do componente de barra de progresso */
+
+.barra-progresso{
+    background-color: #C1C1C1;
+    border-radius: 100vmax;
+    height: .5rem;
+}
+
+    .barra-progresso > div{
+        border-radius: 100vmax;
+        height: 100%;
+    }
+
+    .barra--azul{
+        background-color: var(--cor-azul-hover);
+    }
+
+    .barra--verde{
+        background-color: var(--cor-verde-hover);
+    }
+
+    .barra--vermelha{
+        background-color: var(--cor-vermelho-hover);
+    }

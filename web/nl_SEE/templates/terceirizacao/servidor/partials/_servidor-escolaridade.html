@@ -1,0 +1,35 @@
+{% load static %}
+
+<div class="servidor-escolaridade oculto" data-nav-container="escolaridade">
+    {% if escolaridades %}
+        <div class="container-cards-contratos">
+            {% for escolaridade in escolaridades %}
+                <div class="card-simples">
+                    {% if escolaridade.formacao == "Ensino Médio" %}
+                        <h4 class="card-simples__titulo texto-azul">{{ escolaridade.escola }}</h4>
+                    {% else %}
+                        <h4 class="card-simples__titulo texto-azul">{{ escolaridade.instituicao }}</h4>
+                    {% endif %}
+
+                    <div class="card-simples__descricao" >
+                        <p class=" texto-azul texto-negrito">Formação: <span class="texto-preto texto-normal">{{ escolaridade.formacao }}</span></p>
+                        <p class=" texto-azul texto-negrito">Curso: <span class="texto-preto texto-normal">{{ escolaridade.curso }}</span></p>
+                        <p class=" texto-azul texto-negrito">Situação: <span class="texto-preto texto-normal">{{ escolaridade.situacao }}</span></p>
+                        {% if escolaridade.situacao == "Concluído" %}
+                            <p class=" texto-azul texto-negrito">Data de Conclusão: <span class="texto-preto texto-normal">{{ escolaridade.data_conclusao }}</span></p>
+                        {% endif %}
+                    </div>
+                </div>
+                <br>
+            {% endfor %}
+        </div>
+    {% else %}
+        <h3 class="texto-medio texto-preto">Sem escolaridade informada.</h3>
+    {% endif %}
+
+    {% if permissao.editar == 1 %}
+        <div class="container-botoes">
+            <a class="botao botao--azul" href="{% url 'terceirizacao:cadastro-escolaridade' %}?id={{ servidor.id }}">Adicionar</a>
+        </div>
+    {% endif %}
+</div>

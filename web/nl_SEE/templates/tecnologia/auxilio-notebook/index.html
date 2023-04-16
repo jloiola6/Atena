@@ -1,0 +1,59 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Educação Conectada{% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:index' %}">Tecnologia</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Auxílio Notebook</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Auxílio Notebook</h1>
+
+            <div class="container-cards">
+                {% if 30 in permissoes %}
+                    <a href="{% url 'tecnologia:devolucao-notebook' %}">
+                        <span class="card-menu">
+                            {% include 'partials/icones-cards/tecnologia/auxilio/devolucao.svg' %}
+
+                            <h2 class="card-titulo">Devolução</h2>
+                        </span>
+                    </a>
+                {% endif %}
+
+                {% if 29 in permissoes %}
+                    <a href="{% url 'tecnologia:tabela-notas' %}">
+                        <span class="card-menu">
+                            {% include 'partials/icones-cards/tecnologia/auxilio/notas.svg' %}
+
+                            <h2 class="card-titulo">Notas Fiscais</h2>
+                        </span>
+                    </a>
+                {% endif %}
+
+                {% if 28 in permissoes %}
+                    <a href="{% url 'tecnologia:tabela-auxilio' %}">
+                        <span class="card-menu">
+                            {% include 'partials/icones-cards/tecnologia/auxilio/solicitacoes.svg' %}
+
+                            <h2 class="card-titulo">Solicitações</h2>
+                        </span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+{% endblock %}

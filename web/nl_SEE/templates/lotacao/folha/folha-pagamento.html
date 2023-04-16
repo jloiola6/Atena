@@ -1,0 +1,145 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Lotações {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+{% endblock %}
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+<main>
+    <div class="container">
+        <nav class="container-navegacao">
+            <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'lotacao:index' %}" class=" texto-azul">Gestão de Pessoas</a>
+            <span class="texto-azul">&#62;</span>
+
+            <span class="  texto-azul">Folha de Pagamento</span>
+        </nav>
+        <div class="container-surface container-servidores-busca">
+            <h2 class="texto-medio texto-azul">Buscar servidor</h2>
+
+            <form class="formulario" method="GET">
+
+                <div class="formulario-grupo">
+                    <input type="text" name="cpf" class="campo-texto campo-pequeno" placeholder="CPF" data-mascara="cpf">
+                </div>
+
+                <div class="formulario-grupo">
+                    <input type="text" name="matricula" class="campo-texto campo-pequeno" placeholder="Matrícula" data-mascara="numero">
+                </div>
+
+                <div class="formulario-grupo">
+                    <input type="text" name="nome" class="campo-texto campo-grande" placeholder="Nome do servidor">
+                </div>
+
+                <div class="container-botoes">
+                    <button type='submit' class="botao botao--azul">Buscar</button>
+                    {% comment %} <button class="botao botao--azul" disabled>Filtros</button> {% endcomment %}
+
+                    <!-- {% if permissao.imprimir == 1 %}
+                        <button class="botao botao--azul" data-modal-abrir="exportar">Exportar</button>
+                    {% endif %} -->
+                </div>
+            </form>
+        </div>
+        <table class="tabela tabela-lotacao-servidores">
+
+            <thead>
+                <tr>
+                    <th>Matricula</th>
+                    <th>Digito</th>
+                    <th>Servidor</th>
+                    <th>Cargo</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for servidor in servidores_aux %}
+                    <tr data-modal-abrir="modal-detalhe-lotacao-{{ servidor.id }}">
+
+                        {% if servidor.servidor__matricula %}
+                            <td>{{ servidor.servidor__matricula }}</td>
+                        {% else %}
+                            <td>Não informado</td>
+                        {% endif %}
+
+                        <td>{{ servidor.digito }}</td>
+                        <td>{{ servidor.servidor__nome }}</td>
+                        <td>{{ servidor.cargo__nome }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td class="coluna-paginacao" colspan="4">
+                        <div class="container-paginacao">
+                            <div>
+                                <span class="texto-negrito texto-azul">TOTAL:</span>
+                                <span>{{ quantidade_servidores }}</span>
+                            </div>
+
+                            <div>
+                                {% if servidores.has_previous %}
+                                    <a class="" href="{% url 'lotacao:folha-pagamento' %}?{{ gets_primeira }}">
+                                        <button class="botao-paginacao">first_page</button>
+                                    </a>
+
+                                    <a class="" href="{% url 'lotacao:folha-pagamento' %}?{{ gets_anterior }}">
+                                        <button class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">first_page</button>
+                                    </a>
+
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% endif %}
+
+                                <span class="">
+                                    {{ servidores.number }} de {{ servidores.paginator.num_pages }}
+                                </span>
+
+                                {% if servidores.has_next %}
+                                    <a class="" href="{% url 'lotacao:folha-pagamento' %}?{{ gets_proxima }}">
+                                        <button class="botao-paginacao">navigate_next</button>
+                                    </a>
+
+                                    <a class="" href="{% url 'lotacao:folha-pagamento' %}?{{ gets_ultima }}">
+                                        <button class="botao-paginacao">last_page</button>
+                                    </a>
+
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_next</button>
+                                    </a>
+
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">last_page</button>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</main>
+
+
+{% include 'lotacao/folha/partials/_modal_detalhes_folha.html' %}
+{% include 'partials/_rodape.html' %}
+
+
+<script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+
+
+{% endblock %}

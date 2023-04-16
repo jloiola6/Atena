@@ -1,0 +1,29 @@
+.tabela-vagas-tablet, .tabela-vagas-smartphone{
+    display:none;
+}
+
+@media screen and (max-width: 930px){
+    .tabela-vagas, .tabela-vagas-smartphone{
+        display: none;
+    }
+
+    .tabela-vagas-tablet{
+        display: block;
+    }
+    .tabela-vagas-tablet th{
+        width: 1%;
+    }
+}
+
+@media screen and (max-width: 425px){
+    .tabela-vagas, .tabela-vagas-tablet{
+        display: none;
+    }
+
+    .tabela-vagas-smartphone{
+        display: block;
+    }
+    .tabela-vagas-smartphone th{
+        width: 1%;
+    }
+}

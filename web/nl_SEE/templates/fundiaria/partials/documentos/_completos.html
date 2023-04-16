@@ -1,0 +1,18 @@
+{% load static %}
+
+<div class="oculto" data-nav-container="completos">
+    <div class="container-cards-simples">
+        {% for completo in completos %}
+            <div class="card-simples card-documento" data-documento-resultado="{{ completo.descricao }}">
+                <div class="card-simples__descricao">
+                    <p title="{{completo.descricao}}" class=" texto-azul texto-negritos">Descrição: <span class="texto-preto texto-normal">{{ completo.descricao }}</span></p>
+                    <p class=" texto-azul texto-negritos">Formato: <span class="texto-preto texto-normal">{{ completo.formato }}</span></p>
+                </div>
+
+                <a class="link" href="{% url 'core:index' %}{{completo.caminho}}" target="_blank">Abrir</a>
+            </div>
+        {% empty %}
+            <p class="texto-preto " data-sem-documentos>Nenhum processo completo cadastrado</p>
+        {% endfor %}
+    </div>
+</div>

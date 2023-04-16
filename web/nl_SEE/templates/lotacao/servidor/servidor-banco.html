@@ -1,0 +1,103 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+    Cadastrar Dados Bancários
+{% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/lotacao/servidor/servidor-banco.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:index' %}">Gestão de Pessoas</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:servidores' %}">Servidores</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:servidor-perfil' %}?id={{ servidor.id }}">{{ servidor }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Cadastrar Dados Bancários</span>
+
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Cadastrar Dados Bancários</h1>
+
+            <p class="descricao  texto-preto">Insira os dados bancários do terceirizado</p>
+
+            <form class="container-surface formulario-dados-bancarios" method="POST">
+                {% csrf_token %}
+                <nav class="container-navegacao-surface">
+                    <ul class="navegacao-surface-lista">
+                        <li class="navegacao-surface-item navegacao-surface-item-ativo" data-form-aba="dados-bancarios">
+                            <span class="texto-azul ">Dados bancários</span>
+                        </li>
+                    </ul>
+
+                </nav>
+
+                <div class="formulario-servidor-financeiro" data-form-container="dados-bancarios" >
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-instituicao">Instituição financeira</label>
+                        <input class="campo-texto campo-pequeno" type="text" value="Banco do Brasil" name="instituicao" id="campo-instituicao" readonly>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-tipo-conta">Tipo de conta</label>
+                        <select name="tipo-conta" id="campo-tipo-conta" class="campo-texto campo-pequeno">
+                            {% for tipo_conta in tipos %}
+                                {% if tipo_conta == servidor_banco.tipo_conta %}
+                                    <option value="{{ tipo_conta }}" selected >{{ tipo_conta }}</option>
+                                {% else %}
+                                    <option value="{{ tipo_conta }}">{{ tipo_conta }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-agencia">Agência</label>
+                        <input class="campo-texto campo-pequeno" type="text" value="{{ servidor_banco.agencia }}" name="agencia" id="campo-agencia" placeholder="Ex: 0000" autocomplete="off" data-mascara="numero" maxlength="30" required>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-conta">Conta (com dígito)</label>
+                        <input class="campo-texto campo-pequeno" type="text" value="{{ servidor_banco.conta }}" name="conta" id="campo-conta" placeholder="Ex: 00000-0" autocomplete="off" data-mascara="cc" maxlength="40" required>
+                    </div>
+
+                     <div class="container-botoes">
+                        <button class="botao botao--azul" data-modal-abrir="confirmar">Cadastrar</button>
+                    </div>
+                </div>
+                <div class="modal oculto" data-modal="confirmar">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                            <p class="texto-preto descricao">Tem certeza que deseja atualizar as informações bancárias?</p>
+
+                            <div class="container-botoes">
+                                <button class="botao--verde botao" type="submit">Cadastrar</button>
+                                <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                            </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+
+
+{% endblock %}

@@ -1,0 +1,6 @@
+@media screen and (max-width: 768px) {
+    .navegacao-surface-lista{
+        row-gap: 16px;
+        justify-content: space-around;
+    }
+}

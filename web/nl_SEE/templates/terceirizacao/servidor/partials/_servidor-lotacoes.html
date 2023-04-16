@@ -1,0 +1,33 @@
+{% load static %}
+
+
+<div class="servidor-lotacoes oculto" data-nav-container="lotacoes">
+
+    {% if servidor_contrato %}
+        <div class="container-cards-simples">
+            {% for lotacao in contrato_lotacao %}
+                <div class="card-simples card-lotacao">
+                    {% if lotacao.endereco__escola__nome_escola != None %}
+                        <h4 class="card-simples__titulo texto-azul">{{ lotacao.endereco__escola__nome_escola }}</h4>
+                    {% else %}
+                        <h4 class="card-simples__titulo texto-azul">{{ lotacao.unidade_administrativa__nome }}</h4>
+                    {% endif %}
+
+                    <div class="card-simples__descricao">
+                        <p class=" texto-azul texto-negrito">Número do item: <span class="texto-preto texto-normal">{{ lotacao.item__numero_item }}</span></p>
+                        <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ lotacao.data_inicio }}</span></p>
+                        <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ lotacao.data_termino }}</span></p>
+
+                        {% if lotacao.status == 1 %}
+                            <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">Ativo</span></p>
+                        {% else %}
+                            <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">Inativo</span></p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="texto-preto texto-medio">Este servidor não possui nenhuma lotação cadastrada.</p>
+    {% endif %}
+</div>

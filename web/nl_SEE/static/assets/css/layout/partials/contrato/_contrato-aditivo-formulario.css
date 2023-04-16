@@ -1,0 +1,30 @@
+/* Estilização da partial de formulario de contrato aditivo */
+
+.formulario-contrato-aditivo, .formulario-contrato-aditivo .container-botoes{
+    margin-top: 16px;
+}
+
+.contrato-item-grupo-campos{
+    align-items: flex-end;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}
+
+.contrato-item-grupo-campos .formulario-grupo{
+    align-items: center;
+    justify-content: center;
+}
+
+.contrato-item-grupo-campos input.campo-texto{
+    width: 100%;
+}
+
+.grupo-descricao{
+    width: 73%;
+}
+
+.item-descricao{
+    height: 96px;
+    width: 100%;
+}

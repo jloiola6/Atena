@@ -1,0 +1,27 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Testes {% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'atena:index' %}" class=" texto-azul">Configurações</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Testes</span>
+            </nav>
+
+            <div>
+                <p class="texto-azul ">Foram inseridos {{contador}} registros</p>
+            </div>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+{% endblock %}

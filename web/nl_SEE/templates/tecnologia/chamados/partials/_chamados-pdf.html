@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Atendimento</title>
+</head>
+<body>
+    <header>
+        <table>
+            <tr>
+                <th><img id="img1" src="{{ url_logo }}" width='550px' alt=""></th>
+                <th class="direita"><img id="img2" src="{{ url_atena }}" width='120px' alt=""></th>
+                <!-- <th><img id="img1" src="C:\Users\tharl\OneDrive\Documents\GitHub\ATENA\Atena\nl_SEE\static\assets\img\detei.png" width='550px' alt=""></th>
+                <th><img id="img2" src="C:\Users\tharl\OneDrive\Documents\GitHub\ATENA\Atena\nl_SEE\static\assets\img\ATENA-AZUL.svg" width='120px' alt=""></th> -->
+            </tr>
+        </table>
+    </header>
+
+    <br>
+    <div class="relatorio">
+        <table>
+            <tbody>
+                <tr>
+                    <td class="titulo">Relatório de Atendimento</td>
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <tbody>
+                <tr>
+                    <td><b>Registrado por:</b> {{ solicitacao.user_criador.nome }} </td>
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <tbody>
+                <tr>
+                    <td><b>Protocolo:</b> {{ solicitacao.id }}</td><td><b>Data Chamado:</b> {{ solicitacao.data_abertura }} </td>
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <tbody>
+                <tr>
+                    {% if tecnico %}
+                        <td><b>Patrimonio/Serial:</b> </td><td><b>Data Atendimento:</b> {{ tecnico.data_inicio }}</td>
+                    {% else %}
+                        <td><b>Patrimonio/Serial:</b> </td><td><b>Data Atendimento:</b> </td>
+                    {% endif %}
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <tbody>
+                <tr>
+                    {% if solicitacao.situacao == 'Em atendimento' %}
+                        <td><b>Solicitante:</b> {{ user_solicitante }}</td><td><b>Data Finalização:</b></td>
+                    {% else %}
+                        <td><b>Solicitante:</b> {{ user_solicitante }}</td><td><b>Data Finalização:</b> {{ tecnico.data_fim }} </td>
+                    {% endif %}
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <tbody>
+                <tr>
+                    <td><b>Contato:</b> {{ solicitacao.contato }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <tbody>
+                <tr>
+                    {% if solicitacao.tipo_unidade == 'Unidade Escolar' %}
+                        <td><b>Unidade Educacional:</b> {{ solicitacao.endereco_escola.escola.cod_inep }} - {{ solicitacao.endereco_escola.escola.nome_escola }}</td>
+                    {% else %}
+                        <td><b>Unidade Administrativa:</b> {{ solicitacao.unidade_administrativa.nome }}</td>
+                    {% endif %}
+                </tr>
+            </tbody>
+        </table>
+        {% if solicitacao.tipo_unidade == 'Unidade Escolar' %}
+            <table>
+                <tbody>
+                    <tr>
+                        <td><b>Cidade:</b> {{ solicitacao.endereco_escola.municipio }}</td><td><b>Bairro:</b> {{ solicitacao.endereco_escola.bairro }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table>
+                <tbody>
+                    <tr>
+                        <td><b>Rua:</b> {{ solicitacao.endereco_escola.rua }}</td><td><b>Número:</b> {{ solicitacao.endereco_escola.numero }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table>
+                <tbody>
+                    <tr>
+                        <td><b>Circuito:</b> </td><td><b>Autenticação:</b> </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table>
+                <tbody>
+                    <tr>
+                        <td><b>Contato OI:</b></td>  <td><b>Contato Circuito:</b> </td>
+                    </tr>
+                </tbody>
+            </table>
+        {% endif %}
+
+        <table>
+            <tbody>
+                <tr>
+                    <td><b>Técnico:</b> {{ tecnico.user_tecnico.nome }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <tbody>
+                <tr>
+                    <td class="reparo"><b>Solicitação de reparo:</b> {% for item in chamados %}<p class="paragrafo"><b>{{ item.tipo }} - {{item.servico}}:</b> {{item.descricao_chamado}}.</p>{% endfor %}</td>
+
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <tbody>
+                <tr>
+                    {% if solicitacao.situacao == 'Em atendimento' %}
+                        <td class="atividades"><b>Atividades Realizadas:</b><p class="relizada"></p> </td>
+                    {% else %}
+                        <td class="atividades"><b>Atividades Realizadas:</b><p class="relizada">{{solicitacao.descricao}}</p> </td>
+                    {% endif %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br><br><br>
+    <div class="assinatura">
+        <table>
+            <tr>
+                <td>
+                    <p>___________________________________________</p>
+                    <p><b>Ass. Solicitante</b></p>
+                </td>
+                <td>
+                    <p>___________________________________________</p>
+                    <p><b>Ass. Técnico</b></p>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br>
+    <div class="relatorio">
+        <table>
+            <tbody>
+                <tr>
+                    <td class="titulo">Comprovante de Retirada de Equipamento Para Manutenção na DETEI</td>
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <tbody>
+                <tr>
+                    <td><b>Protocolo:</b>{{ equipamento_recolhido.solicitacao.id }}</td><td><b>Horário da Entrada:</b>{{ equipamento_recolhido.horario_retirada }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <tbody>
+                <tr>
+                    <td class="reparo"><b>Equipamento:</b><span class="paragrafo">{{equipamento_recolhido.equipamento}}</span></td>
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <tbody>
+                <tr>
+                    <td><b>Número Série:</b>{{ equipamento_recolhido.num_serie }}</td><td><b>Patrimônio:</b>{{ equipamento_recolhido.patrimonio }} </td>
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <tbody>
+                <tr>
+                    <td><b>Ass. técnico:</b> </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
+
+<style>
+    @page{
+        margin: 1cm;
+    }
+
+    #img1{
+        width: 100%;
+        height: auto;
+    }
+
+    #img2{
+        width: 120px;
+        height: auto;
+    }
+
+    .direita{
+        text-align: right;
+    }
+
+    .relatorio table{
+        font-size: 12px;
+        border: 1px black solid;
+        padding-top: 4px;
+        margin: 4px;
+    }
+    .reparo{
+        padding-inline-start: 40px;
+    }
+
+    .paragrafo{
+        padding: 0%;
+        margin: 0%;
+    }
+
+    .relizada{
+        padding-left: 0px;
+        padding-top: -55px;
+    }
+
+    .atividades{
+        padding-bottom: 55px;
+
+    }
+
+    .assinatura{
+        text-align: center;
+        font-weight: normal;
+        font-size: 12px;
+    }
+
+    .invisivel{
+        color: white;
+    }
+    .titulo{
+        text-align: center;
+        font-weight: bold;
+        font-size: 14px;
+    }
+</style>

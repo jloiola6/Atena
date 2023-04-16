@@ -1,0 +1,56 @@
+<!-- ADICIONAR REQUIRED -->
+
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+    Cadastro de Empresa
+{% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/partials/contrato/_contrato-aditivo-formulario.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'assets/css/layout/tecnologia/contrato/contrato-aditivo-formulario.css' %}"> -->
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao ">
+                <a href="{% url 'core:index' %}" class="texto-azul">Home</a>
+                <span class="texto-azul">&gt;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:index' %}">Tecnologia</a>
+                <span class="texto-azul">&gt;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:contratos' %}">Contratos</a>
+                <span class="texto-azul">&gt;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:contrato-perfil' %}?id_contrato={{ contrato.id }}">Contrato n° {{ contrato.numero_contrato }}</a>
+                <span class="texto-azul">&gt;</span>
+
+                <span class="  texto-azul">Cadastro de Contrato Aditivo</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Cadastro de Contrato Aditivo</h1>
+            
+            <p class="descricao  texto-preto">Insira os dados do contrato</p>
+
+            {% include 'partials/contrato/_contrato-aditivo-formulario.html' %}
+
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+
+    <script src="{% static 'assets/js/layout/partials/contrato/contrato-aditivo-formulario/controlaCampos.js' %}" type="module"></script>
+    <!-- <script src="{% static 'assets/js/layout/tecnologia/contrato-formulario-aditivo/controlaValores.js' %}"></script> -->
+    
+{% endblock %}

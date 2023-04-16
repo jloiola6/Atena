@@ -1,0 +1,80 @@
+/* Arquivo de configuração e definição dos textos */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,100;1,200;1,300;1,400;1,500;1,600&display=swap');
+
+body, body *{
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: .5px;
+}
+
+
+b, .texto-negrito{
+    font-weight: 600;
+}
+
+.texto-normal{
+    font-weight: 400;
+}
+
+.texto-italico{
+    font-style: italic;
+}
+
+.titulo-pagina{
+    color: var(--texto-azul);
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.texto--12{
+    font-size: .75rem;
+}
+
+.texto-pequeno{
+	font-size: 1rem;
+}
+
+.texto-medio{
+	font-size: 1.25rem;
+}
+
+.texto-grande{
+	font-size: 1.5rem;
+	text-transform: uppercase;
+}
+
+    .texto-branco{
+        color: var(--texto-branco);
+    }
+
+    .texto-preto{
+        color: var(--texto-preto);
+    }
+
+    .texto-azul{
+        color: var(--texto-azul);
+    }
+
+    .texto-cinza{
+        color: var(--texto-cinza);
+    }
+
+    .texto-vermelho{
+        color: var(--texto-vermelho);
+    }
+
+    .texto-amarelo{
+        color: var(--texto-amarelo);
+    }
+
+.link{
+    color: var(--texto-azul);
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+.descricao{
+    margin-top: -.5rem;
+}

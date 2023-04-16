@@ -1,0 +1,30 @@
+{% comment %}
+    Esta partial contém um container com a navegação dos detalhes de um contrato
+    Feita para evitar a repetição código em perfis de contrato nos módulos de ADMINISTRAÇÃO, TECNOLOGIA e TERCEIRIZAÇÃO
+{% endcomment %}
+
+<div class="container-surface surface-contrato-navegacao">
+    <nav class="container-navegacao-surface">
+        <ul class="navegacao-surface-lista">
+            <li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul navegacao-surface-item-ativo" data-nav-aba="itens">Itens</li>
+            <li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul" data-nav-aba="aditivo">Aditivos</li>
+            <li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul" data-nav-aba="empresa">Dados da Empresa</li>
+            <li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul" data-nav-aba="gestores">Gestores</li>
+            <li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul" data-nav-aba="documentos">Documentos</li>
+            
+            {% if aplicacao == 'Tecnologia' %}
+                <li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul" data-nav-aba="empenho">Pré empenho</li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    {% include 'partials/contrato/partials/_contrato-itens.html' %}
+    {% include 'partials/contrato/partials/_contrato-aditivo.html' %}
+    {% include 'partials/contrato/partials/_contrato-empresa.html' %}
+    {% include 'partials/contrato/partials/_contrato-gestores.html' %}
+    {% include 'partials/contrato/partials/_contrato-documentos.html' %}
+    
+    {% if aplicacao == 'Tecnologia' %}
+        {% include 'tecnologia/contrato/partials/_pre-empenho.html' %}
+    {% endif %}
+</div>

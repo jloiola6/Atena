@@ -1,0 +1,512 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Agendamento {% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/lotacao/qualidade/agendamentos.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class="texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'lotacao:index'%}" class="texto-azul">Gestão de Pessoas</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'lotacao:qualidade'%}" class="texto-azul">Qualidade de Vida</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="texto-azul">Agendamentos</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul"> Agendamentos </h1>
+
+            <div class="container-botoes">
+                <button class="botao botao--azul" data-modal-abrir="adicionar-agendamento">Adicionar</button>
+            </div>
+
+            <div class="container-surface container-contratos-busca">
+                <h2 class="texto-medio texto-azul">Buscar agendamento</h2>
+
+                <form class="formulario" method="">
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-servidor">Servidor</label>
+                        <select data-selecao2  name="servidor" id="campo-servidor" class="campo-texto campo-grande">
+                            <option></option>
+                            {% for servidor in servidores %}
+                                <option value="{{ servidor.servidor__id }}">{{ servidor.servidor__nome }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-servico">Serviço</label>
+                        <select name="servico" id="campo-servico" class="campo-texto campo-medio">
+                            <option></option>
+                            {% for servico in servicos %}
+                                <option value="{{ servico.atendimento__servico__id }}">{{ servico.atendimento__servico__nome }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-servico">Atendente</label>
+                        <select name="atendente" id="campo-servico" class="campo-texto campo-medio">
+                            <option></option>
+                            {% for atendente in atendentes %}
+                                <option value="{{ atendente.atendimento__atendente__nome }}">{{ atendente.atendimento__atendente__nome }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-data">Data</label>
+                        <input class="campo-texto campo-pequeno" type="date" name="data" id="campo-data">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul" for="campo-status">Status</label>
+
+                        <fieldset id="campo-status" data-fieldset-status>
+                            <input type="checkbox" name="todos" id="check-todos" data-check-todos>
+                            <label class="texto-azul" for="check-todos">Todos</label>
+
+                            <input type="checkbox" name="status-pendente" value="0" id="status-pendente">
+                            <label class="texto-azul" for="status-pendente">Pendente</label>
+
+                            <input type="checkbox" name="status-concluido" value="1" id="status-concluido">
+                            <label class="texto-azul" for="status-concluido">Concluído</label>
+
+                            <input type="checkbox" name="status-cancelado" value="2" id="status-cancelado">
+                            <label class="texto-azul" for="status-cancelado">Cancelado</label>
+
+                            <input type="checkbox" name="status-ausente" value="3" id="status-ausente">
+                            <label class="texto-azul" for="status-ausente">Não compareceu</label>
+
+                        </fieldset>
+                    </div>
+
+
+                    <div class="container-botoes">
+                        <button class="botao botao--azul">Buscar</button>
+                    </div>
+                </form>
+            </div>
+
+            <table class="tabela tabela-agendamento">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Data</th>
+                        <th>Hora</th>
+                        <th>Serviço</th>
+                        <th>Atendente</th>
+                        <th>Servidor</th>
+                        <th>Contato</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for agendamento in agendamentos %}
+                        <tr data-modal-abrir="agendamento-{{ agendamento.id }}">
+                            {% if agendamento.status == 0 %}
+                                <td title="Pendente">
+                                    <i class="agendamento agendamento--pendente"></i>
+                                </td>
+                            {% elif agendamento.status == 1 %}
+                                <td title="Concluído">
+                                    <i class="agendamento agendamento--concluido"></i>
+                                </td>
+                            {% elif agendamento.status == 2 %}
+                                <td title="Cancelado">
+                                    <i class="agendamento agendamento--cancelado"></i>
+                                </td>
+                            {% elif agendamento.status == 3 %}
+                                <td title="Não compareceu">
+                                    <i class="agendamento agendamento--ausente"></i>
+                                </td>
+                            {% endif %}
+
+                            <td>{{ agendamento.data|date:"SHORT_DATE_FORMAT" }}</td>
+                            <td>{{ agendamento.hora_atendimento }}</td>
+
+                            <td>{{ agendamento.atendimento.servico.nome }}</td>
+                            <td>{{ agendamento.atendimento.atendente.nome }}</td>
+                            <td>{{ agendamento.servidor }}</td>
+
+                            {% if agendamento.contato %}
+                                <td>{{ agendamento.contato }}</td>
+                            {% else %}
+                                <td>Não Informado</td>
+                            {% endif %}
+
+
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td class="coluna-paginacao" colspan="7">
+                            <div class="container-paginacao">
+                                <div>
+                                    <span class="texto-negrito texto-azul">TOTAL:</span>
+                                    <span>{{ qtd_agendamentos }}</span>
+                                </div>
+
+                                <div>
+                                    {% if agendamentos.has_previous %}
+                                        <a class="" href="{% url 'lotacao:agendamentos' %}?{{ gets_primeira }}">
+                                            <button class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'lotacao:agendamentos' %}?{{ gets_anterior }}">
+                                            <button class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% endif %}
+
+                                    <span class="">
+                                        {{ agendamentos.number }} de {{ agendamentos.paginator.num_pages }}
+                                    </span>
+
+                                    {% if agendamentos.has_next %}
+                                        <a class="" href="{% url 'lotacao:agendamentos' %}?{{ gets_proxima }}">
+                                            <button class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'lotacao:agendamentos' %}?{{ gets_ultima }}">
+                                            <button class="botao-paginacao">last_page</button>
+                                        </a>
+
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">last_page</button>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <table class="tabela tabela-agendamento--tablet">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Data</th>
+                        <th>Hora</th>
+                        <th>Serviço</th>
+                        <th>Atendente</th>
+                        <th>Servidor</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for agendamento in agendamentos %}
+                        <tr data-modal-abrir="agendamento-{{ agendamento.id }}">
+                            {% if agendamento.status == 0 %}
+                                <td title="Pendente">
+                                    <i class="agendamento agendamento--pendente"></i>
+                                </td>
+                            {% elif agendamento.status == 1 %}
+                                <td title="Concluído">
+                                    <i class="agendamento agendamento--concluido"></i>
+                                </td>
+                            {% elif agendamento.status == 2 %}
+                                <td title="Cancelado">
+                                    <i class="agendamento agendamento--cancelado"></i>
+                                </td>
+                            {% elif agendamento.status == 3 %}
+                                <td title="Não compareceu">
+                                    <i class="agendamento agendamento--ausente"></i>
+                                </td>
+                            {% endif %}
+
+                            <td>{{ agendamento.data|date:"SHORT_DATE_FORMAT" }}</td>
+                            <td>{{ agendamento.hora_atendimento }}</td>
+
+                            <td>{{ agendamento.atendimento.servico.nome }}</td>
+                            <td>{{ agendamento.atendimento.atendente.nome }}</td>
+                            <td>{{ agendamento.servidor }}</td>
+
+
+
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td class="coluna-paginacao" colspan="6">
+                            <div class="container-paginacao">
+                                <div>
+                                    <span class="texto-negrito texto-azul">TOTAL:</span>
+                                    <span>{{ qtd_agendamentos }}</span>
+                                </div>
+
+                                <div>
+                                    {% if agendamentos.has_previous %}
+                                        <a class="" href="{% url 'lotacao:agendamentos' %}?{{ gets_primeira }}">
+                                            <button class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'lotacao:agendamentos' %}?{{ gets_anterior }}">
+                                            <button class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% endif %}
+
+                                    <span class="">
+                                        {{ agendamentos.number }} de {{ agendamentos.paginator.num_pages }}
+                                    </span>
+
+                                    {% if agendamentos.has_next %}
+                                        <a class="" href="{% url 'lotacao:agendamentos' %}?{{ gets_proxima }}">
+                                            <button class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'lotacao:agendamentos' %}?{{ gets_ultima }}">
+                                            <button class="botao-paginacao">last_page</button>
+                                        </a>
+
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">last_page</button>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <table class="tabela tabela-agendamento--tablet2">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Data</th>
+                        <th>Hora</th>
+                        <th>Serviço</th>
+                        <th>Atendente</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for agendamento in agendamentos %}
+                        <tr data-modal-abrir="agendamento-{{ agendamento.id }}">
+                            {% if agendamento.status == 0 %}
+                                <td title="Pendente">
+                                    <i class="agendamento agendamento--pendente"></i>
+                                </td>
+                            {% elif agendamento.status == 1 %}
+                                <td title="Concluído">
+                                    <i class="agendamento agendamento--concluido"></i>
+                                </td>
+                            {% elif agendamento.status == 2 %}
+                                <td title="Cancelado">
+                                    <i class="agendamento agendamento--cancelado"></i>
+                                </td>
+                            {% elif agendamento.status == 3 %}
+                                <td title="Não compareceu">
+                                    <i class="agendamento agendamento--ausente"></i>
+                                </td>
+                            {% endif %}
+
+                            <td>{{ agendamento.data|date:"SHORT_DATE_FORMAT" }}</td>
+                            <td>{{ agendamento.hora_atendimento }}</td>
+
+                            <td>{{ agendamento.atendimento.servico.nome }}</td>
+                            <td>{{ agendamento.atendimento.atendente.nome }}</td>
+
+
+
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td class="coluna-paginacao" colspan="5">
+                            <div class="container-paginacao">
+                                <div>
+                                    <span class="texto-negrito texto-azul">TOTAL:</span>
+                                    <span>{{ qtd_agendamentos }}</span>
+                                </div>
+
+                                <div>
+                                    {% if agendamentos.has_previous %}
+                                        <a class="" href="{% url 'lotacao:agendamentos' %}?{{ gets_primeira }}">
+                                            <button class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'lotacao:agendamentos' %}?{{ gets_anterior }}">
+                                            <button class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% endif %}
+
+                                    <span class="">
+                                        {{ agendamentos.number }} de {{ agendamentos.paginator.num_pages }}
+                                    </span>
+
+                                    {% if agendamentos.has_next %}
+                                        <a class="" href="{% url 'lotacao:agendamentos' %}?{{ gets_proxima }}">
+                                            <button class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'lotacao:agendamentos' %}?{{ gets_ultima }}">
+                                            <button class="botao-paginacao">last_page</button>
+                                        </a>
+
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">last_page</button>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <table class="tabela tabela-agendamento--smartphone">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Hora</th>
+                        <th>Serviço</th>
+                        <th>Atendente</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for agendamento in agendamentos %}
+                        <tr data-modal-abrir="agendamento-{{ agendamento.id }}">
+
+                            <td>{{ agendamento.data|date:"SHORT_DATE_FORMAT" }}</td>
+                            <td>{{ agendamento.hora_atendimento }}</td>
+
+                            <td>{{ agendamento.atendimento.servico.nome }}</td>
+                            <td>{{ agendamento.atendimento.atendente.nome }}</td>
+
+
+
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td class="coluna-paginacao" colspan="4">
+                            <div class="container-paginacao">
+                                <div>
+                                    <span class="texto-negrito texto-azul">TOTAL:</span>
+                                    <span>{{ qtd_agendamentos }}</span>
+                                </div>
+
+                                <div>
+                                    {% if agendamentos.has_previous %}
+                                        <a class="" href="{% url 'lotacao:agendamentos' %}?{{ gets_primeira }}">
+                                            <button class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'lotacao:agendamentos' %}?{{ gets_anterior }}">
+                                            <button class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% endif %}
+
+                                    <span class="">
+                                        {{ agendamentos.number }} de {{ agendamentos.paginator.num_pages }}
+                                    </span>
+
+                                    {% if agendamentos.has_next %}
+                                        <a class="" href="{% url 'lotacao:agendamentos' %}?{{ gets_proxima }}">
+                                            <button class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'lotacao:agendamentos' %}?{{ gets_ultima }}">
+                                            <button class="botao-paginacao">last_page</button>
+                                        </a>
+
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">last_page</button>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    {% include 'lotacao/qualidade/partials/_modal-novo-agendamento.html' %}
+    {% include 'lotacao/qualidade/partials/_modais-agendamentos-detalhes.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/module/select2.js' %}"></script>
+
+    <script src="{% static 'assets/js/layout/lotacao/qualidade/agendamentos/controlaFiltros.js' %}"></script>
+{% endblock %}

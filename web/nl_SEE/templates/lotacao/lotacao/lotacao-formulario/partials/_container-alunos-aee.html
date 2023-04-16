@@ -1,0 +1,42 @@
+{% load static %}
+
+<div class="oculto" data-form-container="alunos-aee">
+    <div class="formulario-grupo oculto" data-sem-alunos>
+        <p class=" texto-vermelho">Nenhum aluno encontrado na turma, adicione um novo aluno para realizar a seleção</p>
+    </div>
+
+    <div class="formulario-grupo" data-grupo-alunos>
+        <label for="campo-aluno" class="label-campo texto-azul">Aluno</label>
+
+        <div class="grupo-aluno">
+            <div>
+                <select name="mediador-aluno1" id="campo-aluno" class="campo-texto campo-grande" data-selecao-alunos></select>
+            </div>
+            <button class="botao botao--azul" data-botao-adicionar-aluno>Adicionar</button>
+        </div>
+    </div>
+
+    <div class="formulario-grupo">
+        <a href="#" class="link" data-link-formulario-aluno>Adicionar novo aluno</a>
+    </div>
+
+    <div class="container-botoes">
+        <button class="botao botao--azul" data-form-botao="enturmacao-aee">Voltar</button>
+        <button class="botao botao--azul" data-modal-abrir="confirmar">Cadastrar</button>
+    </div>
+
+    <div class="formulario-grupo">
+        <select name="" id="" class="campo-texto campo-medio" data-selecao-estado-aux>
+            {% for estado in estados %}
+                <option value="{{ estado.id }}" data-estado-sigla="{{ estado.sigla }}">{{ estado.nome }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="" id="" class="campo-texto campo-medio" data-selecao-cidade-aux>
+            {% for cidade in cidades %}
+                <option value="{{ cidade.id }}" data-estado="{{ cidade.estado.id }}">{{ cidade.nome }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+</div>

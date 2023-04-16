@@ -1,0 +1,110 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+    Cadastro de Ocorrencia Funcional
+{% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/lotacao/contrato/ocorrencia-funcional.css' %}">
+{% endblock %}
+
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+
+ <main>
+     <div class="container">
+        <nav class="container-navegacao">
+            <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'terceirizacao:index' %}" class=" texto-azul">Tercerização</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a class="  texto-azul" href="{% url 'terceirizacao:contratos' %}">Terceirizados</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a class="  texto-azul" href="{% url 'terceirizacao:servidor-perfil' %}?id={{ servidor.id }}">{{ servidor }}</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a class="  texto-azul" href="{% url 'terceirizacao:servidor-contrato-perfil' %}?id_contrato={{ contrato_lotacao.id }}">Contrato n° {{ contrato.numero_contrato }}</a>
+            <span class="texto-azul">&#62;</span>
+
+            <span class="  texto-azul">Cadastro de Ocorrencia Funcional</span>
+        </nav>
+
+        <h1 class="titulo-pagina texto-azul">Cadastro de Ocorrencia Funcional</h1>
+        <p class="texto-preto  descricao">Insira os dados da ocorrencia funcional</p>
+        <form method="POST" class="container-surface formulario-ocorrencia">
+            {% csrf_token %}
+            <h2 class="texto-azul texto-medio"></h2>
+
+            <div class="formulario-grupo">
+                <label class="label-campo texto-azul" for="campo-Contrato">N° do Item</label>
+                <input class="campo-grande campo-texto" value="{{ item.numero_item }}" type="text" name="" id="campo-Contrato" readonly>
+            </div>
+
+            <div class="formulario-grupo" data-selecao-administrativa>
+                <label class="texto-azul label-campo" for="campo-tipo">Tipo de ocorrencia</label>
+                <select data-selecao2  name="tipo_ocorrencia" id="campo-tipo" class="campo-texto campo-grande">
+                    {% for tipo in ocorrencia %}
+                        <option value="{{ tipo }}">{{ tipo }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="formulario-grupo">
+                <label class="label-campo texto-azul" for="campo-nome">Substituto</label>
+                <input class="campo-grande campo-texto"  type="text" name="substituto" id="campo-Contrato">
+
+            </div>
+
+
+            <div class="formulario-grupo">
+                <label class="label-campo texto-azul" for="campo-inicio">Data de início</label>
+                <input class="campo-pequeno campo-texto" type="date" name="data_inicio" id="campo-inicio"required>
+            </div>
+
+            <div class="formulario-grupo">
+                <label class="label-campo texto-azul" for="campo-fim">Data de término</label>
+                <input class="campo-pequeno campo-texto" type="date" name="data_final" id="campo-fim" required>
+            </div>
+
+            {% comment %} <div class="formulario-grupo">
+                <label class="label-campo texto-azul" for="campo-documento">Documento</label>
+                <input class="campo-grande campo-texto" type="text" name="" id="campo-documento">
+            </div> {% endcomment %}
+
+
+            <div class="container-botoes">
+                <button class="botao botao--azul" data-modal-abrir="confirmar">Salvar</button>
+            </div>
+
+            <div class="modal oculto" data-modal="confirmar">
+                <div class="modal-conteudo modal-confirmacao">
+                    <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                    <p class="texto-preto descricao">Tem certeza que deseja salvar uma nova ocorrência funcional?</p>
+
+                    <div class="container-botoes">
+                        <button class="botao--verde botao" type="submit">Salvar</button>
+                        <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+     </div>
+ </main>
+
+
+ {% include 'partials/_rodape.html' %}
+
+ <script src="{% static 'assets/js/module/select2.js' %}"></script>
+ <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+{% endblock %}

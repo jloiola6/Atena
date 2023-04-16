@@ -1,0 +1,213 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} {{ servidor.nome }} {% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/lotacao/servidor/servidor-perfil.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:index' %}">Gestão de Pessoas</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:servidores' %}">Servidores</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">{{ servidor.nome }}</span>
+            </nav>
+
+            <div class="container-surface">
+                <div class="container-servidor__titulo">
+                    {% include 'lotacao/servidor/partials/icones/servidor.svg' %}
+                    <h1 class="texto-medio texto-azul">{{ servidor.nome }}</h1>
+                    <!-- <button class="botao botao--azul">Editar</button> -->
+                </div>
+                {% if historico_base %}
+                    <p class=" texto-preto texo-normal">Última atualização cadastral dia <span class="texto-negrito">{{ historico_base.ultima_atualizacao }}</span>, realizado(a) por <span class="texto-negrito">{{ historico_login }}</span></p>
+                {% endif %}
+
+                <div class="container-detalhes">
+                    {% if servidor.matricula %}
+                        <p class=" texto-azul texto-negrito">Matrícula: <span class="texto-preto texto-normal">{{ servidor.matricula }}</span></p>
+                    {% endif %}
+
+                    {% if permissao_VF %}
+                        <p class=" texto-azul texto-negrito">CPF: <span class="texto-preto texto-normal">{{ cpf_vf }}</span></p>
+                    {% else %}
+                        <p class=" texto-azul texto-negrito">CPF: <span class="texto-preto texto-normal">{{ cpf }}</span></p>
+                    {% endif %}
+
+                    {% if servidor.rg %}
+                        <p class=" texto-azul texto-negrito">RG: <span class="texto-preto texto-normal">{{ servidor.rg }}</span></p>
+                    {% endif %}
+
+                    {% if servidor.pis %}
+                        <p class=" texto-azul texto-negrito">PIS/PASEP: <span class="texto-preto texto-normal">{{ servidor.pis }}</span></p>
+                    {% endif %}
+
+                    {% if servidor.titulo_eleitor %}
+                        <p class=" texto-azul texto-negrito">Titulo Eleitoral: <span class="texto-preto texto-normal">{{ servidor.titulo_eleitor }}</span></p>
+                    {% endif %}
+
+                    <p class=" texto-azul texto-negrito">Data de Nascimento: <span class="texto-preto texto-normal">{{ servidor.data_nascimento }}</span></p>
+                    <p class=" texto-azul texto-negrito">Gênero: <span class="texto-preto texto-normal">{{ servidor.sexo }}</span></p>
+                    <p class=" texto-azul texto-negrito">Nacionalidade: <span class="texto-preto texto-normal">{{ servidor.nacionalidade }}</span></p>
+                    <p class=" texto-azul texto-negrito">Naturalidade: <span class="texto-preto texto-normal">{{ servidor.naturalidade }} - {{ servidor.uf }}</span></p>
+
+
+                </div>
+                {% if permissao.editar == 1 %}
+                    <div class="container-botoes">
+                        <a href="{% url 'lotacao:servidor-base' %}?id={{ servidor.id }}"><button class="botao--azul botao">Editar</button></a>
+                        {% if not servidor_contrato and usuarios_excluir %}
+                            <form method= 'POST'>
+                                {% csrf_token %}
+                                <button class="botao botao--vermelho" type='submit' name='btn-excluir-servidor' value='excluir-servidor'>Excluir Servidor</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="container-surface">
+                <div class="container-servidor__titulo">
+                    {% include 'lotacao/servidor/partials/icones/endereco.svg' %}
+                    <h2 class="texto-medio texto-azul titulo-endereco-servidor">Endereço</h2>
+                </div>
+                <div class="container-detalhes">
+                    {% if servidor_endereco %}
+                        <p class=" texto-azul texto-negrito texto">Estado: <span class="texto-preto texto-normal">{{ servidor_endereco.uf }}</span></p>
+                        <p class=" texto-azul texto-negrito texto">Município: <span class="texto-preto texto-normal">{{ servidor_endereco.municipio }}</span></p>
+                        <p class=" texto-azul texto-negrito texto">Regional: <span class="texto-preto texto-normal">{{ servidor_endereco.regiao }}</span></p>
+                        <p class=" texto-azul texto-negrito texto">CEP: <span class="texto-preto texto-normal">{{ servidor_endereco.cep }}</span></p>
+                        <p class=" texto-azul texto-negrito texto">Rua: <span class="texto-preto texto-normal">{{ servidor_endereco.rua }}</span></p>
+                        <p class=" texto-azul texto-negrito texto">Numero: <span class="texto-preto texto-normal">{{ servidor_endereco.numero }}</span></p>
+                        <p class=" texto-azul texto-negrito texto">Bairro: <span class="texto-preto texto-normal">{{ servidor_endereco.bairro }}</span></p>
+                        {% if servidor_endereco.complemento %}
+                            <p class=" texto-azul texto-negrito texto">Complemento: <span class="texto-preto texto-normal">{{ servidor_endereco.complemento }}</span></p>
+                        {% endif %}
+
+                        {% if permissao.editar == 1 %}
+                            <div class="container-botoes">
+                                <a href="{% url 'lotacao:servidor-endereco' %}?id_servidor_endereco={{ servidor_endereco.id }}"><button class="botao--azul botao">Editar</button></a>
+                            </div>
+                        {% endif %}
+
+                    {% else %}
+                        <p class="texto-preto">Servidor não possui endereço cadastrado</p>
+                        {% if permissao.editar == 1 %}
+                            <div class="container-botoes">
+                                <a href="{% url 'lotacao:servidor-endereco' %}?id={{ servidor.id }}"><button class="botao--azul botao">Adicionar</button></a>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="container-surface">
+                <div class="container-servidor__titulo">
+                    {% include 'lotacao/servidor/partials/icones/contatos.svg' %}
+                    <h2 class="texto-medio texto-azul titulo-contatos-servidor">Contatos</h2>
+                </div>
+                <div class="container-detalhes">
+                    {% if servidor_contato %}
+                        {% for contato in servidor_contato %}
+                            {% if contato.tipo_contato == 'C' %}
+                                <p class=" texto-azul texto-negrito texto">Celular: <span class="texto-preto texto-normal">{{ contato.contato }}</span></p>
+                            {% elif contato.tipo_contato == 'T' %}
+                                <p class=" texto-azul texto-negrito texto">Telefone: <span class="texto-preto texto-normal">{{ contato.contato }}</span></p>
+                            {% elif contato.tipo_contato == 'E' %}
+                                <p class=" texto-azul texto-negrito texto">Email: <span class="texto-preto texto-normal">{{ contato.contato }}</span></p>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <p class="texto-preto">Sem contatos cadastratos</p>
+                    {% endif %}
+
+
+                </div>
+                {% if permissao.editar == 1 %}
+                    <div class="container-botoes">
+                        <a href="{% url 'lotacao:servidor-contatos' %}?id={{ servidor.id }}"><button class="botao--azul botao">Adicionar</button></a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="container-surface">
+                <div class="container-servidor__titulo">
+                    {% include 'lotacao/servidor/partials/icones/dados-financeiros.svg' %}
+                    <h2 class="texto-medio texto-azul titulo-financeiro-servidor">Dados financeiros</h2>
+                </div>
+                <div class="container-detalhes">
+                    {% if servidor_banco %}
+                        <p class=" texto-azul texto-negrito texto">Instituição: <span class="texto-preto texto-normal">{{ servidor_banco.instituicao }}</span></p>
+                        <p class=" texto-azul texto-negrito texto">Tipo de conta: <span class="texto-preto texto-normal">{{ servidor_banco.tipo_conta }}</span></p>
+                        <p class=" texto-azul texto-negrito texto">Agência: <span class="texto-preto texto-normal">{{ servidor_banco.agencia }}</span></p>
+                        <p class=" texto-azul texto-negrito texto">Conta: <span class="texto-preto texto-normal">{{ servidor_banco.conta }}</span></p>
+
+                        {% if permissao.editar == 1 %}
+                            <div class="container-botoes">
+                                <a href="{% url 'lotacao:servidor-banco' %}?id_servidor_banco={{ servidor_banco.id }}"><button class="botao--azul botao">Editar</button></a>
+                            </div>
+                        {% endif %}
+
+                    {% else %}
+                        <p class="texto-preto">Sem dados financeiros cadastrados</p>
+
+                        {% if permissao.editar == 1 %}
+                            <div class="container-botoes">
+                                <a href="{% url 'lotacao:servidor-banco' %}?id={{ servidor.id }}"><button class="botao--azul botao">Adicionar</button></a>
+                            </div>
+                        {% endif %}
+
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="container-surface-servidor container-surface">
+                <nav class="container-navegacao-surface">
+                    <ul class="navegacao-surface-lista">
+                        <li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul navegacao-surface-item-ativo" data-nav-aba="contratos">Contratos</li>
+
+                        <li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul" data-nav-aba="lotacoes">Lotações</li>
+
+                        <li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul" data-nav-aba="escolaridade">Escolaridade</li>
+
+                        <li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul" data-nav-aba="documentos">Documentos</li>
+                    </ul>
+                </nav>
+
+                {% include 'lotacao/servidor/partials/_servidor-contratos.html' %}
+                {% include 'lotacao/servidor/partials/_servidor-lotacoes.html' %}
+                {% include 'lotacao/servidor/partials/_servidor-escolaridade.html' %}
+                {% include 'lotacao/servidor/partials/_servidor-documentos.html' %}
+
+            </div>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    {% if permissao_contrato %}
+        {% include 'lotacao/servidor/partials/_modal-adicionar-contrato.html' %}
+    {% endif %}
+
+    <script src="{% static 'assets/js/module/controlaNavegacaoSurface.js' %}"></script>
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/module/select2.js' %}"></script>
+
+    <script src="{% static 'assets/js/layout/lotacao/servidor-perfil/modalFormularioContrato.js' %}"></script>
+{% endblock %}

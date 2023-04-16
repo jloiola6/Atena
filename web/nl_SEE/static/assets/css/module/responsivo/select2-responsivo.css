@@ -1,0 +1,19 @@
+@media screen and (max-width: 768px){
+    .select2-container{
+        width: 100%;
+        font-size: 20px;
+    }
+    
+    .select2-container .select2-selection--single{
+        height: 48px !important;
+    }
+    
+    .select2-selection__rendered{
+        padding-top: 6px !important;
+    }
+    
+    .select2-selection__arrow{
+        height: 48px !important;;
+        top: 0 !important;
+    }
+}

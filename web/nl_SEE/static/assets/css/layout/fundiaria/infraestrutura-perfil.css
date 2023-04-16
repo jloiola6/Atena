@@ -1,0 +1,32 @@
+/* Estilização do perfil de uma infraestrutura escolar */
+
+.container-surface-infraestrutura-salas{
+    margin-top: 16px;
+}
+
+.container-surface-infraestrutura-dependencias, .container-surface-infraestrutura-detalhes{
+    margin-top: 24px;
+}
+
+.container-surface-infraestrutura-dependencias .container-botoes{
+    margin-top: 16px;
+}
+
+.container-surface-infraestrutura-detalhes .container-botoes{
+    margin-top: 8px;
+}
+
+.container-cards-infraestrutura{
+    margin-top: 16px;
+}
+
+.container-infraestrutura-detalhes{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.container-infraestrutura-detalhe{
+    margin-top: 8px;
+}

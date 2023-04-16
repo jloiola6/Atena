@@ -1,0 +1,30 @@
+{% load static %}
+
+<div class="oculto" data-form-container="professor-aee">
+    <div class="formulario-grupo" data-grupo-turma>
+        <label class="texto-azul label-campo" for="campo-turma-escola1_1">Turma</label>
+
+        <div>
+            <select name="turma_escolar1_1" id="campo-turma-escola1_1" class="campo-texto campo-medio" data-selecao-turma>
+                {% for turma in turmas %}
+                    <option value="{{ turma.id }}">{{ turma }} - {{ turma.turno }}</option>
+                {% endfor %}
+            </select>
+
+            <button class="botao botao--azul" data-botao-adicionar-turma>Adicionar Turma</button>
+        </div>
+    </div>
+
+    <div class="formulario-grupo">
+        <a href="#" class="link" data-link-formulario-turma>Adicionar nova turma</a>
+
+        {% for etapa in etapas %}
+            <span data-escola-etapa="{{ etapa.etapa.id }}">{{ etapa.etapa }}</span>
+        {% endfor %}
+    </div>
+
+    <div class="container-botoes">
+        <button data-form-botao="dados" class="botao botao--azul">Voltar</button>
+        <button class="botao botao--azul" data-modal-abrir="confirmar">Cadastrar</button>
+    </div>
+</div>

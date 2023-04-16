@@ -1,0 +1,63 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Chamados {% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'tecnologia:index' %}" class=" texto-azul">Tecnologia</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Chamados</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Chamados</h1>
+
+            <div class="container-cards">
+                {% if 21 in permissoes %}
+                    <a href="{% url 'tecnologia:chamados-adm' %}">
+                        <div class="card-menu">
+                            {% include 'partials/icones-cards/tecnologia/chamados/administrador.svg' %}
+
+                            <h2 class="card-titulo">Administrador</h2>
+                        </div>
+                    </a>
+                {% endif %}
+
+                {% if 32 in permissoes %}
+                    <a href="{% url 'tecnologia:chamados-help' %}">
+                        <div class="card-menu">
+                            {% include 'partials/icones-cards/tecnologia/chamados/help.svg' %}
+
+                            <h2 class="card-titulo">Help Desk</h2>
+                        </div>
+                    </a>
+                {% endif %}
+
+                {% if 31 in permissoes %}
+                    <a href="{% url 'tecnologia:chamados-tecnico' %}">
+                        <div class="card-menu">
+                            {% include 'partials/icones-cards/tecnologia/chamados/tecnico.svg' %}
+
+                            <h2 class="card-titulo">Técnico</h2>
+                        </div>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+{% endblock %}

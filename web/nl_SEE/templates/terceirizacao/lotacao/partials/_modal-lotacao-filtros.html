@@ -1,0 +1,78 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="filtros">
+    <form id="modal-conteudo" class="modal-conteudo" method="GET">
+        <div class="modal-filtros-titulo">
+            <h2 class="texto-grande texto-negrito texto-azul">Filtros</h2>
+        </div>
+
+        <p class="descricao  texto-preto">Insira os filtros que deseja aplicar</p>
+
+        {% comment %} <div class="formulario-grupo">
+            <h3 class="texto-medio texto-azul">Modalidade</h3>
+            <div>
+                {% for modalidade in modalidades %}
+                    {% if modalidade.1 in filtros_modalidades %}
+                        <input type="checkbox" name="{{ modalidade.1 }}" id="{{ modalidade.0 }}" checked>
+                        <label class="texto-preto" for="{{ modalidade.0 }}">{{ modalidade.2 }}</label>
+                    {% else %}
+                        <input type="checkbox" name="{{ modalidade.1 }}" id="{{ modalidade.0 }}">
+                        <label class="texto-preto" for="{{ modalidade.0 }}">{{ modalidade.2 }}</label>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div> {% endcomment %}
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-servidor-funcao">Função</label>
+            <input id="campo-servidor-funcao" type="text" class="campo-texto campo-grande" name="funcao" placeholder="Ex: Motorista">
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-unidade-admnistrativa">Unidade Administrativa</label>
+            <select data-selecao2  name="administrativa" id="campo-unidade-admnistrativa" class="campo-texto campo-grande">
+                <option></option>
+                {% for adm in unidades_administrativas %}
+                    <option value="{{ adm.id }}">{{adm.sigla}} - {{ adm.nome }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-unidade-educacional">Unidade Educacional</label>
+            <select data-selecao2  name="educacional" id="campo-unidade-educacional" class="campo-texto campo-grande">
+                <option></option>
+                {% for edu in unidades_educacionais %}
+                    <option value="{{ edu.id }}">{{ edu.escola__nome_escola }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo">Empresa</label>
+
+            <select data-selecao2 name="empresa" class="campo-texto campo-medio">
+                <option></option>
+                {% for empresa in empresas %}
+                    <option data-opcao-empresa value="{{ empresa.0 }}">{{ empresa.1 }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo">Municipio</label>
+
+            <select data-selecao2 name="municipio" class="campo-texto campo-medio">
+                <option></option>
+                {% for municipio in municipios.municipio %}
+                    <option data-opcao-municipio value="{{ municipio }}">{{ municipio }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="container-botoes">
+            <button type="" class="botao botao--verde">Filtrar</button>
+        </div>
+
+    </form>
+</div>

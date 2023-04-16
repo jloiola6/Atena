@@ -1,0 +1,13 @@
+.tabela-links--smartphone{
+    display: none;
+}
+
+@media screen and (max-width:523px){
+    .tabela-links{
+        display: none;
+    }
+
+    .tabela-links--smartphone{
+        display: block;
+    }
+}

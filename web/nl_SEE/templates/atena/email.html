@@ -1,0 +1,20 @@
+<main>
+    <h1 style="font-size: 32px; font-weight: 600; background-color: #104183; color: white; padding: 8px;">Detecção de Erro</h1>
+    
+    <div style="padding-left: 8px; ">
+        <p style="font-size: 20px;"><b>Usuário: </b> {{ user }}</p>
+        <p style="font-size: 20px;"><b>URL: </b> {{ url }}</p>
+        <p style="font-size: 20px;"><b>Log: </b> {{ log }}</p>
+    </div>
+    
+    {% if posts %}
+        <h1 style="font-size: 24px; font-weight: 500; background-color: #104183; color: white; padding: 8px;">POST</h1>
+        <div style="padding-left: 24px;">    
+            {% for post in posts %}
+                <p style="font-size: 20px;"><b>{{ post.0 }}: </b> {{ post.1 }} - {{ post.2 }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+        
+    <p style="font-size: 16px; font-style: italic; padding-top: 24px;">{{ data }} {{ hora }}</p>
+</main>

@@ -1,0 +1,22 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Em Manutenção {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/atena/pagina-manutencao.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main class="container-manutencao">
+        <div class="container">
+            <h1 class="texto-grande texto-azul">MANUTENÇÃO, ENTRE MAIS TARDE</h1>
+            <span class="icone icone-azul icone-grande icone-manutencao">settings</span>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+{% endblock %}

@@ -1,0 +1,163 @@
+{% extends 'partials/_base.html' %}
+{% load static %}
+
+{% block title %}
+    Chamado Nº {{ chamado_id }}
+{% endblock %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/partials/unidade-educacional/_unidade-perfil.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/layout/tecnologia/chamados/chamado-perfil.css' %}">
+{% endblock %}
+
+
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+
+<main>
+    <div class="container">
+        <nav class="container-navegacao">
+            <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'tecnologia:index' %}" class=" texto-azul">Tecnologia</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'tecnologia:chamados' %}" class=" texto-azul">Chamados</a>
+            <span class="texto-azul">&#62;</span>
+
+            {% if perfil == 'help' %}
+                <a href="{% url 'tecnologia:chamados-help' %}" class=" texto-azul">Help Desk</a>
+                <span class="texto-azul">&#62;</span>
+            {% elif perfil == 'tecnico' %}
+                <a href="{% url 'tecnologia:chamados-tecnico' %}" class=" texto-azul">Meus Chamados</a>
+                <span class="texto-azul">&#62;</span>
+            {% endif %}
+
+            <span class="  texto-azul">Chamado Nº {{ chamado_id }}</span>
+        </nav>
+
+        <div class="container-surface">
+            <h1 class="texto-medio texto-azul">Chamado Nº {{ chamado_id }}</h1>
+            <div class="container-detalhes texto-azul texto-negrito">
+                <p>Criador do chamado: <span class="texto-preto texto-normal">{{ solicitacao.user_criador.nome }}</span></p>
+
+                {% if solicitacao.tecnico_atribuido %}
+                    <p>Atríbuido ao técnico: <span class="texto-preto texto-normal">{{ tecnico_atribuido }}</span></p>
+                {% endif %}
+
+                {% if solicitacao.unidade_administrativa %}
+                    <p>Unidade Administrativa: <span class="texto-preto texto-normal">{{ solicitacao.unidade_administrativa}}</span></p>
+                    <p class="texto-normal texto-preto"><b class="texto-azul">Endereço: </b>{{ solicitacao.unidade_administrativa.endereco.municipio }} • {{ solicitacao.unidade_administrativa.endereco.rua }}, {{ solicitacao.unidade_administrativa.endereco.numero }} • {{ solicitacao.unidade_administrativa.endereco.bairro }}</p>
+
+                    <div class="container-detalhes">
+                        <p class="texto-normal texto-preto"><b class="texto-azul">Regional: </b>{{ solicitacao.unidade_administrativa.endereco.regiao }}</p>
+                        <p class="texto-normal texto-preto"><b class="texto-azul">CEP: </b>{{ solicitacao.unidade_administrativa.endereco.cep }}</p>
+                    </div>
+                {% else %}
+                    {% if solicitacao.endereco.tipo == 'S' %}
+                        <p>Unidade Escolar: <span class="texto-preto texto-normal">{{ solicitacao.endereco_escola.escola }}</span></p>
+                    {% else %}
+                        <p>Unidade Escolar: <span class="texto-preto texto-normal">{{ solicitacao.endereco_escola.escola }} (Anexo {{ solicitacao.endereco_escola.numero_anexo }})</span></p>
+                    {% endif %}
+                    <p class="texto-normal texto-preto"><b class="texto-azul">Endereço: </b>{{ solicitacao.endereco_escola.municipio }} • {{ solicitacao.endereco_escola.rua }}, {{ solicitacao.endereco_escola.numero }} • {{ solicitacao.endereco_escola.bairro }}</p>
+
+                    <div class="container-detalhes">
+                        <p class="texto-normal texto-preto"><b class="texto-azul">Regional: </b>{{ solicitacao.endereco_escola.regiao }}</p>
+                        <p class="texto-normal texto-preto"><b class="texto-azul">CEP: </b>{{ solicitacao.endereco_escola.cep }}</p>
+                        <p class="texto-normal texto-preto"><b class="texto-azul">Tipo de Localização: </b>{{ solicitacao.endereco_escola.tipo_localizacao }}</p>
+                    </div>
+                {% endif %}
+
+                <p>Prioridade: <span class="texto-preto texto-normal">{{ solicitacao.prioridade }}</span> </p>
+                <p>Nome solicitante: <span class="texto-preto texto-normal">{{ user_solicitante }}</span> </p>
+                <p>Contato: <span class="texto-preto texto-normal">{{ solicitacao.contato }}</span> </p>
+                <p>Status: <span class="texto-preto texto-normal">{{ solicitacao.situacao }}</span> </p>
+
+                {% if solicitacao.situacao == 'Finalizado' %}
+                    <p>Tempo de conclusão: <span class="texto-preto texto-normal">{{ solicitacao.tempo_total }} minutos</span> </p>
+                    <br>
+                    <p>Atividades Realizadas: <span class="texto-preto texto-normal">{{ solicitacao.descricao }}</span> </p>
+                {% endif %}
+
+                <form class="formulario" method="POST">
+                    {% csrf_token %}
+
+                    <div class="container-botoes">
+                        {% if solicitacao.situacao == 'Aberto' and not tecnico_atribuido %}
+                            <button type="submit" name='btn-iniciar' value= 'iniciar' class="botao botao--azul">Iniciar Chamado</button>
+                        {% elif solicitacao.situacao == 'Pausado' or solicitacao.situacao == 'Aberto' %}
+                            {% if tecnico_atual %}
+                                <button type="submit" name='btn-iniciar' value= 'iniciar' class="botao botao--azul">Iniciar Chamado</button>
+                                <button data-modal-abrir="transferir" class="botao botao--azul">Transferir</button>
+                            {% endif %}
+                        {% elif solicitacao.situacao == 'Em atendimento' and tecnico_atual %}
+                            <button data-modal-abrir="finalizar" class="botao botao--verde">FINALIZAR</button>
+                            <button data-modal-abrir="pausar" class="botao botao--azul">Pausar</button>
+                            <button data-modal-abrir="transferir" class="botao botao--azul">Transferir</button>
+
+                            {% if not equipamento_recolhido %}
+                                <button data-modal-abrir="recolher" class="botao botao--azul">Recolher</button>
+                            {% endif %}
+                        {% endif %}
+
+                        {% if solicitacao.tipo_chamado == 'Externo' and solicitacao.situacao == 'Em atendimento' %}
+                            <button class="botao botao--azul" name="btn-exportar" value="exportar">IMPRIMIR</button>
+                        {% endif %}
+
+                        {% if solicitacao.situacao == 'Finalizado' %}
+                            <button class="botao botao--azul" name="btn-exportar" value="exportar">IMPRIMIR</button>
+                        {% endif %}
+
+                        {% if solicitacao.situacao == 'Aberto' and tecnico_atribuido and not tecnico_atual %}
+                            <p>Chamado Ainda não atendido pelo técnico...</span> </p>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="container-surface">
+            <nav class="container-navegacao-surface">
+                <ul class="navegacao-surface-lista">
+                    <li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul navegacao-surface-item-ativo" data-nav-aba="servicos">Serviços</li>
+                    <li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul" data-nav-aba="registro">Registro</li>
+
+                    {% if equipamento_recolhido %}
+                        <li class="navegacao-surface-item navegacao-surface-item-selecionavel texto-azul" data-nav-aba="recolher">Equipamento Recolhido</li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% include 'tecnologia/chamados/partials/_solicitacao-servicos.html' %}
+            {% include 'tecnologia/chamados/partials/_solicitacao-registro.html' %}
+
+            {% if equipamento_recolhido %}
+                {% include 'tecnologia/chamados/partials/_solicitacao-recolher.html' %}
+            {% endif %}
+        </div>
+
+
+    </div>
+</main>
+
+{% include 'tecnologia/chamados/partials/_modal-chamados-finalizar.html' %}
+{% include 'tecnologia/chamados/partials/_modal-chamados-pausar.html' %}
+
+
+{% include 'tecnologia/chamados/partials/_modal-chamados-transferir.html' %}
+
+
+{% include 'tecnologia/chamados/partials/_modal-chamados-equipamento.html' %}
+{% include 'partials/_rodape.html' %}
+
+<script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+<script src="{% static 'assets/js/module/controlaNavegacaoSurface.js' %}"></script>
+<script src="{% static 'assets/js/layout/tecnologia/chamado-formulario/controlaCamposOutros.js' %}"></script>
+
+<script>
+    let image = document.getElementById('img_assinatura');
+    image.src = document.getElementById('assinatura').textContent;
+</script>
+
+{% endblock %}

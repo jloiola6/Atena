@@ -1,0 +1,92 @@
+<!-- Esta partial contém um container com os dados de uma unidade administrativa
+Feita para evitar a repetição código em perfis de escolas nos módulos que forem ncessários -->
+
+<div class="container-surface">
+    <div class="container-detalhes">
+        <h2 class="texto-medio texto-azul">Dados</h2>
+
+        <p class="texto-azul texto-negrito container-detalhes-bloco">
+            Nome:
+            <span class="texto-preto texto-normal">{{ unidade.nome }}</span>
+        </p>
+
+        <p class=" texto-azul texto-negrito">
+            Sigla:
+            <span class="texto-preto texto-normal">{{ unidade.sigla }}</span>
+        </p>
+
+        {% if endereco %}
+            <h2 class="texto-medio texto-azul container-detalhes-bloco">Endereço</h2>
+
+            <p class=" texto-azul texto-negrito container-detalhes-bloco">
+                Município:
+                <span class="texto-preto texto-normal">{{ endereco.municipio }}</span>
+            </p>
+
+            <p class=" texto-azul texto-negrito">
+                Regional:
+                <span class="texto-preto texto-normal">{{ endereco.regiao }}</span>
+            </p>
+
+            <p class=" texto-azul texto-negrito">
+                CEP:
+                <span class="texto-preto texto-normal">{{ endereco.cep }}</span>
+            </p>
+
+            <p class=" texto-azul texto-negrito">
+                Rua:
+                <span class="texto-preto texto-normal">{{ endereco.rua }}</span>
+            </p>
+
+            <p class=" texto-azul texto-negrito">
+                Número:
+                <span class="texto-preto texto-normal">{{ endereco.numero }}</span>
+            </p>
+
+            <p class=" texto-azul texto-negrito">
+                Bairro:
+                <span class="texto-preto texto-normal">{{ endereco.bairro }}</span>
+            </p>
+
+            <p class=" texto-azul texto-negrito">
+                Complemento:
+                <span class="texto-preto texto-normal">{{ endereco.complemento }}</span>
+            </p>
+
+            <div class="container-botoes">
+                <a href="{% url 'administracao:editar-endereco-adm' %}?id={{id_unidade}}">
+                    <button class="botao botao--azul">Editar</button>
+                </a>
+            </div>
+        {% else %}
+                <p class=" texto-azul texto-negrito container-detalhes-bloco">Unidade localizada na sede.</p>
+        {% endif %}
+
+        <h2 class="texto-medio texto-azul container-detalhes-bloco">Contatos</h2>
+
+        <p class=" texto-azul texto-negrito container-detalhes-bloco">
+            Telefone:
+
+            {% if unidade.telefone != '' %}
+                <span class="texto-preto texto-normal">{{ unidade.telefone }}</span>
+            {% else %}
+                <span class="texto-preto texto-normal">Não cadastrado</span>
+            {% endif %}
+        </p>
+
+        <p class=" texto-azul texto-negrito">
+            E-mail:
+
+            {% if unidade.email != '' %}
+                <span class="texto-preto texto-normal">{{ unidade.email }}</span>
+            {% else %}
+                <span class="texto-preto texto-normal">Não cadastrado</span>
+            {% endif %}
+        </p>
+
+        {% if aplicacao == 'administracao' %}
+            <a class="link container-detalhes-bloco" href="{% url 'administracao:servidores-lotados' %}?id={{ unidade.id }}">Ver servidores lotados</a>
+        {% endif %}
+
+    </div>
+</div>

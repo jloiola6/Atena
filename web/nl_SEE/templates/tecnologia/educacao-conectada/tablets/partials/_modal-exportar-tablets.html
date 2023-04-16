@@ -1,0 +1,24 @@
+
+<div class="modal oculto" data-modal="exportar">
+    <form id="modal-conteudo" class="modal-conteudo" method="POST">
+        {% csrf_token %}
+        <h2 class="texto-grande texto-negrito texto-azul">Exportar dados</h2>
+        <p class="descricao texto-preto ">Insira o tipo de exportação</p>
+
+        <div class="formulario-grupo">
+            <h3 class="texto-medio texto-azul">Tipo de Exportação</h3>
+
+            <fieldset id="exportar-fieldset-formatos">
+                <input type="radio" name="exportar-fieldset-formatos" value="lista_alunos" id="radio-lista" checked>
+                <label class="texto-preto" for="radio-lista">Lista de Alunos</label>
+
+                <input type="radio" name="exportar-fieldset-formatos" value="termo_responsabilidade" id="radio-termo">
+                <label class="texto-preto" for="radio-termo">Termo de Responsabilidade</label>
+            </fieldset>
+        </div>
+
+        <div class="container-botoes">
+            <button type="POST" class="botao botao--verde">Exportar</button>
+        </div>
+    </form>
+</div>

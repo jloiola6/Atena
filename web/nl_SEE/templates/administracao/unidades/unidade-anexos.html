@@ -1,0 +1,45 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} {{ escola.nome_escola }} {% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:index' %}">Administração</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:unidades_educacionais' %}">Unidades</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">{{ escola.nome_escola }}</span>
+            </nav>
+
+            <div class="container-surface">
+                <h2 class="texto-medio texto-azul">Esta unidade possui mais de um endereço</h2>
+                <p class="texto-preto descricao">Selecione o endereço que deseja acessar</p>
+
+                {% for endereco in enderecos %}
+                    <a class="link" href="{% url 'administracao:unidade-perfil' %}?inep={{ inep }}&id_endereco={{ endereco.id }}">
+                        Rua {{ endereco.rua }} - {{ endereco.numero }}, Bairro {{ endereco.bairro }}
+
+                        {% if endereco.tipo == 'S' %}
+                            (Sede)
+                        {% else %}
+                            (Anexo {{ endereco.numero_anexo }})
+                        {% endif %}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+{% endblock %}

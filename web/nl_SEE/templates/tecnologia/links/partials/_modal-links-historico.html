@@ -1,0 +1,32 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="link-historico{{ link_mudanca.0 }}">
+    <div id="modal-conteudo" class="modal-conteudo">
+        <div class="modal-filtros-titulo">
+            <h2 class="texto-grande texto-negrito texto-azul">Alteração {{ link_mudanca.0 }}</h2>
+        </div>
+
+        <p class="descricao  texto-preto">Usuário: {{ link_mudanca.3 }}</p>
+        <p class="descricao  texto-preto">Data e Hora: {{ link_mudanca.2 }}</p>
+        
+        <div class="formulario-grupo">
+            <div>
+                <h3 class="texto-medio texto-azul">Alteração do Link realizada: {{ link_mudanca.4 }}</h3>
+                <br>
+                {% for mudanca in mudancas %}
+                    {% if mudanca.0 == link_mudanca.0 %}
+                        {% for i in mudanca.1 %}
+                            <h3 class="texto-medio texto-azul">{{i.2}}:</h3>
+                            <br>
+                            {% if i.0 != '' %}
+                                <p class="texto-preto"><b>Antigo: </b>{{ i.0 }}</p>
+                            {% endif %}
+                            <p class="texto-preto"><b>Novo: </b>{{ i.1 }}</p>
+                            <br>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>   
+    </div>
+</div>

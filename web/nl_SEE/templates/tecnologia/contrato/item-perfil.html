@@ -1,0 +1,41 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Item {{ item.numero_item }} {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/partials/contrato/_item-perfil.css' %}">
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/partials/contrato/responsivo/_item-perfil-responsivo.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:index' %}">Tecnologia</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:contratos' %}">Contratos</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:contrato-perfil' %}?id_contrato={{ contrato.id }}">Contrato nº {{ contrato.numero_contrato }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Item {{ item.numero_item }}</span>
+            </nav>
+
+            {% include 'partials/contrato/_item-perfil.html' %}
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/controlaNavegacaoSurface.js' %}"></script>
+    <script src="{% static 'assets/js/module/linkTabela.js' %}"></script>
+{% endblock %}

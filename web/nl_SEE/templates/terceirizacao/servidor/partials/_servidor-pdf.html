@@ -1,0 +1,58 @@
+
+<header>
+    <table>
+        <tr>
+            <!-- <th><img id="img1" src="/home/suporte/Atena/nl_SEE/static/assets/img/qualidade.png" width='550px' alt="Cabecalho"></th>
+            <th><img id="img2" src="/home/suporte/Atena/nl_SEE/static/assets/img/ATENA-AZUL.svg" width='120px' alt="Logo Atena"></th> -->
+            <th><img id="img2" src="{{ url_logo }}" width='550px' alt="Cabecalho"></th>
+            <th class="direita"><img id="img1" src="{{ url_atena }}"  width='120px' alt="Logo Atena"></th>
+        </tr>
+    </table>
+
+</header>
+<hr>
+
+<table class="tabela tabela-terceirizados">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th class="cpf">CPF</th>
+            <th class="data">Data de Nascimento</th>
+        </tr>
+    </thead>
+
+    <tbody data-tabela-link="{% url 'terceirizacao:servidor-perfil' %}?id=" >
+        {% for servidor in exportar %}
+            <tr data-tabela-link-chave="{{ servidor.id }}">
+                <td class="paragrafo">{{ servidor.nome|upper }}</td>
+                <td>{{ servidor.cpf }}</td>
+                <td>{{ servidor.data_nascimento }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+
+    <style>
+        .tabela{
+            border: 1px solid black;
+            text-align: center;
+            padding: 2px;
+            padding-top: 6px;
+        }
+
+        .cpf{
+            width: 15%;
+        }
+
+        .data{
+            width: 25%;
+        }
+
+        .paragrafo{
+            text-align: left;
+        }
+
+        .direita{
+            text-align: right;
+        }
+    </style>
+</table>

@@ -1,0 +1,32 @@
+{% load static %}
+
+<div class="fundiaria-imagem oculto" data-nav-container="imagens">
+    {% if imagens %}
+        <div class="container-cards-simples">
+            {% for imagem in imagens %}
+                <div class="card-simples card-imagem" data-modal-abrir="imagem-{{ imagem.id }}">
+                    <img src="{% static imagem.path_arquivo %}">
+                    <div class="card-simples__descricao">
+                        {% comment %} <p class=" texto-azul texto-negrito">Categoria: <span class="texto-preto texto-normal">{{ imagem.categoria }}</span></p> {% endcomment %}
+                        <p class=" texto-azul texto-negrito">Descrição: <span class="texto-preto texto-normal">{{ imagem.descricao_simples }}</span></p>
+                    </div>
+                </div>
+
+                {% include 'fundiaria/partials/_modal-imagem.html' %}
+            {% endfor %}
+        </div>
+    {% else %}
+        <h2 class="texto-medio texto-preto">Sem imagens cadastradas</h2>
+    {% endif %}
+
+    <div class="container-botoes">
+        {% if qtd_imagens > 4 %}
+            <a class="link" href="{% url 'fundiaria:galeria-imagem' %}?id_fundiaria={{fundiaria.id}}">Ver todas as imagens</a>
+        {% else %}
+            <a href="{% url 'fundiaria:imagem-formulario' %}?id_fundiaria={{ fundiaria.id }}">
+                <button class="botao botao--azul">Adicionar</button>
+            </a>
+        {% endif %}
+    </div>
+
+</div>

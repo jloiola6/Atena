@@ -1,0 +1,118 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Alunos {% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class="texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'administracao:index'%}" class="texto-azul">Administração</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="texto-azul">Alunos</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Alunos</h1>
+
+            <div class="container-surface container-servidores-busca">
+                <h2 class="texto-medio texto-azul">Buscar servidor</h2>
+
+                <form class="formulario" method="GET">
+                    <div class="formulario-grupo">
+                        <label for="campo-nome">Nome</label>
+                        <input id="campo-nome" type="text" name="nome" class="campo-texto campo-grande" placeholder="Ex: Franklin Farias">
+                    </div>
+
+                    <div class="container-botoes">
+                        <button type="submit" class="botao botao--azul">Buscar</button>
+                    </div>
+                </form>
+            </div>
+
+            <table class="tabela">
+                <thead>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>Data de Nascimento</th>
+                </thead>
+
+                <tbody data-tabela-link="/administracao/aluno-perfil/">
+                    {% for aluno in alunos %}
+                        <tr data-tabela-link-chave="{{ aluno.id }}">
+                            <td>{{ aluno.nome }}</td>
+                            <td>{{ aluno.cpf }}</td>
+                            <td>{{ aluno.nascimento }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td class="coluna-paginacao" colspan="3">
+                            <div class="container-paginacao">
+                                <div>
+                                    <span class="texto-negrito texto-azul">TOTAL:</span>
+                                    <span>{{ quantidade_alunos }}</span>
+                                </div>
+
+                                <div>
+                                    {% if alunos.has_previous %}
+                                        <a class="" href="{% url 'administracao:alunos' %}?{{ gets_primeira }}">
+                                            <button class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'administracao:alunos' %}?{{ gets_anterior }}">
+                                            <button class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% endif %}
+
+                                    <span class="">
+                                        {{ alunos.number }} de {{ alunos.paginator.num_pages }}
+                                    </span>
+
+                                    {% if alunos.has_next %}
+                                        <a class="" href="{% url 'administracao:alunos' %}?{{ gets_proxima }}">
+                                            <button class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'administracao:alunos' %}?{{ gets_ultima }}">
+                                            <button class="botao-paginacao">last_page</button>
+                                        </a>
+
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">last_page</button>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/linkTabela.js' %}"></script>
+{% endblock %}

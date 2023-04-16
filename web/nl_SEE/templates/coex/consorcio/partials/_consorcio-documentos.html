@@ -1,0 +1,52 @@
+{% load static %}
+
+<div class="comite-documentos oculto" data-nav-container="documentos">
+    {% if documentos %}
+        <div class="container-cards-simples">
+            {% for documento in documentos %}
+                <div class="card-simples card-documento">
+                    <h4 class="card-simples__titulo texto-azul">{{ documento.categoria }}</h4>
+
+                    <div class="card-simples__descricao" >
+                        <p title="{{documento.descricao}}" class=" texto-azul texto-negritos">Descrição: <span class="texto-preto texto-normal">{{ documento.descricao }}</span></p>
+                        <p title="{{documento.descricao}}" class=" texto-azul texto-negritos">Formato: <span class="texto-preto texto-normal">{{ documento.formato }}</span></p>
+                    </div>
+
+                    <div class="container-botoes">
+                        <a class="link" href="{% url 'core:index' %}{{documento.caminho}}" target="_blank">Abrir</a>
+                        <button class="botao botao--vermelho" data-modal-abrir="confirmar-{{ documento.id }}">Remover</button>
+                    </div>
+
+                    <div class="modal oculto" data-modal="confirmar-{{ documento.id }}">
+                        <div class="modal-conteudo modal-confirmacao">
+                            <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                            <p class="texto-preto descricao">Tem certeza que deseja excluir o documento?</p>
+
+                            <div class="container-botoes">
+                                <form method= 'POST'>
+                                    {% csrf_token %}
+                                    <button class="botao botao--verde" type='submit' name='btn-excluir' value='excluir-{{documento.id}}'>Remover</button>
+                                </form>
+                                <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+        <h2 class="texto-medio texto-preto">Sem documentos cadastrados</h2>
+    {% endif %}
+
+    <div class="container-botoes">
+
+        {% if qtd_documentos > 3 %}
+            <a class="link" href="{% url 'coex:gerenciador-documentos-consorcio' %}?id={{id_consorcio}}">Ver todos os documentos</a>
+        {% else %}
+            <a href="{% url 'coex:documento-consorcio' %}?id={{ id_consorcio }}">
+                <button class="botao botao--azul">Adicionar</button>
+            </a>
+        {% endif %}
+    </div>
+</div>

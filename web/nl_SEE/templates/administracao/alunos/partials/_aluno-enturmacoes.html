@@ -1,0 +1,18 @@
+<div data-nav-container="enturmacoes">
+    {% if enturmacoes %}
+        <div class="container-cards-simples">
+            {% for enturmacao in enturmacoes %}
+                <div class="card-simples">
+                    <h3 class="card-simples__titulo">{{ enturmacao.turma }} - {{ enturmacao.status }}</h3>
+                    <div class="texto-preto descricao">{{ enturmacao.turma.endereco.escola }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="texto-preto">O aluno não possui enturmações cadastradas.</p>
+    {% endif %}
+
+    <div class="container-botoes">
+        <button class="botao botao--azul">Adicionar</button>
+    </div>
+</div>

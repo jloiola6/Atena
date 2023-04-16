@@ -1,0 +1,29 @@
+/* Definição do padrão de cores para o modo escuro */
+
+body.modo-escuro .modal{
+	background-color: rgba(0,0,0,0.8);
+}
+
+body.modo-escuro .campo-arquivo{
+	color: #FFFFFF;
+}
+
+/* REFATORAÇÃO, APAGAR ACIMA QUANDO CONCLUIDA */
+body, body *{
+	transition: .5s;
+}
+
+body.modo-escuro{
+	--borda-padrao: none;
+
+	--cor-azul: #207efa;
+
+	--texto-azul: #FFFFFF;
+	--texto-cinza: #FFFFFF;
+	--texto-preto: #FFFFFF;
+
+	--cor-fundo: #121212;
+
+	--cor-surface: #1E1E1E;
+	--cor-surface-hover: #4E4E4E;
+}

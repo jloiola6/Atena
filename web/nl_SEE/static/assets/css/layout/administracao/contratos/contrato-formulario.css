@@ -1,0 +1,34 @@
+/* Estilização da página de formulário de um contrato */
+
+.container-formulario-contrato{
+    margin-top: 1rem;
+}
+
+.formulario-contrato, .formulario-contrato .container-botoes{
+    margin-top: 1rem;
+}
+
+.contrato-empresa-edicao{
+    display: flex;
+    gap: .5rem;
+}
+
+.contrato-item-grupo-campos{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.contrato-item-grupo-campos .formulario-grupo{
+    align-items: center;
+    justify-content: center;
+}
+
+.contrato-item-grupo-campos input.campo-texto{
+    width: 100%;
+}
+
+.item-descricao{
+    height: 5rem;
+    width: 100%;
+}

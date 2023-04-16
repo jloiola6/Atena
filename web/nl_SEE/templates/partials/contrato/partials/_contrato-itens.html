@@ -1,0 +1,147 @@
+{% comment %}
+    Esta partial contém um container com a tabela de itens de um contrato
+    Feita para evitar a repetição código em perfis de contrato nos módulos de ADMINISTRAÇÃO, TECNOLOGIA e TERCEIRIZAÇÃO
+{% endcomment %}
+
+<div class="contrato-itens" data-nav-container="itens">
+    {% if 'Postos de trabalho' in contrato.tipo_contrato or 'Serviços' in contrato.tipo_contrato %}
+        <table class="tabela tabela-contrato-itens">
+            <thead>
+                <th>Vagas</th>
+                <th>Item</th>
+                <th>Lote</th>
+                <th>Descrição</th>
+
+                {% if contrato.tipo_contrato == 'Postos de trabalho - Limpeza' %}
+                    <th class="coluna-centralizada">Total m²</th>
+                {% else %}
+                    <th class="coluna-centralizada">Quantidade</th>
+                {% endif %}
+
+                <th class="coluna-centralizada">Valor Unitário</th>
+                <th class="coluna-direita">Valor global</th>
+            </thead>
+
+            {% if aplicacao == 'Administração' %}
+                <tbody data-tabela-link="{% url 'administracao:item-perfil' %}?id_item=">
+            {% elif aplicacao == 'Tecnologia' %}
+                <tbody data-tabela-link="{% url 'tecnologia:item-perfil' %}?id_item=">
+            {% elif aplicacao == 'Terceirização' %}
+                <tbody data-tabela-link="{% url 'terceirizacao:item-perfil' %}?id_item=">
+            {% endif %}
+
+                {% for item in itens %}
+                    <tr data-tabela-link-chave="{{ item.id }}">
+                        {% if item.vagas == 0 %}
+                            <td title="Não possui vagas"><div class="item-sem-vagas" ></div></td>
+                        {% else %}
+                            <td title="Possui vagas"><div class="item-com-vagas" ></div></td>
+                        {% endif %}
+                    
+                        <td>{{ item.numero_item }}</td>
+                        <td>{{ item.numero_lote }}</td>
+                        <td>{{ item.descricao }}</td>
+                        
+                        {% if contrato.tipo_contrato == 'Postos de trabalho - Limpeza' %}
+                            <td class="coluna-centralizada">{{ item.metragem_mensal }}</td>
+                        {% else %}
+                            <td class="coluna-centralizada">{{ item.quantidade }}</td>
+                        {% endif %}
+                        
+                        <td class="coluna-centralizada">{{ item.valor_unitario }}</td>
+                        <td class="coluna-direita">{{ item.valor_total }}</td>
+                    </tr>
+                {% endfor %}   
+            </tbody>
+        </table>
+    {% else %}
+        <table class="tabela tabela-contrato-itens">
+            <thead>
+                <tr>
+                    <th class="">Item</th>
+                    <th class="">Lote</th>
+                    <th class="">Descrição</th>
+                    <th class="coluna-centralizada">Quantidade</th>
+                    <th class="coluna-centralizada">Valor unitário</th>
+                    <th class="coluna-direita">Valor global</th>
+                </tr>
+            </thead>
+
+            {% if aplicacao == 'Administração' %}
+                <tbody data-tabela-link="{% url 'administracao:item-perfil' %}?id_item=">
+            {% elif aplicacao == 'Tecnologia' %}
+                <tbody data-tabela-link="{% url 'tecnologia:item-perfil' %}?id_item=">
+            {% elif aplicacao == 'Terceirização' %}
+                <tbody data-tabela-link="{% url 'terceirizacao:item-perfil' %}?id_item="">
+            {% endif %}
+
+                {% for item in itens %}
+                    <tr data-tabela-link-chave="{{ item.id }}">
+                        <td>{{ item.numero_item }}</td>
+                        <td>{{ item.numero_lote }}</td>
+                        <td>{{ item.descricao }}</td>
+                        <td class="coluna-centralizada">{{ item.quantidade }}</td>
+                        <td class="coluna-centralizada">{{ item.valor_unitario }}</td>
+                        <td class="coluna-direita">{{ item.valor_total }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    <table class="tabela tabela-contrato-itens-tablet">
+        <thead>
+            <tr>
+                <th class="">Descrição</th>
+                <th class="coluna-centralizada">QTD</th>
+                <th class="coluna-centralizada">Valor unitário</th>
+                <th class="coluna-direita">Valor global</th>
+            </tr>
+        </thead>
+
+        {% if aplicacao == 'Administração' %}
+            <tbody data-tabela-link="{% url 'administracao:item-perfil' %}?id_item=">
+        {% elif aplicacao == 'Tecnologia' %}
+            <tbody data-tabela-link="{% url 'tecnologia:item-perfil' %}?id_item=">
+        {% elif aplicacao == 'Terceirização' %}
+            <tbody data-tabela-link="{% url 'terceirizacao:item-perfil' %}?id_item="">
+        {% endif %}
+
+            {% for item in itens %}
+                <tr data-tabela-link-chave="{{ item.id }}">
+                    <td>{{ item.descricao }}</td>
+                    <td class="coluna-centralizada">{{ item.quantidade }}</td>
+                    <td class="coluna-centralizada">{{ item.valor_unitario }}</td>
+                    <td class="coluna-direita">{{ item.valor_total }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <table class="tabela tabela-contrato-itens-smartphone">
+        <thead>
+            <tr>
+                <th class="">Descrição</th>
+                <th class="coluna-centralizada">QTD</th>
+                <th class="coluna-centralizada">Valor unitário</th>
+            </tr>
+        </thead>
+
+        {% if aplicacao == 'Administração' %}
+            <tbody data-tabela-link="{% url 'administracao:item-perfil' %}?id_item=">
+        {% elif aplicacao == 'Tecnologia' %}
+            <tbody data-tabela-link="{% url 'tecnologia:item-perfil' %}?id_item=">
+        {% elif aplicacao == 'Terceirização' %}
+            <tbody data-tabela-link="{% url 'terceirizacao:item-perfil' %}?id_item="">
+        {% endif %}
+
+            {% for item in itens %}
+                <tr data-tabela-link-chave="{{ item.id }}">
+                    <td>{{ item.descricao }}</td>
+                    <td class="coluna-centralizada">{{ item.quantidade }}</td>
+                    <td class="coluna-centralizada">{{ item.valor_unitario }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,60 @@
+<form class="container-surface" method="POST">
+    {% csrf_token %}
+
+    <nav class="container-navegacao-surface">
+        <ul class="navegacao-surface-lista">
+            <li class="navegacao-surface-item navegacao-surface-item-ativo">
+                <span class="texto-azul">Computador</span>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="formulario-grupo">
+        <label for="campo-patrimonio">Patrimônio</label>
+        <input class="campo-texto campo-medio" type="text" id="campo-patrimonio" name="patrimonio" maxlength="30" required>
+    </div>
+
+    <div class="formulario-grupo">
+        <label for="campo-processador">Processador</label>
+        <input class="campo-texto campo-medio" type="text" id="campo-processador" name="processador" maxlength="100" required>
+    </div>
+
+    <div class="formulario-grupo">
+        <label for="campo-ram">RAM (GB)</label>
+        <input class="campo-texto campo-medio" type="number" id="campo-ram" name="ram" min="1" required>
+    </div>
+
+    <div class="formulario-grupo">
+        <label for="campo-disco">Memória em disco (GB)</label>
+        <input class="campo-texto campo-medio" type="number" id="campo-disco" name="disco" min="1" required>
+    </div>
+
+    <div class="formulario-grupo">
+        <label for="campo-ssd">Memória em SSD (GB)</label>
+        <input class="campo-texto campo-medio" type="number" id="campo-ssd" name="ssd" min="1" required>
+    </div>
+
+    <div class="formulario-grupo">
+        <label for="campo-video">Placa de vídeo (Opicional)</label>
+        <input class="campo-texto campo-medio" type="text" id="campo-video" name="video" maxlength="100">
+    </div>
+
+    <div class="formulario-grupo">
+        <label for="campos-tipo-computador">Tipo</label>
+
+        <fieldset id="campos-tipo-computador">
+            <input type="radio" id="computador-gabinete" name="tipo-computador" value="Gabinete" checked>
+            <label for="computador-gabinete" class="texto-preto">Gabinete</label>
+
+            <input type="radio" id="camputador-notebook" name="tipo-computador" value="Notebook">
+            <label for="camputador-notebook" class="texto-preto">Notebook</label>
+        </fieldset>
+    </div>
+
+    <div class="formulario-grupo">
+        <label for="campo-cor">Cor</label>
+        <input class="campo-texto campo-medio" type="text" id="campo-cor" name="cor" maxlength="100" required>
+    </div>
+
+    {% include 'administracao/unidades/inventario/item-formulario/partials/_modal-confirmacao.html' %}
+</form>

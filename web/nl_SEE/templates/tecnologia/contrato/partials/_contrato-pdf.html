@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-bt">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Exportar Contratos</title>
+    </head>
+    <body>
+        <header>
+            <table>
+                <tr>
+                    <th><img id="img2" src="{{ url_logo }}" alt=""></th>
+                    <th class="direita"><img id="img3" src="{{ url_atena }}" alt="Logo"></th>
+                    <!-- <th><img id="img2" src="C:\Users\joao.soares\Documents\code\Atena\nl_SEE\static\assets\img\contrato_adm.png" alt=""></th>
+                    <th><img id="img3" src="C:\Users\joao.soares\Documents\code\Atena\nl_SEE\static\assets\img\ATENA-AZUL.svg" alt="Logo" style="width:120px;height:auto;"></th> -->
+                </tr>
+            </table>
+        </header>
+
+        <hr>
+
+        <table class="tabela tabela-contratos">
+            <thead>
+                <tr>
+                    <th>N° Contrato</th>
+                    <th>Empresa</th>
+                    <th>Data vigente</th>
+                    <th>Valor total</th>
+                    <th>Situacao</th>
+                </tr>
+            </thead>
+
+            <tbody data-tabela-link="{% url 'tecnologia:contrato-perfil' %}?id_contrato=" >
+                {% for contrato in exportar %}
+                    <tr data-tabela-link-chave="{{ contrato.id }}">
+                        <td>{{ contrato.numero_contrato }}</td>
+                        <td>{{ contrato.empresa.nome }}</td>
+                        <td>{{ contrato.data_inicio }}</td>
+                        <td>{{ contrato.valor_total }}</td>
+                        <td>{{ contrato.situacao }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+
+    <style>
+        @page{
+            size: landscape;
+            margin: 0.7cm;
+        }
+
+        .tabela-contratos{
+            border: 1px solid black;
+            text-align: center;
+            padding: 6px;
+        }
+
+        .tabela-contratos th{
+            font-size: 10px;
+        }
+
+        .tabela-contratos td{
+            font-size: 10px;
+        }
+
+        h1{
+            margin: 0;
+        }
+
+        #img2{
+            width: 100%;
+            height: auto;
+        }
+
+        #img3{
+            width: 120px;
+            height: auto;
+        }
+
+        .direita{
+            text-align: right;
+        }
+
+    </style>
+</html>

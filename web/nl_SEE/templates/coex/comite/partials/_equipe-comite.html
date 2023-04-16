@@ -1,0 +1,57 @@
+<div data-nav-container="equipe">
+    {% if consorcio or equipe %}
+        <h3 class="texto-medio texto-azul">Dados cadastrados</h3>
+
+        <div class="container-detalhes">
+            {% if equipe_presidente %}
+                <p class=" texto-azul texto-negrito">
+                    Presidente:
+                    <a class="link" href="{% url 'coex:servidor-perfil' %}?id={{ endereco.id }}&id_servidor={{ equipe_presidente.servidor__id }}"><span class="texto-preto texto-normal">{{ equipe_presidente.servidor__nome }}</span></a>
+                </p>
+            {% endif %}
+
+            {% if equipe_tesoureiro %}
+                <p class=" texto-azul texto-negrito">
+                    Tesoureiro:
+                    <a class="link" href="{% url 'coex:servidor-perfil' %}?id={{ endereco.id }}&id_servidor={{ equipe_tesoureiro.servidor__id }}"><span class="texto-preto texto-normal">{{ equipe_tesoureiro.servidor__nome }}</span></a>
+                </p>
+            {% endif %}
+
+            {% if equipe_secretario1.nome %}
+                <p class=" texto-azul texto-negrito">Secretário 1: <span class="texto-preto texto-normal">{{ equipe_secretario1.nome }}</span></p>
+            {% endif %}
+
+            {% if equipe_secretario2.nome %}
+                <p class=" texto-azul texto-negrito">Secretário 2: <span class="texto-preto texto-normal">{{ equipe_secretario2.nome }}</span></p>
+            {% endif %}
+
+            {% if equipe_secretario3.nome %}
+                <p class=" texto-azul texto-negrito">Secretário 3: <span class="texto-preto texto-normal">{{ equipe_secretario3.nome }}</span></p>
+            {% endif %}
+
+            {% if equipe_secretario4.nome %}
+                <p class=" texto-azul texto-negrito">Secretário 4: <span class="texto-preto texto-normal">{{ equipe_secretario4.nome }}</span></p>
+            {% endif %}
+        </div>
+
+        {% if coex.status != 0 %}
+            {% if not consorcio %}
+                <div class="container-botoes">
+                    <a href="{% url 'coex:equipe-formulario' %}?id={{ escola.id }}">
+                        <button class="botao botao--azul">Editar</button>
+                    </a>
+                    <a class="link" href="{% url 'coex:inativar-comite' %}?id={{ endereco.escola.id }}"><button class="botao botao--azul">Inativar</button></a>
+                </div>
+            {% endif %}
+        {% endif %}
+    {% else %}
+        {% if not consorcio %}
+            <div class="container-menu-tabela">
+                <a href="{% url 'coex:equipe-formulario' %}?id={{ escola.id }}">
+                    <button class="botao botao--azul">Adicionar</button>
+                </a>
+            </div>
+        {% endif %}
+    {% endif %}
+
+</div>

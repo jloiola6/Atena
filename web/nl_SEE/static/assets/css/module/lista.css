@@ -1,0 +1,17 @@
+/* Estilização de um modelo padrão de listas não ordenadas */
+
+.lista-titulo{
+    margin-top: 16px;
+}
+
+.lista{
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    list-style-type: disc;
+    margin-left: 24px;
+}
+
+/* .lista > li:first-of-type{
+    margin-top: 0;
+} */

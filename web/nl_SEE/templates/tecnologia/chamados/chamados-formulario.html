@@ -1,0 +1,261 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+Cadastro de Chamado
+{% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:index' %}">Tecnologia</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:chamados' %}">Chamados</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class=" texto-azul" href="{% url 'tecnologia:chamados-help' %}">Help Desk</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Cadastro de chamado</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Cadastro de chamado</h1>
+
+            <form class="container-surface container-formulario-chamado" method="POST">
+                {% csrf_token %}
+
+                <nav class="container-navegacao-surface">
+                    <ul class="navegacao-surface-lista">
+                        <li class="navegacao-surface-item navegacao-surface-item-ativo" data-form-aba="solicitacao">
+                            <span class="texto-azul">Solicitação</span>
+                        </li>
+
+                        {% if tipo_solicitacao == "chamado" %}
+                            <li class="navegacao-surface-item" data-form-aba="chamado">
+                                <span class="texto-azul">Chamado</span>
+                            </li>
+                        {% elif tipo_solicitacao == "solicitacao_equipamento" %}
+                            <li class="navegacao-surface-item" data-form-aba="equipamento">
+                                <span class="texto-azul">Equipamento</span>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+
+                <div data-form-container="solicitacao">
+                    <div class="formulario-grupo">
+                        <label class="label-campo texto-azul" for="campo-tipo-unidade">Tipo de unidade</label>
+
+                        {% if 'Administrativa' in tipo_unidade %}
+                            <input class="campo-texto campo-medio" id="campo-tipo-unidade" value="Unidade Administrativa" type="text" readonly>
+                        {% else %}
+                            <input class="campo-texto campo-medio" id="campo-tipo-unidade" value="Unidade Escolar" type="text" readonly>
+                        {% endif %}
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label for="campo-unidade" class="label-campo texto-azul">Unidade</label>
+
+                        {% if 'Administrativa' in tipo_unidade %}
+                            <input class="campo-texto campo-grande" id="campo-unidade" value="{{ unidade.sigla }} - {{ unidade }}" type="text" readonly>
+                        {% else %}
+                            {% if unidade.tipo == 'S' %}
+                                <input class="campo-texto campo-grande" id="campo-unidade" value="{{ unidade }} - {{ unidade.municipio }}" type="text" readonly>
+                            {% else %}
+                                <input class="campo-texto campo-grande" id="campo-unidade" value="{{ unidade }} (Anexo {{ unidade.numero_anexo }}) - {{ unidade.municipio }}" type="text" readonly>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label for="campo-tipo-chamado" class="label-campo texto-azul">Tipo de Chamado</label>
+                        <input id="campo-tipo-chamado" class="campo-texto campo-pequeno" value="{{ tipo_chamado }}" type="text" readonly>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-prioridade">Prioridade</label>
+
+                        <select name="prioridade" id="campo-prioridade" class="campo-texto campo-pequeno" required>
+                            <option value="Baixa">Baixa</option>
+                            <option value="Média">Média</option>
+                            <option value="Alta">Alta</option>
+                        </select>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-nome-solicitante">Nome do Solicitante</label>
+                        <select data-selecao2 name="nome_solicitante" id="campo-nome-solicitante" class="campo-texto campo-pequeno" required>
+                            {% for servidor in servidores_lotados %}
+                                <option value="{{ servidor.0 }}">{{ servidor.1 }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-nome-contato">Contato</label>
+                        <input class="campo-texto campo-medio" type="text" name="contato" id="campo-nome-contato" data-mascara="telefone" placeholder="Ex: (00) 0000-0000">
+                    </div>
+
+                    <div class="container-botoes">
+                        {% if tipo_solicitacao == "chamado" %}
+                            <button class="botao botao--azul" data-form-botao="chamado">Avançar</button>
+                        {% elif tipo_solicitacao == "solicitacao_equipamento" %}
+                            <button class="botao botao--azul" data-form-botao="equipamento">Avançar</button>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if tipo_solicitacao == "chamado" %}
+                    <div class="oculto" data-form-container="chamado">
+
+                        <div data-container-chamado>
+                            <div class="formulario-grupo">
+                                <label class="texto-azul label-campo" for="campo-tipo-serviço1">Tipo de serviço</label>
+                                <select name="tipo-servico-1" id="campo-tipo-servico1" class="campo-texto campo-medio" data-selecao-tipo-servico>
+                                    {% for tipo in tipos_servico %}
+                                        <option value="{{ tipo.tipo }}">{{ tipo.tipo }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label for="" class="texto-azul label-campo">Serviço</label>
+
+                                {% for tipo in tipos_servico %}
+                                    <select name="servico-{{ tipo.tipo }}-1" id="campo-servico-{{ tipo.tipo }}" class="campo-texto campo-grande" data-selecao-servico="{{ tipo.tipo }}">
+                                        {% for servico in servicos %}
+                                            {% if servico.tipo == tipo.tipo %}
+                                                <option value="{{ servico.acao }}">{{ servico.acao }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                {% endfor  %}
+
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label for="campo-texto-descricao1" class="texto-azul label-campo">Descrição</label>
+                                <textarea name="descricao_chamado1" id="campo-texto-descricao1" class="campo-texto campo-area" maxlength="1000"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="container-botoes">
+                            <button class="botao botao--azul" data-adicionar-chamado>Adicionar Chamado</button>
+                        </div>
+
+                        <div class="formulario-grupo">
+                            <label class="texto-azul label-campo" for="campo-tecnico">Atribuir Técnico</label>
+
+                            <select data-selecao2 name="tecnico" id="campo-tecnico" class="campo-texto campo-grande">
+                                <option></option>
+                                {% for tecnico in tecnicos %}
+                                    <option value="{{ tecnico.0 }}">{{ tecnico.1 }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="container-botoes">
+                            <button class="botao botao--azul" data-form-botao="solicitacao">Voltar</button>
+                            <button class="botao botao--azul" data-modal-abrir="confirmar">Salvar</button>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="oculto" data-form-container="equipamento">
+                        <div class="formulario-grupo">
+                            <label class="texto-azul label-campo" for="campo-numero-documento">Nº Documento (SEI)</label>
+                            <input class="campo-texto campo-grande" type="text" value="" name="numero_documento" id="campo-numero-documento" data-mascara="sei" required>
+                        </div>
+
+                        <div class="formulario-grupo">
+                            <label class="texto-azul label-campo" for="campo-equipamento">Equipamento</label>
+                            <input class="campo-texto campo-pequeno" type="text" value="" name="equipamento" id="campo-equipamento" required>
+                        </div>
+
+                        <div class="formulario-grupo">
+                            <label class="texto-azul label-campo" for="campo-quantidade-equipamento">Quantidade</label>
+                            <input class="campo-texto campo-pequeno" type="text" name="quantidade_equipamento" id="campo-quantidade-equipamento" data-mascara="numero" required>
+                        </div>
+
+                        <div class="formulario-grupo">
+                            <label for="campo-texto-descricao-solicitacao" class="texto-azul label-campo">Descrição</label>
+                            <textarea name="descricao_solicitacao" id="campo-texto-descricao-solicitacao" class="campo-texto campo-area" maxlength="800"></textarea>
+                        </div>
+
+                        {% comment %}
+                            <div class="container-botoes">
+                                <button class="botao botao--azul" data-adicionar-solicitacao>Adicionar</button>
+                            </div>
+                        {% endcomment %}
+
+                        <div class="formulario-grupo">
+                            <label class="texto-azul label-campo" for="campo-tecnico">Atribuir Técnico</label>
+
+                            <select data-selecao2 name="tecnico" id="campo-tecnico" class="campo-texto campo-grande">
+                                <option></option>
+                                {% for tecnico in tecnicos %}
+                                    <option value="{{ tecnico.0 }}">{{ tecnico.1 }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="container-botoes">
+                            <button class="botao botao--azul" data-form-botao="solicitacao">Voltar</button>
+                            <button class="botao botao--azul" data-modal-abrir="confirmar">Salvar</button>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="modal oculto" data-modal="confirmar">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                        <p class="texto-preto descricao">Tem certeza que deseja cadastrar o chamado?</p>
+
+                        <div class="container-botoes">
+                            <button class="botao--verde botao" id="botao-salvar" type="submit">Salvar</button>
+                            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    {% if quantidade_servidores == 0 %}
+        <div class="modal" data-modal="aviso" data-modal-bloqueado>
+            <div class="modal-conteudo">
+                <h3 class="texto-azul texto-medio">Atenção</h3>
+                <p class="texto-preto descricao paragrafo">A unidade selecionada não possui nenhum servidor lotado, não é possível fazer o cadastro do chamado.</p>
+
+                <div class="container-botoes">
+                    <a href="{% url 'tecnologia:chamados-help' %}" class="link">Voltar para a página do Help Desk</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
+    <script src="{% static 'assets/js/module/select2.js' %}"></script>
+    <script src="{% static 'assets/js/module/controlaNavegacaoFormulario.js' %}"></script>
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+
+
+    {% if tipo_solicitacao == "chamado" %}
+        <script src="{% static 'assets/js/layout/tecnologia/chamado-formulario/controlaChamados.js' %}"></script>
+    {% endif %}
+{% endblock %}

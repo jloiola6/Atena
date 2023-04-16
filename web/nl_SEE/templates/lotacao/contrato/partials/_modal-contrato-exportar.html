@@ -1,0 +1,45 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="exportar">
+    <form id="modal-conteudo" class="modal-conteudo" method="POST" data-formulario-exportacao>
+        {% csrf_token %}
+        <h2 class="texto-grande texto-negrito texto-azul">Exportar</h2>
+
+        <div class="formulario-grupo">
+            <h3 class="texto-medio texto-azul">Formato</h3>
+
+            <fieldset id="exportar-fieldset-formatos">
+                <input type="radio" name="exportar-contrato" value="contrato" id="radio-contrato" checked data-radio-termo>
+                <label class="texto-preto" for="radio-contrato">Termo de Contrato</label>
+
+                <!-- {% if not contrato.data_cancelamento %}
+                    <input type="radio" name="exportar-contrato" value="cancelamento" id="radio-cancelamento" data-radio-cancelamento>
+                    <label class="texto-preto" for="radio-cancelamento">Termo de Cancelamento de Contrato</label>
+                {% else %}
+                    <div class="oculto">
+                        <input type="radio" name="exportar-contrato" value="cancelamento" id="radio-cancelamento" data-radio-cancelamento>
+                        <label class="texto-preto" for="radio-cancelamento">Termo de Cancelamento de Contrato</label>
+                    </div>
+                {% endif %}
+            </fieldset> -->
+        </div>
+        
+        <!-- <div class="formulario-grupo" data-grupo-cancelamento>
+            <div class="formulario-grupo">
+                <label class="texto-azul label-campo" for="campo-cancelamento">Data de Cancelamento</label>
+                <input class="campo-texto campo-medio" type="date" value="" name="data_cancelamento" id="campo-cancelamento" >
+            </div>
+
+            <div class="formulario-grupo">
+                <label>Motivo do Cancelamento</label>
+                <textarea name="motivo_cancelamento" id="" class="campo-texto campo-area" maxlength="300"></textarea>
+            </div>
+        </div> -->
+
+        <div class="container-botoes">
+            <button name="btn-exportar-contrato" type="submit" class="botao botao--verde">Exportar</button>
+        </div>
+    </form>
+</div>
+
+<script src="{% static 'assets/js/layout/lotacao/contrato-perfil/modalExportarContrato.js' %}"></script>

@@ -1,0 +1,47 @@
+<div class="oculto" data-nav-container="infraestrutura">
+    {% if infraestrutura %}
+        {% if dependencias %}
+            {% for categoria in categorias_dependencias %}
+                <details class="dropdown">
+                    <summary>{{ categoria.tipo_dependencia__categoria }}</summary>
+
+                    {% for tipo in tipos_dependencias %}
+                        {% if tipo.tipo_dependencia__categoria == categoria.tipo_dependencia__categoria %}
+                            <details class="dropdown">
+                                <summary>{{ tipo.tipo_dependencia__tipo }}</summary>
+
+                                <div class="container-cards-simples">
+                                    {% for dependencia in dependencias %}
+                                        {% if dependencia.tipo_dependencia.id == tipo.tipo_dependencia %}
+                                            <div class="card-simples card--dependencia">
+                                                <h4 class="card-simples__titulo">{{ dependencia.descricao }}</h4>
+
+                                                <div class="card-simples__descricao">
+                                                    <p class="texto-preto"><b class="texto-azul">Capacidade: </b>{{ dependencia.capacidade_pessoas }} pessoas</p>
+                                                    <p class="texto-cinza">{{ dependencia.status }}</p>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </details>
+                        {% endif %}
+                    {% endfor %}
+                </details>
+            {% endfor %}
+        {% else %}
+            <span class="texto-preto">Esta unidade ainda não possui dependências físicas cadastradas.</span>
+        {% endif %}
+
+    {% else %}
+        <span class="texto-preto">Esta unidade ainda não possui dados de infraestrutura.</span>
+    {% endif %}
+
+    <div class="container-botoes">
+        <a href="{% url 'administracao:dependencia-formulario' endereco.id %}">
+            <button class="botao botao--azul">Adicionar</button>
+        </a>
+
+        <a href="{% url 'administracao:infraestrutura-perfil' endereco.id %}" class="link">Infraestrutura Completa</a>
+    </div>
+</div>

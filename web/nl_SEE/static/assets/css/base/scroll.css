@@ -1,0 +1,20 @@
+/* Estilização da barra de rolagem */
+
+/* Estilização da scrollbar */
+body::-webkit-scrollbar{
+    width: 12px;
+}
+
+/* Estilização da progress bar */
+body::-webkit-scrollbar-track{
+    background-color: #e7e7e7;
+}
+
+/* Estilização do botão */
+body::-webkit-scrollbar-thumb {
+    background-color: #a7a7a7;
+}
+
+    body::-webkit-scrollbar-thumb:hover {
+        background-color: #8b8b8b;
+    }

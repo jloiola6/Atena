@@ -1,0 +1,7 @@
+@media screen and (max-width: 768px){
+    .container-contrato-lotacao-servidor{
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+    }
+}

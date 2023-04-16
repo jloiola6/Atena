@@ -1,0 +1,67 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} VDP {% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/lotacao/vdp/anos-vdp.css' %}">
+{% endblock %}
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+
+<main>
+    <div class="container">
+        <nav class="container-navegacao">
+            <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'lotacao:index' %}" class=" texto-azul">Gestão de Pessoas</a>
+            <span class="texto-azul">&#62;</span>
+
+            <span class="  texto-azul">Registro de VDP</span>
+        </nav>
+
+        <h1 class="titulo-pagina texto-azul">Registro de VDP</h1>
+
+        {% comment %}
+        <div class="container-cards-simples card-anos">
+            {% for vdp in vdps %}
+                <a href="{% url 'lotacao:vdp-tabela' %}?ano={{ vdp.0 }}">
+                    <div class="card-menu" >
+                        <span class="card-titulo card-ano">{{ vdp.0 }}</span>
+                        <div class="card-dados">
+                            <span class="card-titulo">Quantidade: {{ vdp.1}}</span>
+                            <span class="card-titulo">Total Bruto: R$ {{ vdp.2 }}</span>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+        {% endcomment %}
+
+        <div class="container-cards-simples">
+            {% for vdp in vdps %}
+                <a href="{% url 'lotacao:vdp-tabela' %}?ano={{ vdp.0 }}">
+                    <div class="card-simples card-ano">
+                        <h2 class="texto-azul card-simples__titulo">{{ vdp.0 }}</h2>
+
+                        <div class="card-simples__descricao">
+                            <p class="texto-negrito texto-azul">Quantidade: <span class="texto-normal texto-preto">{{ vdp.1 }}</span></p>
+                            <p class="texto-negrito texto-azul">Total Bruto: <span class="texto-normal texto-preto"> R$ {{ vdp.2 }}</span></p>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+
+{% include 'partials/_rodape.html' %}
+
+{% endblock %}

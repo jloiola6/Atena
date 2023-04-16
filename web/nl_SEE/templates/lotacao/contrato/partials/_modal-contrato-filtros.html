@@ -1,0 +1,70 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="filtros">
+    <form id="modal-conteudo" class="modal-conteudo" method="GET">
+        <div class="modal-filtros-titulo">
+            <h2 class="texto-grande texto-negrito texto-azul">Filtros</h2>
+            <a href="{% url 'lotacao:contratos-filtros' %}" class="link">Filtros avançados</a>
+        </div>
+
+        <p class="descricao  texto-preto">Insira os filtros que deseja aplicar</p>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-servidor-cargo">Cargo</label>
+            <select data-selecao2  name="cargo" id="campo-cargo" class="campo-texto campo-grande">
+                <option></option>
+                {% for cargo in  cargos %}
+                    <option value="{{ cargo.cargo__nome }}">{{cargo.cargo__nome}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-carga-horaria">Carga Horária</label>
+            <select name="carga_horaria" id="campo-carga-horaria" class="campo-texto campo-pequeno">
+                <option></option>
+                {% for carga_horaria in carga_horarias %}
+                    <option value="{{ carga_horaria.cargo__carga_horaria }}">{{carga_horaria.cargo__carga_horaria}}H</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-tipo-contrato">Tipo de Contrato</label>
+            <select name="tipo_contrato" id="campo-tipo-contrato" class="campo-texto campo-pequeno">
+                <option></option>
+                {% for tipo_contrato in tipo_contratos %}
+                    <option value="{{ tipo_contrato.tipo_contrato }}">{{ tipo_contrato.tipo_contrato }}</option>
+                {% endfor %}
+                <option value="PARECER">PARECER</option>
+            </select>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-situacao">Situação</label>
+            <select name="situacao" id="campo-situacao" class="campo-texto campo-pequeno">
+                <option></option>
+                {% for situacao in situacoes %}
+                    <option value="{{ situacao.situacao }}">{{ situacao.situacao }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo">Municipio</label>
+            <select data-selecao2 name="municipio" class="campo-texto campo-medio">
+                <option></option>
+                {% for municipio in municipios %}
+                    <option value="{{ municipio.municipio }}">{{ municipio.municipio }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="container-botoes">
+            <button type="" class="botao botao--verde">Filtrar</button>
+        </div>
+
+    </form>
+</div>
+
+<script src="{% static 'assets/js/module/select2.js' %}"></script>

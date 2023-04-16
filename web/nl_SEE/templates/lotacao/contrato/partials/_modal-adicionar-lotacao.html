@@ -1,0 +1,98 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="adicionar-lotacao">
+    <form id="modal-conteudo" class="modal-conteudo" method="POST">
+        {% csrf_token %}
+        <h2 class="texto-azul texto-medio">Adicionar Lotação</h2>
+
+        <div class="formulario-grupo">
+            <label for="campo-tipo-lotacao" class="label-campo texto-azul">Tipo de Lotação</label>
+            <select class="campo-texto campo-medio" name="tipo-lotacao" id="campo-tipo-lotacao" data-selecao-tipo-lotacao>
+                <option value="Contrato">Contrato</option>
+
+                {% if 'APOIO' in contrato.cargo.nome or 'ASSISTENTE' in contrato.cargo.nome or 'TECNICO ADMINISTRATIVO' in contrato.cargo.nome or 'TECNICO EM INFORMATICA' in contrato.cargo.nome or 'PROFESSOR' in contrato.cargo.nome %}
+                    <option value="Complementação Salarial">Complementação Salarial</option>
+                {% endif %}
+
+                {% if 'PROFESSOR' in contrato.cargo.nome %}
+                    <option value="Aula Complementar">Aula Complementar</option>
+                {% endif %}
+
+                <option value="Dedicação Exclusiva">Dedicação Exclusiva</option>
+                <option value="Permuta">Permuta</option>
+                <option value="Cedido">Cedido</option>
+                <option value="Sem Lotação">Sem Lotação</option>
+            </select>
+        </div>
+
+        <div class="formulario-grupo" data-selecao-tipo-unidade>
+            <label for="campo-tipo-unidade" class="label-campo texto-azul">Tipo de Unidade</label>
+
+            <fieldset id="tipo-unidade">
+                <input type="radio" name="tipo-unidade" value="escolar" id="radio-escolar" checked data-radio-escola>
+                <label class="texto-preto" for="radio-escolar">Unidade Escolar</label>
+
+                <input type="radio" name="tipo-unidade" value="adm" id="radio-adm" data-radio-adm>
+                <label class="texto-preto" for="radio-adm">Unidade Administrativa</label>
+            </fieldset>
+        </div>
+
+        <div class="formulario-grupo" data-selecao-escola>
+            <label class="texto-azul label-campo" for="campo-unidade-escolar">Unidade Escolar</label>
+            <select data-selecao2  name="endereco" id="campo-unidade-escolar" class="campo-texto campo-grande">
+                {% for endereco in enderecos %}
+                    {% if endereco.tipo == 'S' %}
+                        <option value="{{ endereco.id }}">{{ endereco.escola.cod_inep }} - {{ endereco }} - {{ endereco.municipio }}</option>
+                    {% else %}
+                        <option value="{{ endereco.id }}">{{ endereco.escola.cod_inep }} - {{ endereco }} (Anexo {{ endereco.numero_anexo }}) - {{ endereco.municipio }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="formulario-grupo" data-selecao-adm>
+            <label class="texto-azul label-campo" for="campo-unidade-admnistrativa">Unidade Administrativa</label>
+            <select data-selecao2  name="administrativa" id="campo-unidade-admnistrativa" class="campo-texto campo-grande">
+                {% for adm in unidades_administrativas %}
+                    <option value="{{ adm.id }}">{{ adm.sigla }} - {{ adm }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="formulario-grupo" data-selecao-funcao-escola>
+            <label class="texto-azul label-campo" for="campo-funcao-escola">Função</label>
+            <select  name="funcao_escolar" id="campo-funcao-escola" class="campo-texto campo-grande">
+                {% for funcao in funcoes %}
+                    {% if funcao.tipo == 'Unidade Escolar' %}
+                        <option value="{{ funcao.nome }}">{{ funcao.nome }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="formulario-grupo" data-selecao-funcao-adm>
+            <label class="texto-azul label-campo" for="campo-funcao-administrativa">Função</label>
+            <select  name="funcao_adm" id="campo-funcao-administrativa" class="campo-texto campo-grande">
+                {% for funcao in funcoes %}
+                    {% if funcao.tipo == 'Unidade Administrativa' %}
+                        <option value="{{ funcao.nome }}">{{ funcao.nome }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="formulario-grupo" data-selecao-funcao>
+            <label for="campo-funcao" class="texto-azul label-campo">Função</label>
+            <select name="funcao" id="campo-funcao" class="campo-texto campo-grande" data-selecao2>
+                {% for funcao in funcoes %}
+                    <option value="{{ funcao.nome }}">{{ funcao.nome }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="container-botoes">
+            <button class="botao botao--azul" name="btn-formulario-lotacao">Abrir Formulário</button>
+        </div>
+    </form>
+
+</div>

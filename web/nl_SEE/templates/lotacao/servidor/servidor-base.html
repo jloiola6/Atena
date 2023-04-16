@@ -1,0 +1,170 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+Atualizar Dados do Servidor
+{% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/terceirizacao/servidor/servidor-formulario.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:index' %}">Gestão de Pessoas</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:servidores' %}">Servidores</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:servidor-perfil' %}?id={{ servidor.id }}">{{ servidor.nome }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Atualizar Dados do Servidor</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Atualizar Dados do Servidor</h1>
+
+            <p class="descricao  texto-preto">Insira os dados do servidor</p>
+
+            <form class="container-surface container-formulario-servidor" method="POST">
+                {% csrf_token %}
+                <div class="formulario-servidor-dados" data-form-container="dados" >
+                    <h2 class="texto-medio texto-azul">Dados</h2>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-matricula">Matrícula</label>
+                        <input class="campo-texto campo-grande" type="text" value="{{ servidor.matricula }}" name="matricula" id="campo-matricula" autocomplete="off" maxlength="100">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-nome">Nome completo</label>
+                        <input class="campo-texto campo-grande" type="text" value="{{ servidor.nome }}" name="nome" id="campo-nome" placeholder="Ex: Érick Fernandes do Nascimento" autocomplete="off" maxlength="100">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-nome">Nome social (caso possua)</label>
+                        <input class="campo-texto campo-grande" type="text" value="{{ servidor.nome_social }}" name="nome_social" id="campo-nome" placeholder="Ex: Ana Marina Coelho Felício da Silva" autocomplete="off" maxlength="100">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-sexo">Gênero</label>
+                        <select name="sexo" id="campo-sexo" class="campo-texto campo-pequeno">
+
+                            {% for sexo in generos %}
+                                {% if servidor.sexo == sexo %}
+                                    <option value="{{ sexo }}" selected>{{ sexo }}</option>
+                                {% else %}
+                                    <option value="{{ sexo }}">{{ sexo }}</option>
+                                {% endif %}
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                    {% comment %} <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-cor">Cor / Raça</label>
+                        <select name="raca" id="campo-cor" class="campo-texto campo-pequeno">
+                            <option value="">Negro(a)</option>
+                            <option value="">Indígena</option>
+                            <option value="">Branco(a)</option>
+                            <option value="">Pardo(a)</option>
+                            <option value="">Outro</option>
+                        </select>
+                    </div> {% endcomment %}
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-nascimento">Data de nascimento</label>
+                        <input class="campo-texto campo-medio" type="date" name="data_nascimento" id="campo-nascimento" value="{{ servidor.data_nascimento }}" required>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-nacionalidade">Nacionalidade</label>
+
+                        <select class="campo-texto campo-pequeno" name="nacionalidade" id="campo-nacionalidade">
+                            {% for nacional in nacionalidades %}
+                                {% if servidor.nacionalidade == nacional %}
+                                    <option value="{{ nacional }}" selected>{{ nacional }}</option>
+                                {% else %}
+                                    <option value="{{ nacional }}">{{ nacional }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    {% include 'terceirizacao/servidor/partials/_select-naturalidade.html' %}
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-cpf">CPF</label>
+                        <input class="campo-texto campo-pequeno" type="text" value="{{ servidor.cpf }}" name="cpf" id="campo-cpf" placeholder="Ex: 000.000.000-00" autocomplete="off" data-mascara="cpf">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-rg">RG (com dígito)</label>
+                        <input class="campo-texto campo-pequeno" type="text" value="{{ servidor.rg }}" name="rg" id="campo-rg" placeholder="Ex: 000000" autocomplete="off" maxlength="11" data-mascara="numero">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-pis">PIS/PASEP</label>
+                        <input class="campo-texto campo-pequeno" type="text" value="{{ servidor.pis }}" name="pis" id="campo-pis" placeholder="Ex: 0000000" autocomplete="off" data-mascara="numero" maxlength="30">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-titulo">Titulo Eleitoral</label>
+                        <input class="campo-texto campo-pequeno" type="text" value="{{ servidor.titulo_eleitor }}" name="titulo" id="campo-titulo" placeholder="Ex: 0000000" autocomplete="off" data-mascara="numero" maxlength="30">
+                    </div>
+
+                    {% comment %}<div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-emissao">Data de emissão</label>
+                        <input class="campo-texto campo-medio" type="date" name="" id="campo-emissao">
+                    </div>{% endcomment %}
+
+                    {% comment %} <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-estado-civil">Estado civil</label>
+                        <select name="sexo" id="campo-estado-civil" class="campo-texto campo-pequeno">
+                            <option value="">Solteiro(a)</option>
+                            <option value="">Casado(a)</option>
+                            <option value="">União estável</option>
+                            <option value="">Divorciado(a)</option>
+                            <option value="">Viúvo(a)</option>
+                        </select>
+                    </div> {% endcomment %}
+
+                    <div class="container-botoes">
+                        <button class="botao botao--azul" data-modal-abrir="confirmar">Cadastrar</button>
+                    </div>
+
+                    <div class="modal oculto" data-modal="confirmar">
+                        <div class="modal-conteudo modal-confirmacao">
+                            <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                                <p class="texto-preto descricao">Tem certeza que deseja atualizar os dados do servidor?</p>
+
+                                <div class="container-botoes">
+                                    <button class="botao--verde botao" type="submit">Cadastrar</button>
+                                    <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+{% include 'partials/_rodape.html' %}
+
+<script src="{% static 'assets/js/module/select2.js' %}"></script>
+<script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+<script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+
+{% endblock %}

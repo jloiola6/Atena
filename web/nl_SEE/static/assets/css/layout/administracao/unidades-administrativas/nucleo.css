@@ -1,0 +1,53 @@
+/* Estilização da página de perfil de uma nucleo */
+
+.container-surface-nucleo{
+    margin-top: 1.5rem;
+}
+
+.container-nucleo-dados{
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+    row-gap: .5rem;
+}
+
+.titulo-endereco-nucleo{
+    margin-top: 1rem;
+}
+
+.container-endereco-nucleo{
+    display: flex;
+    flex-basis: 50%;
+    flex-direction: column;
+    margin-top: 1rem;
+    row-gap: .5rem;
+}
+
+.container-endereco-nucleo .container-botoes{
+    margin-top: .5rem;
+}
+
+.titulo-equipe-nucleo{
+    margin-top: 1rem;
+}
+
+.container-equipe-nucleo{
+    display: flex;
+    flex-basis: 50%;
+    flex-direction: column;
+    margin-top: 1rem;
+    row-gap: .5rem;
+}
+
+.container-equipe-nucleo .link{
+    margin-top: .5rem;
+}
+
+
+.lista-centros{
+    margin-top: 1.5rem;
+}
+
+.mensagem-sem-centros{
+    margin-top: .5rem;
+}

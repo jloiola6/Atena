@@ -1,0 +1,17 @@
+/* Estilização do container de navegação, utilizado para mapear o site durante a navegação */
+
+.container-navegacao{
+    align-items: center;
+    column-gap: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 0.5rem;
+}
+
+    .container-navegacao a:hover{
+        font-weight: 600;
+    }
+
+    .container-navegacao span:last-child{
+        font-weight: 600;
+    }

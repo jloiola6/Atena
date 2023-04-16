@@ -1,0 +1,120 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+    {% if edicao %}
+        Editar Unidade
+    {% else %}
+        Cadastro de Unidade
+    {% endif %}
+{% endblock %}
+
+{% load static %}
+
+{% comment %} {% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/administracao/unidades/editar-dados.css' %}">
+{% endblock %} {% endcomment %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'fundiaria:index' %}">Fundiária</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'fundiaria:fundiaria-perfil' %}?inep={{ escola.cod_inep }}">{{ escola.nome_escola }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Editar dados</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Editar dados</h1>
+
+            <p class="descricao  texto-preto">Insira os dados da Unidade</p>
+
+            <form class="container-surface container-formulario-unidade" method="POST">
+                {% csrf_token %}
+                <nav class="container-navegacao-surface">
+                    <ul class="navegacao-surface-lista">
+                        <li class="navegacao-surface-item navegacao-surface-item-ativo" data-form-aba="dados">
+                            <span class="texto-azul ">Dados</span>
+                        </li>
+                    </ul>
+
+                </nav>
+
+                <div class="formulario-unidade-dados" data-form-container="dados" >
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-cod-inep">Código INEP</label>
+                        <input class="campo-texto campo-pequeno" type="text" value="{{ escola.cod_inep }}" name="inep" id="campo-cod-inep" placeholder="Ex: 12345678" required autocomplete="off" maxlength="8" data-mascara="numero">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-cod-turmalina">Código Turmalina</label>
+                        <input class="campo-texto campo-pequeno" type="text" value="{{ escola.cod_turmalina }}" name="turmalina" id="campo-cod-turmalina" placeholder="Ex: 1234567891011"  autocomplete="off" data-mascara="numero">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-nome">Nome da Escola</label>
+                        <input class="campo-texto campo-grande" type="text" value="{{ escola.nome_escola }}" name="nome" id="campo-nome" placeholder="Ex: ESC DOUTOR JOAO BATISTA AGUIAR" required autocomplete="off" maxlength="80">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-dependencia">Dependência</label>
+                        <select id="campo-dependencia" name="dependencia" class="campo-texto campo-medio">
+                            {% for dependencia in dependencias %}
+                                {% if dependencia == escola.dependencia_adm %}
+                                    <option value="{{ dependencia }}" selected>{{ dependencia }}</option>
+                                {% else %}
+                                    <option value="{{ dependencia }}">{{ dependencia }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+
+
+                        <fieldset class="formulario-grupo">
+                            <label class="texto-azul label-campo" for="campo-nome">Modalidades de Ensino</label>
+
+                            {% for etapa in etapas %}
+                                <div>
+                                    {% if etapa in etapa_existentes %}
+                                        <input type="checkbox" name="{{ etapa.nome }}" checked id="{{ etapa.id }}">
+                                        <label class="texto-preto" for="{{ etapa.id }}">{{ etapa.nome }} </label>
+                                    {% else %}
+                                        <input type="checkbox" name="{{ etapa.nome }}" id="{{ etapa.id }}">
+                                        <label class="texto-preto" for="{{ etapa.id }}">{{ etapa.nome }} </label>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </fieldset>
+
+                    <div class="container-botoes">
+                        <button class="botao botao--azul" data-modal-abrir="confirmar">Salvar</button>
+                    </div>
+
+                    <div class="modal oculto" data-modal="confirmar">
+                        <div class="modal-conteudo modal-confirmacao">
+                            <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                            <p class="texto-preto descricao">Tem certeza que deseja editar os dados da unidade {{ escola.nome_escola }}?</p>
+
+                            <div class="container-botoes">
+                                <button class="botao--verde botao" type="submit">Salvar</button>
+                                <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type='module'></script>
+{% endblock %}

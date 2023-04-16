@@ -1,0 +1,86 @@
+<div class="formulario-contrato" data-form-container="contrato">
+    <!-- <div class="formulario-grupo">
+        <label for="campo-tipo-contrato" class="texto-azul label-campo">Tipo de contrato</label>
+        <select class="campo-texto campo-medio" name="tipo_contrato" id="campo-tipo-contrato" data-tipo-contrato>
+            <option value="Produtos">Produtos</option>
+            <option value="Serviços">Serviços</option>
+            <option value="Postos de trabalho">Postos de trabalho</option>
+            <option value="Postos de trabalho - Vigilância Armada">Postos de trabalho - Vigilância Armada</option>
+            <option value="Postos de trabalho - Limpeza">Postos de trabalho - Limpeza</option>
+        </select>
+    </div> -->
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-unidade-admnistrativa">Unidade Administrativa</label>
+        <select data-selecao2  name="administrativa" id="campo-unidade-admnistrativa" class="campo-texto campo-grande">
+            {% for adm in unidades_administrativas %}
+                <option value="{{ adm.id }}">{{adm.sigla}} - {{ adm }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-numero">N° do contrato</label>
+        <input class="campo-texto campo-pequeno" type="text" value="" name="numero_contrato" id="campo-numero" placeholder="Ex: 0000/0000"  autocomplete="off" data-mascara="contrato">
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo">Empresa</label>
+
+        <select data-selecao2 name="empresa" class="campo-texto campo-medio">
+            {% for empresa in empresas %}
+                <option data-opcao-empresa value="{{ empresa.id }}">{{ empresa.nome }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="formulario-grupo">
+        <a class="link" href="{% url 'administracao:empresa-formulario' %}">Adicionar nova empresa</a>
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-sei">N° do SEI</label>
+        <input class="campo-texto campo-grande" type="text" value="" name="numero_sei" id="campo-sei" placeholder="0000.000000.00000/0000-00"  autocomplete="off" data-mascara="sei">
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-sei">N° do documento (SEI)</label>
+        <input class="campo-texto campo-grande" type="text" value="" name="numero_documento_sei" id="campo-sei" placeholder="Ex: 0000"  autocomplete="off" maxlength="30" data-mascara="numero">
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-objeto">Objeto</label>
+        <textarea class="campo-texto campo-area" type="text" value="" name="objeto" id="campo-objeto" placeholder="" autocomplete="off" maxlength="800"></textarea>
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-inicio-vigencia">Início da vigência</label>
+        <input class="campo-texto campo-medio" type="date" value="" name="data_inicio" id="campo-inicio-vigencia" data-inicio-vigencia>
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-termino-vigencia">Término da vigência</label>
+        <input class="campo-texto campo-medio" type="date" value="" name="data_termino" id="campo-termino-vigencia" data-termino-vigencia disabled>
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-fonte">Fonte</label>
+        <select name="fonte_recurso" id="campo-fonte" class="campo-texto campo-medio">
+            {% for fonte in fontes %}
+                <option value="{{ fonte }}">{{ fonte }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="formulario-grupo">
+        <label class="texto-azul label-campo" for="campo-situacao">Situacao</label>
+        <select name="situacao" id="campo-situacao" class="campo-texto campo-pequeno">
+            <option value="Vigente">Vigente</option>
+            <option value="Inativo">Inativo</option>
+        </select>
+    </div>
+
+    <div class="container-botoes">
+        <button class="botao botao--azul" data-form-botao="itens" disabled>Avançar</button>
+    </div>
+</div>

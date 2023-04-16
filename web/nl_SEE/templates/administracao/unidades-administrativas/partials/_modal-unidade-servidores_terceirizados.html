@@ -1,0 +1,26 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="servidores_terceirizados">
+    <div  class="modal-conteudo">
+        <h2 class="texto-grande texto-negrito texto-azul">Servidores Terceirizados ({{ qtd_servidores_terceirizados }})</h2>
+
+        <table class="tabela">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Função</th>
+                </tr>
+            </thead>
+
+            <tbody data-tabela-link="{% url 'terceirizacao:servidor-perfil' %}?id=">
+                {% for servidor in servidores_terceirizados %}
+                    <tr data-tabela-link-chave="{{ servidor.servidor.id }}">
+                        <td>{{ servidor.servidor }}</td>
+                        <td>{{ servidor.item.descricao }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+    </div>
+</div>

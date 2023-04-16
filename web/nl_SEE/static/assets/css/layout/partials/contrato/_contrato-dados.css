@@ -1,0 +1,25 @@
+/* Estilização da partial de dados de um contrato */
+
+.surface-contrato{
+    margin-top: 24px;
+}
+
+    .surface-contrato .contrato-dados{
+        display: flex;
+        flex-direction: column;
+        row-gap: 8px;
+    }
+
+    .surface-contrato .container-botoes{
+        margin-top: 8px;
+    }
+
+.contrato-dados-bloco{
+    margin-top: 16px;
+}
+
+.contrato-objeto{
+    line-height: 20px;
+    text-align: justify;
+    width: 60%;
+}

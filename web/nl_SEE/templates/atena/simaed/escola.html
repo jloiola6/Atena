@@ -1,0 +1,61 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} SIMAED {% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'atena:index' %}" class=" texto-azul">Configurações</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'atena:simaed' %}" class=" texto-azul">SIMAED</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'atena:importacao' importacao.id %}" class=" texto-azul">{{ importacao }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">{{ escola }}</span>
+            </nav>
+
+            <h1 class="titulo-pagina">{{ escola }}</h1>
+
+            <h2 class="texto-azul texto-medio">Turmas ({{ qtd_turmas }})</h2>
+
+            <form method="POST" class="container-botoes">
+                {% csrf_token %}
+                <button class="botao botao--azul" type="submit" name="importar-escola">Importar enturmações</button>
+            </form>
+
+
+            {% for etapa in etapas %}
+                <h3 class="texto-azul">{{ etapa.nome }}</h3>
+
+                {% for turma in turmas %}
+                    {% if turma.nivel == etapa.nivel %}
+                        <details class="dropdown">
+                            <summary>{{ turma.turma }} - {{ turma.turno }} ({{ turma.qtd_alunos }})</summary>
+
+                            <div class="container-detalhes">
+                                {% for aluno in turma.alunos %}
+                                    <p class="texto-preto">{{ aluno.nome_aluno }}</p>
+                                {% endfor %}
+                            </div>
+                        </details>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/controlaSubmissao.js' %}"></script>
+{% endblock %}

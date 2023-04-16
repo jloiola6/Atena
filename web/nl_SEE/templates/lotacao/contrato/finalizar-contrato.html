@@ -1,0 +1,116 @@
+<!-- ADICIONAR REQUIRED -->
+
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+    Finalizar contrato
+{% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:index' %}">Gestão de Pessoas</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:contratos' %}">Contratos</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:servidor-perfil' %}?id={{ servidor.id }}">{{ servidor }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'lotacao:contrato-perfil' contrato.id %}">Digito n° {{ contrato.digito }}</a>
+                <span class="texto-azul">&#62;</span>
+                {% if id_contrato %}
+                    <span class="  texto-azul">Finalizar contrato</span>
+                {% else %}
+                    <span class="  texto-azul">Finalizar lotação</span>
+                {% endif %}
+            </nav>
+
+            <form class="container-surface container-formulario-finalizar-contrato" method="POST">
+                {% csrf_token %}
+
+                {% if id_contrato %}
+                    <!-- <h2 class="texto-medio texto-azul">Finalizar contrato</h2>
+                    <p class="descricao texto-preto">Para cadastrar um novo contrato é preciso inativar o anterior. Preencha os dados</p> -->
+                    <h2 class="texto-medio texto-azul">Finalizar lotação</h2>
+                    <p class="descricao texto-preto">Para cadastrar uma nova lotação é preciso inativar a anterior. Preencha os dados</p>
+
+                    <div class="formulario-grupo">
+                        <label for="campo-numero-contrato" class="texto-azul label-campo">Digíto</label>
+                        <input id="campo-numero-contrato" type="text" class="campo-texto campo-pequeno" readonly value="N° {{ contrato.digito }}">
+                    </div>
+                {% else %}
+                    <h2 class="texto-medio texto-azul">Finalizar lotação</h2>
+                    <p class="descricao texto-preto">Preencha os dados</p>
+
+                    {% if lotacao.unidade_adm %}
+                        <div class="formulario-grupo">
+                            <label for="campo-numero-contrato" class="texto-azul label-campo">Lotação</label>
+                            <input id="campo-numero-contrato" type="text" class="campo-texto campo-grande" value="{{ lotacao.unidade_adm.nome }}" readonly>
+                        </div>
+                    {% else %}
+                        <div class="formulario-grupo">
+                            <label for="campo-numero-contrato" class="texto-azul label-campo">Lotação</label>
+                            <input id="campo-numero-contrato" type="text" class="campo-texto campo-grande" value="{{ lotacao.unidade_escolar.escola.nome_escola }}" readonly>
+                        </div>
+                    {% endif %}
+                    {% if lotacao.funcao == 'Diretor(a) Escolar' or lotacao.funcao == 'Coordenador(a) Administrativo de Escolas' or lotacao.funcao == 'Coordenador(a) de Ensino Escolar' or lotacao.funcao == 'Secretário(a) Escolar'%}
+                        <div class="formulario-grupo">
+                            <label for="portaria-destituicao" class="texto-azul label-campo">Portaria de Destituição</label>
+                            <input id="portaria-destituicao" name="portaria-destituicao" type="text" class="campo-texto campo-grande" placeholder="Ex.: 001/2023" required>
+                        </div>
+                        <div class="formulario-grupo">
+                            <label for="doe-portaria-destituicao" class="texto-azul label-campo">Doe</label>
+                            <input id="doe-portaria-destituicao" name="doe-portaria-destituicao" type="text" class="campo-texto campo-grande" placeholder="Ex.: 00000" required>
+                        </div>
+                    {% endif %}
+
+                {% endif %}
+
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-data-fim">Data de finalização</label>
+                    <input id="campo-data-fim" name='data_finalizacao' type="date" class="campo-pequeno campo-texto" required>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label for="campo-texto-motivo" class="texto-azul label-campo">Motivo</label>
+                    <textarea name="motivo" id="campo-texto-motivo" class="campo-texto campo-area" required></textarea>
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao botao--azul" data-modal-abrir="confirmar">Salvar</button>
+                </div>
+
+                <div class="modal oculto" data-modal="confirmar">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                        {% if id_contrato %}
+                            <p class="texto-preto descricao">Tem certeza que deseja inativar o contrato?</p>
+                        {% else %}
+                            <p class="texto-preto descricao">Tem certeza que deseja inativar a lotação?</p>
+                        {% endif %}
+
+                        <div class="container-botoes">
+                            <button class="botao--verde botao" type="submit">Salvar</button>
+                            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+
+{% endblock %}

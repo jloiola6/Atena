@@ -1,0 +1,29 @@
+/* Configuração da responsividade da tabela de veiculos */
+
+.tabela-veiculos-tablet, .tabela-veiculos-smartphone{
+    display: none;
+}
+
+@media screen and (max-width: 876px){
+    .tabela-veiculos, .tabela-veiculos-smartphone{
+        display: none;
+    }
+
+    .tabela-veiculos-tablet{
+        display: block;
+    }
+
+    .tabela-veiculos-campo{
+        width: 1%;
+    }
+}
+
+@media screen and (max-width: 425px){
+    .tabela-veiculos, .tabela-veiculos-tablet{
+        display: none;
+    }
+
+    .tabela-veiculos-smartphone{
+        display: block;
+    }
+} 

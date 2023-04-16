@@ -1,0 +1,92 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} {{ aluno.nome }} {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <!-- <link rel="stylesheet"  href="{% static 'assets/css/layout/dinem/aluno-perfil.css' %}"> -->
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:index' %}">Administracao</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:unidades_educacionais' %}">Unidades</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:unidade-perfil' %}?inep={{ turma.endereco.escola.cod_inep }}">{{ turma.endereco.escola.nome_escola }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:turma-perfil' %}?id={{ turma.id }}">{{ turma }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">{{ aluno.nome }}</span>
+            </nav>
+
+            <div class="container-surface container-surface-aluno">
+                <h1 class="texto-medio texto-azul">{{ aluno.nome }}</h1>
+                <p class="texto-preto descricao">{{ escola.nome_escola }} - {{ turma.etapa.nome }} - {{ turma.nome }}</p>
+
+                <div class="container-detalhes">
+                    <p class=" texto-negrito texto-azul ">Data de Nascimento: <span class="texto-preto texto-normal">{{ aluno.nascimento }}</span></p>
+
+                    {% if deficiencia %}
+                        <p class=" texto-negrito texto-azul ">Deficiência: <span class="texto-preto texto-normal">{{ aluno.deficiencia }}</span></p>
+                    {% endif %}
+
+                    <p class=" texto-negrito texto-azul ">Pai: <span class="texto-preto texto-normal">{{ aluno.nome_pai }}</span></p>
+                    <p class=" texto-negrito texto-azul ">Mãe: <span class="texto-preto texto-normal">{{ aluno.nome_mae }}</span></p>
+
+                    <p class=" texto-negrito texto-azul ">Nacionalidade: <span class="texto-preto texto-normal">{{ aluno.nacionalidade }}</span></p>
+                    <p class=" texto-negrito texto-azul ">Naturalidade: <span class="texto-preto texto-normal">{{ aluno.naturalidade }} - {{ aluno.uf }}</span></p>
+
+                    <p class=" texto-negrito texto-azul container-detalhes-bloco">Celular: <span class="texto-preto texto-normal">{{ aluno.celular }}</span></p>
+                    <p class=" texto-negrito texto-azul">Telefone: <span class="texto-preto texto-normal">{{ aluno.telefone }}</span></p>
+                    <p class=" texto-negrito texto-azul">Telefone do responsável: <span class="texto-preto texto-normal">{{ aluno.responsavel_telefone }}</span></p>
+                    <p class=" texto-negrito texto-azul ">E-mail: <span class="texto-preto texto-normal">{{ aluno.email }}</span></p>
+                </div>
+            </div>
+
+            <div class="container-surface container-surface-boletim">
+
+                {% if professores_aee %}
+                    <h2 class="texto-medio texto-azul">Servidores associados ao aluno</h2>
+                    <br>
+                    {% for professor_aee in servidores %}
+                        <div class="card-simples card-simples-grade">
+                            <h3 class="texto-azul card-simples__titulo">{{ professor_aee.contrato__servidor__nome }}</h3>
+                            <div class="card-simples__descricao">
+                                <p class="texto-azul ">Cargo: <span class="texto-preto texto-normal">{{ professor_aee.contrato__cargo__nome }}</span></p>
+                                <p class="texto-azul ">Situação: <span class="texto-preto texto-normal">{{ professor_aee.carga_horaria }}h</span></p>
+                            </div>
+                        </div>
+                        <br>
+                    {% endfor %}
+                {% else %}
+                    <h2 class=" texto-preto texto-medio">O aluno não possui nenhum Professor AEE associado.</h2>
+
+                    <!-- <div class="container-botoes">
+                        <a href="{% url 'administracao:vincular-professor-formulario' %}?id_aluno={{ aluno.id }}">
+                            <button class="botao botao--azul">Vincular Professor</button>
+                        </a>
+                    </div> -->
+                {% endif %}
+
+            </div>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <!-- <script src="{% static 'assets/js/module/select2.js' %}"></script> -->
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+{% endblock %}

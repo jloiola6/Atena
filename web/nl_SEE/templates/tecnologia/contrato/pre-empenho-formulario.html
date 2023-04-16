@@ -1,0 +1,126 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+    Cadastrar Empenho
+{% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/tecnologia/contrato/pre-empenho-formulario.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:index' %}">Tecnologia</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:contratos' %}">Contratos</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:contrato-perfil' %}?id_contrato={{ contrato.id }}">Contrato n° {{ contrato.numero_contrato }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Pré Empenho</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Pré Empenho</h1>
+
+            <p class="descricao  texto-preto">Dados correspondente ao pré empenho </p>
+
+            <form class="container-surface" method="POST" data-contrato-tipo="{{ contrato.tipo_contrato }}">
+                {% csrf_token %}
+                <h2 class="texto-medio texto-azul">Data e itens do contrato</h2>
+
+                <hr>
+                {% for item in itens %}
+                    <div>
+                        <div class="contrato-item-grupo-campos">
+                            <div class="formulario-grupo">
+                                <label class="texto-azul label-campo" for="campo-numero_item">N° do item</label>
+                                <input class="campo-texto" type="text" value="{{ item.0 }}" name="numero_item{{ item.0 }}" id="campo-numero_item" maxlength="3" autocomplete="off" data-mascara="numero" readonly>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label class="texto-azul label-campo" for="campo-numero_lote">Velocidade</label>
+                                <input class="campo-texto" type="text" value="{{ item.1 }}" name="velocidade{{ item.1 }}" id="campo-numero_lote" autocomplete="off" readonly>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label class="texto-azul label-campo" for="campo-quantidade">Quantidade</label>
+                                <input class="campo-texto" type="text" value="{{ item.2 }}" name="quantidade{{ item.2 }}" id="campo-quantidade" maxlength="9" autocomplete="off" data-qtd-item readonly>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label class="texto-azul label-campo" for="campo-quantidade">Fonte</label>
+                                <input class="campo-texto" type="text" value="{{ item.3 }}" name="fonte{{ item.3 }}" id="campo-quantidade" maxlength="9" autocomplete="off" data-qtd-item readonly>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label class="texto-azul label-campo" for="campo-valor_unitario">Valor unitário</label>
+                                <input class="campo-texto" type="text" value="{{ item.4 }}" name="valor_unitario{{ item.4 }}" id="campo-valor_unitario" maxlength="30" autocomplete="off" data-mascara="moeda" data-unitario-item readonly>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label class="texto-azul label-campo" for="campo-valor_total">Valor Mensal</label>
+                                <input class="campo-texto" type="text" value="{{ item.5 }}" name="valor_total{{ item.5 }}" id="campo-valor_total" maxlength="30" autocomplete="off" data-mascara="moeda" data-mensal-item readonly>
+                            </div>
+
+                            <div class="formulario-grupo">
+                                <label class="texto-azul label-campo" for="campo-valor_total">Valor Total</label>
+                                <input class="campo-texto" type="text" value="" name="" id="campo-valor_total" maxlength="30" autocomplete="off" data-mascara="moeda" data-total-item readonly>
+                            </div>
+                        </div>
+
+                        <div class="contrato-item-grupo-campos">
+                            <div class="formulario-grupo grupo-descricao">
+                                <label class="texto-azul label-campo" for="campo-descricao">Descrição</label>
+                                <textarea id="campo-descricao" name="descricao{{ item.6 }}" class="campo-texto campo-area item-descricao" maxlength="300" autocomplete="off" readonly>{{ item.6 }}</textarea>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <hr>
+                {% endfor %}
+
+                <div class="formulario-grupo">
+                    <label for="campo-meses" class="texto-azul label-campo">Quantidade de meses</label>
+                    <input class="campo-texto campo-pequeno" value="" name="" type="number" min="1" max="12" data-meses required>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label for="campo-valor-total" class="label-campo texto-azul">Valor global</label>
+                    <input id="campo-valor-total" name="valor_total" type="text" class="campo-texto campo-pequeno" required data-mascara="moeda" data-valor-global readonly>
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao botao--azul" data-modal-abrir="confirmar">Cadastrar</button>
+                </div>
+
+                <div class="modal oculto" data-modal="confirmar">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                        <p class="texto-preto descricao">Tem certeza que deseja cadastrar o aditivo no contrato?</p>
+
+                        <div class="container-botoes">
+                            <button class="botao--verde botao" type="submit">Salvar</button>
+                            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+
+    <script src="{% static 'assets/js/layout/tecnologia/pre-empenho-formulario/controlaCampos.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,21 @@
+/* Estilização da tela de perfil de um item de um contrato */
+
+.surface-item{
+    margin-top: 24px;
+}
+
+.item-dados{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+    .item-descricao{
+        line-height: 20px;
+        text-align: justify;
+        width: 60%;
+    }
+
+.item-servidores, .item-servidores .container-botoes{
+    margin-top: 16px;
+}

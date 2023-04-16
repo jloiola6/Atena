@@ -1,0 +1,32 @@
+<form class="container-surface" method="POST">
+    {% csrf_token %}
+
+    <nav class="container-navegacao-surface">
+        <ul class="navegacao-surface-lista">
+            <li class="navegacao-surface-item navegacao-surface-item-ativo">
+                <span class="texto-azul">Armário</span>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="formulario-grupo">
+        <label for="campo-patrimonio">Patrimônio</label>
+        <input class="campo-texto campo-medio" type="text" id="campo-patrimonio" name="patrimonio" maxlength="30" required>
+    </div>
+
+
+    <div class="formulario-grupo">
+        <label for="campo-tipo-armario">Tipo</label>
+
+        <select name="tipo-armario" id="campo-tipo-armario" class="campo-texto campo-medio">
+            <option value="Armário de arquivos de aço">Armário de arquivos de aço</option>
+            <option value="Armário de arquivos de aço 2 portas">Armário de arquivos de aço 2 portas</option>
+            <option value="Armário de arquivos de Madeira/MDF/MDP">Armário de arquivos de Madeira/MDF/MDP</option>
+            <option value="Armário de arquivo suspenso">Armário de arquivo suspenso</option>
+            <option value="Armário de material acadêmico">Armário de material acadêmico</option>
+            <option value="Armário de sala de aula Anos Iniciais">Armário de sala de aula Anos Iniciais</option>
+        </select>
+    </div>
+
+    {% include 'administracao/unidades/inventario/item-formulario/partials/_modal-confirmacao.html' %}
+</form>

@@ -1,0 +1,33 @@
+/* Estilização dos formulários utilizados no sistema */
+
+@keyframes spin-submissao{
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+}
+
+form, div[data-form-container], .formulario-grupo{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+div[data-form-container]{
+    animation: var(--main-animation);
+}
+
+.formulario-grupo{
+    gap: 8px;
+}
+
+label{
+    color: var(--texto-azul);
+}
+
+.spinner-submissao{
+    animation: spin-submissao 2s ease-in-out infinite;
+    aspect-ratio: 1;
+    border: .25rem #10418361 solid;
+    border-top-color: var(--cor-azul);
+    border-radius: 50%;
+    width: 2rem;
+}

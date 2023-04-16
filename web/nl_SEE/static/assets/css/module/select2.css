@@ -1,0 +1,30 @@
+/* Estilização do componente de seleção com busca */
+
+.select2-container{
+    width: 400px;
+    font-size: 16px;
+}
+
+.select2-container .select2-selection--single{
+    height: 40px !important;
+}
+
+.select2-selection__rendered{
+    padding-top: 6px !important;
+}
+
+.select2-selection__arrow{
+    height: 40px !important;
+    top: 0 !important;
+}
+
+.select2-search__field{
+    font-family: var(--main-font);
+    font-size: 16px;
+    height: 40px;
+}
+
+    .select2-search__field:focus{
+        border: 1px solid var(--text-primary-color) !important;
+        outline: 0;
+    }

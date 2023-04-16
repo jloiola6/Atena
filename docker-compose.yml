@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  mysql:
+    build: ./mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'secretaria'
+      MYSQL_USER: 'see'
+      MYSQL_PASSWORD: 'dtmisee@'
+      MYSQL_ROOT_PASSWORD: 'DTMIsee@DIPS'
+    volumes:
+      - db_data:/var/lib/mysql
+
+  web:
+    build: ./web
+    command: /bin/bash -c "chown root:root /code/nl_SEE/staticfiles/ && cd nl_SEE && python manage.py makemigrations atena administracao core coex dinem fundiaria lotacao lotus tecnologia terceirizacao usuario && python manage.py migrate && gunicorn nl.wsgi:application -c gunicorn_config.py -b 0.0.0.0:8000 --chdir /code/nl_SEE"
+    volumes:
+      - ./web:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mysql
+  
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - web
+
+volumes:
+  db_data:
+  static_data:

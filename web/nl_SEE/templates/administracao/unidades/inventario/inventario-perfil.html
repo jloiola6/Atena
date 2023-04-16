@@ -1,0 +1,93 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Inventário {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/administracao/unidades/inventario/inventario-perfil.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class="texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:index' %}">Administração</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:unidades_educacionais' %}">Unidades</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:unidade-perfil' %}?inep={{ escola.cod_inep }}">{{ escola.nome_escola }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="texto-azul">Inventário</span>
+            </nav>
+
+            <h1 class="titulo-pagina">Inventário</h1>
+            <p class="texto-preto descricao">Selecione a dependência física para ver os itens cadastrados</p>
+
+            {% for categoria in categorias_dependencias %}
+                <details class="dropdown">
+                    <summary>{{ categoria.tipo_dependencia__categoria }}</summary>
+
+                    {% for dependencia in dependencias %}
+                        {% if dependencia.tipo_dependencia__categoria == categoria.tipo_dependencia__categoria %}
+                            <details class="dropdown">
+                                <summary>{{ dependencia.descricao }}</summary>
+
+                                {% if dependencia.possui_itens %}
+                                    {% for categoria_item in categorias_itens %}
+                                        {% if categoria_item.dependencia_id == dependencia.id %}
+                                            <details class="dropdown">
+                                                <summary>{{ categoria_item.tipo__categoria__nome }}</summary>
+
+                                                <table class="tabela">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Tipo</th>
+                                                            <th>Patrimônio</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                        {% for item in itens %}
+                                                            {% if item.dependencia.id == dependencia.id and item.tipo.categoria.id == categoria_item.tipo__categoria__id %}
+                                                                <tr data-modal-abrir="item-detalhes-{{ item.id }}">
+                                                                    <td>{{ item.tipo.nome }}</td>
+                                                                    <td>{{ item.patrimonio }}</td>
+                                                                </tr>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </details>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <span class="texto-preto">Esta dependência não possui itens cadastrados</span>
+                                {% endif %}
+
+                                <div class="container-botoes">
+                                    <button class="botao botao--secundario" data-modal-abrir="adicionar-{{ dependencia.id }}">Adicionar</button>
+                                </div>
+                            </details>
+                        {% endif %}
+                    {% endfor %}
+                </details>
+            {% endfor %}
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    {% include 'administracao/unidades/inventario/partials/_modais-item-detalhes.html' %}
+    {% include 'administracao/unidades/inventario/partials/_modais-adicionar-item.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+{% endblock %}

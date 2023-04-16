@@ -1,0 +1,9 @@
+/* Estilização da página de usuários */
+
+.container-usuario-busca, .container-usuario-busca .container-botoes{
+    margin-top: 16px;
+}
+
+.link-pre-cadastrados{
+    margin-top: 16px;
+}

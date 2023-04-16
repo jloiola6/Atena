@@ -1,0 +1,9 @@
+/* Estilização da página de formulário de organograma */
+
+.container-formulario-organograma{
+    margin-top: 1rem;
+}
+
+    .container-formulario-organograma .container-botoes{
+        margin-top: 1rem;
+    }

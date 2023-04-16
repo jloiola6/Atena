@@ -1,0 +1,74 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Título da Página {% endblock %}
+
+{% load static %}
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+
+<main>
+    <div class="container">
+
+        <div class="container-surface" style="margin-top: 16px;">
+            <h2 class="texto-medio texto-azul">Título do Container</h2>
+            
+            <div class="formulario-grupo">
+                <label class="label-campo texto-azul">Número</label>
+                <input type="text" class="campo-texto campo-medio" data-mascara-numero>
+            </div>
+            
+            <div class="formulario-grupo">
+                <label class="label-campo texto-azul">CPF</label>
+                <input type="text" class="campo-texto campo-medio" data-mascara-cpf>
+            </div>
+            
+            <div class="formulario-grupo">
+                <label class="label-campo texto-azul">CNPJ</label>
+                <input type="text" class="campo-texto campo-medio" data-mascara-cnpj>
+            </div>
+            
+            <div class="formulario-grupo">
+                <label class="label-campo texto-azul">Telefone</label>
+                <input type="text" class="campo-texto campo-medio" data-mascara-telefone>
+            </div>
+            
+            <div class="formulario-grupo">
+                <label class="label-campo texto-azul">CEP</label>
+                <input type="text" class="campo-texto campo-medio" data-mascara-cep>
+            </div>
+            
+            <div class="formulario-grupo">
+                <label class="label-campo texto-azul">Moeda</label>
+                <input type="text" class="campo-texto campo-medio" data-mascara-moeda>
+            </div>
+            
+            <div class="formulario-grupo">
+                <label class="label-campo texto-azul">Conta corrente</label>
+                <input type="text" class="campo-texto campo-medio" data-mascara-cc>
+            </div>
+            
+            <div class="formulario-grupo">
+                <label class="label-campo texto-azul">SEI</label>
+                <input type="text" class="campo-texto campo-medio" data-mascara-sei>
+            </div>
+            
+            <div class="formulario-grupo">
+                <label class="label-campo texto-azul">N° do contrato</label>
+                <input type="text" class="campo-texto campo-medio" data-mascara-contrato>
+            </div>
+            
+            <div class="formulario-grupo">
+                <label class="label-campo texto-azul">N° do empenho</label>
+                <input type="text" class="campo-texto campo-medio" data-mascara-empenho>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+{% include 'partials/_rodape.html' %}
+
+<script src="{% static 'assets/js/layout/atena/teste-mascaras/testeMascaras.js' %}"></script>
+
+{% endblock %}

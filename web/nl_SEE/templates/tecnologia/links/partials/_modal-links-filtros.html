@@ -1,0 +1,128 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="filtros">
+    <form id="modal-conteudo" class="modal-conteudo" method="GET">
+        <h2 class="texto-grande texto-negrito texto-azul">Filtros</h2>
+
+        <p class="descricao  texto-preto">Insira os filtros que deseja aplicar</p>
+
+        <div class="formulario-grupo">
+            <h3 class="texto-medio texto-azul">Tipo</h3>
+            <div>
+                {% for tipo in tipos %}
+                    {% if tipo.1 in filtros_tipo %}
+                        <input type="checkbox" name="{{ tipo.1 }}" id="{{ tipo.0 }}" checked>
+                        <label class="texto-preto" for="{{ tipo.0 }}">{{ tipo.1 }}</label>
+                    {% else %}
+                        <input type="checkbox" name="{{ tipo.1 }}" id="{{ tipo.0 }}">
+                        <label class="texto-preto" for="{{ tipo.0 }}">{{ tipo.1 }}</label>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="formulario-grupo">
+            <h3 class="texto-medio texto-azul">Fornecedor</h3>
+            <div>
+                {% for fornecedor in fornecedores %}
+                    {% if fornecedor.1 in filtros_fornecedor %}
+                        <input type="checkbox" name="{{ fornecedor.1 }}" id="{{ fornecedor.0 }}" checked>
+                        <label class="texto-preto" for="{{ fornecedor.0 }}">{{ fornecedor.1 }}</label>
+                    {% else %}
+                        <input type="checkbox" name="{{ fornecedor.1 }}" id="{{ fornecedor.0 }}">
+                        <label class="texto-preto" for="{{ fornecedor.0 }}">{{ fornecedor.1 }}</label>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="formulario-grupo">
+            <h3 class="texto-medio texto-azul">Fonte</h3>
+            <div>
+                {% for fonte in fontes %}
+                    {% if fonte.1 in filtros_fonte %}
+                        <input type="checkbox" name="{{ fonte.1 }}" id="{{ fonte.0 }}" checked>
+                        <label class="texto-preto" for="{{ fonte.0 }}">{{ fonte.1 }}</label>
+                    {% else %}
+                        <input type="checkbox" name="{{ fonte.1 }}" id="{{ fonte.0 }}">
+                        <label class="texto-preto" for="{{ fonte.0 }}">{{ fonte.1 }}</label>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="formulario-grupo">
+            <h3 class="texto-medio texto-azul">Operadora</h3>
+            <div>
+                {% for operadora in operadoras %}
+                    {% if operadora.1 in filtros_operadora %}
+                        <input type="checkbox" name="{{ operadora.1 }}" id="{{ operadora.0 }}" checked>
+                        <label class="texto-preto" for="{{ operadora.0 }}">{{ operadora.1 }}</label>
+                    {% else %}
+                        <input type="checkbox" name="{{ operadora.1 }}" id="{{ operadora.0 }}">
+                        <label class="texto-preto" for="{{ operadora.0 }}">{{ operadora.1 }}</label>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="formulario-grupo">
+            <h3 class="texto-medio texto-azul">Tipo de Banda</h3>
+            {% for tipo_banda in bandas %}
+                <div>
+                    {% if tipo_banda.1 in filtros_banda %}
+                        <input type="checkbox" name="{{ tipo_banda.1 }}" id="{{ tipo_banda.0 }}" checked>
+                        <label class="texto-preto" for="{{ tipo_banda.0 }}">{{ tipo_banda.1 }}</label>
+                    {% else %}
+                        <input type="checkbox" name="{{ tipo_banda.1 }}" id="{{ tipo_banda.0 }}">
+                        <label class="texto-preto" for="{{ tipo_banda.0 }}">{{ tipo_banda.1 }}</label>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="formulario-grupo">
+            <h3 class="texto-medio texto-azul">Tipo de Banda</h3>
+            {% for velocidade in velocidades %}
+                <div>
+                    {% if velocidade.1 in filtros_velocidade %}
+                        <input type="checkbox" name="{{ velocidade.1 }}" id="{{ velocidade.0 }}" checked>
+                        <label class="texto-preto" for="{{ velocidade.0 }}">{{ velocidade.1 }}</label>
+                    {% else %}
+                        <input type="checkbox" name="{{ velocidade.1 }}" id="{{ velocidade.0 }}">
+                        <label class="texto-preto" for="{{ velocidade.0 }}">{{ velocidade.1 }}</label>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-municipio">Municipio</label>
+            <select data-selecao2  name="municipio" id="campo-municipio" class="campo-texto campo-grande">
+                <option></option>
+                {% for municipio in municipios %}
+                    <option value="{{ municipio }}">{{ municipio }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="formulario-grupo">
+            <h3 class="texto-medio texto-azul">Situação</h3>
+            <div>
+                {% for situacao in status %}
+                    {% if situacao.1 in filtros_status %}
+                        <input type="checkbox" name="{{ situacao.1 }}" id="{{ situacao.0 }}" checked>
+                        <label class="texto-preto" for="{{ situacao.0 }}">{{ situacao.1 }}</label>
+                    {% else %}
+                        <input type="checkbox" name="{{ situacao.1 }}" id="{{ situacao.0 }}">
+                        <label class="texto-preto" for="{{ situacao.0 }}">{{ situacao.1 }}</label>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="container-botoes">
+            <button type="" class="botao botao--verde">Filtrar</button>
+        </div>
+    </form>
+</div>

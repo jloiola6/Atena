@@ -1,0 +1,106 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} {{ escola }} {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/tecnologia/educacao-conectada/tablets/escola-perfil.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:index' %}">Tecnologia</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:educacao-conectada' %}">Educação Conectada</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'tecnologia:escolas' %}">Tablets</a>
+                <span class="  texto-azul">&#62;</span>
+
+                <span class="texto-azul">{{ escola }}</span>
+            </nav>
+
+            <div class="container-surface">
+                <div class="container-unidade__titulo">
+                    {% include 'partials/unidade-educacional/icones/dados.svg' %}
+
+                    <h1 class="texto-medio texto-azul">{{ escola }}</h1>
+                </div>
+
+                <p class="texto-preto">{{ tipo_endereco }} • {{ endereco.municipio }} • {{ endereco.rua }}, {{ endereco.numero }} • {{ endereco.bairro }}</p>
+
+                {% if escola_etapas %}
+                    <ul class="unidade__etapas">
+                        {% for etapa in escola_etapas %}
+                            {% if 'EJA' in etapa.etapa.nome %}
+                                <li class="unidade__etapa etapa--eja">{{ etapa.etapa.nome }}</li>
+                            {% elif 'Ensino Fundamental' in etapa.etapa.nome %}
+                                <li class="unidade__etapa etapa--fundamental">{{ etapa.etapa.nome }}</li>
+                            {% elif 'Ensino Médio' in etapa.etapa.nome %}
+                                <li class="unidade__etapa etapa--medio">{{ etapa.etapa.nome }}</li>
+                            {% elif 'AEE - Atendimento Educacional Especializado' in etapa.etapa.nome %}
+                                <li class="unidade__etapa etapa--aee">{{ etapa.etapa.nome }}</li>
+                            {% elif 'Aprender' in etapa.etapa.nome %}
+                                <li class="unidade__etapa etapa--aprender">{{ etapa.etapa.nome }}</li>
+                            {% elif 'Campo' in etapa.etapa.nome %}
+                                <li class="unidade__etapa etapa--campo">{{ etapa.etapa.nome }}</li>
+                            {% else %}
+                                <li class="unidade__etapa">{{ etapa.etapa.nome }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+                <div class="container-detalhes">
+                    <p class="texto-preto"><b class="texto-azul">INEP: </b>{{ escola.cod_inep }}</p>
+
+                    <p class="texto-preto"><b class="texto-azul">Turmalina: </b>
+                        {% if escola.cod_turmalina %}
+                            {{ escola.cod_turmalina }}
+                        {% else %}
+                            Não informado
+                        {% endif %}
+                    </p>
+
+                    <p class="texto-preto"><b class="texto-azul">Total de alunos: </b>
+                        {% if escola.total_alunos %}
+                            {{ escola.total_alunos }}
+                        {% else %}
+                            Não informado
+                        {% endif %}
+                    </p>
+
+                    <p class="texto-preto"><b class="texto-azul">Tipificação: </b>
+                        {% if escola.tipificacao %}
+                            {{ escola.tipificacao }}
+                        {% else %}
+                            Não informado
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+
+            <div class="container-surface">
+                <nav class="container-navegacao-surface">
+                    <ul class="navegacao-surface-lista">
+                        <li class="navegacao-surface-item navegacao-surface-item-ativo">Turmas {{ ANO_LETIVO }} ({{ quantidade_turmas }})</li>
+                    </ul>
+                </nav>
+
+                {% include 'tecnologia/educacao-conectada/tablets/partials/_escola-turmas.html' %}
+            </div>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+{% endblock %}

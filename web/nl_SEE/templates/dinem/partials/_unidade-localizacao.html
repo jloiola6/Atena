@@ -1,0 +1,11 @@
+<div class="container-unidade-mapa oculto" data-nav-container="localizacao">
+    {% if endereco.google_map %}
+        <div data-container-mapa>
+            <span class="oculto" data-unidade-mapa>{{ endereco.google_map }}</span>
+        </div>
+
+    {% else %}
+        <h3 class="texto-medio texto-preto">Esta unidade não possui mapa cadastrado</h3>
+    {% endif %}
+
+</div>

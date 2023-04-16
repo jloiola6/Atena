@@ -1,0 +1,18 @@
+{% load static %}
+
+<div class="" data-nav-container="imagens">
+    <div class="container-cards-simples" >
+        {% for imagem in imagens %}
+            <div class="card-simples card-imagem" data-imagem-resultado="{{ imagem.descricao }}" data-modal-abrir="imagem-{{imagem.id}}">
+                <img src="{% static imagem.path_arquivo %}" alt="{{ imagem.descricao }}">
+
+                <div class="card-simples__descricao">
+                    <p class=" texto-azul texto-negrito">Descrição: <span class="texto-preto texto-normal">{{ imagem.descricao_simples }}</span></p>
+                </div>
+            </div>
+            {% include 'fundiaria/partials/_modal-imagem.html' %}
+        {% empty %}
+            <p class="texto-preto " data-sem-imagens>Nenhuma imagem cadastrada</p>
+        {% endfor %}
+    </div>
+</div>

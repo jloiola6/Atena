@@ -1,0 +1,303 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Cadastro de Link {% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/tecnologia/links/link-formulario.css' %}">
+{% endblock %}
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+
+<main>
+    <div class="container">
+        <nav class="container-navegacao">
+            <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a  class="  texto-azul" href="{% url 'tecnologia:index' %}">Tecnologia</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a  class="  texto-azul" href="{% url 'tecnologia:links-tabela' %}">Links</a>
+            <span class="texto-azul">&#62;</span>
+
+            {% if edicao %}
+                {% if link.tipo == 'Unidade Educacional' %}
+                    <a  class="  texto-azul" href="{% url 'tecnologia:link-perfil' %}?id={{ link.id }} ">{{ link.unidade_educacional }}</a>
+                    <span class="texto-azul">&#62;</span>
+                {% else %}
+                    <a  class="  texto-azul" href="{% url 'tecnologia:link-perfil' %}?id={{ link.id }} ">{{ link.departamento }}</a>
+                    <span class="texto-azul">&#62;</span>
+                {% endif %}
+
+                <span class="  texto-azul">Edição de link</span>
+            {% else %}
+                <span class="  texto-azul">Cadastro de link</span>
+            {% endif %}
+        </nav>
+
+        {% if edicao %}
+            <h1 class="titulo-pagina texto-azul">Edição de link</h1>
+        {% else %}
+            <h1 class="titulo-pagina texto-azul">Cadastro de link</h1>
+        {% endif %}
+
+        <p class="descricao texto-preto">Insira os dados do link</p>
+
+        <form class="container-surface container-formulario-link" method="POST">
+            {% csrf_token %}
+
+            <h2 class="texto-medio texto-azul">Dados do link</h2>
+
+            {% if edicao %}
+            <div class="formulario-grupo">
+                <label class="texto-azul label-campo" for="campo-fornecedor">Fornecedor</label>
+                <input class="campo-texto campo-medio" type="text" name="fornecedor" id="campo-fornecedor" readonly value="{{ link.fornecedor }}" data-selecao-fornecedor>
+            </div>
+
+            {% else %}
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-fornecedor">Fornecedor</label>
+                    <select name="fornecedor" class="campo-texto campo-medio" id="campo-fornecedor" data-selecao-fornecedor>
+                        {% if link.fornecedor == 'MEC' %}
+                            <option value="MEC" selected>MEC</option>
+                            <option value="SEE">SEE</option>
+                        {% else %}
+                            <option value="SEE" selected>SEE</option>
+                            <option value="MEC">MEC</option>
+                        {% endif %}
+                    </select>
+                </div>
+            {% endif %}
+
+
+            {% if edicao %}
+                <div class="formulario-grupo" data-selecao-item>
+                    <label class="texto-azul label-campo" for="campo-iplan">Item</label>
+                    <input class="campo-texto campo-grande" type="text" value="{{ link.item.contrato.numero_contrato }} - {{ link.item.numero_item }} - {{ link.item.descricao }}" name="item" id="campo-link" disabled>
+                </div>
+            {% else %}
+                <div class="formulario-grupo" data-selecao-item>
+                    <label id="label-campo-tipo" class="texto-azul label-campo" for="campo-item">Item</label>
+                    <select name="item" class="campo-texto campo-medio" id="campo-item" data-selecao2>
+                        {% for item in itens %}
+                            {% if item == link.item %}
+                                <option value="{{ item.id }}" selected>{{ item.contrato__numero_contrato }} - {{ item.numero_item }} - {{ item.descricao }}</option>
+                            {% else %}
+                                <option value="{{ item.id }}">{{ item.contrato__numero_contrato }} - {{ item.numero_item }} - {{ item.descricao }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            {% endif %}
+
+
+            {% if edicao %}
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-circuito" required>Nº Circuito</label>
+                    <input class="campo-texto campo-medio" type="text" value="{{ link.circuito }}" name="circuito" id="campo-circuito" maxlength="40" readonly>
+                </div>
+            {% else %}
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-circuito" required>Nº Circuito</label>
+                    <input class="campo-texto campo-medio" type="text" value="{{ link.circuito }}" name="circuito" id="campo-circuito" maxlength="40">
+                </div>
+            {% endif %}
+
+            <div class="formulario-grupo">
+                <label class="label-campo texto-azul" for="fieldset-tipo-unidade">Tipo de Unidade</label>
+                <fieldset id="fieldset-tipo-unidade">
+                    {% if link.tipo == 'Departamento SEE' %}
+                        <input type="radio" name="tipo" value="Unidade Educacional" id="radio-escolar" data-radio-escola>
+                        <label class="texto-preto" for="radio-escolar">Unidade Educacional</label>
+
+                        <input type="radio" name="tipo" value="Departamento SEE" id="radio-adm" checked data-radio-adm>
+                        <label class="texto-preto" for="radio-adm">Departamento SEE</label>
+                    {% else %}
+                        <input type="radio" name="tipo" value="Unidade Educacional" id="radio-escolar" checked data-radio-escola>
+                        <label class="texto-preto" for="radio-escolar">Unidade Educacional</label>
+
+                        <input type="radio" name="tipo" value="Departamento SEE" id="radio-adm" data-radio-adm>
+                        <label class="texto-preto" for="radio-adm">Departamento SEE</label>
+                    {% endif %}
+                </fieldset>
+            </div>
+
+            <div class="formulario-grupo" data-selecao-escola>
+                <label id="label-campo-unidade" class="texto-azul label-campo" for="campo-unidade">Unidade Educacional</label>
+                <select name="unidade" class="campo-texto campo-grande" id="campo-unidade" data-selecao2>
+                    <option></option>
+                    {% for endereco in enderecos %}
+                        {% if endereco.id == link.unidade_educacional.id %}
+                            <option value="{{ endereco.id }}" selected>{{endereco.escola__cod_inep}} - {{ endereco.escola__nome_escola }}</option>
+                        {% else %}
+                            <option value="{{ endereco.id }}">{{endereco.escola__cod_inep}} - {{ endereco.escola__nome_escola }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+
+                <div class="formulario-grupo">
+                    <label id="label-campo-fonte-edu" class="texto-azul label-campo" for="campo-fonte-edu">Fonte</label>
+                    <select name="fonte_edu" class="campo-texto campo-medio" id="campo-fonte-edu">
+                        <option value="300">300</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="formulario-grupo" data-selecao-administrativa>
+                <label id="label-campo-departamento" class="texto-azul label-campo " for="campo-departamento">Departamento</label>
+                <select name="departamento" class="campo-texto campo-grande " id="campo-departamento" data-selecao2>
+                    <option></option>
+                    {% for departamento in departamentos %}
+                        {% if departamento.id == link.departamento.id %}
+                            <option value="{{ departamento.id }}" selected>{{ departamento.sigla }} - {{ departamento.nome }}</option>
+                        {% else %}
+                            <option value="{{ departamento.id }}">{{ departamento.sigla }} - {{ departamento.nome }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+
+                <div class="formulario-grupo">
+                    <label id="label-campo-fonte-adm" class="texto-azul label-campo" for="campo-fonte-adm">Fonte</label>
+                    <select name="fonte_adm" class="campo-texto campo-medio " id="campo-fonte-adm">
+                            <option value="100">100</option>
+                            <option value="300">300</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="formulario-grupo">
+                <label class="texto-azul label-campo" for="campo-operadora">Operadora</label>
+                <select name="operadora" class="campo-texto campo-medio" id="campo-operadora">
+                    {% for item in operadoras %}
+                        {% if item == link.operadora %}
+                            <option value="{{ item }}" selected>{{ item }}</option>
+                        {% else %}
+                            <option value="{{ item }}">{{ item }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="formulario-grupo">
+                <label class="texto-azul label-campo" for="campo-tipo_banda">Tipo de Banda</label>
+                <select name="tipo_banda" class="campo-texto campo-medio" id="campo-tipo_banda">
+                    {% for item in tipo_bandas %}
+                        {% if item == link.tipo_banda %}
+                            <option value="{{ item }}" selected>{{ item }}</option>
+                        {% else %}
+                            <option value="{{ item }}">{{ item }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="formulario-grupo" >
+                <label class="texto-azul label-campo" for="campo-velocidade">Velocidade (MB/s)</label>
+                <select name="velocidade" class="campo-texto campo-medio" id="campo-velocidade" data-selecao-tipo>
+                    {% for item in velocidades %}
+                        {% if item == link.velocidade %}
+                            <option value="{{ item }}" selected>{{ item }}</option>
+                        {% else %}
+                            <option value="{{ item }}">{{ item }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+
+            {% if not edicao %}
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-status">Situação</label>
+                    <select name="status" class="campo-texto campo-medio" id="campo-status">
+                        {% if link.status == 'INATIVO' %}
+                            <option value="ATIVO">ATIVO</option>
+                            <option value="INATIVO" selected>INATIVO</option>
+                        {% else %}
+                            <option value="ATIVO" selected>ATIVO</option>
+                            <option value="INATIVO">INATIVO</option>
+                        {% endif %}
+                    </select>
+                </div>
+
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-data-ativo">Data de Ativação</label>
+                    <input id="campo-data-ativo" name='data_ativo' type="date" class="campo-pequeno campo-texto" required>
+                </div>
+            {% else %}
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-data-ativo">Data da Alteração</label>
+                    <input id="campo-data-ativo" name='data_alteracao' type="date" class="campo-pequeno campo-texto" required>
+                </div>
+            {% endif %}
+
+            <div class="formulario-grupo">
+                <label class="texto-azul label-campo" for="campo-iplan">IP LAN</label>
+                <input class="campo-texto campo-pequeno" type="text" value="{{ link.iplan }}" name="iplan" id="campo-iplan" maxlength="20" placeholder="Ex: 127.0.0.1">
+            </div>
+
+            <div class="formulario-grupo">
+                <label class="texto-azul label-campo" for="campo-ipwan">IP WAN</label>
+                <input class="campo-texto campo-pequeno" type="text" value="{{ link.ipwan }}" name="ipwan" id="campo-ipwan" maxlength="20" placeholder="Ex: 127.0.0.1">
+            </div>
+
+            <div class="formulario-grupo" data-container-firewall>
+                <label class="texto-azul label-campo" for="campo-farewall">IP Firewall</label>
+                {% for firewall in firewalls %}
+                    <div class="">
+                        <input class="campo-texto campo-pequeno" type="text" value="{{ firewall.ip_firewall }}" name="ip_firewall-{{ firewall.id }}" id="campo-ip-firewall" maxlength="50" placeholder="Ex: 127.0.0.1">
+                        <button class="botao botao--vermelho" data-botao-excluir>Excluir</button>
+                    </div>
+                {% endfor %}
+                <div>
+                    <button class="botao botao--azul" data-botao-adicionar>Adicionar</button>
+                </div>
+            </div>
+
+            <div class="formulario-grupo">
+                <label class="texto-azul label-campo" for="campo-observacao">Observação</label>
+                <textarea class="campo-texto campo-area" type="text" value="{{ link.observacao }}" name="observacao" id="campo-observacao">{{ link.observacao }}</textarea>
+            </div>
+
+            <div class="container-botoes">
+                {% if edicao %}
+                    <button class="botao botao--azul" data-modal-abrir="confirmar">Salvar</button>
+                {% else %}
+                    <button class="botao botao--azul" data-modal-abrir="confirmar">Cadastrar</button>
+                {% endif %}
+            </div>
+
+            <div class="modal oculto" data-modal="confirmar">
+                <div class="modal-conteudo modal-confirmacao">
+                    <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+
+                    {% if edicao %}
+                        <p class="texto-preto descricao">Tem certeza que deseja editar o link?</p>
+                    {% else %}
+                        <p class="texto-preto descricao">Tem certeza que deseja cadastrar o link?</p>
+                    {% endif %}
+
+                    <div class="container-botoes">
+                        <button class="botao--verde botao" type="submit">Salvar</button>
+                        <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+{% include 'partials/_rodape.html' %}
+
+<script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+<script src="{% static 'assets/js/module/select2.js' %}"></script>
+
+<script src="{% static 'assets/js/layout/tecnologia/link-formulario/controlaCampos.js' %}"></script>
+{% endblock %}

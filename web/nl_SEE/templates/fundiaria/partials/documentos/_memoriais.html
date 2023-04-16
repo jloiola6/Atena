@@ -1,0 +1,18 @@
+{% load static %}
+
+<div class="oculto" data-nav-container="memoriais">
+    <div class="container-cards-simples">
+        {% for memorial in memoriais %}
+            <div class="card-simples card-documento" data-documento-resultado="{{ memorial.descricao }}">
+                <div class="card-simples__descricao">
+                    <p title="{{memorial.descricao}}" class=" texto-azul texto-negritos">Descrição: <span class="texto-preto texto-normal">{{ memorial.descricao }}</span></p>
+                    <p class=" texto-azul texto-negritos">Formato: <span class="texto-preto texto-normal">{{ memorial.formato }}</span></p>
+                </div>
+
+                <a class="link" href="{% url 'core:index' %}{{memorial.caminho}}" target="_blank">Abrir</a>
+            </div>
+        {% empty %}
+            <p class="texto-preto " data-sem-documentos>Nenhum memorial descritivo cadastrado</p>
+        {% endfor %}
+    </div>
+</div>

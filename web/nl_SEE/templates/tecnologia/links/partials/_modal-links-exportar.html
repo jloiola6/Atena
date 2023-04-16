@@ -1,0 +1,69 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="exportar">
+    <form id="modal-conteudo" class="modal-conteudo" method="POST">
+        {% csrf_token %}
+        <h2 class="texto-grande texto-negrito texto-azul">Exportar dados</h2>
+        <p class="descricao texto-preto ">Insira o formato e campos que deseja exportar</p>
+
+        <div class="formulario-grupo">
+            <h3 class="texto-medio texto-azul">Formato</h3>
+
+            <fieldset id="exportar-fieldset-formatos">
+                <!-- <input type="radio" name="exportar-fieldset-formatos" value="excel" id="radio-excel" checked>
+                <label class="texto-preto" for="radio-excel">Excel</label> -->
+
+                <input type="radio" name="exportar-fieldset-formatos" value="pdf" id="radio-pdf" checked>
+                <label class="texto-preto" for="radio-pdf">PDF</label>
+            </fieldset>
+        </div>
+
+        <!-- <div class="formulario-grupo">
+            <h3 class="texto-medio texto-azul">Campos</h3>
+
+            <div>
+                <input type="checkbox" name="circuito" id="exportar-campo-circuito" checked>
+                <label class="texto-preto" for="exportar-campo-circuito">N° Circuito</label>
+            </div>
+
+            <div>
+                <input type="checkbox" name="unidade" id="exportar-campo-unidade" checked>
+                <label class="texto-preto" for="exportar-campo-unidade">Unidade / Departamento</label>
+            </div>
+
+            <div>
+                <input type="checkbox" name="tipo" id="exportar-campo-tipo" checked>
+                <label class="texto-preto" for="exportar-campo-tipo">Tipo</label>
+            </div>
+
+            <div>
+                <input type="checkbox" name="fornecedor" id="exportar-campo-fornecedor" checked>
+                <label class="texto-preto" for="exportar-campo-fornecedor">Fornecedor</label>
+            </div>
+
+            <div>
+                <input type="checkbox" name="operadora" id="exportar-campo-operadora" checked>
+                <label class="texto-preto" for="exportar-campo-operadora">Operadora</label>
+            </div>
+
+            <div>
+                <input type="checkbox" name="tipo_banda" id="exportar-campo-tipo-banda" checked>
+                <label class="texto-preto" for="exportar-campo-tipo-banda">Tipo de Banda</label>
+            </div>
+
+            <div>
+                <input type="checkbox" name="velocidade" id="exportar-campo-velocidade" checked>
+                <label class="texto-preto" for="exportar-campo-velocidade">MB/s</label>
+            </div>
+
+            <div>
+                <input type="checkbox" name="status" id="exportar-campo-status" checked>
+                <label class="texto-preto" for="exportar-campo-status">Status</label>
+            </div>
+        </div> -->
+
+        <div class="container-botoes">
+            <button type="POST" class="botao botao--verde">Exportar</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,484 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Cadastro de Organização {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/administracao/unidades/organizacao/organizacao-formulario.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:index' %}">Administração</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:unidades_educacionais' %}">Unidades</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:unidade-perfil' %}?inep={{ escola.cod_inep }}">{{ escola.nome_escola }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                {% if edicao %}
+                    <span class="  texto-azul">Edição de Organização</span>
+                {% else %}
+                    <span class="  texto-azul">Cadastro de Organização</span>
+                {% endif %}
+            </nav>
+
+            {% if edicao %}
+                <h1 class="titulo-pagina texto-azul">Edição de Organização Escolar</h1>
+            {% else %}
+                <h1 class="titulo-pagina texto-azul">Cadastro de Organização Escolar</h1>
+            {% endif %}
+
+            <p class="descricao texto-preto ">Insira os dados da Organização da Unidade</p>
+
+            <form class="container-surface container-formulario-organizacao" method="POST">
+                {% csrf_token %}
+
+                <h2 class="texto-medio texto-azul">Dados da Organização</h2>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-nome-escola">Escola</label>
+                    <input class="campo-texto campo-grande" type="text" value="{{ escola.nome_escola }}" id="campo-nome-escola" readonly>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo"  for="campo-site">Site / Blog</label>
+                    <input class="campo-texto campo-grande" type="text"  name="site" id="campo-site" value="{{ organizacao.site }}" placeholder="Ex: www.see.acre.gov.br" autocomplete="off" maxlength="50">
+                </div>
+
+                <!-- <div class="formulario-grupo">
+                    <label class="texto-azul label-campo"  for="campo-lingua">Língua em que o ensino é ministrada</label>
+                    <input class="campo-texto campo-grande" type="text"  name="lingua" id="campo-lingua" placeholder="Ex: Português" autocomplete="off" maxlength="50">
+                </div> -->
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="fieldset-organizacao-espacos">Compartilha espaços para atividades Escola-Comunidade</label>
+
+                    <fieldset id="fieldset-organizacao-espacos">
+                        {% if organizacao.espacos_escola_comunidade == 'Sim' or not edicao %}
+                            <input type="radio" name="fieldset-organizacao-espacos" value="Sim" id="organizacao-espacos-sim" checked>
+                        {% else %}
+                            <input type="radio" name="fieldset-organizacao-espacos" value="Sim" id="organizacao-espacos-sim">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="organizacao-espacos-sim">Sim</label>
+
+                        {% if organizacao.espacos_escola_comunidade == 'Não' %}
+                            <input type="radio" name="fieldset-organizacao-espacos" value="Não" id="organizacao-espacos-nao" checked>
+                        {% else %}
+                            <input type="radio" name="fieldset-organizacao-espacos" value="Não" id="organizacao-espacos-nao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="organizacao-espacos-nao">Não</label>
+                    </fieldset>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="fieldset-organizacao-utiliza-espacos">Utiliza espaços no entorno para atividades regulares</label>
+
+                    <fieldset id="fieldset-organizacao-utiliza-espacos">
+                        {% if organizacao.espacos_entorno == 'Sim' or not edicao %}
+                            <input type="radio" name="fieldset-organizacao-utiliza-espacos" value="Sim" id="organizacao-utiliza-espacos-sim" checked>
+                        {% else %}
+                            <input type="radio" name="fieldset-organizacao-utiliza-espacos" value="Sim" id="organizacao-utiliza-espacos-sim">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="organizacao-utiliza-espacos-sim">Sim</label>
+
+                        {% if organizacao.espacos_entorno == 'Não' %}
+                            <input type="radio" name="fieldset-organizacao-utiliza-espacos" value="Não" id="organizacao-espacos-nao" checked>
+                        {% else %}
+                            <input type="radio" name="fieldset-organizacao-utiliza-espacos" value="Não" id="organizacao-espacos-nao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="organizacao-utiliza-espacos-nao">Não</label>
+                    </fieldset>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo"  for="fieldset-organizacao-projeto">Projeto político pedagógico atualizada nos últimos 12 meses</label>
+
+                    <fieldset id="fieldset-organizacao-projeto">
+                        {% if organizacao.pedagogia_atualizada == 'Sim' or not edicao %}
+                            <input type="radio" name="fieldset-organizacao-projeto" value="Sim" id="organizacao-projeto-sim" checked>
+                        {% else %}
+                            <input type="radio" name="fieldset-organizacao-projeto" value="Sim" id="organizacao-projeto-sim" >
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="organizacao-projeto-sim">Sim</label>
+
+                        {% if organizacao.pedagogia_atualizada == 'Não' %}
+                            <input type="radio" name="fieldset-organizacao-projeto" value="Não" id="organizacao-projeto-nao" checked>
+                        {% else %}
+                            <input type="radio" name="fieldset-organizacao-projeto" value="Não" id="organizacao-projeto-nao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="organizacao-projeto-nao">Não</label>
+
+                        {% if organizacao.pedagogia_atualizada == 'Não possui' %}
+                            <input type="radio" name="fieldset-organizacao-projeto" value="Não possui" id="organizacao-projeto-nao-possui" checked>
+                        {% else %}
+                            <input type="radio" name="fieldset-organizacao-projeto" value="Não possui" id="organizacao-projeto-nao-possui">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="organizacao-projeto-nao-possui">A escola não possui projeto/proposta pedagógica</label>
+                    </fieldset>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo"  for="fieldset-organizacao-indigena">Educação escolar indígena</label>
+
+                    <fieldset id="fieldset-organizacao-indigena">
+                        {% if organizacao.educacao_indigena == 'Sim' or not edicao %}
+                            <input type="radio" name="fieldset-organizacao-indigena" value="Sim" id="organizacao-indigena-sim" checked>
+                        {% else %}
+                            <input type="radio" name="fieldset-organizacao-indigena" value="Sim" id="organizacao-indigena-sim">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="organizacao-indigena-sim">Sim</label>
+
+                        {% if organizacao.educacao_indigena == 'Não' %}
+                            <input type="radio" name="fieldset-organizacao-indigena" value="Não" id="organizacao-indigena-nao" checked>
+                        {% else %}
+                            <input type="radio" name="fieldset-organizacao-indigena" value="Não" id="organizacao-indigena-nao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="organizacao-indigena-nao">Não</label>
+                    </fieldset>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo"  for="fieldset-organizacao-processo">Realiza processo seletivo</label>
+
+                    <fieldset id="fieldset-organizacao-processo">
+                        {% if organizacao.processo_seletivo == 'Sim' or not edicao %}
+                            <input type="radio" name="fieldset-organizacao-processo" value="Sim" id="organizacao-processo-sim" checked>
+                        {% else %}
+                            <input type="radio" name="fieldset-organizacao-processo" value="Sim" id="organizacao-processo-sim">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="organizacao-processo-sim">Sim</label>
+
+                        {% if organizacao.processo_seletivo == 'Não' %}
+                            <input type="radio" name="fieldset-organizacao-processo" value="Não" id="organizacao-processo-nao" checked>
+                        {% else %}
+                            <input type="radio" name="fieldset-organizacao-processo" value="Não" id="organizacao-processo-nao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="organizacao-processo-nao">Não</label>
+                    </fieldset>
+                </div>
+
+                <div class="formulario-grupo" data-grupo-check>
+                    <label class="texto-azul label-campo">Formas de organização do ensino</label>
+
+                    <div>
+                        {% if 'Série/Ano (séries anuais)' in formas %}
+                            <input type="checkbox" name="checkbox-1" value="Série/Ano (séries anuais)" id="checkbox-serie" checked data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-1" value="Série/Ano (séries anuais)" id="checkbox-serie" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-serie">Série/Ano (séries anuais)</label>
+                    </div>
+
+                    <div>
+                        {% if 'Períodos semestrais' in formas %}
+                            <input type="checkbox" name="checkbox-2" value="Períodos semestrais" id="checkbox-periodos" checked data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-2" value="Períodos semestrais" id="checkbox-periodos" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-periodos">Períodos semestrais</label>
+                    </div>
+
+                    <div>
+                        {% if 'Ciclo(s) do ensino fundamental' in formas %}
+                            <input type="checkbox" name="checkbox-3" value="Ciclo(s) do ensino fundamental" id="checkbox-ciclos" checked data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-3" value="Ciclo(s) do ensino fundamental" id="checkbox-ciclos" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-ciclos">Ciclo(s) do ensino fundamental</label>
+                    </div>
+
+                    <div>
+                        {% if 'Grupos não seriados com base na idade ou competência (art. 23 LDB)' in formas %}
+                            <input type="checkbox" name="checkbox-4" value="Grupos não seriados com base na idade ou competência (art. 23 LDB)" id="checkbox-grupos" checked data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-4" value="Grupos não seriados com base na idade ou competência (art. 23 LDB)" id="checkbox-grupos" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-grupos">Grupos não seriados com base na idade ou competência (art. 23 LDB)</label>
+                    </div>
+
+                    <div>
+                        {% if 'Módulos' in formas %}
+                            <input type="checkbox" name="checkbox-5" value="Módulos" id="checkbox-modulos" checked data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-5" value="Módulos" id="checkbox-modulos" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-modulos">Módulos</label>
+                    </div>
+
+                    <div>
+                        {% if 'Alternância regular de períodos de estudos (proposta pedagógica de formação por alternância: tempo-escola e tempo-comunidade)' in formas %}
+                            <input type="checkbox" name="checkbox-6" value="Alternância regular de períodos de estudos (proposta pedagógica de formação por alternância: tempo-escola e tempo-comunidade)" id="checkbox-alternancia" checked data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-6" value="Alternância regular de períodos de estudos (proposta pedagógica de formação por alternância: tempo-escola e tempo-comunidade)" id="checkbox-alternancia" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-alternancia">Alternância regular de períodos de estudos (proposta pedagógica de formação por alternância: tempo-escola e tempo-comunidade)</label>
+                    </div>
+
+                </div>
+
+                <div class="formulario-grupo" data-grupo-check>
+                    <label class="texto-azul label-campo">Instrumentos, materiais socioculturais/pedagógicos em uso na escola</label>
+
+                    <div>
+                        {% if 'Acervo multimídia' in instrumentos %}
+                            <input type="checkbox" name="checkbox-7" value="Acervo multimídia" id="checkbox-multimidia" checked data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-7" value="Acervo multimídia" id="checkbox-multimidia" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-multimidia">Acervo multimídia</label>
+                    </div>
+
+                    <div>
+                        {% if 'Brinquedos para educação infantil' in instrumentos %}
+                            <input type="checkbox" name="checkbox-8" value="Brinquedos para educação infantil" id="checkbox-brinquedos" checked data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-8" value="Brinquedos para educação infantil" id="checkbox-brinquedos" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-brinquedos">Brinquedos para educação infantil</label>
+                    </div>
+
+                    <div>
+                        {% if 'Conjunto de materiais científicos' in instrumentos %}
+                            <input type="checkbox" name="checkbox-9" value="Conjunto de materiais científicos" id="checkbox-materiais" checked data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-9" value="Conjunto de materiais científicos" id="checkbox-materiais" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-materiais">Conjunto de materiais científicos</label>
+                    </div>
+
+                    <div>
+                        {% if 'Equipamento para amplificação e difusão de som/áudio' in instrumentos %}
+                            <input type="checkbox" name="checkbox-10" value="Equipamento para amplificação e difusão de som/áudio" id="checkbox-equipamento" checked data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-10" value="Equipamento para amplificação e difusão de som/áudio" id="checkbox-equipamento" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-equipamento">Equipamento para amplificação e difusão de som/áudio</label>
+                    </div>
+
+                    <div>
+                        {% if 'Instrumentos musicais para conjunto, banda/fanfarra e/ou aulas de música' in instrumentos %}
+                            <input type="checkbox" name="checkbox-11" value="Instrumentos musicais para conjunto, banda/fanfarra e/ou aulas de música" id="checkbox-instrumentos" checked data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-11" value="Instrumentos musicais para conjunto, banda/fanfarra e/ou aulas de música" id="checkbox-instrumentos" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-instrumentos">Instrumentos musicais para conjunto, banda/fanfarra e/ou aulas de música</label>
+                    </div>
+
+                    <div>
+                        {% if 'Jogos educativos' in instrumentos %}
+                            <input type="checkbox" name="checkbox-12" value="Jogos educativos" id="checkbox-jogos" data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-12" value="Jogos educativos" id="checkbox-jogos" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-jogos">Jogos educativos</label>
+                    </div>
+
+                    <div>
+                        {% if 'Materiais para atividades culturais e artísticas' in instrumentos %}
+                            <input type="checkbox" name="checkbox-13" value="Materiais para atividades culturais e artísticas" id="checkbox-materiais-culturais" checked data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-13" value="Materiais para atividades culturais e artísticas" id="checkbox-materiais-culturais" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-materiais-culturais">Materiais para atividades culturais e artísticas</label>
+                    </div>
+
+                    <div>
+                        {% if 'Materiais para prática desportiva e recreação' in instrumentos %}
+                            <input type="checkbox" name="checkbox-14" value="Materiais para prática desportiva e recreação" id="checkbox-materiais-recreacao" checked data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-14" value="Materiais para prática desportiva e recreação" id="checkbox-materiais-recreacao" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-materiais-recreacao">Materiais para prática desportiva e recreação</label>
+                    </div>
+
+                    <div>
+                        {% if 'Materiais pedagógicos para a educação escolar indígena' in instrumentos %}
+                            <input type="checkbox" name="checkbox-15" value="Materiais pedagógicos para a educação escolar indígena" id="checkbox-materiais-indigenas" checked data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-15" value="Materiais pedagógicos para a educação escolar indígena" id="checkbox-materiais-indigenas" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-materiais-indigenas">Materiais pedagógicos para a educação escolar indígena</label>
+                    </div>
+
+                    <div>
+                        {% if 'Materiais pedagógicos para a educação das relações étnico-raciais' in instrumentos %}
+                            <input type="checkbox" name="checkbox-16" value="Materiais pedagógicos para a educação das relações étnico-raciais" id="checkbox-materiais-etnicos" checked data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-16" value="Materiais pedagógicos para a educação das relações étnico-raciais" id="checkbox-materiais-etnicos" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-materiais-etnicos">Materiais pedagógicos para a educação das relações étnico-raciais</label>
+                    </div>
+
+                    <div>
+                        {% if 'Materiais pedagógicos para a educação do campo' in instrumentos %}
+                            <input type="checkbox" name="checkbox-17" value="Materiais pedagógicos para a educação do campo" id="checkbox-materiais-educacao" checked data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-17" value="Materiais pedagógicos para a educação do campo" id="checkbox-materiais-educacao" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-materiais-educacao">Materiais pedagógicos para a educação do campo</label>
+                    </div>
+
+                    <div>
+                        {% if 'Nenhum dos instrumentos lista dos brinquedos' in instrumentos %}
+                            <input type="checkbox" name="checkbox-18" value="Nenhum dos instrumentos lista dos brinquedos" id="checkbox-nenhum-instrumento" checked data-checkbox="NA">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-18" value="Nenhum dos instrumentos lista dos brinquedos" id="checkbox-nenhum-instrumento" data-checkbox="NA">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-nenhum-instrumento">Nenhum dos instrumentos lista dos brinquedos</label>
+                    </div>
+
+                </div>
+
+                <div class="formulario-grupo" data-grupo-check>
+                    <label class="texto-azul label-campo">Reserva de vagas por sistema de cotas para grupos específicos de alunos</label>
+
+                    <div>
+                        {% if 'Autodeclarado preto, pardo ou indígena (PPI)' in reserva %}
+                            <input type="checkbox" name="checkbox-19" value="Autodeclarado preto, pardo ou indígena (PPI)" id="checkbox-ppi" checked data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-19" value="Autodeclarado preto, pardo ou indígena (PPI)" id="checkbox-ppi" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-ppi">Autodeclarado preto, pardo ou indígena (PPI)</label>
+                    </div>
+
+                    <div>
+                        {% if 'Condição de renda' in reserva %}
+                            <input type="checkbox" name="checkbox-20" value="Condição de renda" id="checkbox-renda" checked data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-20" value="Condição de renda" id="checkbox-renda" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-renda">Condição de renda</label>
+                    </div>
+
+                    <div>
+                        {% if 'Oriundo de escola pública' in reserva %}
+                            <input type="checkbox" name="checkbox-21" value="Oriundo de escola pública" id="checkbox-escola-publica" checked data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-21" value="Oriundo de escola pública" id="checkbox-escola-publica" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-escola-publica">Oriundo de escola pública</label>
+                    </div>
+
+                    <div>
+                        {% if 'Pessoa com deficiência (PCD)' in reserva %}
+                            <input type="checkbox" name="checkbox-22" value="Pessoa com deficiência (PCD)" id="checkbox-pcd" checked data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-22" value="Pessoa com deficiência (PCD)" id="checkbox-pcd" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-pcd">Pessoa com deficiência (PCD)</label>
+                    </div>
+
+                    <div>
+                        {% if 'Outros grupos que não os listados' in reserva %}
+                            <input type="checkbox" name="checkbox-23" value="Outros grupos que não os listados" id="checkbox-outros-grupos" checked data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-23" value="Outros grupos que não os listados" id="checkbox-outros-grupos" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-outros-grupos">Outros grupos que não os listados</label>
+                    </div>
+
+                    <div>
+                        {% if 'Sem reservas de vagas para sistemas de cotas (ampla concorrência)' in reserva %}
+                            <input type="checkbox" name="checkbox-24" value="Sem reservas de vagas para sistemas de cotas (ampla concorrência)" id="checkbox-sem-cotas" checked data-checkbox="NA">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-24" value="Sem reservas de vagas para sistemas de cotas (ampla concorrência)" id="checkbox-sem-cotas" data-checkbox="NA">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-sem-cotas">Sem reservas de vagas para sistemas de cotas (ampla concorrência)</label>
+                    </div>
+
+                </div>
+
+                <div class="formulario-grupo" data-grupo-check>
+                    <label class="texto-azul label-campo">Orgãos colegiados em funcionamento na escola</label>
+
+                    <div>
+                        {% if 'Associação de pais' in colegiados %}
+                            <input type="checkbox" name="checkbox-25" value="Associação de pais" id="checkbox-associacao-pais" checked data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-25" value="Associação de pais" id="checkbox-associacao-pais" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-associacao-pais">Associação de pais</label>
+                    </div>
+
+                    <div>
+                        {% if 'Associação de pais e mestres' in colegiados %}
+                            <input type="checkbox" name="checkbox-26" value="Associação de pais e mestres" id="checkbox-associacao-pais-mestres" checked data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-26" value="Associação de pais e mestres" id="checkbox-associacao-pais-mestres" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-associacao-pais-mestres">Associação de pais e mestres</label>
+                    </div>
+
+                    <div>
+                        {% if 'Conselho escolar' in colegiados %}
+                            <input type="checkbox" name="checkbox-27" value="Conselho escolar" id="checkbox-conselho-escolar" checked data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-27" value="Conselho escolar" id="checkbox-conselho-escolar" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-conselho-escolar">Conselho escolar</label>
+                    </div>
+
+                    <div>
+                        {% if 'Grêmio estudantil' in colegiados %}
+                            <input type="checkbox" name="checkbox-28" value="Grêmio estudantil" id="checkbox-gremio" checked data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-28" value="Grêmio estudantil" id="checkbox-gremio" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-gremio">Grêmio estudantil</label>
+                    </div>
+
+                    <div>
+                        {% if 'Outros' in colegiados %}
+                            <input type="checkbox" name="checkbox-29" value="Outros" id="checkbox-outros-orgaos" checked data-checkbox="padrao">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-29" value="Outros" id="checkbox-outros-orgaos" data-checkbox="padrao">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-outros-orgaos">Outros</label>
+                    </div>
+
+                    <div>
+                        {% if 'Não há orgãos colegiados em funcionamento' in colegiados %}
+                            <input type="checkbox" name="checkbox-30" value="Não há orgãos colegiados em funcionamento" id="checkbox-sem-orgãos" checked data-checkbox="NA">
+                        {% else %}
+                            <input type="checkbox" name="checkbox-30" value="Não há orgãos colegiados em funcionamento" id="checkbox-sem-orgãos" data-checkbox="NA">
+                        {% endif %}
+                        <label class="texto-normal texto-preto" for="checkbox-sem-orgãos">Não há orgãos colegiados em funcionamento</label>
+                    </div>
+
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao botao--azul" data-botao-cadastrar data-modal-abrir="confirmar">Salvar</button>
+                </div>
+
+                <div class="modal oculto" data-modal="confirmar">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                        <p class="texto-preto descricao">Tem certeza que deseja cadastrar a organização na unidade {{ escola.nome_escola }}?</p>
+
+                        <div class="container-botoes">
+                            <button class="botao--verde botao" type="submit">Salvar</button>
+                            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/layout/administracao/infraestrutura-formulario/controlaCampos.js' %}"></script>
+{% endblock %}

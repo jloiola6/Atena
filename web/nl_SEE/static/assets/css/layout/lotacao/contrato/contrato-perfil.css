@@ -1,0 +1,17 @@
+/* Estilização da página de perfil de um contrato */
+
+.container-contrato-lotacao-servidor{
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-lotacao{
+    width: 100%;
+}
+
+.card-titulo-imagem{
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}

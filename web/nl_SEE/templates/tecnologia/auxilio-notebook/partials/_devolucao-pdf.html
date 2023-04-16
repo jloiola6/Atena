@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html lang="pt-bt">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Devolução Notebook - Auxilio</title>
+    </head>
+    <body>
+
+        <header>
+            <table>
+                <tr>
+                    <!-- <th><img id="img2" src="/home/suporte/Atena/nl_SEE/static/assets/img/detei.png" alt=""></th>
+                    <th><img id="img3" src="/home/suporte/Atena/nl_SEE/static/assets/img/ATENA-AZUL.svg" alt="Logo" style="width:120px;height:auto;"></th> -->
+                    <th><img id="img2" src="{{ url_logo }}" alt=""></th>
+                    <th class="direita"><img id="img3" src="{{ url_atena }}" alt="Logo"></th>
+                </tr>
+            </table>
+        </header>
+        <hr>
+        <h1 class="titulo">TERMO DE DEVOLUÇÃO DO NOTEBOOK - AUXÍLIO</h1>
+        <div class="texto">
+            <p>Eu, <b>{{ auxilio.usuario__nome }}</b>, de CPF <b>{{ auxilio.usuario__cpf }}</b>, ocupante do cargo/função <b>{{ auxilio.usuario__cargo }}</b>,
+            lotado em <b>{{ auxilio.usuario__lotacao__nome }}</b>, declaro e confirmo a devolução do aparelho Notebook a Secretaria de Estado de Educação,
+            Cultura e Esportes, em perfeitas condições de uso. Ciente de que na falta de algum acessório, deverei ressacir a Secretaria de Estado de Educação,
+            Cultura e Esportes, caso mesmo seja reivindicado.</p>
+
+            <div class="motivo">
+                <p><b>Configurações do Notebook:</b></p>
+                <p style="text-decoration: underline;">• {{ descricao }}</p>
+                <br>
+
+                <p><b>Motivo da devolução:</b></p>
+                <p style="text-decoration: underline;">• {{ motivo }}</p>
+                <br>
+            </div>
+
+            <p>Eu, <b>{{ nome }}</b>, declaro que recebi o Notebook com os seguintes acessórios:</p><br>
+
+            <table class="tabela-identificacao" style="text-align: center;">
+                <tbody>
+                    <tr>
+                        <td class="principal"><b>Caixa do Notebook</b></td><td>
+                        {% if caixa_notebook == '1' %}
+                            [<span>X</span>] SIM </td><td>[<span class="invisivel">iiii</span>] NÃO</td>
+                        {% else %}
+                            [<span class="invisivel">iiii</span>] SIM </td><td>[<span>X</span>] NÃO</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td class="principal"><b>Nota Fiscal</b></td><td>
+                        {% if nota_notebook == '1' %}
+                            [<span>X</span>] SIM </td><td>[<span class="invisivel">iiii</span>] NÃO</td>
+                        {% else %}
+                            [<span class="invisivel">iiii</span>] SIM </td><td>[<span>X</span>] NÃO</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td class="principal"><b>Notebook</b></td><td>
+                        {% if notebook == '1' %}
+                            [<span>X</span>] SIM </td><td>[<span class="invisivel">iiii</span>] NÃO</td>
+                        {% else %}
+                            [<span class="invisivel">iiii</span>] SIM </td><td>[<span>X</span>] NÃO</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td class="principal"><b>Carregador</b></td><td>
+                        {% if carregador == '1' %}
+                            [<span>X</span>] SIM </td><td>[<span class="invisivel">iiii</span>] NÃO</td>
+                        {% else %}
+                            [<span class="invisivel">iiii</span>] SIM </td><td>[<span>X</span>] NÃO</td>
+                        {% endif %}
+                    </tr>
+
+                </tbody>
+            </table>
+
+
+            <br><br><br>
+
+            <div style="text-align: center;">
+                <table>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                            <p>Rio Branco, _______/_______/_________</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <br><br><br><br>
+
+        <div class="assinatura">
+            <table>
+                <tr>
+                    <td>
+                        <p><b>___________________________________________</b></p>
+                        <p>Assinatura do usuário(a)</p>
+                        <p class="invisivel">i</p>
+                    </td>
+                    <td>
+                        <p><b>___________________________________________</b></p>
+                        <p>Assinatura do responsável no setor</p>
+                        <p style="font-size: 14px;">recebi em: _____/_____/_______</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <style>
+            @page{
+                margin: 1cm;
+            }
+
+            .dados{
+                padding-top: 5px;
+                padding-bottom: 5px;
+            }
+
+            #img2{
+                width: 100%;
+                height: auto;
+            }
+
+            #img3{
+                width: 120px;
+                height: auto;
+            }
+
+            .direita{
+                text-align: right;
+            }
+
+            .titulo{
+                padding-top: 20px;
+                text-align: center;
+                font-family: sans-serif;
+                font-size: 16px;
+            }
+
+            .tabela-identificacao{
+                border: 1px black solid;
+                padding: 3px;
+                font-family:sans-serif;
+                font-size: 12px;
+            }
+
+            .conteudo{
+                padding-left: 20px;
+            }
+
+            .invisivel{
+                color: white;
+            }
+
+            .texto{
+                text-align: justify;
+                font-family: sans-serif;
+                font-size: 12px;
+            }
+
+            .assinatura{
+                text-align: center;
+                font-weight: normal;
+                font-size: 10px;
+            }
+
+            .principal{
+                font-size: 16px;
+                width: 50%;
+            }
+
+        </style>
+
+    </body>
+</html>

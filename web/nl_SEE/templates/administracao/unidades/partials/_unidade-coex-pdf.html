@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dados COEX</title>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <th><img id="img1" src="{{ url_logo }}" width='550px' alt=""></th>
+                <th class="direita"><img id="img2" src="{{ url_atena }}" width='120px' alt=""></th>
+                <!-- <th><img src="C:\Users\gustavo.lima\Documents\Programação\Atena\nl_SEE\static\assets\img\divisao-infraestrutura-redes.png" alt=""></th>
+                <th><img src="C:\Users\gustavo.lima\Documents\Programação\Atena\nl_SEE\static\assets\img\ATENA-AZUL.svg" width="120px" alt=""></th> -->
+            </tr>
+        </table>
+        <hr>
+        <br><br>
+        <table class="tabela-unidade">
+            <tr>
+                <td class="titulo"> <b>Unidade Educacional</b> </td>
+            </tr>
+        </table>
+        <table class="tabela-unidade">
+            <tr>
+                <td><b> INEP:</b> {{endereco.escola.cod_inep}}</td>
+                <td><b> Escola:</b> {{endereco.escola.nome_escola}}</td>
+                <td><b> Dependência:</b> {{endereco.escola.dependencia_adm}}</td>
+            </tr>
+        </table>
+        <table class="tabela-unidade">
+            <tr>
+                <td><b>Rua:</b> {{endereco.rua}}</td>
+                <td><b>Bairro:</b> {{endereco.bairro}}</td>
+                <td><b>Número:</b> {{endereco.numero}}</td>
+                <td><b>Município:</b> {{endereco.municipio}}</td>
+            </tr>
+        </table>
+        <br>
+        <table class="tabela-unidade">
+            <td class="titulo"><b>COEX</b></td>
+        </table>
+        <table class="tabela-unidade">
+            <tr>
+                {% if consorcio %}
+                    <td><b>Nome Empresarial:</b> {{consorcio.nome_consorcio}}</td>
+                    <td><b>CNPJ:</b> {{consorcio.cnpj}}</td>
+                    <td><b>Tipo:</b> Consórcio</td>
+
+                {% else %}
+                    <td><b>Nome Empresarial:</b> {{coex.nome_empresarial}}</td>
+                    <td><b>CNPJ:</b> {{coex.cnpj}}</td>
+                    <td><b>Tipo:</b> Comite</td>
+                {% endif %}
+            </tr>
+        </table>
+
+        <br>
+        <table class="tabela-unidade">
+            {% if consorcio %}
+                <td class="titulo"><b>Equipe Consórcio</b></td>
+            {% else %}
+                <td class="titulo"><b>Equipe Comitê</b></td>
+            {% endif %}
+        </table>
+        <table class="tabela-unidade">
+            <tr>
+                <td><b>Presidente: </b>{{presidente.servidor__nome}}</td>
+                <td><b>Tesoureiro: </b>{{tesoureiro.servidor__nome}}</td>
+            </tr>
+        </table>
+        <table class="tabela-unidade">
+            <tr>
+                {% if secretario1.nome %}
+                    <td><b>Secretário 1: </b>{{secretario1.nome}}</td>
+                {% else %}
+                    <td><b>Secretário 1: </b>Não informado</td>
+                {% endif %}
+
+                {% if secretario2.nome %}
+                    <td><b>Secretário 2: </b>{{secretario2.nome}}</td>
+                {% else %}
+                    <td><b>Secretário 2: </b>Não informado</td>
+                {% endif %}
+            </tr>
+        </table>
+        <table class="tabela-unidade">
+            <tr>
+                {% if secretario3.nome %}
+                    <td><b>Secretário 3: </b>{{secretario3.nome}}</td>
+                {% else %}
+                    <td><b>Secretário 3: </b>Não informado</td>
+                {% endif %}
+                {% if secretario4.nome %}
+                    <td><b>Secretário 4: </b>{{secretario4.nome}}</td>
+                {% else %}
+                    <td><b>Secretário 4: </b>Não informado</td>
+                {% endif %}
+            </tr>
+        </table>
+
+    </body>
+
+    <style>
+        .direita{
+            text-align: right;
+        }
+
+        .tabela-unidade{
+            border: 1px black solid;
+            padding-top: 4px;
+            padding-left: 2px;
+            font-size: 12px;
+        }
+        .titulo{
+            text-align: center;
+            font-size: 14px;
+            background-color: beige;
+        }
+
+    </style>
+</html>

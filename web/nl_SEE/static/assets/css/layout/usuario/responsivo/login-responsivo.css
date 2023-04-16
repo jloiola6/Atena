@@ -1,0 +1,21 @@
+@media screen and (max-width: 480px), (max-height: 480px) and (orientation: landscape) {
+
+    .container-login{
+        background-image: none;
+        box-shadow: none;
+    }
+
+    .campo-texto-login{
+        font-size: 16px;
+        height: 40px;
+        width: 70%;
+    }
+
+    .container-imagens-login{
+        gap: 24px
+    }
+
+    .formulario-login .container-botoes .botao{
+        width: 70%;
+    }
+}

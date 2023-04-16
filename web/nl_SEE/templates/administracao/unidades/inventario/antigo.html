@@ -1,0 +1,52 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Título da Página {% endblock %}
+
+{% load static %}
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+
+<main>
+    <div class="container">
+        <nav class="container-navegacao">
+            <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+            <span class="texto-azul">&#62;</span>
+
+            <span class="  texto-azul">Nome da Página</span>
+        </nav>
+
+        <h1 class="titulo-pagina texto-azul">Nome da Página (caso tenha)</h1>
+        <p class="descricao texto-preto">Descrição (caso tenha)</p>
+
+        <div class="container-surface" style="margin-top: 16px;">
+            <h2 class="texto-medio texto-azul">Título do Container</h2>
+
+            <div style="display: flex; flex-direction: column; margin-top: 16px; row-gap: 8px;">
+                <p class=" texto-azul texto-negrito ">Descrição: <span class="texto-preto texto-normal">Dado</span></p>
+                <p class=" texto-azul texto-negrito">Descrição: <span class="texto-preto texto-normal">Dado</span></p>
+
+                <div class="container-botoes" style="margin-top: 8px;">
+                    <a href="#"><button class="botao botao--azul">Botão</button></a>
+                </div>
+            </div>
+
+            <div style="margin-top: 16px;">
+                <h2 class="texto-medio texto-azul">Instruções</h2>
+
+                <ul style="list-style-type: disc; margin-left: 24px;">
+                    <li class="descricao">A margem superior do container deve ser de 16px caso a página aja um título principal e de 24px caso não aja;</li>
+                    <li class="descricao texto-negrito">Não utilizar CSS inline;</li>
+                    <li class="descricao">O css inline utilizado neste arquivo deve ser utilizado como referencia para a estilização em arquivos externos;</li>
+                    <li class="descricao">As margens são padronizadas com multiplos de 8 (8px, 16px, 32px);</li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+</main>
+
+{% include 'partials/_rodape.html' %}
+
+{% endblock %}

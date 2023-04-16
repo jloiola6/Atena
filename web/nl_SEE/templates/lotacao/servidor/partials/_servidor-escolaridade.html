@@ -1,0 +1,62 @@
+{% load static %}
+
+<div class="servidor-escolaridade oculto" data-nav-container="escolaridade">
+
+    {% if escolaridade_lotus %}
+        <div class="container-cards-contratos">
+            {% for escolaridade in escolaridade_lotus %}
+                <div class="card-simples">
+                    <h4 class="card-simples__titulo texto-azul">{{ escolaridade.instituicao_ensino }}<img align="right" src="{% static 'assets/img/lotus.png' %}" alt="Lotus"></h4>
+                    <div class="card-simples__descricao" >
+                        <p class=" texto-azul texto-negrito">Formação: <span class="texto-preto texto-normal">{{ escolaridade.tipo_formacao }}</span></p>
+                        <p class=" texto-azul texto-negrito">Curso: <span class="texto-preto texto-normal">{{ escolaridade.nome_curso }}</span></p>
+
+                        {% if escolaridade.ano_conclusao %}
+                            <p class=" texto-azul texto-negrito">Situação: <span class="texto-preto texto-normal">Concluído</span></p>
+                            <p class=" texto-azul texto-negrito">Ano de Conclusão: <span class="texto-preto texto-normal">{{ escolaridade.ano_conclusao }}</span></p>
+                        {% endif %}
+                    </div>
+                    <p class="descricao texto-cinza texto-negrito">Dados importados via Lotus</p>
+                </div>
+                <br>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if escolaridade_atena %}
+        <div class="container-cards-contratos">
+            {% for escolaridade in escolaridade_atena %}
+                <div class="card-simples">
+                    {% if escolaridade.formacao == "Ensino Médio" or escolaridade.formacao == "Ensino Médio - Magistério" %}
+                        <h4 class="card-simples__titulo texto-azul">{{ escolaridade.escola }}</h4>
+                    {% else %}
+                        <h4 class="card-simples__titulo texto-azul">{{ escolaridade.instituicao }}</h4>
+                    {% endif %}
+
+                    <div class="card-simples__descricao" >
+                        <p class=" texto-azul texto-negrito">Formação: <span class="texto-preto texto-normal">{{ escolaridade.formacao }}</span></p>
+                        {% if escolaridade.curso != None %}
+                            <p class=" texto-azul texto-negrito">Curso: <span class="texto-preto texto-normal">{{ escolaridade.curso }}</span></p>
+                        {% endif %}
+                        <p class=" texto-azul texto-negrito">Situação: <span class="texto-preto texto-normal">{{ escolaridade.situacao }}</span></p>
+                        {% if escolaridade.situacao == "Concluído" %}
+                            <p class=" texto-azul texto-negrito">Data de Conclusão: <span class="texto-preto texto-normal">{{ escolaridade.data_conclusao }}</span></p>
+                        {% endif %}
+                    </div>
+                </div>
+                <br>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if not escolaridade_lotus and not escolaridade_atena %}
+        <h3 class="texto-medio texto-preto">Sem escolaridade informada.</h3>
+    {% endif %}
+
+    {% if permissao.editar == 1 %}
+        <div>
+            <a class="botao botao--azul" href="{% url 'lotacao:cadastro-escolaridade' %}?id={{ servidor.id }}">Adicionar</a>
+        </div>
+    {% endif %}
+
+</div>

@@ -1,0 +1,105 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+    Cadastro de Ocorrencia Funcional
+{% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% comment %} {% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/lotacao/contrato/vdp-funcional.css' %}">
+{% endblock %} {% endcomment %}
+
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+
+ <main>
+     <div class="container">
+        <nav class="container-navegacao">
+            <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'lotacao:index' %}" class=" texto-azul">Gestão de Pessoas</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a class="  texto-azul" href="{% url 'lotacao:contratos' %}">Contratos</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a class="  texto-azul" href="{% url 'lotacao:servidor-perfil' %}?id={{ servidor.id }}">{{ servidor.nome }}</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a class="  texto-azul" href="{% url 'lotacao:contrato-perfil' %}?id_contrato={{ contrato.id }}">Dígito n° {{ contrato.digito }}</a>
+            <span class="texto-azul">&#62;</span>
+
+            <span class="  texto-azul">Cadastro da V.D.P</span>
+        </nav>
+
+        <h1 class="titulo-pagina texto-azul">Cadastro de Prêmio</h1>
+        <p class="texto-preto  descricao">Insira os dados da prêmio</p>
+        <form method="POST" class="container-surface formulario-ocorrencia">
+            {% csrf_token %}
+            <h2 class="texto-azul texto-medio"></h2>
+
+            <div class="formulario-grupo">
+                <label class="label-campo texto-azul" for="campo-Contrato">Dígito N°</label>
+                <input class="campo-pequeno campo-texto" value="{{ contrato.digito }}" type="text" name="" id="campo-Contrato" readonly>
+            </div>
+
+            <div class="formulario-grupo">
+                <label class="texto-azul label-campo" for="campo-ano_periodo">Período de Pagamento</label>
+                <select data-selecao2  name="ano_periodo" id="campo-ano_periodo" class="campo-texto campo-grande">
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                </select>
+            </div>
+
+            <div class="formulario-grupo">
+                <label class="texto-azul label-campo" for="campo-ano_verificacao">Ano de Verificação</label>
+                <select data-selecao2  name="ano_verificacao" id="campo-ano_verificacao" class="campo-texto campo-grande">
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                </select>
+            </div>
+
+            <div class="formulario-grupo">
+                <label class="label-campo texto-azul" for="campo-valor_bruto">Valor Bruto</label>
+                <input class="campo-pequeno campo-texto" type="text" name="valor_bruto" id="campo-valor_bruto"  maxlength="30" autocomplete="off" data-mascara="moeda">
+            </div>
+
+            <div class="formulario-grupo">
+                <label class="label-campo texto-azul" for="campo-valor_liquido">Valor Líquido</label>
+                <input class="campo-pequeno campo-texto" type="text" name="valor_liquido" id="campo-valor_liquido"  maxlength="30" autocomplete="off" data-mascara="moeda">
+            </div>
+
+            <div class="container-botoes">
+                <button class="botao botao--azul" data-modal-abrir="confirmar">Salvar</button>
+            </div>
+
+            <div class="modal oculto" data-modal="confirmar">
+                <div class="modal-conteudo modal-confirmacao">
+                    <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                    <p class="texto-preto descricao">Tem certeza que deseja salvar uma nova prêmio?</p>
+
+                    <div class="container-botoes">
+                        <button class="botao--verde botao" type="submit">Salvar</button>
+                        <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+     </div>
+ </main>
+
+
+ {% include 'partials/_rodape.html' %}
+
+ <script src="{% static 'assets/js/module/select2.js' %}"></script>
+ <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+ <script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+{% endblock %}

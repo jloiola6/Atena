@@ -1,0 +1,41 @@
+<div class="modal oculto" data-modal="recolher">
+    <form id="modal-conteudo" class="modal-conteudo" method="POST">
+        {% csrf_token %}
+        <div class="modal-filtros-titulo">
+            <h2 class="texto-grande texto-negrito texto-azul">Recolher Equipamento</h2>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-equipamento">Equipamento Recolhido</label>
+            <select data-selecao2 name="equipamento" id="campo-equipamento"
+                class="campo-texto campo-grande" data-selecao-equipamento>
+                {% for opcao in opcao_equipamentos %}
+                    <option value="{{ opcao }}">{{ opcao }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="formulario-grupo oculto" data-selecao-outros>
+            <label class="texto-azul label-campo" for="campo-outros">Outros</label>
+            <input class="campo-texto campo-grande" type="text" name="outros"
+                id="campo-outros">
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-serie">Número de Série</label>
+            <input class="campo-texto campo-grande" type="text" name="serie"
+                id="campo-serie" required>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-patrimonio">Patrimônio</label>
+            <input class="campo-texto campo-grande" type="text" name="patrimonio"
+                id="campo-patrimonio" required>
+        </div>
+
+        <div class="container-botoes">
+            <button type="submit" class="botao botao--verde" name="btn-recolher" value="recolher">Confirmar</button>
+            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+        </div>
+    </form>
+</div>

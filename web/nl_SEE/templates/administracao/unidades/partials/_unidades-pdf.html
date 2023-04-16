@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exportar Unidades Educacionais</title>
+</head>
+<body>
+    <header>
+        <table>
+            <tr>
+                <td><img class="header--brasao" src="{{ url_logo }}" alt="Logo"></td>
+                <td></td>
+                <td class="direita"><img src="{{ url_atena }}" alt="Logo" style="width:120px;height:auto;"></td>
+                <!-- <td><img class="header--brasao" src="C:\Users\joao.soares\Documents\code\Atena\nl_SEE\static\assets\img\servidores-lotados.png" alt="Logo"></td>
+                <td></td>
+                <td><img src="C:\Users\joao.soares\Documents\code\Atena\nl_SEE\static\assets\img\ATENA-AZUL.svg" alt="Logo" style="width:120px;height:auto;"></td> -->
+            </tr>
+        </table>
+    </header>
+
+    <hr>
+    <br><br>
+
+    <table class="tabela tabela-unidades">
+        <thead>
+            <tr class="cabecalho-coluna">
+                <th class="inep">INEP</th>
+                <th class="">Nome</th>
+                <th class="municipio">Município</th>
+                <th class="regiao">Regional</th>
+                <th class="zona">Zona</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for endereco in enderecos %}
+                <tr>
+                    <td  class="inep">{{ endereco.escola__cod_inep }}</td>
+                    <td>{{ endereco.escola__nome_escola }}</td>
+                    <td class="municipio">{{ endereco.municipio }}</td>
+                    <td class="regiao">{{ endereco.regiao }}</td>
+                    <td class="zona">{{ endereco.tipo_localizacao }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <style>
+        @page{
+            size: landscape;
+            margin: 1cm;
+        }
+
+        #img1{
+            width: 100%;
+            height: auto;
+        }
+
+        #img2{
+            width: 120px;
+            height: auto;
+        }
+
+        .direita{
+            text-align: right;
+        }
+
+        .tabela-unidades{
+            border: 1px solid black;
+            padding-top: 4px;
+            padding-left: 2px;
+            padding-right: 2px;
+            font-family: sans-serif;
+            font-size: 12px;
+        }
+
+        .inep{
+            width: 8%;
+            text-align: center;
+        }
+
+        .municipio{
+            width: 14%;
+            text-align: center;
+        }
+
+        .regiao{
+            width: 12%;
+            text-align: center;
+        }
+
+        .zona{
+            width: 12%;
+            text-align: center;
+        }
+
+        .cabecalho-coluna{
+            font-size: 14px;
+            font-weight: bold;
+        }
+    </style>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+<div class="oculto" data-nav-container="links">
+    {% if links %}
+        <div class="lista-menus">
+            <div class="menu-pai" data-accordeon-pai="links" data-accorderon-ativo="false" style="border-left-style: solid; border-left-color: var(--primary-color); border-left-width: 12px;">
+                <h3 class="texto-medio texto-azul">Links de Internet ({{ qtd_links }})</h3>
+                <span class="icone icone-medio icone-azul">expand_more</span>
+            </div>
+            {% for link in links %}
+                <div class="menu-pai menu-filho menu-eja" data-accordeon-filho="links" data-accordeon-pai="{{ link.1.id }}" data-accorderon-ativo="false">
+                    <h4 class="texto-medio texto-azul">Link {{ link.0 }}</h4>
+                    <span class="icone icone-medio icone-azul">expand_more</span>
+                </div>
+
+                <div class="menu-pai menu-filho" data-accordeon-filho="{{ link.1.id }}" data-accorderon-ativo="false">
+                    <div class="container-detalhes">
+                        <p class=" texto-azul texto-negrito">Fornecedor: <span class="texto-preto texto-normal">{{ link.1.fornecedor }}</span></p>
+                        <p class=" texto-azul texto-negrito">N° Circuito: <span class="texto-preto texto-normal">{{ link.1.circuito }}</span></p>
+
+                        {% if link.autenticacao %}
+                            <p class=" texto-azul texto-negrito">Autenticação: <span class="texto-preto texto-normal">{{ link.1.autenticacao }}</span></p>
+                        {% endif %}
+
+                        <p class=" texto-azul texto-negrito ">Tipo de alocação: <span class="texto-preto texto-normal">{{ link.1.tipo }}</span></p>
+                        <p class=" texto-azul texto-negrito ">Fonte: <span class="texto-preto texto-normal">{{ link.1.fonte }}</span></p>
+                        <p class=" texto-azul texto-negrito">Operadora: <span class="texto-preto texto-normal">{{ link.1.operadora }}</span></p>
+                        <p class=" texto-azul texto-negrito">Tipo de Banda: <span class="texto-preto texto-normal">{{ link.1.tipo_banda }}</span></p>
+                        <p class=" texto-azul texto-negrito">Velocidade: <span class="texto-preto texto-normal">{{ link.1.velocidade }}</span></p>
+                        <p class=" texto-azul texto-negrito">Data de Ativação: <span class="texto-preto texto-normal">{{ link.1.data_ativo }}</span></p>
+                        <p class=" texto-azul texto-negrito">IP LAN: <span class="texto-preto texto-normal">{{ link.1.iplan }}</span></p>
+                        <p class=" texto-azul texto-negrito">IP WAN: <span class="texto-preto texto-normal">{{ link.1.ipwan }}</span></p>
+
+                        {% for firewall in firewalls %}
+                            <p class=" texto-azul texto-negrito">IP Firewall: <span class="texto-preto texto-normal">{{ firewall.1.ip_firewall }}</span></p>
+                        {% endfor %}
+
+
+                        <p class=" texto-azul texto-negrito container-detalhes-bloco">Observação: <span class="texto-preto texto-normal">{{ link.1.observacao }}</span></p>
+
+                        <p class=" texto-azul texto-negrito container-detalhes-bloco">Status: <span class="texto-preto texto-normal">{{ link.1.status }}</span></p>
+                        {% if link.status == 'INATIVO' %}
+                            <p class=" texto-azul texto-negrito">Usuário: <span class="texto-preto texto-normal">{{ link.1.user_inativou }}</span></p>
+                            <p class=" texto-azul texto-negrito">Data de Inativação: <span class="texto-preto texto-normal">{{ link.1.data_inativo }}</span></p>
+                            <p class=" texto-azul texto-negrito">Motivo: <span class="texto-preto texto-normal">{{ link.1.motivo }}</span></p>
+                        {% endif %}
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="container-botoes">
+            <form method= 'POST'>
+                {% csrf_token %}
+                <button class="botao botao--azul" type='submit' name='btn-links' value= 'exportar-links-{{ link.1.id }}'>Exportar</button>
+            </form>
+        </div>
+    {% else %}
+        <span class="texto-medio texto-preto">Esta unidade ainda não possui Link cadastrado.</span>
+    {% endif %}
+</div>

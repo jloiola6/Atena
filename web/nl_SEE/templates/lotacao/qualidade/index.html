@@ -1,0 +1,71 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Qualidade de Vida {% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a href="{% url 'core:index' %}" class="texto-azul">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a href="{% url 'lotacao:index' %}" class="texto-azul">Gestão de Pessoas</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="texto-azul">Qualidade de Vida</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Qualidade de Vida</h1>
+
+            <div class="container-cards">
+                {% if 7 in permissoes %}
+                    <a href="{% url 'lotacao:atendimento-formulario' %}">
+                        <div class="card-menu">
+                            {% include 'partials/icones-cards/lotacao/qualidade/adicionar-atendimento.svg' %}
+
+                            <h2 class="card-titulo">Adicionar Atendimento</h2>
+                        </div>
+                    </a>
+                {% endif %}
+
+                <a href="{% url 'lotacao:aniversarios' %}">
+                    <div class="card-menu">
+                        {% include 'partials/icones-cards/lotacao/qualidade/aniversarios.svg' %}
+
+                        <h2 class="card-titulo">Aniversários</h2>
+                    </div>
+                </a>
+
+                <a href="{% url 'lotacao:agendamentos' %}">
+                    <div class="card-menu">
+                        {% include 'partials/icones-cards/lotacao/qualidade/agendamentos.svg' %}
+
+                        <h2 class="card-titulo">Agendamentos</h2>
+                    </div>
+                </a>
+
+                <a href="{% url 'lotacao:relatorios' %}">
+                    <div class="card-menu">
+                        {% include 'partials/icones-cards/lotacao/qualidade/relatorios.svg' %}
+
+                        <h2 class="card-titulo">Relatórios</h2>
+                    </div>
+                </a>
+
+                <a href="{% url 'lotacao:lista-espera' %}">
+                    <div class="card-menu">
+                        {% include 'partials/icones-cards/lotacao/qualidade/lista-espera.svg' %}
+
+                        <h2 class="card-titulo">Lista de Espera</h2>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+{% endblock %}

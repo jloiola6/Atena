@@ -1,0 +1,176 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} {{ aluno.nome }} {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/dinem/aluno-perfil.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'dinem:index' %}">N.E.M.</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'dinem:unidade-perfil' %}?inep={{ turma.endereco.escola.cod_inep }}">{{ turma.endereco.escola.nome_escola }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'dinem:turma-perfil' turma.id %}">{{ turma.nome }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">{{ aluno.nome }}</span>
+            </nav>
+
+            <div class="container-surface">
+                <h1 class="texto-medio texto-azul">{{ aluno.nome }}</h1>
+                <p class="texto-preto descricao">{{ turma.endereco.escola.nome_escola }} • {{ turma.etapa }} • {{ turma.nome }}</p>
+
+                <div class="container-detalhes">
+                    {% if aluno.cpf %}
+                        <p class=" texto-negrito texto-azul ">CPF: <span class="texto-preto texto-normal">{{ cpf_aluno }}</span></p>
+                    {% endif %}
+                    <p class=" texto-negrito texto-azul ">Data de Nascimento: <span class="texto-preto texto-normal">{{ aluno.nascimento }}</span></p>
+                    <p class=" texto-negrito texto-azul ">Nacionalidade: <span class="texto-preto texto-normal">{{ aluno.nacionalidade }}</span></p>
+                    <p class=" texto-negrito texto-azul ">Naturalidade: <span class="texto-preto texto-normal">{{ aluno.naturalidade }}</span></p>
+                    <p class=" texto-negrito texto-azul ">Pai: <span class="texto-preto texto-normal">{{ aluno.nome_pai }}</span></p>
+                    <p class=" texto-negrito texto-azul ">Mãe: <span class="texto-preto texto-normal">{{ aluno.nome_mae }}</span></p>
+                </div>
+
+                <div class="container-botoes">
+                    <a href="{% url 'dinem:aluno-formulario' aluno_turma.id %} ">
+                        <button class="botao botao--azul">Editar</button>
+                    </a>
+                    
+                    {% if 7 in permissoes %}
+                        <form class="container-botoes" method="POST">
+                            {% csrf_token %}
+                            <button class="botao botao--vermelho" type="submit" name="enturmacao" value="{{ aluno.id }}">Excluir Enturmação</button>
+                        </form>
+                    {% endif %}
+                </div>
+
+
+                {% if historico %}
+                    {% if turma.ano_letivo == '2021' %}
+                        <div class="container-botoes">
+                            <a href="{% url 'dinem:relatorio-aluno' aluno_turma.id %}">
+                                <button id="" class="botao botao--verde">Gerar Histórico</button>
+                            </a>
+                        </div>
+                    {% endif %}
+                {% else %}
+                  
+                    <h3 class="texto-medio texto-azul">Boletins Pendentes</h3>
+                    <div class="container-botoes">
+                        {% for etapa in etapas_pendentes %}
+                            <a href="{% url 'dinem:aluno-boletim' aluno_turma.id etapa %}">
+                                <button class="botao botao--azul">{{ etapa }}</button>
+                            </a>
+                        {% endfor %}
+                    </div>
+                
+                {% endif %}
+
+                {% if historico and turma.etapa.id == 6 and turma.ano_serie == '3ª Série' and turma.ano_letivo == '2022' %}
+                    <div class="container-botoes">
+                        <a href="{% url 'dinem:dados_aluno_integral' aluno_turma.id %}">
+                            <button id="" class="botao botao--verde">Gerar Histórico</button>
+                        </a>
+                    </div>
+                {% endif %}
+
+                {% if historico and turma.etapa.id == 5 and turma.ano_serie == '3ª Série' and turma.ano_letivo == '2022' %}
+                    <div class="container-botoes">
+                        <a href="{% url 'dinem:dados_aluno_parcial' aluno_turma.id %}">
+                            <button id="" class="botao botao--verde">Gerar Histórico</button>
+                        </a>
+                    </div>
+                {% endif %}
+
+                {% if historico and turma.etapa.id == 18 and turma.ano_serie == '3ª Série' and turma.ano_letivo == '2022' %}
+                    <div class="container-botoes">
+                        <a href="{% url 'dinem:dados_aluno_tecnico' aluno_turma.id %}">
+                            <button id="" class="botao botao--verde">Gerar Histórico</button>
+                        </a>
+                    </div>
+                {% endif %}
+
+                <!-- {% if historico and turma.etapa.id == 6 and turma.ano_serie == '2ª Série' and turma.ano_letivo == '2022' %}
+                    <div class="container-botoes">
+                        <a href="{% url 'dinem:dados_aluno_integral_2serie' aluno_turma.id %}">
+                            <button id="" class="botao botao--verde">Gerar Histórico</button>
+                        </a>
+                    </div>
+                {% endif %}
+
+                {% if historico and turma.etapa.id == 5 and turma.ano_serie == '2ª Série' and turma.ano_letivo == '2022' %}
+                    <div class="container-botoes">
+                        <a href="{% url 'dinem:dados_aluno_parcial_2serie' aluno_turma.id %}">
+                            <button id="" class="botao botao--verde">Gerar Histórico</button>
+                        </a>
+                    </div>
+                {% endif %}
+
+                {% if historico and turma.etapa.id == 18 and turma.ano_serie == '2ª Série' and turma.ano_letivo == '2022' %}
+                    <div class="container-botoes">
+                        <a href="{% url 'dinem:dados_aluno_tecnico_2serie' aluno_turma.id %}">
+                            <button id="" class="botao botao--verde">Gerar Histórico</button>
+                        </a>
+                    </div>
+                {% endif %}
+
+                {% if historico and turma.etapa.id == 6 and turma.ano_serie == '1ª Série' and turma.ano_letivo == '2022' %}
+                    <div class="container-botoes">
+                        <a href="{% url 'dinem:dados_aluno_integral_1serie' aluno_turma.id %}">
+                            <button id="" class="botao botao--verde">Gerar Histórico</button>
+                        </a>
+                    </div>
+                {% endif %}
+
+                {% if historico and turma.etapa.id == 5 and turma.ano_serie == '1ª Série' and turma.ano_letivo == '2022' %}
+                    <div class="container-botoes">
+                        <a href="{% url 'dinem:dados_aluno_parcial_1serie' aluno_turma.id %}">
+                            <button id="" class="botao botao--verde">Gerar Histórico</button>
+                        </a>
+                    </div>
+                {% endif %} -->
+            </div>
+
+            <div class="container-surface">
+                {% if relatorios %}
+                    <nav class="container-navegacao-surface">
+                        <ul class="navegacao-surface-lista">
+                            {% for relatorio in relatorios %}
+                                <li class="navegacao-surface-item navegacao-surface-item-selecionavel" data-nav-item="{{ relatorio.etapa }}">
+                                    <span class="texto-azul ">{{ relatorio.etapa }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </nav>
+
+                    {% for relatorio in relatorios %}
+                        {% include 'dinem/aluno-boletim/partials/_notas-alunos.html' %}
+                    {% endfor %}
+
+                    <script src="{% static 'assets/js/layout/dinem/aluno-perfil/controlaNavegacao.js' %}"></script>
+                {% else %}
+                    <h2 class=" texto-preto texto-medio">O aluno ainda não possui nenhum boletim cadastrado.</h2>
+                {% endif %}
+
+            </div>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <!-- <script src="{% static 'assets/js/module/select2.js' %}"></script> -->
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+{% endblock %}

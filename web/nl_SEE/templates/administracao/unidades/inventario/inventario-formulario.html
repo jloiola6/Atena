@@ -1,0 +1,586 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+    {% if edicao == True %}
+        Editar Item
+    {% else %}
+        Cadastro de Item
+    {% endif %}
+{% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/administracao/unidades/inventario/inventario-formulario.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                {% comment %}
+                <!-- <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:index' %}">Administração</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:unidades_educacionais' %}">Unidades</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:unidade-perfil' %}?inep={{ escola.cod_inep }}">{{ escola.nome_escola }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:inventario-perfil' %}?id={{ endereco.id }}">Inventário</a>
+                <span class="texto-azul">&#62;</span>
+
+                {% if edicao %}
+                    <span class="  texto-azul">Editar item</span>
+                {% else %}
+                    <span class="  texto-azul">Cadastro de item</span>
+                {% endif %} -->
+                {% endcomment %}
+            </nav>
+            {% if edicao %}
+                <h1 class="titulo-pagina texto-azul">Editar item</h1>
+            {% else %}
+                <h1 class="titulo-pagina texto-azul">Cadastro de item</h1>
+            {% endif %}
+
+            <p class=" descricao">Insira os dados do item</p>
+
+            <form class="container-surface container-formulario-inventario" method="POST">
+                {% csrf_token %}
+
+                <h2 class="texto-medio texto-azul">Dados do item</h2>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-nome-escola">Escola</label>
+                    <input class="campo-texto campo-grande" type="text" value="{{ escola.nome_escola }}" id="campo-nome-escola" readonly>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-dependencia">Depedencia</label>
+                    <select id="campo-dependencia" name="dependencia" class="campo-texto campo-medio" data-selecao-dependencia>
+                        {% for dependencia in dependencias %}
+                            {% if dependencia == inventario.dependencia %}
+                                <option value="{{ dependencia.id }}" selected>{{ dependencia.tipo }}</option>
+                            {% else %}
+                                <option value="{{ dependencia.id }}">{{ dependencia.tipo }}</option>
+                            {%endif%}
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-tipo-item">Tipo de Item</label>
+                    <select id="campo-tipo-item" name="tipo-item" class="campo-texto campo-medio" data-selecao-tipo-item>
+                        {% for item in tipos %}
+                            {% if equipamento_item.tipo == item.0 %}
+                                <option value="{{ item.0 }}" selected>{{ item.1 }}</option>
+                            {% else %}
+                                <option value="{{ item.0 }}">{{ item.1 }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-equipamento">Equipamento</label>
+                    <select id="campo-equipamento" name="equipamento" class="campo-texto campo-medio" data-selecao-equipamento>
+                        {% for equipamento in equipamentos %}
+                            <option value="{{ equipamento.id }}" data-equipamento-tipo="{{ equipamento.tipo }}" selected>{{ equipamento.nome }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="formulario-grupo" data-campo-patrimonio required>
+                    <label class="texto-azul label-campo" for="campo-patrimonio" >Patrimônio</label>
+                    <input class="campo-texto campo-pequeno" type="text" name="patrimonio" value="{{ inventario.patrimonio }}" id="campo-patrimonio" placeholder="Ex: 123456" autocomplete="off">
+                </div>
+
+                <div class="formulario-grupo" data-campo-marca>
+                    <label class="texto-azul label-campo" for="campo-marca">Marca</label>
+                    <input class="campo-texto campo-pequeno" type="text" name="marca" value="{{ inventario.marca }}" id="campo-marca" autocomplete="off">
+                </div>
+
+                <div class="formulario-grupo" data-campo-modelo>
+                    <label class="texto-azul label-campo" for="campo-modelo">Modelo</label>
+                    <input class="campo-texto campo-pequeno" type="text" name="modelo" value="{{ inventario.modelo }}" id="campo-modelo" autocomplete="off">
+                </div>
+
+                <div class="formulario-grupo" data-campo-descricao>
+                    <label class="texto-azul label-campo" for="campo-descricao">Descrição</label>
+                    <input class="campo-texto campo-pequeno" type="text" name="descricao" value="{{ inventario.descricao }}" id="campo-descricao" autocomplete="off">
+                </div>
+
+                <div class="formulario-grupo" data-campo-quantidade>
+                    <label class="texto-azul " for="campo-modelo">Quantidade</label>
+                    <input class="campo-texto campo-pequeno" type="number" min="1" name="quantidade" value="{{ inventario.quantidade }}" id="campo-quantidade" autocomplete="off">
+                </div>
+
+                <div data-form="computador">
+                    <div class="formulario-grupo">
+                        <label class="texto-azul" for="campo-processador">Processador</label>
+                        <input class="campo-texto campo-pequeno" type="text" name="fieldset-local-1" value="{{ detalhes.processador }}" id="campo-processador" autocomplete="off">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul" for="campo-ram">Ram (GB)</label>
+                        <input class="campo-texto campo-pequeno" type="number" min="1" name="fieldset-local-2" value="{{ detalhes.ram }}" id="campo-ram" autocomplete="off">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-disco">Memória em Disco (GB)</label>
+                        <input class="campo-texto campo-pequeno" type="number" min="1" name="fieldset-local-3" value="{{ detalhes.disco }}" id="campo-disco" autocomplete="off">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-ssd">Memória em SSD (GB)</label>
+                        <input class="campo-texto campo-pequeno" type="number" min="1" name="fieldset-local-4" value="{{ detalhes.ssd }}" id="campo-ssd" autocomplete="off">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-placa">Placa de Vídeo (Opcional)</label>
+                        <input class="campo-texto campo-medio" type="text" name="fieldset-local-5" value="{{ detalhes.placa_video }}" id="campo-placa" autocomplete="off">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-cor">Cor</label>
+                        <input class="campo-texto campo-pequeno" type="text" name="fieldset-local-6" value="{{ detalhes.cor }}" id="campo-cor" autocomplete="off">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="fieldset-tipo-computador">Tipo</label>
+
+                        <fieldset id="fieldset-tipo-computador">
+                            {% if detalhes.tipo == 'Gabinete' or not edicao %}
+                                <input class="" type="radio" checked name="fieldset-local-7" value="Gabinete" id="campo-gabinete">
+                            {% else %}
+                                <input class="" type="radio" name="fieldset-local-7" value="Gabinete" id="campo-gabinete">
+                            {% endif %}
+                            <label class="texto-preto" for="campo-gabinete">Gabinete</label>
+
+                            {% if detalhes.tipo == 'Notebook' %}
+                                <input class="" type="radio" checked name="fieldset-local-7" value="Notebook" id="campo-notebook">
+                            {% else %}
+                                <input class="" type="radio" name="fieldset-local-7" value="Notebook" id="campo-notebook">
+                            {% endif %}
+                            <label class="texto-preto" for="campo-notebook">Notebook</label>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div data-form="nobreak">
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-tomadas">Quantidade de tomadas</label>
+                        <input class="campo-texto campo-pequeno" type="number" min="0" name="fieldset-local-8" value="{{ detalhes.qtd_tomadas }}" id="campo-tomadas" autocomplete="off">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="fieldset-estabilizador">Estabilizador</label>
+
+                        <fieldset id="fieldset-estabilizador">
+                            {% if detalhes.estabilizador == 'Sim' or not edicao %}
+                                <input class="" type="radio" checked name="fieldset-local-9" value="Sim" id="campo-sim">
+                            {% else %}
+                                <input class="" type="radio" name="fieldset-local-9" value="Sim" id="campo-sim">
+                            {% endif %}
+                            <label class="texto-preto" for="campo-sim">Sim</label>
+
+                            {% if detalhes.estabilizador == 'Não' %}
+                                <input class="" type="radio" name="fieldset-local-9" value="Não" id="campo-nao">
+                            {% else %}
+                                <input class="" type="radio" name="fieldset-local-9" value="Não" id="campo-nao">
+                            {% endif %}
+                            <label class="texto-preto" for="campo-nao">Não</label>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div data-form="projetor">
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-resolucao">Resolução</label>
+                        <input class="campo-texto campo-pequeno" type="text" name="fieldset-local-10" value="{{ detalhes.resolucao }}" id="campo-resolucao" autocomplete="off">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-potencia">Potência (Watts)</label>
+                        <input class="campo-texto campo-pequeno" type="number" min="1" name="fieldset-local-11" value="{{ detalhes.potencia }}" id="campo-potencia" autocomplete="off">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-potencia-w">Potência (Lumens)</label>
+                        <input class="campo-texto campo-pequeno" type="number" min="1" name="fieldset-local-12" value="{{ detalhes.lumens }}" id="campo-potencia-w" autocomplete="off">
+                    </div>
+                </div>
+
+                <div data-form="impressora">
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="fieldset-tipo-impressao">Tipo de impressão</label>
+
+                        <fieldset id="fieldset-tipo-impressao">
+                            {% if detalhes.tipo_impressao == 'Preto e Branco' or not edicao %}
+                                <input class="" type="radio" checked name="fieldset-local-13" value="Preto e Branco" id="campo-pb">
+                            {% else %}
+                                <input class="" type="radio" name="fieldset-local-13" value="Preto e Branco" id="campo-pb">
+                            {% endif %}
+                            <label class="texto-preto" for="campo-pb">Preto e Branco</label>
+
+                            {% if detalhes.tipo_impressao == 'Colorido' %}
+                                <input class="" type="radio" checked name="fieldset-local-13" value="Colorido" id="campo-colorido">
+                            {% else %}
+                                <input class="" type="radio" name="fieldset-local-13" value="Colorido" id="campo-colorido">
+                            {% endif %}
+                            <label class="texto-preto" for="campo-colorido">Colorido</label>
+                        </fieldset>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="fieldset-conectividade">Conectividade</label>
+
+                        <fieldset id="fieldset-conectividade">
+                            {% if detalhes.conectividade == 'Wi-Fi' %}
+                                <input class="" type="checkbox" checked name="fieldset-local-14" value="Wi-Fi" id="campo-wifi">
+                            {% else %}
+                                <input class="" type="checkbox" name="fieldset-local-14" value="Wi-Fi" id="campo-wifi">
+                            {% endif %}
+                            <label class="texto-preto" for="campo-wifi">Wi-Fi</label>
+
+                            {% if detalhes.conectividade == 'Bluetooth' %}
+                                <input class="" type="checkbox" checked name="fieldset-local-14" value="Bluetooth" id="campo-bluetooth">
+                            {% else %}
+                                <input class="" type="checkbox" name="fieldset-local-14" value="Bluetooth" id="campo-bluetooth">
+                            {% endif %}
+                            <label class="texto-preto" for="campo-bluetooth">Bluetooth</label>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div data-form="switch">
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-porta-rj45">Quantidade de portas RJ-45</label>
+                        <input class="campo-texto campo-pequeno" type="number" min="1" name="fieldset-local-16" value="{{ detalhes.qtd_RJ45 }}" id="campo-porta-rj45" autocomplete="off">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-porta-sfp">Quantidade de portas SFP</label>
+                        <input class="campo-texto campo-pequeno" type="number" min="1" name="fieldset-local-17" value="{{ detalhes.qtd_SFP }}" id="campo-porta-sfp" autocomplete="off">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="fieldset-fonte">Fonte integrada</label>
+
+                        <fieldset id="fieldset-fonte">
+
+                            {% if detalhes.fonte_integrada == 'Sim' %}
+                                <input class="" type="radio" checked name="fieldset-local-18" value="Sim" id="campo-sim">
+                            {% else %}
+                                <input class="" type="radio" checked name="fieldset-local-18" value="Sim" id="campo-sim">
+                            {% endif %}
+                            <label class="texto-preto" for="campo-sim">Sim</label>
+
+                            {% if detalhes.fonte_integrada == 'Não' %}
+                                <input class="" type="radio" checked name="fieldset-local-18" value="Não" id="campo-nao">
+                            {% else %}
+                                <input class="" type="radio" name="fieldset-local-18" value="Não" id="campo-nao">
+                            {% endif %}
+                            <label class="texto-preto" for="campo-nao">Não</label>
+                        </fieldset>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-potencia">Potência (Watts)</label>
+                        <input class="campo-texto campo-pequeno" type="number" min="1" name="fieldset-local-19" value="{{ detalhes.potencia }}" id="campo-potencia" autocomplete="off">
+                    </div>
+                </div>
+
+                <div data-form="geladeira">
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-cor">Cor</label>
+                        <input class="campo-texto campo-pequeno" type="text" name="fieldset-local-20" value="{{ detalhes.cor }}" id="campo-cor" autocomplete="off">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-capacidade">Capacidade (Litros)</label>
+                        <input class="campo-texto campo-pequeno" type="number" min="1" name="fieldset-local-21" value="{{ detalhes.capacidade }}" id="campo-capacidade" autocomplete="off">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="fieldset-voltagem">Voltagem</label>
+
+                        <fieldset id="fieldset-voltagem">
+                            {% if detalhes.voltagem == '110V' %}
+                                <input class="" type="radio" checked name="fieldset-local-22" value="110V" id="campo-110">
+                            {% else %}
+                                <input class="" type="radio" name="fieldset-local-22" value="110V" id="campo-110">
+                            {% endif %}
+                            <label class="texto-preto" for="campo-110">110V</label>
+
+                            {% if detalhes.voltagem == '220V' %}
+                                <input class="" type="radio" checked name="fieldset-local-22" value="220V" id="campo-220">
+                            {% else %}
+                                <input class="" type="radio" name="fieldset-local-22" value="220V" id="campo-220">
+                            {% endif %}
+                            <label class="texto-preto" for="campo-220">220V</label>
+
+                            {% if detalhes.voltagem or not edicao %}
+                                <input class="" type="radio" checked name="fieldset-local-22" value="Bivolt" id="campo-bivolt">
+                            {% else %}
+                                <input class="" type="radio" name="fieldset-local-22" value="Bivolt" id="campo-bivolt">
+                            {% endif %}
+                            <label class="texto-preto" for="campo-bivolt">Bivolt</label>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div data-form="ac">
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-capacidade">Capacidade (BTUs)</label>
+                        <input class="campo-texto campo-pequeno" type="number" min="1" name="fieldset-local-23" value="{{ detalhes.capacidade }}" id="campo-capacidade" autocomplete="off">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-cor">Cor</label>
+                        <input class="campo-texto campo-pequeno" type="text" name="fieldset-local-24" value="{{ detalhes.cor }}" id="campo-cor" autocomplete="off">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="fieldset-voltagem">Voltagem</label>
+
+                        <fieldset id="fieldset-voltagem">
+                            {% if detalhes.voltagem == '110V' %}
+                                <input class="" type="radio" checked name="fieldset-local-25" value="110V" id="campo-110">
+                            {% else %}
+                                <input class="" type="radio" name="fieldset-local-25" value="110V" id="campo-110">
+                            {% endif %}
+                            <label class="texto-preto" for="campo-110">110V</label>
+
+                            {% if detalhes.voltagem == '220V' %}
+                                <input class="" type="radio" checked name="fieldset-local-25" value="220V" id="campo-220">
+                            {% else %}
+                                <input class="" type="radio" name="fieldset-local-25" value="220V" id="campo-220">
+                            {% endif %}
+                            <label class="texto-preto" for="campo-220">220V</label>
+
+                            {% if detalhes.voltagem or not edicao %}
+                                <input class="" type="radio" checked name="fieldset-local-25" value="Bivolt" id="campo-bivolt">
+                            {% else %}
+                                <input class="" type="radio" name="fieldset-local-25" value="Bivolt" id="campo-bivolt">
+                            {% endif %}
+                            <label class="texto-preto" for="campo-bivolt">Bivolt</label>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div data-form="liquidificador">
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-capacidade">Capacidade (Litros)</label>
+                        <input class="campo-texto campo-pequeno" type="number" min="1" name="fieldset-local-26" value="{{ detalhes.capacidade }}" id="campo-capacidade" autocomplete="off">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-potencia">Potência (Watts)</label>
+                        <input class="campo-texto campo-pequeno" type="number" min="1" name="fieldset-local-27" value="{{ detalhes.potencia }}" id="campo-potencia" autocomplete="off">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-cor">Cor</label>
+                        <input class="campo-texto campo-pequeno" type="text" name="fieldset-local-28" value="{{ detalhes.cor }}" id="campo-cor" autocomplete="off">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="fieldset-voltagem">Voltagem</label>
+
+                        <fieldset id="fieldset-voltagem">
+                            {% if detalhes.voltagem == '110V' %}
+                                <input class="" type="radio" checked name="fieldset-local-29" value="110V" id="campo-110">
+                            {% else %}
+                                <input class="" type="radio" name="fieldset-local-29" value="110V" id="campo-110">
+                            {% endif %}
+                            <label class="texto-preto" for="campo-110">110V</label>
+
+                            {% if detalhes.voltagem == '220V' %}
+                                <input class="" type="radio" checked name="fieldset-local-29" value="220V" id="campo-220">
+                            {% else %}
+                                <input class="" type="radio" name="fieldset-local-29" value="220V" id="campo-220">
+                            {% endif %}
+                            <label class="texto-preto" for="campo-220">220V</label>
+
+                            {% if detalhes.voltagem or not edicao %}
+                                <input class="" type="radio" checked name="fieldset-local-29" value="Bivolt" id="campo-bivolt">
+                            {% else %}
+                                <input class="" type="radio" name="fieldset-local-29" value="Bivolt" id="campo-bivolt">
+                            {% endif %}
+                            <label class="texto-preto" for="campo-bivolt">Bivolt</label>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div data-form="fogao">
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-capacidade">Capacidade (Litros)</label>
+                        <input class="campo-texto campo-pequeno" type="number" min="1" name="fieldset-local-30" value="{{ detalhes.capacidade }}" id="campo-capacidade" autocomplete="off">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-cor">Cor</label>
+                        <input class="campo-texto campo-pequeno" type="text" name="fieldset-local-31" value="{{ detalhes.cor }}" id="campo-cor" autocomplete="off">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="fieldset-voltagem">Voltagem</label>
+
+                        <fieldset id="fieldset-voltagem">
+                            {% if detalhes.voltagem == '110V' %}
+                                <input class="" type="radio" checked name="fieldset-local-32" value="110V" id="campo-110">
+                            {% else %}
+                                <input class="" type="radio" name="fieldset-local-32" value="110V" id="campo-110">
+                            {% endif %}
+                            <label class="texto-preto" for="campo-110">110V</label>
+
+                            {% if detalhes.voltagem == '220V' %}
+                                <input class="" type="radio" checked name="fieldset-local-32" value="220V" id="campo-220">
+                            {% else %}
+                                <input class="" type="radio" name="fieldset-local-32" value="220V" id="campo-220">
+                            {% endif %}
+                            <label class="texto-preto" for="campo-220">220V</label>
+
+                            {% if detalhes.voltagem or not edicao %}
+                                <input class="" type="radio" checked name="fieldset-local-32" value="Bivolt" id="campo-bivolt">
+                            {% else %}
+                                <input class="" type="radio" name="fieldset-local-32" value="Bivolt" id="campo-bivolt">
+                            {% endif %}
+                            <label class="texto-preto" for="campo-bivolt">Bivolt</label>
+                        </fieldset>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="fieldset-industrial">Industrial</label>
+
+                        <fieldset id="fieldset-industrial">
+                            {% if detalhes.fonte_integrada == 'Sim' %}
+                                <input class="" type="radio" checked name="fieldset-local-33" value="Sim" id="campo-sim">
+                            {% else %}
+                                <input class="" type="radio" checked name="fieldset-local-33" value="Sim" id="campo-sim">
+                            {% endif %}
+                            <label class="texto-preto" for="campo-sim">Sim</label>
+
+                            {% if detalhes.fonte_integrada == 'Não' %}
+                                <input class="" type="radio" checked name="fieldset-local-33" value="Não" id="campo-nao">
+                            {% else %}
+                                <input class="" type="radio" name="fieldset-local-33" value="Não" id="campo-nao">
+                            {% endif %}
+                            <label class="texto-preto" for="campo-nao">Não</label>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div data-form="quadro">
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-tipo">Tipo</label>
+                        <select name="fieldset-local-34" id="campo-tipo" class="campo-texto campo-medio">
+                            <option value="Quadro de vidro">Quadro de vidro</option>
+                            <option value="Quadro magnético">Quadro magnético</option>
+                        </select>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-tamanho">Tamanho</label>
+                        <input class="campo-texto campo-pequeno" type="text" name="fieldset-local-35" value="{{ detalhes.tamanho }}" id="campo-tamanho" autocomplete="off">
+                    </div>
+                </div>
+
+                {% comment %}
+                <div data-form="mobilia">
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-tipo">Tipo</label>
+                        <input class="campo-texto campo-pequeno" type="text" name="" value="{{ detalhes.tipo }}" id="campo-tipo" autocomplete="off">
+                    </div>
+                </div>
+                {% endcomment %}
+
+                <div data-form="armario">
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-tipo">Tipo</label>
+                        <select name="fieldset-local-36" id="campo-tipo" class="campo-texto campo-grande">
+                            <option value="Armário de arquivos de aço">Armário de arquivos de aço</option>
+                            <option value="Armário de arquivos de aço 2 portas">Armário de arquivos de aço 2 portas</option>
+                            <option value="Armário de arquivos de Madeira/MDF/MDP">Armário de arquivos de Madeira/MDF/MDP</option>
+                            <option value="Armário de arquivo suspenso">Armário de arquivo suspenso</option>
+                            <option value="Armário de material acadêmico">Armário de material acadêmico</option>
+                            <option value="Armário de sala de aula Anos Iniciais">Armário de sala de aula Anos Iniciais</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div data-form="cadeira">
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-tipo">Tipo</label>
+                        <select name="fieldset-local-37" id="campo-tipo" class="campo-texto campo-medio">
+                            <option value="Cadeira de madeira">Cadeira de madeira</option>
+                            <option value="Cadeira giratória">Cadeira giratória</option>
+                            <option value="Cadeira para Anos Iniciais">Cadeira para Anos Iniciais</option>
+                            <option value="Cadeira para professor">Cadeira para professor</option>
+                            <option value="Cadeira universitária">Cadeira universitária</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div data-form="estante">
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-tipo">Tipo</label>
+                        <select name="fieldset-local-38" id="campo-tipo" class="campo-texto campo-medio">
+                            <option value="Estante de aço para biblioteca">Estante de aço para biblioteca</option>
+                            <option value="Estante de madeira">Estante de madeira</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div data-form="mesa">
+                    <div class="formulario-grupo">
+                        <label class="texto-azul " for="campo-tipo">Tipo</label>
+                        <select name="fieldset-local-39" id="campo-tipo" class="campo-texto campo-medio">
+                            <option value="Mesa de reunião">Mesa de reunião</option>
+                            <option value="Mesa para Anos Iniciais">Mesa para Anos Iniciais</option>
+                            <option value="Mesa para professor">Mesa para professor</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="container-botoes">
+                    {% if edicao %}
+                        <button class="botao botao--azul" data-modal-abrir="confirmar">Editar</button>
+                    {% else %}
+                        <button class="botao botao--azul" data-modal-abrir="confirmar">Cadastrar</button>
+                    {% endif %}
+                </div>
+
+                <div class="modal oculto" data-modal="confirmar">
+                    <div class="modal-conteudo modal-confirmacao">
+                        <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                        <p class="texto-preto descricao">Tem certeza que deseja cadastrar o item no inverntário da unidade {{ escola.nome_escola }}?</p>
+
+                        <div class="container-botoes">
+                            {% if edicao %}
+                                <button class="botao--verde botao" type="submit">Editar</button>
+                            {% else %}
+                                <button class="botao--verde botao" type="submit">Salvar</button>
+                            {% endif %}
+
+                            <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/layout/administracao/inventario-formulario/controlaCampos.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+/* Estilização do container padrão */
+
+/* Container geral, presente em todas as páginas para ajustar a disposição do conteúfdo */
+.container{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: auto;
+    margin-top: 1rem;
+    text-align: left;
+    width: 1200px;
+}
+
+/* RESPONSIVIDADE */
+@media screen and (max-width: calc(1200px + 1.5rem)) {
+    .container, body .cabecalho-container, body .rodape-container{
+        width: calc(1024px - 4rem);
+    }
+}
+
+@media screen and (max-width: 1024px){
+    .container, body .cabecalho-container, body .rodape-container{
+        width: 100%;
+        padding-inline: 2rem;
+    }
+}
+
+@media screen and (max-width: 425px){
+    .container, body .cabecalho-container, body .rodape-container{
+        padding-inline: 1rem;
+    }
+}

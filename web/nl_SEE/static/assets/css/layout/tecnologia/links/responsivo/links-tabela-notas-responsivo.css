@@ -1,0 +1,14 @@
+.tabela-links--tablet{
+    display: none;
+}
+
+
+
+@media screen and (max-width: 472px) {
+    .tabela-links--tablet{
+        display: block;
+    }
+    .tabela-links{
+        display: none;
+    }
+}

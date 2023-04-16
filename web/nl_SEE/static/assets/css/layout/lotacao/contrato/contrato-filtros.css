@@ -1,0 +1,29 @@
+/* Estilização da página de filtros avançados de contratos */
+
+.lista-menus{
+    margin-top: 16px;
+}
+
+.menu-pai[data-accordeon-ativo="true"] ~ .menu-filho{
+    border-top: 1px solid #999999;
+}
+
+.menu-pai ~ .menu-pai{
+    align-items: flex-start;
+}
+
+.container-cargos{
+    column-gap: 8px;
+    flex-basis: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    row-gap: 8px;
+}
+
+.container-cargos > div{
+    width: 49%;
+}
+
+.container-cargos label{
+    line-height: 24px;
+}

@@ -1,0 +1,34 @@
+/* .card-ano{
+    margin-left:120px ;
+    margin-top:-155px ;
+    font-size: 60px;
+} */
+/*
+.card-anos{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.card-dados{
+    display: flex;
+    flex-direction: column;
+    padding-top: 70px;
+    gap: 20px;
+    margin-left: -500px;
+}
+
+.card-menu{
+    display: flex;
+    flex-direction: row;
+    width: 400px;
+    height: 230px;
+} */
+
+.card-ano{
+    width: 216px;
+}
+
+.card-simples__titulo{
+    font-size: 40px;
+}

@@ -1,0 +1,144 @@
+<!-- ADICIONAR REQUIRED -->
+
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+    Cadastro de Empresa
+{% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/administracao/contratos/empresa-formulario.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:index' %}">Administração</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:contratos' %}">Contratos</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">Cadastro de Empresa</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Cadastro de Empresa</h1>
+
+            <p class="descricao  texto-preto">Insira os dados da Empresa</p>
+
+            <form class="container-surface container-formulario-empresa" method="POST">
+                {% csrf_token %}
+
+                <nav class="container-navegacao-surface">
+                    <ul class="navegacao-surface-lista">
+                        <li class="navegacao-surface-item navegacao-surface-item-ativo" data-form-aba="dados">
+                            <span class="texto-azul">Dados</span>
+                        </li>
+
+                        <li class="navegacao-surface-item" data-form-aba="endereco">
+                            <span class="texto-azul">Endereço</span>
+                        </li>
+
+                        {% comment %} <li class="navegacao-surface-item" data-form-aba="">
+                            <span class="texto-azul">Gestores</span> {% endcomment %}
+                        {% comment %} </li> {% endcomment %}
+
+                    </ul>
+                </nav>
+
+                <div class="" data-form-container="dados">
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-nome">Nome</label>
+                        <input class="campo-texto campo-grande" type="text" value="" name="nome" id="campo-nome" placeholder=""  autocomplete="off" maxlength="200">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-razao_social">Razão Social</label>
+                        <input class="campo-texto campo-grande" type="text" value="" name="razao_social" id="campo-razao_social" placeholder=""  autocomplete="off" maxlength="200">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-cnpj">CNPJ</label>
+                        <input class="campo-texto campo-medio" type="text" value="" name="cnpj" id="campo-cnpj" placeholder="Ex: 00.000.000/0000-00"  autocomplete="off" data-mascara="cnpj">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-telefone">Telefone (com DDD)</label>
+                        <input class="campo-texto campo-medio" type="text" value="" name="telefone" id="campo-telefone" placeholder="Ex: (00) 00000-0000"  autocomplete="off" data-mascara="telefone">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-email">E-mail</label>
+                        <input class="campo-texto campo-grande" type="email" value="" name="email" id="campo-email" placeholder=""  autocomplete="off" maxlength="50">
+                    </div>
+
+                    <div class="container-botoes">
+                        <button class="botao botao--azul" data-form-botao="endereco">Avançar</button>
+                    </div>
+                </div>
+
+
+                <div class=" oculto" data-form-container="endereco">
+                    {% include 'partials/_select-naturalidade.html' %}
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-rua">Rua</label>
+                        <input class="campo-texto campo-grande" type="text" value="" name="rua" id="campo-rua" placeholder=""  autocomplete="off" maxlength="50">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-numero">Numero</label>
+                        <input class="campo-texto campo-pequeno" type="text" value="" name="numero" id="campo-numero" placeholder=""  autocomplete="off" maxlength="50" data-mascara="numero">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-bairro">Bairro</label>
+                        <input class="campo-texto campo-grande" type="text" value="" name="bairro" id="campo-bairro" placeholder=""  autocomplete="off" maxlength="50">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-cep">CEP</label>
+                        <input class="campo-texto campo-pequeno" type="text" value="" name="cep" id="campo-cep" placeholder="Ex: 00000-000" autocomplete="off" data-mascara="cep">
+                    </div>
+
+                    <div class="container-botoes">
+                        <button class="botao botao--azul" data-form-botao="dados">Voltar</button>
+                        <button class="botao botao--azul" data-modal-abrir="confirmar">Cadastrar</button>
+                    </div>
+
+                    <div class="modal" data-modal="confirmar">
+                        <div class="modal-conteudo modal-confirmacao">
+                            <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                            <p class="texto-preto descricao">Tem certeza que deseja cadastrar a empresa?</p>
+
+                            <div class="container-botoes">
+                                <button class="botao--verde botao" type="submit">Salvar</button>
+                                <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/select2.js' %}"></script>
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/module/controlaNavegacaoFormulario.js' %}"></script>
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+{% endblock %}

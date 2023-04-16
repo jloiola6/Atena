@@ -1,0 +1,9 @@
+/* Estilização da página de formulário de servidor */
+
+.container-formulario-servidor, .container-formulario-servidor .container-botoes{
+    margin-top: 16px;
+}
+
+.formulario-servidor-dados{
+    animation: var(--main-animation);
+}

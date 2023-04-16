@@ -1,0 +1,13 @@
+.tabela-terceirizados-smartphone{
+    display: none;
+}
+
+@media screen and (max-width: 499px){
+    .tabela-terceirizados{
+        display: none;
+    }
+
+    .tabela-terceirizados-smartphone{
+        display: block;
+    }
+}

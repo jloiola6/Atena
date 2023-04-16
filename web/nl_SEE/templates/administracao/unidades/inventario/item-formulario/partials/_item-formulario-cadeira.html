@@ -1,0 +1,31 @@
+<form class="container-surface" method="POST">
+    {% csrf_token %}
+
+    <nav class="container-navegacao-surface">
+        <ul class="navegacao-surface-lista">
+            <li class="navegacao-surface-item navegacao-surface-item-ativo">
+                <span class="texto-azul">Cadeira</span>
+            </li>
+        </ul>
+    </nav>
+
+
+    <div class="formulario-grupo">
+        <label for="campo-patrimonio">Patrimônio</label>
+        <input class="campo-texto campo-medio" type="text" id="campo-patrimonio" name="patrimonio" maxlength="30" required>
+    </div>
+
+    <div class="formulario-grupo">
+        <label for="campo-tipo-cadeira">Tipo</label>
+
+        <select name="tipo-cadeira" id="campo-tipo-cadeira" class="campo-texto campo-medio">
+            <option value="Cadeira de madeira">Cadeira de madeira</option>
+            <option value="Cadeira giratória">Cadeira giratória</option>
+            <option value="Cadeira para Anos Iniciais">Cadeira para Anos Iniciais</option>
+            <option value="Cadeira para professor">Cadeira para professor</option>
+            <option value="Cadeira universitária">Cadeira universitária</option>
+        </select>
+    </div>
+
+    {% include 'administracao/unidades/inventario/item-formulario/partials/_modal-confirmacao.html' %}
+</form>

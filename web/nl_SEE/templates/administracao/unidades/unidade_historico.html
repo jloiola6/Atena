@@ -1,0 +1,82 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Histórico da Unidade {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/administracao/unidades/unidade-historico.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+
+        <div class="container">
+            <nav class="container-navegacao ">
+                <a  class=" texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class=" texto-azul " href="{% url 'administracao:index' %}">Administração</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class=" texto-azul " href="{% url 'administracao:unidades_educacionais' %}">Unidades</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class=" texto-azul " href="{% url 'administracao:unidade-perfil' %}?inep={{ escola.cod_inep }}">{{ escola.nome_escola }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class=" texto-azul ">Histórico da Unidade</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Histórico da Unidade</h1>
+
+            {% if possui_historico %}
+                <div class="container-menu-tabela">
+                    <button onclick="exibeModal(true, 'modal-unidades-filtros')" class="botao botao--azul">Filtros</button>
+                </div>
+
+                {% for data in datas %}
+                    <p class="texto-azul lista-historico texto-medio">{{ data }}</p>
+                    {% for acao in historico %}
+                        {% if data in acao.data %}
+                            <div class="lista-menus lista-historico">
+                                <div class="menu-pai menu-historico">
+                                    {% if acao.acao == 'A' and acao.tabela == 'administracao_escola' %}
+                                        <span title="Undiade adicionada" class="icone icone-medio icone-azul">post_add</span>
+                                        <p class="texto-preto" data-unidade-historico-hora>{{ acao.data }}</p>
+                                        <p class="texto-preto"><b>{{ acao.log.usuario }}</b> adicionou a Unidade</p>
+                                    {% elif acao.acao == 'A' and acao.tabela == 'administracao_endereco' %}
+                                        <span title="Undiade adicionada" class="icone icone-medio icone-azul">post_add</span>
+                                        <p class="texto-preto" data-unidade-historico-hora>{{ acao.data }}</p>
+                                        <p class="texto-preto"><b>{{ acao.log.usuario }}</b> adicionou a Unidade</p>
+                                    {% elif acao.acao == 'E' %}
+                                        <span title="Unidade editada" class="icone icone-medio icone-azul">edit</span>
+                                        <p class="texto-preto" data-unidade-historico-hora>{{ acao.data }}</p>
+                                        <p class="texto-preto"><b>{{ acao.log.usuario }}</b> editou: <br><br><span data-unidade-historico-modificacao>{{ acao.modificacao }}</span></p>
+                                    {% else %}
+                                        <span title="Undiade adicionada" class="icone icone-medio icone-azul">post_add</span>
+                                        <p class="texto-preto" data-unidade-historico-hora>{{ acao.data }}</p>
+                                        <p class="texto-preto"><b>{{ acao.log.usuario }}</b> adicionou contato a unidade</p>
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                        {% endif %}
+
+                    {% endfor %}
+                {% endfor %}
+            {% else %}
+                <h2 class="texto-medio texto-preto">Esta unidade não ainda possui histórico de atividades.</h2>
+            {% endif %}
+
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/abrir-modal.js' %}"></script>
+    <script src="{% static 'assets/js/layout/administracao/unidades/controla-filtros.js' %}"></script>
+    <script src="{% static 'assets/js/layout/administracao/unidade-historico/tratamentoDados.js' %}"></script>
+{% endblock %}

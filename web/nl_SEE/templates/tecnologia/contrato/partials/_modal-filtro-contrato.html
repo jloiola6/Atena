@@ -1,0 +1,36 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="filtros">
+    <form id="modal-conteudo" class="modal-conteudo" method="GET">
+        <div class="modal-filtros-titulo">
+            <h2 class="texto-grande texto-negrito texto-azul">Filtros</h2>
+        </div>
+
+        <p class="descricao  texto-preto">Insira os filtros que deseja aplicar</p>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo">Empresa</label>
+
+            <select data-selecao2 name="empresa" class="campo-texto campo-medio">
+                <option></option>
+                {% for empresa in empresas %}
+                    <option value="{{ empresa.0 }}"> {{ empresa.1 }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+         <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-situacao">Situação</label>
+            <select data-selecao2  name="situacao" id="campo-situacao" class="campo-texto campo-grande">
+                <option></option>
+                <option>Vigente</option>
+                <option>Inativo</option>
+            </select>
+        </div>
+
+        <div class="container-botoes">
+            <button type="" class="botao botao--verde">Filtrar</button>
+        </div>
+
+    </form>
+</div>

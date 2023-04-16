@@ -1,0 +1,34 @@
+/* Estilização da página de cadastro de pré-empenho */
+
+hr{
+    margin-top: 24px;
+}
+
+.contrato-item-grupo-campos{
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}
+
+.contrato-item-grupo-campos .formulario-grupo{
+    align-items: center;
+    justify-content: center;
+}
+
+.contrato-item-grupo-campos input.campo-texto{
+    width: 100%;
+}
+
+.grupo-descricao{
+    width: 100%;
+}
+
+.grupo-meses{
+    flex-grow: 1;
+}
+
+.item-descricao{
+    height: 96px;
+    width: 100%;
+}

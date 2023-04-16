@@ -1,0 +1,165 @@
+<div class="modal oculto" data-modal="filtros">
+    <form id="modal-conteudo" class="modal-conteudo" method="GET">
+        <div class="modal-filtros-titulo">
+            <h2 class="texto-grande texto-negrito texto-azul">Filtros</h2>
+            {% comment %} <a href="#" class="link texto-azul">Filtragem completa</a> {% endcomment %}
+        </div>
+
+        <p class="descricao  texto-preto">Insira os filtros que deseja aplicar</p>
+
+        <div class="formulario-grupo">
+            <h3 class="texto-medio texto-azul">Tipificação</h3>
+
+            {% for tipificacao in tipificacoes %}
+                <div>
+                    {% if tipificacao.1 in filtros_tipificacoes %}
+                        <input type="checkbox" name="{{ tipificacao.1 }}" id="{{ tipificacao.0 }}" checked>
+                        <label class="texto-preto" for="{{ tipificacao.0 }}">{{ tipificacao.2 }}</label>
+                    {% else %}
+                        <input type="checkbox" name="{{ tipificacao.1 }}" id="{{ tipificacao.0 }}">
+                        <label class="texto-preto" for="{{ tipificacao.0 }}">{{ tipificacao.2 }}</label>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="formulario-grupo">
+            <h3 class="texto-medio texto-azul">Etapas de Ensino</h3>
+
+            {% for etapa in etapas %}
+                <div>
+                    {% if etapa.1 in filtros_etapas %}
+                        <input type="checkbox" name="{{ etapa.1 }}" id="{{ etapa.0 }}" checked>
+                        <label class="texto-preto" for="{{ etapa.0 }}">{{ etapa.2 }}</label>
+                    {% else %}
+                        <input type="checkbox" name="{{ etapa.1 }}" id="{{ etapa.0 }}">
+                        <label class="texto-preto" for="{{ etapa.0 }}">{{ etapa.2 }}</label>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="formulario-grupo">
+            <h3 class="texto-medio texto-azul">Município</h3>
+            {% for municipio, name_municipio in qtd_municipios %}
+                {% if name_municipio in filtros_municipio %}
+                    <div>
+                        <input type="checkbox" name="{{ name_municipio }}" id="id-{{ name_municipio }}" data-municipio="{{ municipio }}" checked>
+                        <label class="texto-preto" for="id-{{ name_municipio }}">{{ municipio }}</label>
+                    </div>
+                {% else %}
+                    <div>
+                        <input type="checkbox" name="{{ name_municipio }}" id="id-{{ name_municipio }}" data-municipio="{{ municipio }}">
+                        <label class="texto-preto" for="id-{{ name_municipio }}">{{ municipio }}</label>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        {% comment %}
+
+        <!--
+        <div class="formulario-grupo">
+            <h3 class="texto-medio texto-azul">Regional</h3>
+            <div>
+                {% for regiao, name_regiao in qtd_regioes %}
+                    {% if name_regiao in filtros_regional %}
+                        <input type="checkbox" class="filtro-regional" name="{{ name_regiao }}" id="id-{{ name_regiao }}" checked onclick="controlaCheckboxRegional(this)" data-regional="{{ regiao }}">
+                        <label class="texto-preto" for="id-{{ name_regiao }}">{{ regiao }}</label>
+
+                    {% else %}
+                        <input type="checkbox" class="filtro-regional" name="{{ name_regiao }}" id="id-{{ name_regiao }}" onclick="controlaCheckboxRegional(this)" data-regional="{{ regiao }}">
+                        <label class="texto-preto" for="id-{{ name_regiao }}">{{ regiao }}</label>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div> -->
+        {% endcomment %}
+        <div class="formulario-grupo">
+            <h3 class="texto-medio texto-azul">Regional</h3>
+            <div>
+                {% for regiao, name_regiao in qtd_regioes %}
+                    {% if name_regiao in filtros_regional %}
+                        <input type="checkbox" class="filtro-regional" name="{{ name_regiao }}" id="id-{{ name_regiao }}" checked data-regional="{{ regiao }}">
+                        <label class="texto-preto" for="id-{{ name_regiao }}">{{ regiao }}</label>
+
+                    {% else %}
+                        <input type="checkbox" class="filtro-regional" name="{{ name_regiao }}" id="id-{{ name_regiao }}" data-regional="{{ regiao }}">
+                        <label class="texto-preto" for="id-{{ name_regiao }}">{{ regiao }}</label>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="formulario-grupo">
+            <h3 class="texto-medio texto-azul">Tipo de Localização</h3>
+            <div>
+                {% for localizacao in tipo_localizacao %}
+                    {% if localizacao.1 in filtros_localizacao %}
+                        <input type="checkbox" name="{{ localizacao.1 }}" id="{{ localizacao.0 }}" checked>
+                        <label class="texto-preto" for="{{ localizacao.0 }}">{{ localizacao.2 }}</label>
+                    {% else %}
+                        <input type="checkbox" name="{{ localizacao.1 }}" id="{{ localizacao.0 }}">
+                        <label class="texto-preto" for="{{ localizacao.0 }}">{{ localizacao.2 }}</label>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="formulario-grupo formulario-filtro-indigena" data-filtro-indigena>
+            <h3 class="texto-medio texto-azul">Etnia</h3>
+            {% for etnia in etnias %}
+                {% if etnia.1 in filtros_etnias %}
+                    <div>
+                        <input type="checkbox" name="{{ etnia.1 }}" id="{{ etnia.0 }}" checked>
+                        <label class="texto-preto" for="{{ etnia.0 }}">{{ etnia.2 }}</label>
+                    </div>
+                {% else %}
+                    <div>
+                        <input type="checkbox" name="{{ etnia.1 }}" id="{{ etnia.0 }}">
+                        <label class="texto-preto" for="{{ etnia.0 }}">{{ etnia.2 }}</label>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="formulario-grupo formulario-filtro-indigena" data-filtro-indigena>
+            <h3 class="texto-medio texto-azul">Localização</h3>
+            {% for localizacao in localizacoes %}
+                {% if localizacao.1 in filtros_localizacao_inidigena %}
+                    <div>
+                        <input type="checkbox" name="{{ localizacao.1 }}" id="{{ localizacao.0 }}" checked>
+                        <label class="texto-preto" for="{{ localizacao.0 }}">{{ localizacao.2 }}</label>
+                    </div>
+                {% else %}
+                    <div>
+                        <input type="checkbox" name="{{ localizacao.1 }}" id="{{ localizacao.0 }}">
+                        <label class="texto-preto" for="{{ localizacao.0 }}">{{ localizacao.2 }}</label>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="formulario-grupo formulario-filtro-indigena" data-filtro-indigena>
+            <h3 class="texto-medio texto-azul">Aldeia</h3>
+            {% for aldeia in aldeias %}
+                {% if aldeia.1 in filtros_aldeias %}
+                    <div>
+                        <input type="checkbox" name="{{ aldeia.1 }}" id="{{ aldeia.0 }}">
+                        <label class="texto-preto" for="{{ aldeia.0 }}">{{ aldeia.2 }}</label>
+                    </div>
+                {% else %}
+                    <div>
+                        <input type="checkbox" name="{{ aldeia.1 }}" id="{{ aldeia.0 }}">
+                        <label class="texto-preto" for="{{ aldeia.0 }}">{{ aldeia.2 }}</label>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="container-botoes">
+            <button type="" class="botao botao--verde">Filtrar</button>
+        </div>
+
+    </form>
+</div>

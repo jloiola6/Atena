@@ -1,0 +1,13 @@
+.tabela-contratos-lotacao-smartphone{
+    display: none;
+}
+
+@media screen and (max-width: 519px){
+    .tabela-contratos-lotacao{
+        display: none;
+    }
+
+    .tabela-contratos-lotacao-smartphone{
+        display: block;
+    }
+}

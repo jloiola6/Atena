@@ -1,0 +1,342 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Lotacoes {% endblock %}
+
+{% load static %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/terceirizacao/lotacao/lotacoes.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/layout/terceirizacao/lotacao/responsivo/lotacoes-responsivo.css' %}">
+{% endblock %}
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+
+<main>
+    <div class="container">
+        <nav class="container-navegacao">
+            <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'terceirizacao:index' %}" class=" texto-azul">Terceirização</a>
+            <span class="texto-azul">&#62;</span>
+
+            <span class="  texto-azul">Lotações</span>
+        </nav>
+
+        <h1 class="titulo-pagina texto-azul">Lotações</h1>
+
+        <div class="container-surface container-lotacoes-busca">
+            <h2 class="texto-medio texto-azul">Buscar</h2>
+
+            <form class="formulario" method="GET">
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-numero-contrato">N° do contrato</label>
+                    <input type="text" id="campo-numero-contrato" name="numero_contrato" class="campo-texto campo-pequeno" placeholder="Ex: 0000/0000" data-mascara="contrato">
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-servidor-cpf">CPF</label>
+                    <input id="campo-servidor-cpf" type="text" name="cpf" class="campo-texto campo-medio" placeholder="Ex: 000.000.000-00" data-mascara="cpf">
+                </div>
+
+                <div class="formulario-grupo">
+                    <label class="texto-azul label-campo" for="campo-servidor-nome">Nome do servidor</label>
+                    <input id="campo-servidor-nome" type="text" name="nome" class="campo-texto campo-grande" placeholder="Ex: Érick Fernandes do Nascimento" maxlength="100">
+                </div>
+
+                {% if todos_servidores %}
+                    <div class="formulario-grupo">
+                        <a class="link" href="{% url 'terceirizacao:servidores-lotados' %}?id={{ administrativa }}">Ver TODOS os servidores</a>
+                    </div>
+                {% endif %}
+
+                <div class="container-botoes">
+                    <button type='submit' class="botao botao--azul">Buscar</button>
+                    <button data-modal-abrir="filtros" class="botao botao--azul">Filtros</button>
+
+                    {% if permissao.imprimir == 1 %}
+                        <button class="botao botao--azul" data-modal-abrir="exportar">Exportar</button>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+
+        <table class="tabela tabela-lotacoes-terceirizados">
+            <thead>
+                <tr>
+                    <th>Contrato</th>
+                    <th>Item</th>
+                    <th>Servidor</th>
+                    <th>Unidade</th>
+                    <th>Municipio</th>
+                    {% comment %} <th>Carga horária</th> {% endcomment %}
+                    {% comment %} <th>Situação</th> {% endcomment %}
+                </tr>
+            </thead>
+
+            {% comment %} <tbody data-tabela-link="{% url 'terceirizacao:lotacao-perfil' %}?" > {% endcomment %}
+            <tbody data-tabela-link="{% url 'terceirizacao:servidor-perfil' %}?" >
+                {% for lotacao in lotacoes %}
+                    <tr data-tabela-link-chave="id={{ lotacao.servidor.id }}">
+                        {% if lotacao.unidade_administrativa %}
+                                <td>{{ lotacao.item.contrato.numero_contrato }}</td>
+                                <td>{{ lotacao.item.numero_item }}</td>
+                                <td>{{ lotacao.servidor|upper }}</td>
+                                <td>{{ lotacao.unidade_administrativa|upper }}</td>
+                                <td></td>
+                        {% else %}
+                                <td>{{ lotacao.item.contrato.numero_contrato }}</td>
+                                <td>{{ lotacao.item.numero_item }}</td>
+                                <td>{{ lotacao.servidor }}</td>
+                                <td>{{ lotacao.endereco }}</td>
+                                <td>{{ lotacao.endereco.municipio }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td class="coluna-paginacao" colspan="5">
+                        <div class="container-paginacao">
+                            <div>
+                                <span class="texto-negrito texto-azul">TOTAL:</span>
+                                <span>{{ quantidade_lotacoes }}</span>
+                            </div>
+
+                            <div>
+                                {% if lotacoes.has_previous %}
+                                    <a class="" href="{% url 'terceirizacao:lotacoes' %}?{{ gets_primeira }}">
+                                        <button class="botao-paginacao">first_page</button>
+                                    </a>
+
+                                    <a class="" href="{% url 'terceirizacao:lotacoes' %}?{{ gets_anterior }}">
+                                        <button class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">first_page</button>
+                                    </a>
+
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% endif %}
+
+                                <span class="">
+                                    {{ lotacoes.number }} de {{ lotacoes.paginator.num_pages }}
+                                </span>
+
+                                {% if lotacoes.has_next %}
+                                    <a class="" href="{% url 'terceirizacao:lotacoes' %}?{{ gets_proxima }}">
+                                        <button class="botao-paginacao">navigate_next</button>
+                                    </a>
+
+                                    <a class="" href="{% url 'terceirizacao:lotacoes' %}?{{ gets_ultima }}">
+                                        <button class="botao-paginacao">last_page</button>
+                                    </a>
+
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_next</button>
+                                    </a>
+
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">last_page</button>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <table class="tabela tabela-lotacoes-terceirizados-tablet">
+            <thead>
+                <tr>
+                    <th>Contrato</th>
+                    <th>Item</th>
+                    <th>Servidor</th>
+                    <th>Unidade</th>
+                    {% comment %} <th>Carga horária</th> {% endcomment %}
+                    {% comment %} <th>Situação</th> {% endcomment %}
+                </tr>
+            </thead>
+
+            {% comment %} <tbody data-tabela-link="{% url 'terceirizacao:lotacao-perfil' %}?" > {% endcomment %}
+            <tbody data-tabela-link="{% url 'terceirizacao:servidor-perfil' %}?" >
+                {% for lotacao in lotacoes %}
+                    <tr data-tabela-link-chave="id={{ lotacao.servidor.id }}">
+                        {% if lotacao.unidade_administrativa %}
+                                <td>{{ lotacao.item.contrato.numero_contrato }}</td>
+                                <td>{{ lotacao.item.numero_item }}</td>
+                                <td>{{ lotacao.servidor|upper }}</td>
+                                <td>{{ lotacao.unidade_administrativa|upper }}</td>
+                        {% else %}
+                                <td>{{ lotacao.item.contrato.numero_contrato }}</td>
+                                <td>{{ lotacao.item.numero_item }}</td>
+                                <td>{{ lotacao.servidor }}</td>
+                                <td>{{ lotacao.endereco }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td class="coluna-paginacao" colspan="4">
+                        <div class="container-paginacao">
+                            <div>
+                                <span class="texto-negrito texto-azul">TOTAL:</span>
+                                <span>{{ quantidade_lotacoes }}</span>
+                            </div>
+
+                            <div>
+                                {% if lotacoes.has_previous %}
+                                    <a class="" href="{% url 'terceirizacao:lotacoes' %}?{{ gets_primeira }}">
+                                        <button class="botao-paginacao">first_page</button>
+                                    </a>
+
+                                    <a class="" href="{% url 'terceirizacao:lotacoes' %}?{{ gets_anterior }}">
+                                        <button class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">first_page</button>
+                                    </a>
+
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% endif %}
+
+                                <span class="">
+                                    {{ lotacoes.number }} de {{ lotacoes.paginator.num_pages }}
+                                </span>
+
+                                {% if lotacoes.has_next %}
+                                    <a class="" href="{% url 'terceirizacao:lotacoes' %}?{{ gets_proxima }}">
+                                        <button class="botao-paginacao">navigate_next</button>
+                                    </a>
+
+                                    <a class="" href="{% url 'terceirizacao:lotacoes' %}?{{ gets_ultima }}">
+                                        <button class="botao-paginacao">last_page</button>
+                                    </a>
+
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_next</button>
+                                    </a>
+
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">last_page</button>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <table class="tabela tabela-lotacoes-terceirizados-smartphone">
+            <thead>
+                <tr>
+                    <th>Contrato</th>
+                    <th>Servidor</th>
+                </tr>
+            </thead>
+
+            {% comment %} <tbody data-tabela-link="{% url 'terceirizacao:lotacao-perfil' %}?" > {% endcomment %}
+            <tbody data-tabela-link="{% url 'terceirizacao:servidor-perfil' %}?" >
+                {% for lotacao in lotacoes %}
+                    {% if lotacao.unidade_administrativa %}
+                        {% comment %} <tr data-tabela-link-chave="id_unidade={{ lotacao.unidade_administrativa.id }}"> {% endcomment %}
+                        <tr data-tabela-link-chave="id={{ lotacao.servidor.id }}">
+                            <td>{{ lotacao.item.contrato.numero_contrato }}</td>
+                            <td>{{ lotacao.servidor|upper }}</td>
+                        </tr>
+                    {% else %}
+                        <tr data-tabela-link-chave="id_endereco={{ lotacao.endereco.id }}">
+                            <td>{{ lotacao.item.contrato.numero_contrato }}</td>
+                            <td>{{ lotacao.servidor|upper }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td class="coluna-paginacao" colspan="2">
+                        <div class="container-paginacao">
+                            <div>
+                                <span class="texto-negrito texto-azul">TOTAL:</span>
+                                <span>{{ quantidade_lotacoes }}</span>
+                            </div>
+
+                            <div>
+                                {% if lotacoes.has_previous %}
+                                    <a class="" href="{% url 'terceirizacao:lotacoes' %}?{{ gets_primeira }}">
+                                        <button class="botao-paginacao">first_page</button>
+                                    </a>
+
+                                    <a class="" href="{% url 'terceirizacao:lotacoes' %}?{{ gets_anterior }}">
+                                        <button class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">first_page</button>
+                                    </a>
+
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% endif %}
+
+                                <span class="">
+                                    {{ lotacoes.number }} de {{ lotacoes.paginator.num_pages }}
+                                </span>
+
+                                {% if lotacoes.has_next %}
+                                    <a class="" href="{% url 'terceirizacao:lotacoes' %}?{{ gets_proxima }}">
+                                        <button class="botao-paginacao">navigate_next</button>
+                                    </a>
+
+                                    <a class="" href="{% url 'terceirizacao:lotacoes' %}?{{ gets_ultima }}">
+                                        <button class="botao-paginacao">last_page</button>
+                                    </a>
+
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_next</button>
+                                    </a>
+
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">last_page</button>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</main>
+
+{% include 'terceirizacao/lotacao/partials/_modal-lotacao-exportar.html' %}
+{% include 'terceirizacao/lotacao/partials/_modal-lotacao-filtros.html' %}
+{% include 'partials/_rodape.html' %}
+
+<script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+<script src="{% static 'assets/js/module/linkTabela.js' %}"></script>
+<script src="{% static 'assets/js/module/select2.js' %}"></script>
+<script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+
+{% endblock %}

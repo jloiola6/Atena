@@ -1,0 +1,369 @@
+<!-- Esta partial contém um container com uma tabela de Unidades Educacionais
+Feita para evitar a repetição código em perfis de escolas nos módulos que forem ncessários -->
+
+<table class="tabela tabela-unidades">
+    <thead>
+        <th>INEP</th>
+        <th>Nome</th>
+        <th>Município</th>
+        <th>Regional</th>
+        <th>Zona</th>
+    </thead>
+
+    {% if aplicacao == 'administracao' %}
+        <tbody data-tabela-link="{% url 'administracao:unidade-perfil' %}?inep=">
+    {% elif aplicacao == 'fundiaria-unidade-adm' or aplicacao == 'fundiaria-unidade-escolar' %}
+        <tbody data-tabela-link="{% url 'fundiaria:fundiaria-perfil' %}?inep=">
+    {% endif %}
+
+        {% for endereco in enderecos %}
+            <tr data-tabela-link-chave="{{ endereco.escola__cod_inep  }}">
+                <td>{{ endereco.escola__cod_inep }}</td>
+                <td>{{ endereco.escola__nome_escola }}</td>
+                <td>{{ endereco.municipio }}</td>
+                <td>{{ endereco.regiao }}</td>
+                <td>{{ endereco.tipo_localizacao }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+
+    <tfoot>
+        <tr>
+            <td class="coluna-paginacao" colspan="5">
+                <div class="container-paginacao">
+                    <div>
+                        <span class="texto-negrito texto-azul">TOTAL:</span>
+                        <span>{{quantidade_escolas}}</span>
+                    </div>
+                
+                    <div>      
+                        {% if enderecos.has_previous %}
+                            {% if aplicacao == 'administracao' %}
+                                <a class="" href="{% url 'administracao:unidades_educacionais' %}?{{ gets_primeira }}">
+                                    <button class="botao-paginacao">first_page</button>
+                                </a>
+                                
+                                <a class="" href="{% url 'administracao:unidades_educacionais' %}?{{ gets_anterior }}">
+                                    <button class="botao-paginacao">navigate_before</button>
+                                </a>
+
+                            {% elif aplicacao == 'fundiaria-unidade-adm' %}
+                                <a class="" href="{% url 'fundiaria:unidades-adm' %}?{{ gets_primeira }}">
+                                    <button class="botao-paginacao">first_page</button>
+                                </a>
+                                
+                                <a class="" href="{% url 'fundiaria:unidades-adm' %}?{{ gets_anterior }}">
+                                    <button class="botao-paginacao">navigate_before</button>
+                                </a>
+                            {% elif aplicacao == 'fundiaria-unidade-escolar' %}
+                                <a class="" href="{% url 'fundiaria:unidades-educacionais' %}?{{ gets_primeira }}">
+                                    <button class="botao-paginacao">first_page</button>
+                                </a>
+                                
+                                <a class="" href="{% url 'fundiaria:unidades-educacionais' %}?{{ gets_anterior }}">
+                                    <button class="botao-paginacao">navigate_before</button>
+                                </a>
+                            {% endif %}
+                    
+                            
+                        {% else %}
+                            <a class="" href="">
+                                <button disabled class="botao-paginacao">first_page</button>
+                            </a>
+                            
+                            <a class="" href="#">
+                                <button disabled class="botao-paginacao">navigate_before</button>
+                            </a>
+                        {% endif %}
+                        
+                        <span class="">
+                            {{ enderecos.number }} de {{ enderecos.paginator.num_pages }}
+                        </span>
+
+                        {% if enderecos.has_next %}
+                            {% if aplicacao == 'administracao' %}
+                                <a class="" href="{% url 'administracao:unidades_educacionais' %}?{{ gets_proxima }}">
+                                    <button class="botao-paginacao">navigate_next</button>
+                                </a>
+                                
+                                <a class="" href="{% url 'administracao:unidades_educacionais' %}?{{ gets_ultima }}">
+                                    <button class="botao-paginacao">last_page</button>
+                                </a>
+                            {% elif aplicacao == 'fundiaria-unidade-adm' %}
+                                <a class="" href="{% url 'fundiaria:unidades-adm' %}?{{ gets_proxima }}">
+                                    <button class="botao-paginacao">navigate_next</button>
+                                </a>
+                                
+                                <a class="" href="{% url 'fundiaria:unidades-adm' %}?{{ gets_ultima }}">
+                                    <button class="botao-paginacao">last_page</button>
+                                </a>
+                            {% elif aplicacao == 'fundiaria-unidade-escolar' %}
+                                <a class="" href="{% url 'fundiaria:unidades-educacionais' %}?{{ gets_proxima }}">
+                                    <button class="botao-paginacao">navigate_next</button>
+                                </a>
+                                
+                                <a class="" href="{% url 'fundiaria:unidades-educacionais' %}?{{ gets_ultima }}">
+                                    <button class="botao-paginacao">last_page</button>
+                                </a>
+                            {% endif %}
+
+                            
+                        
+                        {% else %}
+                            <a class="" href="#">
+                                <button disabled class="botao-paginacao">navigate_next</button>
+                            </a>
+                            
+                            <a class="" href="#">
+                                <button disabled class="botao-paginacao">last_page</button>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+<table class="tabela tabela-unidades-tablet">
+    <thead>
+        <tr>
+            <th class="tabela-unidades-campo">Nome</th>
+            <th class="tabela-unidades-campo">Município</th>
+            <th class="tabela-unidades-campo">Regional</th>
+            <th class="tabela-unidades-campo">Zona</th>
+        </tr> 
+    </thead>
+
+    {% if aplicacao == 'administracao' %}
+        <tbody data-tabela-link="{% url 'administracao:unidade-perfil' %}?inep=">
+    {% elif aplicacao == 'fundiaria-unidade-adm' or aplicacao == 'fundiaria-unidade-escolar' %}
+        <tbody data-tabela-link="{% url 'fundiaria:fundiaria-perfil' %}?inep=">
+    {% endif %}
+        {% for endereco in enderecos %}
+            <tr data-tabela-link-chave="{{ endereco.escola__cod_inep}}">
+                {% comment %}<td class="oculto">{{ endereco.escola__cod_inep}}</td>{% endcomment %}
+                <td>{{ endereco.escola__nome_escola }}</td>
+                <td>{{ endereco.municipio }}</td>
+                <td>{{ endereco.regiao }}</td>
+                <td>{{ endereco.tipo_localizacao }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+
+    <tfoot>
+        <tr>
+            <td class="coluna-paginacao" colspan="4">
+                <div class="container-paginacao">
+                    <div>
+                        <span class="texto-negrito texto-azul">TOTAL:</span>
+                        <span>{{quantidade_escolas}}</span>
+                    </div>
+                
+                    <div>      
+                        {% if enderecos.has_previous %}
+                            {% if aplicacao == 'administracao' %}
+                                <a class="" href="{% url 'administracao:unidades_educacionais' %}?{{ gets_primeira }}">
+                                    <button class="botao-paginacao">first_page</button>
+                                </a>
+                                
+                                <a class="" href="{% url 'administracao:unidades_educacionais' %}?{{ gets_anterior }}">
+                                    <button class="botao-paginacao">navigate_before</button>
+                                </a>
+                            {% elif aplicacao == 'fundiaria-unidade-adm' %}
+                                <a class="" href="{% url 'fundiaria:unidades-adm' %}?{{ gets_primeira }}">
+                                    <button class="botao-paginacao">first_page</button>
+                                </a>
+                                
+                                <a class="" href="{% url 'fundiaria:unidades-adm' %}?{{ gets_anterior }}">
+                                    <button class="botao-paginacao">navigate_before</button>
+                                </a>
+                            {% elif aplicacao == 'fundiaria-unidade-escolar' %}
+                                <a class="" href="{% url 'fundiaria:unidades-educacionais' %}?{{ gets_primeira }}">
+                                    <button class="botao-paginacao">first_page</button>
+                                </a>
+                                
+                                <a class="" href="{% url 'fundiaria:unidades-educacionais' %}?{{ gets_anterior }}">
+                                    <button class="botao-paginacao">navigate_before</button>
+                                </a>
+                            {% endif %}
+                    
+                            
+                        {% else %}
+                            <a class="" href="">
+                                <button disabled class="botao-paginacao">first_page</button>
+                            </a>
+                            
+                            <a class="" href="#">
+                                <button disabled class="botao-paginacao">navigate_before</button>
+                            </a>
+                        {% endif %}
+                        
+                        <span class="">
+                            {{ enderecos.number }} de {{ enderecos.paginator.num_pages }}
+                        </span>
+
+                        {% if enderecos.has_next %}
+                            {% if aplicacao == 'administracao' %}
+                                <a class="" href="{% url 'administracao:unidades_educacionais' %}?{{ gets_proxima }}">
+                                    <button class="botao-paginacao">navigate_next</button>
+                                </a>
+                                
+                                <a class="" href="{% url 'administracao:unidades_educacionais' %}?{{ gets_ultima }}">
+                                    <button class="botao-paginacao">last_page</button>
+                                </a>
+                            {% elif aplicacao == 'fundiaria-unidade-adm' %}
+                                <a class="" href="{% url 'fundiaria:unidades-adm' %}?{{ gets_proxima }}">
+                                    <button class="botao-paginacao">navigate_next</button>
+                                </a>
+                                
+                                <a class="" href="{% url 'fundiaria:unidades-adm' %}?{{ gets_ultima }}">
+                                    <button class="botao-paginacao">navigate_before</button>
+                                </a>
+                            {% elif aplicacao == 'fundiaria-unidade-escolar' %}
+                                <a class="" href="{% url 'fundiaria:unidades-educacionais' %}?{{ gets_proxima }}">
+                                    <button class="botao-paginacao">last_page</button>
+                                </a>
+                                
+                                <a class="" href="{% url 'fundiaria:unidades-educacionais' %}?{{ gets_ultima }}">
+                                    <button class="botao-paginacao">last_page</button>
+                                </a>
+                            {% endif %}
+
+                            
+                        
+                        {% else %}
+                            <a class="" href="#">
+                                <button disabled class="botao-paginacao">navigate_next</button>
+                            </a>
+                            
+                            <a class="" href="#">
+                                <button disabled class="botao-paginacao">last_page</button>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+<table class="tabela tabela-unidades-smartphone">
+    <thead>
+        <tr>
+            <th class="tabela-unidades-campo">Nome</th>
+            <th class="tabela-unidades-campo">Município</th>
+            <th class="tabela-unidades-campo">Zona</th>
+        </tr> 
+    </thead>
+
+    {% if aplicacao == 'administracao' %}
+        <tbody data-tabela-link="{% url 'administracao:unidade-perfil' %}?inep=">
+    {% elif aplicacao == 'fundiaria-unidade-adm' or aplicacao == 'fundiaria-unidade-escolar' %}
+        <tbody data-tabela-link="{% url 'fundiaria:fundiaria-perfil' %}?inep=">
+    {% endif %}
+        {% for endereco in enderecos %}
+            <tr data-tabela-link-chave="{{ endereco.escola__cod_inep}}">
+                <td class="oculto">{{ endereco.escola__cod_inep}}</td>
+                <td>{{ endereco.escola__nome_escola }}</td>
+                <td>{{ endereco.municipio }}</td>
+                <td>{{ endereco.tipo_localizacao }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+
+    <tfoot>
+        <tr>
+            <td class="coluna-paginacao" colspan="3">
+                <div class="container-paginacao">
+                    <div>
+                        <span class="texto-negrito texto-azul">TOTAL:</span>
+                        <span>{{quantidade_escolas}}</span>
+                    </div>
+                
+                    <div>      
+                        {% if enderecos.has_previous %}
+                            {% if aplicacao == 'administracao' %}
+                                <a class="" href="{% url 'administracao:unidades_educacionais' %}?{{ gets_primeira }}">
+                                    <button class="botao-paginacao">first_page</button>
+                                </a>
+                                
+                                <a class="" href="{% url 'administracao:unidades_educacionais' %}?{{ gets_anterior }}">
+                                    <button class="botao-paginacao">navigate_before</button>
+                                </a>
+                            {% elif aplicacao == 'fundiaria-unidade-adm' %}
+                                <a class="" href="{% url 'fundiaria:unidades-adm' %}?{{ gets_primeira }}">
+                                    <button class="botao-paginacao">first_page</button>
+                                </a>
+                                
+                                <a class="" href="{% url 'fundiaria:unidades-adm' %}?{{ gets_anterior }}">
+                                    <button class="botao-paginacao">navigate_before</button>
+                                </a>
+                            {% elif aplicacao == 'fundiaria-unidade-escolar' %}
+                                <a class="" href="{% url 'fundiaria:unidades-educacionais' %}?{{ gets_primeira }}">
+                                    <button class="botao-paginacao">first_page</button>
+                                </a>
+                                
+                                <a class="" href="{% url 'fundiaria:unidades-educacionais' %}?{{ gets_anterior }}">
+                                    <button class="botao-paginacao">navigate_before</button>
+                                </a>
+                            {% endif %}
+                    
+                            
+                        {% else %}
+                            <a class="" href="">
+                                <button disabled class="botao-paginacao">first_page</button>
+                            </a>
+                            
+                            <a class="" href="#">
+                                <button disabled class="botao-paginacao">navigate_before</button>
+                            </a>
+                        {% endif %}
+                        
+                        <span class="">
+                            {{ enderecos.number }} de {{ enderecos.paginator.num_pages }}
+                        </span>
+
+                        {% if enderecos.has_next %}
+                            {% if aplicacao == 'administracao' %}
+                                <a class="" href="{% url 'administracao:unidades_educacionais' %}?{{ gets_proxima }}">
+                                    <button class="botao-paginacao">navigate_next</button>
+                                </a>
+                                
+                                <a class="" href="{% url 'administracao:unidades_educacionais' %}?{{ gets_ultima }}">
+                                    <button class="botao-paginacao">last_page</button>
+                                </a>
+                            {% elif aplicacao == 'fundiaria-unidade-adm' %}
+                                <a class="" href="{% url 'fundiaria:unidades-adm' %}?{{ gets_proxima }}">
+                                    <button class="botao-paginacao">navigate_next</button>
+                                </a>
+                                
+                                <a class="" href="{% url 'fundiaria:unidades-adm' %}?{{ gets_ultima }}">
+                                    <button class="botao-paginacao">last_page</button>
+                                </a>
+                            {% elif aplicacao == 'fundiaria-unidade-escolar' %}
+                                <a class="" href="{% url 'fundiaria:unidades-educacionais' %}?{{ gets_proxima }}">
+                                    <button class="botao-paginacao">navigate_next</button>
+                                </a>
+                                
+                                <a class="" href="{% url 'fundiaria:unidades-educacionais' %}?{{ gets_ultima }}">
+                                    <button class="botao-paginacao">last_page</button>
+                                </a>
+                            {% endif %}
+                            
+                        
+                        {% else %}
+                            <a class="" href="#">
+                                <button disabled class="botao-paginacao">navigate_next</button>
+                            </a>
+                            
+                            <a class="" href="#">
+                                <button disabled class="botao-paginacao">last_page</button>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </tfoot>
+</table>

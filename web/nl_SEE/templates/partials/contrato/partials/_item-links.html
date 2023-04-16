@@ -1,0 +1,265 @@
+{% comment %}
+    Esta partial contém um container com os links de um item
+    Feita para evitar a repetição código em perfis de contrato nos módulos de ADMINISTRAÇÃO, TECNOLOGIA e TERCEIRIZAÇÃO
+{% endcomment %}
+
+<div class="item-links" data-nav-container="links">
+    {% if quantidade_links > 0 %}
+        <table class="tabela tabela-links">
+            <thead>
+                <tr>                  
+                    <th class="">Circuito</th>
+                    <th class="">Unidade / Departamento</th>
+                    <th class="">Tipo</th>
+                    <th class="">Fornecedor</th>
+                    <th class="">Operadora</th>
+                    <th class="">Tipo de Banda</th>
+                    <th class="">MB/s</th>
+                </tr> 
+            </thead>
+
+            <tbody data-tabela-link="/tecnologia/link_perfil?id=">
+                {% for link in links %}
+                    <tr data-tabela-link-chave="{{ link.id }}">
+                        <td>{{ link.circuito }}</td>
+
+                        {% if link.tipo == 'Unidade Educacional' %}
+                            <td>{{ link.unidade_educacional__escola__cod_inep }} - {{ link.unidade_educacional__escola__nome_escola }}</td>
+                        {% else %}
+                            <td> {{ link.departamento__sigla }} - {{ link.departamento__nome }}</td>
+                        {% endif %}
+
+                        <td>{{ link.tipo }}</td>
+                        <td>{{ link.fornecedor }}</td>
+                        <td>{{ link.operadora }}</td>
+                        <td>{{ link.tipo_banda }}</td>
+                        <td>{{ link.velocidade }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td class="coluna-paginacao" colspan="7">
+                        <div class="container-paginacao">
+                            <div>
+                                <span class="texto-negrito texto-azul">Vagas Restantes:</span>
+                                <span>{{vagas_restantes}}</span>
+                            </div>
+
+                            <div>
+                                {% if links.has_previous %}
+                                    <a class="" href="{% url 'tecnologia:item-perfil' %}?{{ gets_primeira }}">
+                                        <button class="botao-paginacao">first_page</button>
+                                    </a>
+                                    
+                                    <a class="" href="{% url 'tecnologia:item-perfil' %}?{{ gets_anterior }}">
+                                        <button class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">first_page</button>
+                                    </a>
+                                    
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% endif %}
+
+                                <span class="">
+                                    {{ links.number }} de {{ links.paginator.num_pages }}
+                                </span>
+                            
+                                {% if links.has_next %}
+                                    <a class="" href="{% url 'tecnologia:item-perfil' %}?{{ gets_proxima }}">
+                                        <button class="botao-paginacao">navigate_next</button>
+                                    </a>
+                                    
+                                    <a class="" href="{% url 'tecnologia:item-perfil' %}?{{ gets_ultima }}">
+                                        <button class="botao-paginacao">last_page</button>
+                                    </a>
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_next</button>
+                                    </a>
+                                    
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">last_page</button>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <table class="tabela tabela-links-tablet">
+            <thead>
+                <tr>                  
+                    <th class="">Circuito</th>
+                    <th class="">Unidade / Departamento</th>
+                    <th class="">Fornecedor</th>
+                    <th class="">Operadora</th>
+                    <th class="">MB/S</th>
+                </tr> 
+            </thead>
+
+            <tbody data-tabela-link="/tecnologia/link_perfil?id=">
+                {% for link in links %}
+                    <tr data-tabela-link-chave="{{ link.id }}">
+                        <td>{{ link.circuito }}</td>
+
+                        {% if link.tipo == 'Unidade Educacional' %}
+                            <td>{{ link.unidade_educacional__escola__cod_inep }} - {{ link.unidade_educacional__escola__nome_escola }}</td>
+                        {% else %}
+                            <td> {{ link.departamento__sigla }} - {{ link.departamento__nome }}</td>
+                        {% endif %}
+
+                        <td>{{ link.fornecedor }}</td>
+                        <td>{{ link.operadora }}</td>
+                        <td>{{ link.velocidade }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td class="coluna-paginacao" colspan="5">
+                        <div class="container-paginacao">
+                            <div>
+                                <span class="texto-negrito texto-azul">TOTAL:</span>
+                                <span>{{quantidade_links}}</span>
+                            </div>
+
+                            <div>
+                                {% if links.has_previous %}
+                                    <a class="" href="{% url 'tecnologia:item-perfil' %}?{{ gets_primeira }}">
+                                        <button class="botao-paginacao">first_page</button>
+                                    </a>
+                                    
+                                    <a class="" href="{% url 'tecnologia:item-perfil' %}?{{ gets_anterior }}">
+                                        <button class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">first_page</button>
+                                    </a>
+                                    
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% endif %}
+
+                                <span class="">
+                                    {{ links.number }} de {{ links.paginator.num_pages }}
+                                </span>
+                            
+                                {% if links.has_next %}
+                                    <a class="" href="{% url 'tecnologia:item-perfil' %}?{{ gets_proxima }}">
+                                        <button class="botao-paginacao">navigate_next</button>
+                                    </a>
+                                    
+                                    <a class="" href="{% url 'tecnologia:item-perfil' %}?{{ gets_ultima }}">
+                                        <button class="botao-paginacao">last_page</button>
+                                    </a>
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_next</button>
+                                    </a>
+                                    
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">last_page</button>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <table class="tabela tabela-links-smartphone">
+            <thead>
+                <tr>                  
+                    <th class="">Circuito</th>
+                    <th class="">Unidade / Departamento</th>
+                    <th class="">Operadora</th>
+                </tr> 
+            </thead>
+
+            <tbody data-tabela-link="/tecnologia/link_perfil?id=">
+                {% for link in links %}
+                    <tr data-tabela-link-chave="{{ link.id }}">
+                        <td>{{ link.circuito }}</td>
+
+                        {% if link.tipo == 'Unidade Educacional' %}
+                            <td>{{ link.unidade_educacional__escola__cod_inep }} - {{ link.unidade_educacional__escola__nome_escola }}</td>
+                        {% else %}
+                            <td> {{ link.departamento__sigla }} - {{ link.departamento__nome }}</td>
+                        {% endif %}
+
+                        <td>{{ link.operadora }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td class="coluna-paginacao" colspan="3">
+                        <div class="container-paginacao">
+                            <div>
+                                <span class="texto-negrito texto-azul">TOTAL:</span>
+                                <span>{{quantidade_links}}</span>
+                            </div>
+
+                            <div>
+                                {% if links.has_previous %}
+                                    <a class="" href="{% url 'tecnologia:item-perfil' %}?{{ gets_primeira }}">
+                                        <button class="botao-paginacao">first_page</button>
+                                    </a>
+                                    
+                                    <a class="" href="{% url 'tecnologia:item-perfil' %}?{{ gets_anterior }}">
+                                        <button class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">first_page</button>
+                                    </a>
+                                    
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_before</button>
+                                    </a>
+                                {% endif %}
+
+                                <span class="">
+                                    {{ links.number }} de {{ links.paginator.num_pages }}
+                                </span>
+                            
+                                {% if links.has_next %}
+                                    <a class="" href="{% url 'tecnologia:item-perfil' %}?{{ gets_proxima }}">
+                                        <button class="botao-paginacao">navigate_next</button>
+                                    </a>
+                                    
+                                    <a class="" href="{% url 'tecnologia:item-perfil' %}?{{ gets_ultima }}">
+                                        <button class="botao-paginacao">last_page</button>
+                                    </a>
+                                {% else %}
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">navigate_next</button>
+                                    </a>
+                                    
+                                    <a class="" href="#">
+                                        <button disabled class="botao-paginacao">last_page</button>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    {% else %}
+        <p class="texto-medio texto-preto">Não possui links associado a esse item do contrato.</p>
+    {% endif %}
+</div>

@@ -1,0 +1,37 @@
+<div class="lista-menus">
+    <div class="menu-pai" data-accordeon-pai="servidores-enturmados" data-accorderon-ativo="false" style="border-left-style: solid; border-left-color: var(--primary-color); border-left-width: 12px;">
+        <h3 class="texto-medio texto-azul">Servidores Enturmados ({{ qtd_enturmados }})</h3>
+        <span class="icone icone-medio icone-azul">expand_more</span>
+    </div>
+    {% for servidor in professores %}
+        <div class="menu-pai menu-filho menu-eja" data-accordeon-filho="servidores-enturmados" data-accordeon-pai="{{ servidor.0 }}" data-accorderon-ativo="false" style="border-left-style: solid; border-left-color: var(--primary-color); border-left-width: 12px;">
+            <h4 class="texto-medio texto-azul">{{ servidor.0 }} ({{ servidor.2 }})</h4>
+            <span class="icone icone-medio icone-azul">expand_more</span>
+        </div>
+
+        <div class="menu-pai menu-filho" data-accordeon-filho="{{ servidor.0 }}" data-accorderon-ativo="false">
+            <table class="tabela tabela-servidores">
+                <thead>
+                    <th>Nome</th>
+                    {% if servidor.0 == 'Professor(a)' %}
+                        <th>Quantidade de turmas</th>
+                        <th>Total de Horas</th>
+                    {% else %}
+                        <th>Total de Alunos</th>
+                    {% endif %}
+                </thead>
+                {% for professor in servidor.1 %}
+                    <tbody data-tabela-link="{% url 'administracao:professor-perfil' %}?id_servidor_lotacao={{ professor.0}}&id_endereco={{ endereco.id }}">
+                        <tr data-tabela-link-chave="{{ endereco.escola__id }}">
+                            <td>{{ professor.1.nome }}</td>
+                            <td>{{ professor.2 }}</td>
+                            {% if servidor.0 == 'Professor(a)' %}
+                                <td>{{ professor.3 }}h</td>
+                            {% endif %}
+                        </tr>
+                    </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    {% endfor %}
+</div>

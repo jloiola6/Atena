@@ -1,0 +1,50 @@
+ <!-- ADICIONAR REQUIRED -->
+
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+    Cadastro de Aditivo
+{% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/partials/contrato/_contrato-aditivo-formulario.css' %}">
+    <!-- <link rel="stylesheet"  href="{% static 'assets/css/layout/administracao/contratos/contrato-aditivo-formulario.css' %}"> -->
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+    <main>
+        <div class="container">
+            <nav class="container-navegacao ">
+                <a href="{% url 'core:index' %}" class="texto-azul">Home</a>
+                <span class="texto-azul">&gt;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:index' %}">Administração</a>
+                <span class="texto-azul">&gt;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:contratos' %}">Contratos</a>
+                <span class="texto-azul">&gt;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:contrato-perfil' %}?id_contrato={{ contrato.id }}">Contrato n° {{ contrato.numero_contrato }}</a>
+                <span class="texto-azul">&gt;</span>
+
+                <span class="  texto-azul">Cadastro de Contrato Aditivo</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Cadastro de Contrato Aditivo</h1>
+
+            <p class="descricao  texto-preto">Insira os dados do contrato</p>
+
+            {% include 'partials/contrato/_contrato-aditivo-formulario.html' %}
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+    <script src="{% static 'assets/js/layout/partials/contrato/contrato-aditivo-formulario/controlaCampos.js' %}" type="module"></script>
+
+{% endblock %}

@@ -1,0 +1,71 @@
+/* Estiização da página de login */
+
+.main-login{
+    align-items: center;
+    animation: none;
+    background-image: linear-gradient(45deg, #358DFF, #273497);
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.container-login{
+    background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+    border-radius: 8px;
+    box-shadow: var(--main-shadow);
+    padding: 60px 0;
+    position: relative;
+    text-align: center;
+    width: 440px;
+}
+
+.formulario-login{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: center;
+    margin: auto;
+    margin-top: 16px;
+    width: 100%;
+}
+    
+    .formulario-login span{
+        display: block;
+    }
+
+    .formulario-login .container-botoes{
+        justify-content: center;
+        margin-top: 8px;
+    }
+    
+    .formulario-login .container-botoes .botao{
+        background-color: #0fa0a7;
+    }
+    
+    .formulario-login .container-botoes .botao:hover{
+        background-color: #16afb7;
+    }
+
+.campo-texto-login{
+    display: block;
+    margin: auto;
+    width: 242px;
+}
+
+.container-imagens-login{
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    margin-top: 24px;
+}
+
+    .logo-see{
+        height: auto;
+        max-width: 75px;
+    }
+
+    .brasao-login{
+        height: auto;
+        max-width: 120px;
+    }

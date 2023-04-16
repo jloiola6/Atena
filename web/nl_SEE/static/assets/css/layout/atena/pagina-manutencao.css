@@ -1,0 +1,33 @@
+.container-manutencao{
+    align-items: center;
+    display: flex;
+}
+
+.container-manutencao .container{
+    align-items: center;
+    display: flex;
+    gap: 24px;
+    flex-direction: row;
+    height: 100%;
+}
+
+@keyframes animacao-manutencao{
+    from{transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+}
+
+.icone-manutencao{
+    animation: animacao-manutencao 3s linear infinite;
+    color: var(--texto-azul);
+}
+
+@media screen and (max-width: 425px){
+    .container-manutencao h1{
+        text-align: center;
+    }
+
+    .container-manutencao .container{
+        flex-direction: column;
+        justify-content: center;
+    }
+}

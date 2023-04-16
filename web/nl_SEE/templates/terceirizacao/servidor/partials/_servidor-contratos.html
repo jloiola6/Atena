@@ -1,0 +1,73 @@
+{% load static %}
+
+<div class="servidor-contratos" data-nav-container="contratos">
+    {% if servidor_contrato_see %}
+        <h2 class="texto-medio texto-azul">Contratos SEE</h2>
+
+        <div class="container-cards-simples container-cards-contratos">
+            {% for contrato in servidor_contrato_see %}
+                <a href="#">
+                    <div class="card-simples ">
+                        <h4 class="card-simples__titulo texto-azul">Digito N° {{ contrato.digito }}</h4>
+
+                        <div class="card-simples__descricao">
+                            {% comment %} <p class=" texto-azul texto-negrito">Digito: <span class="texto-preto texto-normal">{{ contrato.digito }}</span></p> {% endcomment %}
+                            <p class=" texto-azul texto-negrito">Cargo: <span class="texto-preto texto-normal">{{ contrato.cargo }}</span></p>
+                            {% if contrato.cargo.classe %}
+                                <p class=" texto-azul texto-negrito">Classe: <span class="texto-preto texto-normal">{{ contrato.cargo.classe }}</span></p>
+                            {% endif %}
+                            <p class=" texto-azul texto-negrito">Carga horária: <span class="texto-preto texto-normal">{{ contrato.cargo.carga_horaria }}H</span></p>
+                            <p class=" texto-azul texto-negrito">Situação: <span class="texto-preto texto-normal">{{ contrato.situacao }}</span></p>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+
+        </div>
+    {% endif %}
+
+    <h2 class="texto-medio texto-azul titulo-contratos-terceirizados">Contratos Terceirizados</h2>
+
+    {% if servidor_contrato %}
+        <div class="container-cards-simples container-cards-contratos">
+            {% for contrato in contrato_lotacao %}
+                {% comment %} {% if  %} {% endcomment %}
+                    <a href="{% url 'terceirizacao:servidor-contrato-perfil' %}?id_contrato={{ contrato.id }}">
+                        <div class="card-simples ">
+                            <h4 class="card-simples__titulo texto-azul">N° {{ contrato.item__contrato__numero_contrato }}</h4>
+
+                            <div class="card-simples__descricao">
+                                <p class=" texto-azul texto-negrito">Item do contrato: <span class="texto-preto texto-normal">{{ contrato.item__numero_item }}</span></p>
+                                <p class=" texto-azul texto-negrito paragrafo">Descrição: <span class="texto-preto texto-normal">{{ contrato.item__descricao|upper }}</span></p>
+                                <p class=" texto-azul texto-negrito">Valor unitário: <span class="texto-preto texto-normal">{{ contrato.item__valor_unitario }}</span></p>
+                                {% if contrato.status == 1 %}
+                                    <p class=" texto-azul texto-negrito">Situação: <span class="texto-preto texto-normal">Ativo</span></p>
+                                {% else %}
+                                    <p class=" texto-azul texto-negrito">Situação: <span class="texto-preto texto-normal">Inativo</span></p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </a>
+                {% comment %} {% endif %} {% endcomment %}
+            {% endfor %}
+        </div>
+    {% else %}
+        <h3 class="texto-preto texto-medio">Este servidor não possui contrato cadastrado</h3>
+    {% endif %}
+
+    {% if permissao.editar == 1 %}
+        {% if ultimo_contrato %}
+            <div class="container-botoes">
+                <a href="{% url 'terceirizacao:finalizar-contrato' %}?id_contrato={{ ultimo_contrato.id }}">
+                    <button class="botao botao--azul">Alterar contrato</button>
+                </a>
+            </div>
+        {% else %}
+            <div class="container-botoes">
+                <a href="{% url 'terceirizacao:contrato-formulario' %}?id_servidor={{ servidor.id }}">
+                    <button class="botao botao--azul">Adicionar</button>
+                </a>
+            </div>
+        {% endif %}
+    {% endif %}
+</div>

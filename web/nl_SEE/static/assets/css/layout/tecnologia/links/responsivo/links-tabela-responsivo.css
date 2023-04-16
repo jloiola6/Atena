@@ -1,0 +1,37 @@
+/* Configuração da responsividade da tabela de links */
+
+.tabela-links-tablet, .tabela-links-smartphone{
+    display: none;
+}
+
+@media screen and (max-width: 889px){
+    .tabela-links, .tabela-links-smartphone{
+        display: none;
+    }
+
+    .tabela-links-tablet{
+        display: block;
+    }
+
+        /* .tabela-links-tablet th{
+            width: 25%;
+        } */
+}
+
+@media screen and (max-width: 587px){
+    .tabela-links, .tabela-links-tablet{
+        display: none;
+    }
+
+    .tabela-links-smartphone{
+        display: block;
+    }
+
+        .tabela-links-smartphone th{
+            width: 1%;
+        }
+}
+
+.total_unitario{
+    margin-left: 50px;
+}

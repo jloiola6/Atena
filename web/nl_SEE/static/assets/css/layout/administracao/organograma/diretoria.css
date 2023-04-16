@@ -1,0 +1,56 @@
+/* Estilização da página de perfil de uma diretoria */
+
+.container-surface-diretoria{
+    margin-top: 1.5rem;
+}
+
+.container-diretoria-dados{
+    display: flex;
+    flex-direction: column;
+    margin-top: .5rem;
+    row-gap: .5rem;
+}
+
+.titulo-endereco-diretoria{
+    margin-top: 1rem;
+}
+
+.container-endereco-diretoria{
+    display: flex;
+    flex-basis: 50%;
+    flex-direction: column;
+    margin-top: 1rem;
+    row-gap: .5rem;
+}
+
+.container-endereco-diretoria .container-botoes{
+    margin-top: .5rem;
+}
+
+.titulo-equipe-diretoria{
+    margin-top: 1rem;
+}
+
+.container-equipe-diretoria{
+    display: flex;
+    flex-basis: 50%;
+    flex-direction: column;
+    margin-top: 1rem;
+    row-gap: .5rem;
+}
+
+.container-equipe-diretoria .link{
+    margin-top: .5rem;
+}
+
+.container-botoes-departamentos{
+    margin-top: 1rem;
+}
+
+.lista-departamentos{
+    margin-top: 1.5rem;
+}
+
+.mensagem-sem-departamentos{
+    margin-top: 1rem;
+}

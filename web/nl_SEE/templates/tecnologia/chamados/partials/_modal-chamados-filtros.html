@@ -1,0 +1,58 @@
+
+<div class="modal oculto" data-modal="filtros">
+    <form id="modal-conteudo" class="modal-conteudo" method="GET">
+        <div class="modal-filtros-titulo">
+            <h2 class="texto-grande texto-negrito texto-azul">Filtros</h2>
+        </div>
+
+        <p class="descricao  texto-preto">Insira os filtros que deseja aplicar</p>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-unidade-escolar">Unidade Escolar</label>
+            <select data-selecao2  name="endereco_escola" id="campo-unidade-escolar" class="campo-texto campo-grande">
+                <option value=""></option>
+                {% for endereco in endereco_chamados %}
+                    {% if endereco.endereco_escola__escola__id != None %}
+                        <option value="{{ endereco.endereco_escola__escola__id }}">{{ endereco.endereco_escola__escola__cod_inep }} - {{ endereco.endereco_escola__escola__nome_escola }} - {{ endereco.endereco_escola__municipio }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-unidade-admnistrativa">Unidade Administrativa</label>
+            <select data-selecao2  name="unidade_administrativa" id="campo-unidade-admnistrativa" class="campo-texto campo-grande">
+                <option value=""></option>
+                {% for adm in consulta_chamados %}
+                    {% if adm.unidade_administrativa__id != None %}
+                        <option value="{{ adm.unidade_administrativa__id }}">{{ adm.unidade_administrativa__sigla }} - {{ adm.unidade_administrativa__nome }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-tipo-chamado">Tipo de Chamado</label>
+            <select name="tipo_chamado" id="tipo_chamado" class="campo-texto campo-pequeno">
+                <option value=""></option>
+                <option value="Interno">Interno</option>
+                <option value="Externo">Externo</option>
+            </select>
+        </div>
+
+        <div class="formulario-grupo">
+            <label class="texto-azul label-campo" for="campo-tipo-chamado">Situaçao do chamado</label>
+            <select name="chamado_status" id="chamado_status" class="campo-texto campo-pequeno">
+                <option value=""></option>
+                <option value="Aberto">Aberto</option>
+                <option value="Em atendimento">Em atendimento</option>
+                <option value="Finalizado">Finalizado</option>
+            </select>
+        </div>
+
+        <div class="container-botoes">
+            <button type="" class="botao botao--verde">Filtrar</button>
+        </div>
+
+    </form>
+</div>

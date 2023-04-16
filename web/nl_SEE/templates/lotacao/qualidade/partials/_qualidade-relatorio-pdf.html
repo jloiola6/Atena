@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-bt">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Qualidade de Vida</title>
+    </head>
+
+    <body>
+        {% for atendimento in atende %}
+        <header>
+            <table>
+                <tr>
+                    <!-- <th><img id="img1" src="/home/suporte/Atena/nl_SEE/static/assets/img/qualidade.png" width='550px' alt="Cabecalho"></th>
+                    <th><img id="img2" src="/home/suporte/Atena/nl_SEE/static/assets/img/ATENA-AZUL.svg" width='120px' alt="Logo Atena"></th> -->
+                    <th><img id="img2" src="{{ url_logo }}" width='550px' alt="Cabecalho"></th>
+                    <th class="direita"><img id="img1" src="{{ url_atena }}"  width='120px' alt="Logo Atena"></th>
+                </tr>
+            </table>
+        </header>
+        <hr>
+        <br><br><br>
+
+        <table>
+            <tbody>
+                <tr>
+                    <td class="atendente"><b>Servidor(a):</b> {{ atendimento.atendente__nome }}</td>
+                    <td class="atendente direita"><b>Atividade:</b> {{ atendimento.servico__nome }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="tabela-qualidade">
+            <tbody>
+                <tr>
+                    <td><h1 class="titulo">Relatório de Atividade - {{ mes }}</h1></td>
+                </tr>
+            </tbody>
+        </table>
+            <table class="tabela-qualidade">
+                <tbody>
+                    <tr>
+                        <th class="cabecalho-tabela"><b>Status</b></th>
+                        <th class="cabecalho-tabela"><b>Atividades Internas</b></th>
+                        <th class="cabecalho-tabela"><b>Atividades Externas</b></th>
+                        <th class="cabecalho-tabela"><b>Total</b></th>
+                    </tr>
+                    {% if psicologo %}
+
+                        <tr>
+                            <td class="cabecalho-tabela">Concluidos</td>
+                            <td class="conteudo-tabela">{{ relatorio.concluidos_interno }}</td>
+                            <td class="conteudo-tabela">{{ relatorio.concluidos_externo }}</td>
+                            <td class="conteudo-tabela"><b>{{ relatorio.concluidos_soma }}</b></td>
+                        </tr>
+
+                        <tr>
+                            <td class="cabecalho-tabela">Cancelados</td>
+                            <td class="conteudo-tabela">{{ relatorio.cancelados_interno }}</td>
+                            <td class="conteudo-tabela">{{ relatorio.cancelados_externo }}</td>
+                            <td class="conteudo-tabela"><b>{{ relatorio.cancelados_soma }}</b></td>
+                        </tr>
+
+                        <tr>
+                            <td class="cabecalho-tabela">Não Compareceram</td>
+                            <td class="conteudo-tabela">{{ relatorio.faltaram_interno }}</td>
+                            <td class="conteudo-tabela">{{ relatorio.faltaram_externo }}</td>
+                            <td class="conteudo-tabela"><b>{{ relatorio.faltaram_soma }}</b></td>
+                        </tr>
+
+                        <tr>
+                            <th class="cabecalho-tabela">Total</th>
+                            <td class="conteudo-tabela"><b>{{ relatorio.soma_interno }}</b></td>
+                            <td class="conteudo-tabela"><b>{{ relatorio.soma_externo }}</b></td>
+                            <td class="cabecalho-tabela">{{ relatorio.total }}</td>
+                        </tr>
+                    
+                    {% else %}
+                        
+                        <tr>
+                            <td class="cabecalho-tabela">Concluidos</td>
+                            <td class="conteudo-tabela">{{ relatorio.concluidos_interno }}</td>
+                            <td class="conteudo-tabela">{{ relatorio.concluidos_externo }}</td>
+                            <td class="conteudo-tabela"><b>{{ relatorio.soma_concluidos }}</b></td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="cabecalho-tabela">Cancelados</td>
+                            <td class="conteudo-tabela">{{ relatorio.cancelados_interno }}</td>
+                            <td class="conteudo-tabela">{{ relatorio.cancelados_externo }}</td>
+                            <td class="conteudo-tabela"><b>{{ relatorio.soma_cancelados }}</b></td>
+                        </tr>
+                        
+                        <tr>
+                            <th class="cabecalho-tabela">Total</th>
+                            <td class="conteudo-tabela"><b>{{ relatorio.soma_interno }}</b></td>
+                            <td class="conteudo-tabela"><b>{{ relatorio.soma_externo }}</b></td>
+                            <td class="cabecalho-tabela">{{ relatorio.total }}</td>
+                        </tr>
+
+                    {% endif %}
+                    
+                </tbody>
+            </table>
+ 
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <table>
+            <td></td><td class="data">Rio Branco, Acre {{ data.day }} de {{ mesatual }} de {{ data.year }}</td>
+        </table>
+        <br><br><br><br><br><br>
+        <table class="assinatura">
+            <tr>
+                <td>_____________________________________________</td>
+            </tr>
+            <tr>
+                <td><b>{{ atendimento.atendente__nome }}</b></td>
+            </tr>
+        </table>
+        {% endfor %}
+    </body>
+
+    <style>
+        @page{
+            margin: 1cm;
+        }
+
+        .tabela-qualidade{
+            border: 1px solid black;
+            text-align: center;
+            padding-top: 5px;
+        }
+
+        .tabela-qualidade th{
+            font-size: 14px;
+        }
+
+        .tabela-qualidade td{
+            font-size: 12px;
+        }
+
+        .cabecalho-tabela{
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            padding-left: 3px;
+        }
+
+        .titulo{
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .atendente{
+            font-size: 14px;
+            padding-bottom: 10px;
+        }
+
+        .data{
+            font-size: 14px;
+            text-align: right;
+        }
+
+        .assinatura{
+            text-align: center;
+            font-size: 14px;
+            position: sticky;
+            width: 50%;
+            bottom: 10px;
+        }
+        .direita{
+            text-align: right;
+        }
+
+        .total{
+            font-size: 16px;
+        }
+
+    </style>
+
+</html>

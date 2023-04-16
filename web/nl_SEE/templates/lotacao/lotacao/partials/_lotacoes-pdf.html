@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="pt-bt">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Exportar lotações</title>
+    </head>
+    <body>
+        <header>
+            <table>
+                <tr>
+                    <th><img id="img2" src="{{ url_logo }}" alt=""></th>
+                    <th class="direita"><img id="img3" src="{{ url_atena }}" alt="Logo" style="width:120px;height:auto;"></th>
+                    <!-- <th><img id="img2" src="C:\Users\joao.soares\Documents\code\Atena\nl_SEE\static\assets\img\divisao-lotacao.png" alt=""></th>
+                    <th><img id="img3" src="C:\Users\joao.soares\Documents\code\Atena\nl_SEE\static\assets\img\ATENA-AZUL.svg" alt="Logo" style="width:120px;height:auto;"></th> -->
+                </tr>
+            </table>
+        </header>
+
+        <hr>
+
+        <table>
+            <tr>
+                <th class="dados dado-lotacao">Total de Lotações: {{  quantidade_lotacoes  }}</th>
+                <th></th>
+                <th></th>
+                <th class="dados">Exportado por {{ nome }} dia {{ data }}</th>
+            </tr>
+        </table>
+        <table class="tabela tabela-lotacoes">
+            <thead>
+                <tr>
+                    <th class="matricula">MATRICULA</th>
+                    <th class="digito">DIGITO</th>
+                    <th class="">NOME</th>
+                    <th class="cpf">CPF</th>
+                    <th class="">CARGO</th>
+                    <th class="">ADMISSÃO</th>
+                    <th class="contrato">CONTRATO</th>
+                    <th class="subconta">SUB</th>
+                    <th class="">FUNÇAO</th>
+                    <!-- <th class="">INEP</th> -->
+                    <th class="">LOTAÇÃO</th>
+                    <th class="">MUNICIPIO</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for lotacao in lotacoes %}
+
+                    <tr>
+                        {% if lotacao.contrato__servidor__matricula %}
+                            <td>{{ lotacao.contrato__servidor__matricula }}</td>
+                        {% else %}
+                            <td>Não Informado</td>
+                        {% endif %}
+
+                        {% if lotacao.contrato__digito %}
+                            <td>{{ lotacao.contrato__digito }}</td>
+                        {% else %}
+                            <td>Não Informado</td>
+                        {% endif %}
+
+                        <td>{{ lotacao.contrato__servidor__nome }}</td>
+                        <td>{{ lotacao.contrato__servidor__cpf }}</td>
+                        <td>{{ lotacao.contrato__cargo__nome }}</td>
+                        <td>{{ lotacao.data_inicio }}</td>
+                        <td>{{ lotacao.contrato__tipo_contrato }}</td>
+                        <td>{{ lotacao.subconta__sub }}</td>
+
+                        {% if lotacao.funcao %}
+                            <td>{{ lotacao.funcao }}</td>
+                        {% else %}
+                            <td>Não Informado</td>
+                        {% endif %}
+                        <!-- <td>{{ lotacao.unidade_escolar__escola__cod_inep }}</td> -->
+
+                        {% if lotacao.unidade_escolar__escola__nome_escola %}
+                            <td>{{ lotacao.unidade_escolar__escola__cod_inep }} - {{ lotacao.unidade_escolar__escola__nome_escola }}</td>
+                            <td>{{ lotacao.unidade_escolar__municipio }}</td>
+                        {% else %}
+                            <td>{{ lotacao.unidade_adm__nome }}</td>
+                            <td>{{ lotacao.unidade_adm__endereco__municipio }}</td>
+                        {% endif %}
+                    </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+        <!-- <div>
+            <span class="texto-negrito texto-azul">TOTAL:</span>
+            <span>{{ quantidade_links }}</span>
+        </div> -->
+
+        <style>
+            @page{
+                size: landscape;
+                margin: 0.7cm;
+            }
+            .tabela-lotacoes{
+                border: 1px solid black;
+                text-align: center;
+                padding: 6px;
+            }
+
+            .tabela-lotacoes th{
+                font-size: 10px;
+            }
+
+            .tabela-lotacoes td{
+                font-size: 10px;
+            }
+
+            h1{
+                margin: 0;
+            }
+
+            #img2{
+                width: 100%;
+                height: auto;
+            }
+
+            #img3{
+                width: 120px;
+                height: auto;
+            }
+
+            .direita{
+                text-align: right;
+            }
+
+            .cabecalho{
+                font-size: 16px;
+                font-family: sans-serif;
+                text-align: center;
+            }
+
+            .texto1{
+                padding-top: 18px;
+            }
+
+            .texto2{
+                padding-bottom: 4px;
+            }
+
+            .dados{
+                padding-top: 8px;
+            }
+
+            .matricula{
+                width: 100px;
+            }
+
+            .digito{
+                width: 45px;
+            }
+
+            .contrato{
+                width: 100px;
+            }
+
+            .subconta{
+                width: 30px;
+            }
+
+            .dado-lotacao{
+                font-size: 16px;
+            }
+
+            .cpf{
+                width: 80px;
+            }
+
+        </style>
+
+    </body>
+</html>

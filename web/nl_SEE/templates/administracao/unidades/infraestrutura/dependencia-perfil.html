@@ -1,0 +1,198 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Infraestrutura {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/administracao/unidades/infraestrutura/dependencia-perfil.css' %}">
+{% endblock %}
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+
+<main>
+    <div class="container">
+        <!-- <nav class="container-navegacao">
+            <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'administracao:index' %}" class=" texto-azul">Administração</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'administracao:unidades_educacionais' %}" class=" texto-azul">Unidades</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'administracao:unidade-perfil' %}?inep={{ escola.cod_inep }}" class=" texto-azul">{{ escola.nome_escola }}</a>
+            <span class="texto-azul">&#62;</span>
+
+            <span class="  texto-azul">Infraestrutura</span>
+        </nav>
+
+        <h1 class="titulo-pagina texto-azul">{{ escola.nome_escola }}</h1>
+
+        <div class="container-surface container-surface-salas">
+            <h2 class="texto-medio texto-azul">Salas de Aula ({{ quantidade_salas_de_aula }})</h2>
+
+            {% if possui_salas_de_aula %}
+                <div class=" container-cards-simples container-cards-infraestrutura" >
+                    {% for sala in salas_de_aula %}
+                        <a href="#">
+                            <div class="card-simples">
+                                <h4 class="card-simples__titulo texto-azul">{{ sala.descricao }}</h4>
+
+                                <div class="card-simples__descricao">
+                                    <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">{{ sala.status }}</span></p>
+                                    <p class=" texto-azul texto-negrito">Capacidade: <span class="texto-preto texto-normal">{{ sala.capacidade_pessoas }} pessoas</span></p>
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+
+            {% else %}
+                <p class="texto-preto descricao">Sem salas de aula cadastradas, adicione uma dependencia física do tipo Sala de Aula para cadastrar</p>
+            {% endif %}
+        </div>
+
+        <div class="container-surface container-surface-detalhes" >
+            <h2 class="texto-medio texto-azul">Dependências Físicas ({{ quantidade_dependencias }})</h2>
+
+            {% if possui_dependencias %}
+                <div class=" container-cards-simples container-cards-infraestrutura" >
+                    {% for dependencia in dependencias %}
+                        {% if dependencia.tipo != 'Sala de Aula' %}
+                            <a href="#">
+                                <div class="card-simples">
+                                    <h4 class="card-simples__titulo texto-azul">{{ dependencia.descricao }}</h4>
+
+                                    <div class="card-simples__descricao">
+                                        <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">{{ dependencia.status }}</span></p>
+                                        <!-- <p class=" texto-azul texto-negrito">Tipo: <span class="texto-preto texto-normal">{{ dependencia.tipo.tipo }}</span></p> -->
+                                        <p class=" texto-azul texto-negrito">Capacidade: <span class="texto-preto texto-normal">{{ dependencia.capacidade_pessoas }} pessoas</span></p>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+            {% else %}
+                <p class="texto-preto descricao">Sem dependencias físicas cadastradas</p>
+
+            {% endif %}
+
+            <div class="container-botoes" >
+                <a href=""><button class="botao botao--azul">Adicionar</button></a>
+            </div>
+        </div>
+
+        <div class="container-surface" >
+            <h2 class="texto-medio texto-azul">Detalhes da unidade</h2>
+
+            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 8px;">
+
+                <p class=" texto-azul">
+                    Fornecimento de água potável:
+                    <span class="texto-preto texto-normal">{{ infraestrutura.agua_potavel }}</span>
+                </p>
+
+                <p class=" texto-azul">
+                    Metragem da escola:
+                    <span class="texto-preto texto-normal">{{ infraestrutura.metragem }} m²</span>
+                </p>
+
+                <p class=" texto-azul">
+                    Forma de ocupação:
+                    <span class="texto-preto texto-normal">{{ infraestrutura.forma_ocupacao }}</span>
+                </p>
+
+                <div class="container-botoes" style="margin-top: 8px;">
+                    <a href=""><button class="botao botao--azul">Editar</button></a>
+                </div>
+
+                <p class=" texto-azul" style="margin-top: 8px;">Local de funcionamento:</p>
+                <ul style="list-style-type: disc; margin-left: 24px;">
+                    {% for local in locais %}
+                        {% if local == locais.0 %}
+                            <li class="texto-preto">{{ local.local }}</li>
+                        {% else %}
+                            <li class="descricao texto-preto">{{ local.local }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+
+                <p class=" texto-azul" style="margin-top: 8px;">Abastecimento de água:</p>
+                <ul style="list-style-type: disc; margin-left: 24px;">
+                    {% for abastecimento in abastecimentos %}
+                        {% if abastecimento == abastecimentos.0 %}
+                            <li class="texto-preto">{{ abastecimento.tipo }}</li>
+                        {% else %}
+                            <li class="descricao texto-preto">{{ abastecimento.tipo }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+
+                <p class=" texto-azul" style="margin-top: 8px;">Rede de esgoto:</p>
+                <ul style="list-style-type: disc; margin-left: 24px;">
+                    {% for esgoto in esgotos %}
+                        {% if esgoto == esgotos.0 %}
+                            <li class="texto-preto">{{ esgoto.tipo }}</li>
+                        {% else %}
+                            <li class="descricao texto-preto">{{ esgoto.tipo }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+
+                <p class=" texto-azul" style="margin-top: 8px;">Fonte de energia elétrica:</p>
+                <ul style="list-style-type: disc; margin-left: 24px;">
+                    {% for energia in energias %}
+                        {% if energia == energias.0 %}
+                            <li class="texto-preto">{{ energia.tipo }}</li>
+                        {% else %}
+                            <li class="descricao texto-preto">{{ energia.tipo }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+
+                <p class=" texto-azul" style="margin-top: 8px;">Destinação do lixo:</p>
+                <ul style="list-style-type: disc; margin-left: 24px;">
+                    {% for destinacao in destinacoes %}
+                        {% if destinacao == destinacoes.0 %}
+                            <li class="texto-preto">{{ destinacao.tipo }}</li>
+                        {% else %}
+                            <li class="descricao texto-preto">{{ destinacao.tipo }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+
+                <p class=" texto-azul" style="margin-top: 8px;">Tratamento do lixo:</p>
+                <ul style="list-style-type: disc; margin-left: 24px;">
+                    {% for tratamento in tratamentos %}
+                        {% if tratamento == tratamentos.0 %}
+                            <li class="texto-preto">{{ tratamento.tipo }}</li>
+                        {% else %}
+                            <li class="descricao texto-preto">{{ tratamento.tipo }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+
+                <p class=" texto-azul" style="margin-top: 8px;">Recursos de acessibilidade:</p>
+                <ul style="list-style-type: disc; margin-left: 24px;">
+                    {% for recurso in recursos %}
+                        {% if recurso == recursos.0 %}
+                            <li class="texto-preto">{{ recurso.tipo }}</li>
+                        {% else %}
+                            <li class="descricao texto-preto">{{ recurso.tipo }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+
+            </div>
+        </div> -->
+    </div>
+</main>
+
+{% include 'partials/_rodape.html' %}
+
+{% endblock %}

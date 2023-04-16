@@ -1,0 +1,111 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Organização {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/administracao/unidades/organizacao/organizacao-perfil.css' %}">
+{% endblock %}
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+
+<main>
+    <div class="container">
+        <nav class="container-navegacao">
+            <a href="{% url 'core:index' %}" class=" texto-azul">Home</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'administracao:index' %}" class=" texto-azul">Administração</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'administracao:unidades_educacionais' %}" class=" texto-azul">Unidades</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a href="{% url 'administracao:unidade-perfil' %}?inep={{ escola.cod_inep }}" class=" texto-azul">{{ escola.nome_escola }}</a>
+            <span class="texto-azul">&#62;</span>
+
+            <span class="  texto-azul">Organização Escolar</span>
+        </nav>
+
+        <h1 class="titulo-pagina texto-azul">{{ escola.nome_escola }}</h1>
+
+        <div class="container-surface container-surface-organizacao-detalhes">
+            <h2 class="texto-medio texto-azul">Detalhes da unidade</h2>
+
+            <div class="container-organizacao-detalhes">
+
+                <p class=" texto-azul">
+                    Site / Blog:
+                    <span class="texto-preto texto-normal">{{ organizacao.site }}</span>
+                </p>
+
+                <p class=" texto-azul">
+                    Compartilha espaços para atividades regulares:
+                    <span class="texto-preto texto-normal">{{ organizacao.espacos_escola_comunidade }}</span>
+                </p>
+
+                <p class=" texto-azul">
+                    Utiliza espaços para atividades regulares:
+                    <span class="texto-preto texto-normal">{{ organizacao.espacos_entorno }}</span>
+                </p>
+
+                <p class=" texto-azul">
+                    Educação Escolar Indígena:
+                    <span class="texto-preto texto-normal">{{ organizacao.educacao_indigena }}</span>
+                </p>
+
+                <p class=" texto-azul">
+                    Projeto político pedagógico atualizado no último ano:
+                    <span class="texto-preto texto-normal">{{ organizacao.pedagogia_atualizada }}</span>
+                </p>
+
+                <p class=" texto-azul">
+                    Possui processo seletivo:
+                    <span class="texto-preto texto-normal">{{ organizacao.processo_seletivo }}</span>
+                </p>
+
+                {% if permissao.editar == 1 %}
+                    <div class="container-botoes">
+                        <a href="{% url 'administracao:organizacao-formulario' %}?id={{ escola.id }}">
+                            <button class="botao botao--azul">Editar</button>
+                        </a>
+                    </div>
+                {% endif %}
+
+                <p class=" texto-azul container-organizacao-detalhe">Formas de organização do ensino:</p>
+                <ul class="lista">
+                    {% for forma in formas %}
+                        <li class="texto-preto ">{{ forma }}</li>
+                    {% endfor %}
+                </ul>
+
+                <p class=" texto-azul container-organizacao-detalhe">Instrumentos, materiais socioculturais/pedagógicos em uso na escola:</p>
+                <ul class="lista">
+                    {% for instrumento in instrumentos %}
+                        <li class="texto-preto ">{{ instrumento }}</li>
+                    {% endfor %}
+                </ul>
+
+                <p class=" texto-azul container-organizacao-detalhe">Reserva de vagas por sistema de cotas para grupos específicos de alunos:</p>
+                <ul class="lista">
+                    {% for reserva in reservas %}
+                        <li class="texto-preto ">{{ reserva }}</li>
+                    {% endfor %}
+                </ul>
+
+                <p class=" texto-azul container-organizacao-detalhe">Orgãos colegiados em funcionamento na escola:</p>
+                <ul class="lista">
+                    {% for colegiado in colegiados %}
+                        <li class="texto-preto ">{{ colegiado }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% include 'partials/_rodape.html' %}
+
+{% endblock %}

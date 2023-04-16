@@ -1,0 +1,69 @@
+{% load static %}
+
+<div class="oculto" data-nav-container="aditivo">
+    {% if aditivos_lotus %}
+        <div class="container-cards-simples contrato-lotacoes">
+            {% for aditivo in aditivos_lotus %}
+                <div class="card-simples card-ocorrencia">
+                    <h4 class="card-simples__titulo texto-azul">Contrato Aditivado <img align="right" src="{% static 'assets/img/lotus.png' %}" alt="Lotus"></h4>
+
+                    <div class="card-simples__descricao">
+                        <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ aditivo.data_fim }}</span></p>
+                    </div>
+                    <p class="descricao texto-cinza texto-negrito">Dados importados via Lotus</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if aditivos %}
+        <div class="container-cards-simples contrato-lotacoes">
+            {% for aditivo in aditivos %}
+                <div class="card-simples card-ocorrencia">
+                    <h4 class="card-simples__titulo texto-azul">Contrato Aditivado</h4>
+
+                    <div class="card-simples__descricao">
+                        <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ aditivo.data_inicio }}</span></p>
+                        <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ aditivo.data_termino }}</span></p>
+                        {% if aditivo.status == 1 %}
+                            <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">Ativo</span></p>
+                        {% else %}
+                            <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">Inativo</span></p>
+                        {% endif %}
+                    </div>
+
+                    <div class="container-botoes">
+                        {% if permissao.imprimir == 1 %}
+                            {% if servidor_endereco %}
+                                <form method= 'POST'>
+                                    {% csrf_token %}
+                                    <button class="botao botao--azul" type='submit' name='btn-exportar' value= 'exportar-aditivo'>Exportar</button>
+                                </form>
+                            {% else %}
+                                <p class="texto-normal texto-preto">Para exportar é necessário cadastrar o endereço do servidor.</p>
+                            {% endif %}
+                        {% endif %}
+                        {% if user in usuarios_excluir %}
+                            <form method= 'POST'>
+                                {% csrf_token %}
+                                <button class="botao botao--vermelho" type='submit' name='btn-excluir-aditivo' value='excluir-aditivo-{{ aditivo.id }}'>Excluir Contrato</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if not aditivos_lotus and not aditivos %}
+        <h3 class="texto-medio texto-preto">Sem aditivo no contrato.</h3>
+    {% endif %}
+
+    {% if permissao.editar == 1 and id_contrato %}
+        <div class="container-botoes">
+            <a href="{% url 'lotacao:aditivo-formulario' %}?id_contrato={{ contrato.id }}">
+                <button class="botao botao--azul">Adicionar</button>
+            </a>
+        </div>
+    {% endif %}
+</div>

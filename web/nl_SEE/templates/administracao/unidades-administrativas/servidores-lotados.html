@@ -1,0 +1,242 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} Servidores Lotados {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet" href="{% static 'assets/css/layout/administracao/unidades-administrativas/servidores-lotados.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:index' %}">Administração</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'administracao:unidades-administrativas' %}">Unidades</a>
+                <span class="texto-azul">&#62;</span>
+
+                {% if unidade.categoria.id == 2 %}
+                    <a class="  texto-azul" href="{% url 'administracao:diretoria' %}?id={{ unidade.id }}">{{ unidade.nome }}</a>
+                    <span class="texto-azul">&#62;</span>
+                {% elif unidade.categoria.id == 3 %}
+                    <a class="  texto-azul" href="{% url 'administracao:departamento' %}?id={{ unidade.id }}">{{ unidade.nome }}</a>
+                    <span class="texto-azul">&#62;</span>
+                {% elif unidade.categoria.id == 4 %}
+                    <a class="  texto-azul" href="{% url 'administracao:divisao' %}?id={{ unidade.id }}">{{ unidade.nome }}</a>
+                    <span class="texto-azul">&#62;</span>
+                {% elif unidade.categoria.id == 5 %}
+                    <a class="  texto-azul" href="{% url 'administracao:nucleo' %}?id={{ unidade.id }}">{{ unidade.nome }}</a>
+                    <span class="texto-azul">&#62;</span>
+                {% endif %}
+
+                <span class="  texto-azul">Servidores Lotados</span>
+            </nav>
+
+            <h1 class="titulo-pagina texto-azul">Servidores Lotados</h1>
+
+            <div class="container-surface container-servidores-busca">
+                <h2 class="texto-medio texto-azul">Buscar servidor</h2>
+
+                <form class="formulario" method="GET">
+
+                    <div class="formulario-grupo oculto">
+                        <input type="text" name="id" value="{{ id_unidade }}" class="campo-texto campo-pequeno" placeholder="CPF" data-mascara="cpf">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <input type="text" name="cpf" class="campo-texto campo-pequeno" placeholder="CPF" data-mascara="cpf">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <input type="text" name="matricula" class="campo-texto campo-pequeno" placeholder="Matrícula">
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <input type="text" name="nome" class="campo-texto campo-grande" placeholder="Nome do servidor">
+                    </div>
+
+                    <div class="container-botoes">
+                        <button type='submit' class="botao botao--azul">Buscar</button>
+                        <button class="botao botao--azul" disabled>Filtros</button>
+
+                        {% if permissao.imprimir == 1 %}
+                            <button class="botao botao--azul" data-modal-abrir="exportar">Exportar</button>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+
+            <table class="tabela tabela-servidores">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Digito</th>
+                        {% comment %} <th>CPF</th> {% endcomment %}
+                        <th>Lotação</th>
+                        <th>Cargo</th>
+                        <th>Tipo</th>
+                    </tr>
+                </thead>
+
+                <tbody data-tabela-link="{% url 'terceirizacao:servidor-perfil' %}?id=" >
+                    {% for servidor in servidores %}
+                        <tr data-tabela-link-chave="{{ servidor.servidor.id }}">
+                            <td>{{ servidor.0 }}</td>
+                            <td>{{ servidor.1 }}</td>
+                            <td>{{ servidor.2 }}</td>
+                            <td>{{ servidor.3 }}</td>
+                            <td>{{ servidor.4 }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td class="coluna-paginacao" colspan="5">
+                            <div class="container-paginacao">
+                                <div>
+                                    <span class="texto-negrito texto-azul">TOTAL:</span>
+                                    <span>{{ quantidade_servidores }}</span>
+                                </div>
+
+                                <div>
+                                    {% if servidores.has_previous %}
+                                        <a class="" href="{% url 'administracao:servidores-lotados' %}?id={{ id_unidade }}&page=1">
+                                            <button class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'administracao:servidores-lotados' %}?{{ gets_anterior }}">
+                                            <button class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% endif %}
+
+                                    <span class="">
+                                        {{ servidores.number }} de {{ servidores.paginator.num_pages }}
+                                    </span>
+
+                                    {% if servidores.has_next %}
+                                        <a class="" href="{% url 'administracao:servidores-lotados' %}?{{ gets_proxima }}">
+                                            <button class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'administracao:servidores-lotados' %}?{{ gets_ultima }}">
+                                            <button class="botao-paginacao">last_page</button>
+                                        </a>
+
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">last_page</button>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <table class="tabela tabela-servidores--tablet">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Cargo</th>
+                        <th>Tipo</th>
+                    </tr>
+                </thead>
+
+                <tbody data-tabela-link="{% url 'terceirizacao:servidor-perfil' %}?id=" >
+                    {% for servidor in servidores %}
+                        <tr data-tabela-link-chave="{{ servidor.servidor.id }}">
+                            <td>{{ servidor.0 }}</td>
+                            <td>{{ servidor.3 }}</td>
+                            <td>{{ servidor.4 }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td class="coluna-paginacao" colspan="3">
+                            <div class="container-paginacao">
+                                <div>
+                                    <span class="texto-negrito texto-azul">TOTAL:</span>
+                                    <span>{{ quantidade_servidores }}</span>
+                                </div>
+
+                                <div>
+                                    {% if servidores.has_previous %}
+                                        <a class="" href="{% url 'administracao:servidores-lotados' %}?id={{ id_unidade }}&page=1">
+                                            <button class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'administracao:servidores-lotados' %}?{{ gets_anterior }}">
+                                            <button class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% endif %}
+
+                                    <span class="">
+                                        {{ servidores.number }} de {{ servidores.paginator.num_pages }}
+                                    </span>
+
+                                    {% if servidores.has_next %}
+                                        <a class="" href="{% url 'administracao:servidores-lotados' %}?{{ gets_proxima }}">
+                                            <button class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'administracao:servidores-lotados' %}?{{ gets_ultima }}">
+                                            <button class="botao-paginacao">last_page</button>
+                                        </a>
+
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">last_page</button>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+        </div>
+    </main>
+
+    {% include 'administracao/unidades-administrativas/partials/_modal-servidores-lotados-exportar.html' %}
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/mascaras.js' %}" type='module'></script>
+    <script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+{% endblock %}

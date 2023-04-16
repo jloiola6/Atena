@@ -1,0 +1,5 @@
+/* Estilização da página de cadastro de subconta */
+
+.container-subconta-formulario, .container-subconta-formulario .container-botoes{
+    margin-top: 16px;
+}

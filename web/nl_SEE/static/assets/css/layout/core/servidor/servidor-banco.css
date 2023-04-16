@@ -1,0 +1,5 @@
+/* Estilização da página de cadastro de dados bancários de um servidor */
+
+.formulario-dados-bancarios, .formulario-dados-bancarios .container-botoes{
+    margin-top: 16px;
+}

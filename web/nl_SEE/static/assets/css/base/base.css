@@ -1,0 +1,44 @@
+@keyframes fade-in{
+	from {opacity: 0;}
+	to {opacity: 1;}
+}
+
+@font-face {
+	font-family: 'Material Icons';
+	src: url("fontes/MaterialIconsRound-Regular.otf");
+}
+
+html{
+	/* Definição do padrão de borda */
+	--borda-padrao: 1px solid #C1C1C1;
+
+	/* Definição do padrão de sombra */
+	--main-shadow: 0 2px 8px var(--shadow-color);
+	--main-shadow-hover: 0 4px 8px var(--shadow-color);
+
+	/* Definição do padrão de animação */
+	--main-animation: fade-in .5s linear;
+
+	font-size: 1rem;
+}
+
+html, body{
+	height: 100%;
+}
+
+body{
+	background-color: var(--cor-fundo);
+	display: flex;
+	flex-direction: column;
+}
+
+main{
+	animation: var(--main-animation);
+	box-sizing: border-box;
+	flex-basis: 100%;
+	text-align: center;
+}
+
+hr{
+	width: 100%;
+}

@@ -1,0 +1,111 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="exportar">
+    <form id="modal-conteudo" class="modal-conteudo" method="POST">
+        {% csrf_token %}
+        <h2 class="texto-grande texto-negrito texto-azul">Exportar dados</h2>
+        <p class="descricao texto-preto ">Insira o formato e campos que deseja exportar</p>
+
+        <div class="formulario-grupo">
+            <h3 class="texto-medio texto-azul">Formato</h3>
+
+            <fieldset id="exportar-fieldset-formatos">
+                <input type="radio" name="exportar-fieldset-formatos" value="excel" id="radio-excel" checked>
+                <label class="texto-preto" for="radio-excel">Excel</label>
+
+                <input type="radio" name="exportar-fieldset-formatos" value="pdf" id="radio-pdf">
+                <label class="texto-preto" for="radio-pdf">PDF</label>
+            </fieldset>
+        </div>
+
+        <div class="formulario-grupo">
+            <h3 class="texto-medio texto-azul">Campos</h3>
+
+            <h3 class=" texto-azul texto-negrito">DADOS DA UNIDADE</h3>
+
+
+
+            <div>
+                <input type="checkbox" name="cod_inep" id="exportar-campo-inep" checked>
+                <label class="texto-preto" for="exportar-campo-inep">INEP</label>
+
+                <input type="checkbox" name="nome_escola" id="exportar-campo-nome" checked>
+                <label class="texto-preto" for="exportar-campo-nome">Nome</label>
+
+                <input type="checkbox" name="tipificacao" id="exportar-campo-tipificacao" checked>
+                <label class="texto-preto" for="exportar-campo-tipificacao">Tipificação</label>
+
+                <input type="checkbox" name="cod_turmalina" id="exportar-campo-turmalina" checked>
+                <label class="texto-preto" for="exportar-campo-turmalina">Turmalina</label>
+
+                <input type="checkbox" name="total_alunos" id="exportar-campo-total-alunos" checked>
+                <label class="texto-preto" for="exportar-campo-total-alunos">Quantidade de Alunos</label>
+            </div>
+
+            <!-- <input type="checkbox" name="modalidade" id="exportar-campo-modalidade" checked>
+                <label for="exportar-campo-modalidade">Modalidade</label> -->
+
+            <h3 class=" texto-azul texto-negrito">ENDEREÇO</h3>
+
+            <div>
+                <input type="checkbox" name="municipio" id="exportar-campo-municipio" checked>
+                <label class="texto-preto" for="exportar-campo-municipio">Município</label>
+            </div>
+
+            <div>
+                <input type="checkbox" name="regiao" id="exportar-campo-regiao" checked>
+                <label class="texto-preto" for="exportar-campo-regiao">Regional</label>
+            </div>
+
+            <div>
+                <input type="checkbox" name="zoneamento" id="exportar-campo-zoneamento" checked>
+                <label class="texto-preto" for="exportar-campo-zoneamento">Zoneamento</label>
+            </div>
+
+            <div>
+                <input type="checkbox" name="cep" id="exportar-campo-cep" checked>
+                <label class="texto-preto" for="exportar-campo-cep">CEP</label>
+            </div>
+
+            <div>
+                <input type="checkbox" name="rua" id="exportar-campo-rua" checked>
+                <label class="texto-preto" for="exportar-campo-rua">Rua</label>
+            </div>
+
+            <div>
+                <input type="checkbox" name="numero" id="exportar-campo-numero" checked>
+                <label class="texto-preto" for="exportar-campo-numero">Número</label>
+            </div>
+
+            <div>
+                <input type="checkbox" name="bairro" id="exportar-campo-bairro" checked>
+                <label class="texto-preto" for="exportar-campo-bairro">Bairro</label>
+            </div>
+
+            <div>
+                <input type="checkbox" name="complemento" id="exportar-campo-complemento" checked>
+                <label class="texto-preto" for="exportar-campo-complemento">Complemento</label>
+            </div>
+
+            <div>
+                <input type="checkbox" name="tipo_localizacao" id="exportar-campo-tipo_localizacao" checked>
+                <label class="texto-preto" for="exportar-campo-tipo_localizacao">Tipo de Localização</label>
+            </div>
+
+            <div>
+                <input type="checkbox" name="latitude" id="exportar-campo-latitude" checked>
+                <label class="texto-preto" for="exportar-campo-latitude">Latitude</label>
+            </div>
+
+            <div>
+                <input type="checkbox" name="longitude" id="exportar-campo-longitude" checked>
+                <label class="texto-preto" for="exportar-campo-longitude">Longitude</label>
+            </div>
+
+        </div>
+
+        <div class="container-botoes">
+            <button type="POST" class="botao botao--verde">Exportar</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,33 @@
+<form class="container-surface" method="POST">
+    {% csrf_token %}
+
+    <nav class="container-navegacao-surface">
+        <ul class="navegacao-surface-lista">
+            <li class="navegacao-surface-item navegacao-surface-item-ativo">
+                <span class="texto-azul">Projetor</span>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="formulario-grupo">
+        <label for="campo-patrimonio">Patrimônio</label>
+        <input class="campo-texto campo-medio" type="text" id="campo-patrimonio" name="patrimonio" maxlength="30" required>
+    </div>
+
+    <div class="formulario-grupo">
+        <label for="campo-resolucao">Resolução</label>
+        <input class="campo-texto campo-medio" type="text" id="campo-resolucao" name="resolucao" maxlength="100" required>
+    </div>
+
+    <div class="formulario-grupo">
+        <label for="campo-watts">Potência (Watts)</label>
+        <input class="campo-texto campo-medio" type="text" id="campo-watts" name="watts" maxlength="100" required>
+    </div>
+
+    <div class="formulario-grupo">
+        <label for="campo-lumens">Potência (lumens)</label>
+        <input class="campo-texto campo-medio" type="text" id="campo-lumens" name="lumens" maxlength="100" required>
+    </div>
+
+    {% include 'administracao/unidades/inventario/item-formulario/partials/_modal-confirmacao.html' %}
+</form>

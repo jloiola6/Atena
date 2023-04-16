@@ -1,0 +1,11 @@
+/* Estilização do modal que leva uma imagem */
+
+.modal-imagem{
+    padding: 24px;
+    width: 1000px;
+}
+
+    .modal-imagem img{
+        object-fit: cover;
+        width: 100%;
+    }

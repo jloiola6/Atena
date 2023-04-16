@@ -1,0 +1,30 @@
+{% load static %}
+
+{% for turma in turmas %}
+    <div class="modal oculto" data-modal="grade-{{ turma.id }}">
+        <div class="modal-conteudo">
+            <h5 class="card-simples__titulo texto-azul">{{ turma.nome }}</h5>
+            <p class="texto-preto descricao">{{ turma.etapa__nome }}</p>
+
+            <table class="tabela">
+                <thead>
+                    <th>Professor(a)</th>
+                    <th>Disciplina / Rota</th>
+                    <th>Carga Horária</th>
+                </thead>
+
+                <tbody>
+                    {% for grade in grades %}
+                        {% if grade.turma__id == turma.id %}
+                            <tr>
+                                <td>{{ grade.grade_professor }}</td>
+                                <td>{{ grade.disciplina__nome }}</td>
+                                <td>{{ grade.carga_horaria }}h</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endfor %}

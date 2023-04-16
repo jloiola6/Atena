@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Exportar Links</title>
+    </head>
+
+    <body>
+        <header>
+            <table>
+                <tr>
+                    <th><img id="img1" src="{{ url_logo }}" width='550px' alt=""></th>
+                    <th class="direita"><img id="img2" src="{{ url_atena }}" width='120px' alt=""></th>
+                    <!-- <th><img id="img1" src="C:\Users\franklin.farias\Documents\Programação\Atena\nl_SEE\static\assets\img\divisao-infraestrutura-redes.png" width='550px' alt=""></th>
+                    <th><img id="img2" src="C:\Users\franklin.farias\Documents\Programação\Atena\nl_SEE\static\assets\img\ATENA-AZUL.svg" width='120px' alt=""></th> -->
+                </tr>
+            </table>
+        </header>
+
+        <hr><br>
+        <div>
+            <section class="detalhes">
+                <div class="dados-servidor">
+                    <table class="tabela-identificacao">
+                        <tbody>
+                            <tr>
+                                <td><b>Escola:</b> {{ endereco.escola.cod_inep }} - {{ endereco.escola.nome_escola }}</td><td><b>Tipo Localização:</b> {{ endereco.tipo_localizacao }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Rua:</b> {{ endereco.rua }}</td><td><b>Número:</b> {{ endereco.numero }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Bairro:</b> {{ endereco.bairro }}</td><td><b>Município:</b> {{ endereco.municipio }} - {{ endereco.uf }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="meio">
+                {% for link in links %}
+                    <br>
+                    <h3>Link {{ link.0 }}</h3>
+                    <table class="tabela-links">
+                        <tbody>
+                            <tr>
+                                <td class="cabecalho-tabela">Fornecedor:</td><td class="conteudo-tabela">{{ link.1.fornecedor }}</td>
+                            </tr>
+                            <tr>
+                                <td class="cabecalho-tabela">Nº Circuito:</td><td class="conteudo-tabela">{{ link.1.circuito }}</td>
+                            </tr>
+
+                            {% if link.1.autenticacao %}
+                                <tr>
+                                    <td class="cabecalho-tabela">Autenticação:</td><td class="conteudo-tabela">{{ link.1.autenticacao }}</td>
+                                </tr>
+                            {% endif %}
+
+                            <tr>
+                                <td class="cabecalho-tabela">Tipo de Alocação:</td><td class="conteudo-tabela">{{ link.1.tipo }}</td>
+                            </tr>
+
+                            {% if link.1.fonte %}
+                                <tr>
+                                    <td class="cabecalho-tabela">Fonte:</td><td class="conteudo-tabela">{{ link.1.fonte }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td class="cabecalho-tabela">Fonte:</td><td class="conteudo-tabela">Não informado</td>
+                                </tr>
+                            {% endif %}
+
+                            {% if link.1.operadora %}
+                                <tr>
+                                    <td class="cabecalho-tabela">Operadora:</td><td class="conteudo-tabela">{{ link.1.operadora }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td class="cabecalho-tabela">Operadora:</td><td class="conteudo-tabela">Não informado</td>
+                                </tr>
+                            {% endif %}
+
+                            <tr>
+                                <td class="cabecalho-tabela">Tipo de Banda:</td><td class="conteudo-tabela">{{ link.1.tipo_banda }}</td>
+                            </tr>
+
+                            {% if link.1.velocidade %}
+                                <tr>
+                                    <td class="cabecalho-tabela">Velocidade:</td><td class="conteudo-tabela">{{ link.1.velocidade }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td class="cabecalho-tabela">Velocidade:</td><td class="conteudo-tabela">Não informado</td>
+                                </tr>
+                            {% endif %}
+
+                            {% if link.1.data_ativo %}
+                                <tr>
+                                    <td class="cabecalho-tabela">Data de Ativação</td><td class="conteudo-tabela">{{ link.1.data_ativo }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td class="cabecalho-tabela">Data de Ativação</td><td class="conteudo-tabela">Não informado</td>
+                                </tr>
+                            {% endif %}
+                            <tr>
+                                <td class="cabecalho-tabela">IP LAN:</td><td class="conteudo-tabela">{{ link.1.iplan }}</td>
+                            </tr>
+                            <tr>
+                                <td class="cabecalho-tabela">IP WAN:</td><td class="conteudo-tabela">{{ link.1.ipwan }}</td>
+                            </tr>
+
+                            {% if link.1.observacao %}
+                                <tr>
+                                    <td class="cabecalho-tabela">Observação:</td><td class="conteudo-tabela">{{ link.1.observacao }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td class="cabecalho-tabela">Observação:</td><td class="conteudo-tabela">Não informado</td>
+                                </tr>
+                            {% endif %}
+
+                            {% if link.1.status == "ATIVO" %}
+                                <tr>
+                                    <td class="cabecalho-tabela">Status:</td><td class="conteudo-tabela">{{ link.1.status }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td class="cabecalho-tabela">Status:</td><td class="conteudo-tabela">{{ link.1.status }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="cabecalho-tabela">Data de Inativação:</td><td class="conteudo-tabela">{{ link.1.data_inativo }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="cabecalho-tabela">Usuário:</td><td class="conteudo-tabela">{{ link.1.user_inativou }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="cabecalho-tabela">Motivo:</td><td class="conteudo-tabela">{{ link.1.motivo }}</td>
+                                </tr>
+                            {% endif %}
+
+                        </tbody>
+                    </table>
+                {% endfor %}
+            </section>
+        </div>
+
+        <style>
+            body{
+                font-size: 10px;
+            }
+
+            @page{
+                margin: 1cm;
+            }
+
+            #img1{
+                width: 100%;
+                height: auto;
+            }
+
+            #img2{
+                width: 120px;
+                height: auto;
+            }
+
+            .direita{
+                text-align: right;
+            }
+
+            h3{
+                text-align: center;
+                font-size: 14px;
+                margin: 0;
+            }
+
+            h2{
+                margin: 0;
+            }
+
+            .tabela-identificacao{
+                font-family:sans-serif;
+                font-size: 12px;
+            }
+
+            .apresentacao{
+                font-size: 12px;
+                text-align: left;
+                padding-bottom: 12px;
+                padding-top: 12px;
+
+            }
+
+            .tabela-links{
+                border: 1px solid black;
+                padding-top: 4px;
+                padding-left: 2px;
+            }
+
+            .cabecalho-tabela{
+                font-size: 10px;
+                font-weight: bold;
+            }
+
+            .conteudo-tabela{
+                font-size: 10px;
+            }
+
+            p{
+                margin: 0px;
+            }
+
+
+        </style>
+
+    </body>
+</html>

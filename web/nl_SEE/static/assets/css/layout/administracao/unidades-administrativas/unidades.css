@@ -1,0 +1,74 @@
+/* Estilização da página de unidades administrativas */
+
+/* .container-unidade-administrativa-dados, .container-unidades-administrativas-busca{
+    margin-top: 16px;
+} */
+
+/* .unidade-administrativa-endereco-titulo{
+    margin-top: 16px;
+} */
+
+.container-unidade-administrativa-endereco{
+    display: flex;
+    flex-basis: 50%;
+    flex-direction: column;
+    row-gap: 8px;
+}
+
+/* .lista-diretoria{
+    margin-top: 1rem;
+} */
+div[data-container-unidades]{
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+ }
+
+.diretoria{
+    border-left-style: solid;
+    border-left-color: #4EAF49;
+}
+
+    .diretoria:hover{
+        border-left-width: 24px;
+    }
+
+.departamento{
+    border-left-style: solid;
+    border-left-color: #66B2FF;
+}
+
+    .departamento:hover{
+        border-left-width: 24px;
+    }
+
+.divisao{
+    border-left-style: solid;
+    border-left-color: #009999;
+}
+
+    .divisao:hover{
+        border-left-width: 24px;
+    }
+
+.nucleo{
+    border-left-style: solid;
+    border-left-color: #10739E;
+}
+
+    .nucleo:hover{
+        border-left-width: 24px;
+    }
+
+.centro{
+    border-left-style: solid;
+    border-left-color: #006600;
+}
+
+    .centro:hover{
+        border-left-width: 24px;
+    }
+
+.mensagem-sem-unidades{
+    margin-top: 16px;
+}

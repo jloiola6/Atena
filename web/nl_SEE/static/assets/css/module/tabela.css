@@ -1,0 +1,105 @@
+/* Estilização das tabelas */
+
+.tabela{
+    border-spacing: 0 .5rem;
+    border-collapse: separate;
+    width: 100%;
+}
+
+/* Propriedades das colunas do cabeçalho */
+.tabela th{
+    color: var(--texto-azul);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Propridades das linhas da tabela */
+.tabela thead > tr{
+    margin-top: 0;
+}
+
+.tabela tr{
+    background-color: var(--cor-surface);
+}
+
+.tabela tbody tr:hover{
+    background-color: var(--cor-surface-hover);
+    cursor: pointer;
+}
+
+.tabela .linha-desabilitada:hover{
+    background-color: initial;
+    cursor: initial;
+}
+
+/* Propriedades das colunas */
+.tabela th, .tabela td{
+    border-bottom: var(--borda-padrao);
+    border-top: var(--borda-padrao);
+    box-sizing: border-box;
+    font-size: calc(1rem - .125rem);
+    padding: 1rem;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.tabela .coluna-centralizada{
+    text-align: center;
+}
+
+.tabela .coluna-direita{
+    text-align: right;
+}
+
+.tabela th:first-child, .tabela td:first-child{
+    border-bottom-left-radius: .5rem;
+    border-left: var(--borda-padrao);
+    border-top-left-radius: .5rem;
+}
+
+.tabela th:last-child, .tabela td:last-child{
+    border-bottom-right-radius: .5rem;
+    border-right: var(--borda-padrao);
+    border-top-right-radius: .5rem;
+}
+
+/* Propriedades do rodapé da tabela */
+.tabela .container-paginacao {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+    .tabela .coluna-paginacao span{
+        font-size: 16px;
+        vertical-align: middle;
+    }
+
+    .tabela .container-paginacao > div:last-child{
+        align-items: center;
+        display: flex;
+        gap: 8px;
+    }
+
+    .botao-paginacao{
+        background-color: transparent;
+        border: none;
+        color: var(--texto-azul);
+        cursor: pointer;
+        font-family: 'Material Icons';
+        font-size: 24px;
+        font-weight: bold;
+        padding: 0;
+        text-transform: lowercase;
+        vertical-align: middle;
+    }
+
+    .botao-paginacao:disabled{
+        color: #C1C1C1;
+        cursor: default;
+    }
+
+/* MODO ESCURO */
+body.modo-escuro .tabela td{
+	color: var(--texto-branco);
+}

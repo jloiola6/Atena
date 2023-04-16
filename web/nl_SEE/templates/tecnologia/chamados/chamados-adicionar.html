@@ -1,0 +1,112 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %}
+    Cadastro de Subchamado
+{% endblock %}
+
+{% block select %}
+    {% include 'partials/_select2.html' %}
+{% endblock %}
+
+{% load static %}
+
+{% block content %}
+{% include 'partials/_cabecalho.html' %}
+<main>
+    <div class="container">
+        <nav class="container-navegacao">
+            <a class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a class="  texto-azul" href="{% url 'tecnologia:index' %}">Tecnologia</a>
+            <span class="texto-azul">&#62;</span>
+
+            <a class="  texto-azul" href="{% url 'tecnologia:chamados' %}">Chamados</a>
+            <span class="texto-azul">&#62;</span>
+
+            <span class="  texto-azul">Adicionar Chamado</span>
+
+        </nav>
+
+        <h1 class="titulo-pagina texto-azul">Cadastro de sub-chamado</h1>
+
+        <p class="descricao  texto-preto">Dados do sub-chamado</p>
+
+        <form class="container-surface container-formulario-chamado" method="POST">
+            {% csrf_token %}
+
+            <nav class="container-navegacao-surface">
+                <ul class="navegacao-surface-lista">
+                    <li class="navegacao-surface-item navegacao-surface-item-ativo" data-form-aba="solicitacao"><span class="texto-azul">Solicitação</span></li>
+                </ul>
+            </nav>
+
+            <div data-form-container="chamado">
+
+                <div data-container-chamado>
+                    <div class="formulario-grupo">
+                        <label class="texto-azul label-campo" for="campo-tipo-serviço1">Tipo de serviço</label>
+                        <select name="tipo-servico-1" id="campo-tipo-servico1" class="campo-texto campo-medio" data-selecao-tipo-servico>
+                            {% for tipo in tipos_servico %}
+                                <option value="{{ tipo.tipo }}">{{ tipo.tipo }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label for="" class="texto-azul label-campo">Serviço</label>
+
+                        {% for tipo in tipos_servico %}
+                            <select name="servico-{{ tipo.tipo }}-1" id="campo-servico-{{ tipo.tipo }}" class="campo-texto campo-grande" data-selecao-servico="{{ tipo.tipo }}">
+                                {% for servico in servicos %}
+                                    {% if servico.tipo == tipo.tipo %}
+                                        <option value="{{ servico.acao }}">{{ servico.acao }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        {% endfor  %}
+
+                    </div>
+
+                    <div class="formulario-grupo">
+                        <label for="campo-texto-descricao1" class="texto-azul label-campo">Descrição</label>
+                        <textarea name="descricao_chamado1" id="campo-texto-descricao1" class="campo-texto campo-area" maxlength="1000"></textarea>
+                    </div>
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao botao--azul" data-adicionar-chamado>Adicionar Chamado</button>
+                </div>
+
+                <div class="container-botoes">
+                    <button class="botao botao--azul" data-form-botao="solicitacao">Voltar</button>
+                    <button class="botao botao--azul" data-modal-abrir="confirmar">Salvar</button>
+                </div>
+            </div>
+
+            <div class="modal oculto" data-modal="confirmar">
+                <div class="modal-conteudo modal-confirmacao">
+                    <h3 class="texto-medio texto-azul texto-negrito">Confirmar operação</h3>
+                    <p class="texto-preto descricao">Tem certeza que deseja cadastrar o chamado?</p>
+
+                    <div class="container-botoes">
+                        <button class="botao--verde botao" id="botao-salvar" type="submit">Salvar</button>
+                        <button class="botao botao--vermelho" data-modal-fechar>Cancelar</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</main>
+
+{% include 'partials/_rodape.html' %}
+
+
+<script src="{% static 'assets/js/module/select2.js' %}"></script>
+<script src="{% static 'assets/js/module/abrirModal.js' %}"></script>
+<script src="{% static 'assets/js/module/mascaras.js' %}" type="module"></script>
+
+<script src="{% static 'assets/js/layout/tecnologia/chamado-formulario/controlaChamados.js' %}"></script>
+
+{% endblock %}

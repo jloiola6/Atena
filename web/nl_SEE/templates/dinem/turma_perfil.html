@@ -1,0 +1,294 @@
+{% extends 'partials/_base.html' %}
+
+{% block title %} {{ turma.nome }} {% endblock %}
+
+{% load static %}
+
+{% block css_layout %}
+    <link rel="stylesheet"  href="{% static 'assets/css/layout/dinem/turma-perfil.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% include 'partials/_cabecalho.html' %}
+
+    <main>
+        <div class="container">
+            <nav class="container-navegacao">
+                <a  class="  texto-azul" href="{% url 'core:index' %}">Home</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'dinem:index' %}">N.E.M.</a>
+                <span class="texto-azul">&#62;</span>
+
+                <a class="  texto-azul" href="{% url 'dinem:unidade-perfil' %}?inep={{ turma.endereco.escola.cod_inep }}">{{ turma.endereco.escola.nome_escola }}</a>
+                <span class="texto-azul">&#62;</span>
+
+                <span class="  texto-azul">{{ turma.nome }}</span>
+            </nav>
+
+            <div class="container-surface">
+                <h1 class="texto-medio texto-azul">{{ turma.nome }}</h1>
+                <p class="descricao texto-preto">{{ turma.endereco.escola.nome_escola }}</p>
+
+                <div class="container-detalhes">
+                    <p class=" texto-azul texto-negrito ">Turno: <span class="texto-preto texto-normal">{{ turma.turno }}</span></p>
+                    <p class=" texto-azul texto-negrito texto">Etapa: <span class="texto-preto texto-normal">{{ turma.etapa.nome }}</span></p>
+                    <p class=" texto-azul texto-negrito texto">Total de alunos: <span class="texto-preto texto-normal">{{ turma.total_alunos }}</span></p>
+                </div>
+
+                {% if btn_relatorio and turma.ano_letivo == '2021' %}
+                    <div class="container-botoes">
+                        <a href="{% url 'dinem:relatorio-turma' %}?id={{ id_turma }}">
+                            <button class="botao botao--verde">Gerar Relatório</button>
+                        </a>
+                    </div>
+                {% endif %}
+
+                {% if btn_relatorio and turma.etapa.id == 5 and turma.ano_serie == '3ª Série' and turma.ano_letivo == '2022' %}
+                    <div class="container-botoes">
+                        <a href="{% url 'dinem:turma_parcial_terceiro' %}?id={{ id_turma }}">
+                            <button class="botao botao--verde">Gerar Relatório</button>
+                        </a>
+                    </div>
+                {% endif %}
+
+                {% if btn_relatorio and turma.etapa.id == 6 and turma.ano_serie == '3ª Série' and turma.ano_letivo == '2022' %}
+                    <div class="container-botoes">
+                        <a href="{% url 'dinem:turma_integral_terceiro' %}?id={{ id_turma }}">
+                            <button class="botao botao--verde">Gerar Relatório</button>
+                        </a>
+                    </div>
+                {% endif %}
+
+                {% if btn_relatorio and turma.etapa.id == 6 and turma.ano_serie == '2ª Série' and turma.ano_letivo == '2022' %}
+                    <div class="container-botoes">
+                        <a href="{% url 'dinem:turma_integral_2serie' %}?id={{ id_turma }}">
+                            <button class="botao botao--verde">Gerar Relatório</button>
+                        </a>
+                    </div>
+                {% endif %}
+
+                {% if btn_relatorio and turma.etapa.id == 5 and turma.ano_serie == '2ª Série' and turma.ano_letivo == '2022' %}
+                    <div class="container-botoes">
+                        <a href="{% url 'dinem:turma_parcial_2serie' %}?id={{ id_turma }}">
+                            <button class="botao botao--verde">Gerar Relatório</button>
+                        </a>
+                    </div>
+                {% endif %}
+
+                {% if btn_relatorio and turma.etapa.id == 18 and turma.ano_serie == '2ª Série' and turma.ano_letivo == '2022' %}
+                    <div class="container-botoes">
+                        <a href="{% url 'dinem:turma_profissionalizante_2serie' %}?id={{ id_turma }}">
+                            <button class="botao botao--verde">Gerar Relatório</button>
+                        </a>
+                    </div>
+                {% endif %}
+
+                {% if btn_relatorio and turma.etapa.id == 6 and turma.ano_serie == '1ª Série' and turma.ano_letivo == '2022' %}
+                    <div class="container-botoes">
+                        <a href="{% url 'dinem:turma_integral_1serie' %}?id={{ id_turma }}">
+                            <button class="botao botao--verde">Gerar Relatório</button>
+                        </a>
+                    </div>
+                {% endif %}
+
+                {% if btn_relatorio and turma.etapa.id == 5 and turma.ano_serie == '1ª Série' and turma.ano_letivo == '2022' %}
+                    <div class="container-botoes">
+                        <a href="{% url 'dinem:turma_parcial_1serie' %}?id={{ id_turma }}">
+                            <button class="botao botao--verde">Gerar Relatório</button>
+                        </a>
+                    </div>
+                {% endif %}
+
+                {% if btn_relatorio and turma.etapa.id == 18 and turma.ano_serie == '1ª Série' and turma.ano_letivo == '2022' %}
+                    <div class="container-botoes">
+                        <a href="{% url 'dinem:turma_profissionalizante_1serie' %}?id={{ id_turma }}">
+                            <button class="botao botao--verde">Gerar Relatório</button>
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <h2 class="titulo-pagina texto-azul">Alunos</h2>
+
+            <table class="tabela tabela-aluno">
+                <thead>
+                    <tr>
+                        <th>nome</th>
+                        <th>data de nascimento</th>
+                        <th>sexo</th>
+                        <th>situação</th>
+                    </tr>
+                </thead>
+
+                <tbody data-tabela-link="/dinem/aluno_perfil/">
+                    {% for aluno in alunos %}
+                        <tr data-tabela-link-chave="{{ aluno.id }}">
+                            <td>{{ aluno.aluno__nome }}</td>
+                            <td>{{ aluno.aluno__nascimento }}</td>
+
+                            {% if aluno.aluno__sexo == 'M' %}
+                                <td>Masculino</td>
+                            {% elif aluno.aluno__sexo == 'F' %}
+                                <td>Feminino</td>
+                            {% endif %}
+
+                            {% if aluno.situacao == 'Parcial' %}
+                                <td class="texto-negrito aluno-parcial">{{ aluno.situacao }}</td>
+                            {% elif aluno.situacao == 'Pendente' %}
+                                <td class="texto-negrito aluno-pendente">{{ aluno.situacao }}</td>
+                            {% elif aluno.situacao == 'Finalizado' %}
+                                <td class="texto-negrito aluno-finalizado">{{ aluno.situacao }}</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td class="coluna-paginacao" colspan="4">
+                            <div class="container-paginacao">
+                                <div>
+                                    <span class="texto-negrito texto-azul">TOTAL:</span>
+                                    <span>{{ qtd_alunos }}</span>
+                                </div>
+
+                                <div>
+                                    {% if alunos.has_previous %}
+                                        <a class="" href="{% url 'dinem:turma-perfil' id_turma %}?{{ gets_primeira }}">
+                                            <button class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'dinem:turma-perfil' id_turma %}?{{ gets_anterior }}">
+                                            <button class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% else %}
+                                        <a class="" href="">
+                                            <button disabled class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% endif %}
+
+                                    <span class="">
+                                        {{ alunos.number }} de {{ alunos.paginator.num_pages }}
+                                    </span>
+
+                                    {% if alunos.has_next %}
+                                        <a class="" href="{% url 'dinem:turma-perfil' id_turma %}?{{ gets_proxima }}">
+                                            <button class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'dinem:turma-perfil' id_turma %}?{{ gets_ultima }}">
+                                            <button class="botao-paginacao">last_page</button>
+                                        </a>
+
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">last_page</button>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <table class="tabela tabela-aluno--smartphone">
+                <thead>
+                    <tr>
+                        <th>nome</th>
+                        <th>data de nascimento</th>
+                        <th>situação</th>
+                    </tr>
+                </thead>
+
+                <tbody data-tabela-link="/dinem/aluno_perfil?id=">
+                    {% for aluno in alunos %}
+                        <tr data-tabela-link-chave="{{ aluno.aluno__id }}">
+                            <td>{{ aluno.aluno__nome }}</td>
+                            <td>{{ aluno.aluno__nascimento }}</td>
+
+
+                            {% if aluno.situacao == 'Parcial' %}
+                                <td class="texto-negrito aluno-parcial">{{ aluno.situacao }}</td>
+                            {% elif aluno.situacao == 'Pendente' %}
+                                <td class="texto-negrito aluno-pendente">{{ aluno.situacao }}</td>
+                            {% elif aluno.situacao == 'Finalizado' %}
+                                <td class="texto-negrito aluno-finalizado">{{ aluno.situacao }}</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td class="coluna-paginacao" colspan="3">
+                            <div class="container-paginacao">
+                                <div>
+                                    <span class="texto-negrito texto-azul">TOTAL:</span>
+                                    <span>{{ qtd_alunos }}</span>
+                                </div>
+
+                                <div>
+                                    {% if alunos.has_previous %}
+                                        <a class="" href="{% url 'dinem:turma-perfil' id_turma %}?{{ gets_primeira }}">
+                                            <button class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'dinem:turma-perfil' id_turma %}?{{ gets_anterior }}">
+                                            <button class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% else %}
+                                        <a class="" href="">
+                                            <button disabled class="botao-paginacao">first_page</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_before</button>
+                                        </a>
+                                    {% endif %}
+
+                                    <span class="">
+                                        {{ alunos.number }} de {{ alunos.paginator.num_pages }}
+                                    </span>
+
+                                    {% if alunos.has_next %}
+                                        <a class="" href="{% url 'dinem:turma-perfil' id_turma %}?{{ gets_proxima }}">
+                                            <button class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="{% url 'dinem:turma-perfil' id_turma %}?{{ gets_ultima }}">
+                                            <button class="botao-paginacao">last_page</button>
+                                        </a>
+
+                                    {% else %}
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">navigate_next</button>
+                                        </a>
+
+                                        <a class="" href="#">
+                                            <button disabled class="botao-paginacao">last_page</button>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </main>
+
+    {% include 'partials/_rodape.html' %}
+
+    <script src="{% static 'assets/js/module/linkTabela.js' %}"></script>
+{% endblock %}

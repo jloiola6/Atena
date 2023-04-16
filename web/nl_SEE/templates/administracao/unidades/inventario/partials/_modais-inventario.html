@@ -1,0 +1,304 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="Computador/Notebook">
+    <div id="modal-conteudo" class="modal-conteudo" >
+        <h2 class="texto-grande texto-negrito texto-azul" data-computador-tipo>Computador/Notebook</h2>
+        <p class=" texto-azul texto-negrito descricao">Patrimônio: <span class="texto-preto texto-normal" data-computador-patrimonio></span></p>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
+            <p class=" texto-azul texto-negrito">Marca: <span class="texto-preto texto-normal"data-computador-marca></span></p>
+            <p class=" texto-azul texto-negrito">Modelo: <span class="texto-preto texto-normal"data-computador-modelo></span></p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
+            <p class=" texto-azul texto-negrito">Processador: <span class="texto-preto texto-normal" data-computador-processador></span></p>
+            <p class=" texto-azul texto-negrito">Ram: <span class="texto-preto texto-normal" data-computador-ram></span></p>
+            <p class=" texto-azul texto-negrito">Disco: <span class="texto-preto texto-normal" data-computador-disco></span></p>
+            <p class=" texto-azul texto-negrito">SSD: <span class="texto-preto texto-normal" data-computador-ssd></span></p>
+            <p class=" texto-azul texto-negrito">Placa de vídeo: <span class="texto-preto texto-normal" data-computador-placa></span></p>
+            <p class=" texto-azul texto-negrito">Cor: <span class="texto-preto texto-normal" data-computador-cor></span></p>
+        </div>
+
+        {% if permissao.editar == 1 %}
+            <div class="container-menu-tabela">
+                <a href="#" data-computador-link>
+                    <button class="botao botao--azul">Editar</button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="modal oculto" data-modal="Impressora">
+    <div id="modal-conteudo" class="modal-conteudo" >
+        <h2 class="texto-grande texto-negrito texto-azul">Impressora</h2>
+        <p class=" texto-azul texto-negrito descricao">Patrimônio: <span class="texto-preto texto-normal" data-impressora-patrimonio>123456</span></p>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
+            <p class=" texto-azul texto-negrito">Marca: <span class="texto-preto texto-normal" data-impressora-marca></span></p>
+            <p class=" texto-azul texto-negrito">Modelo: <span class="texto-preto texto-normal" data-impressora-modelo></span></p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
+            <p class=" texto-azul texto-negrito">Tipo de impressão: <span class="texto-preto texto-normal" data-impressora-tipo></span></p>
+            <p class=" texto-azul texto-negrito">Conectividade: <span class="texto-preto texto-normal" data-impressora-conexao></span></p>
+        </div>
+
+        {% if permissao.editar == 1 %}
+            <div class="container-menu-tabela">
+                <a href="#" data-impressora-link>
+                    <button class="botao botao--azul">Editar</button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="modal oculto" data-modal="Nobreak">
+    <div id="modal-conteudo" class="modal-conteudo" >
+        <h2 class="texto-grande texto-negrito texto-azul">Nobreak</h2>
+        <p class=" texto-azul texto-negrito descricao">Patrimônio: <span class="texto-preto texto-normal" data-nobreak-patrimonio></span></p>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
+            <p class=" texto-azul texto-negrito">Marca: <span class="texto-preto texto-normal" data-nobreak-marca></span></p>
+            <p class=" texto-azul texto-negrito">Modelo: <span class="texto-preto texto-normal" data-nobreak-modelo></span></p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
+            <p class=" texto-azul texto-negrito">Quantidade de tomadas: <span class="texto-preto texto-normal" data-nobreak-tomadas></span></p>
+            <p class=" texto-azul texto-negrito">Estabilizador: <span class="texto-preto texto-normal" data-nobreak-estabilizador></span></p>
+        </div>
+
+        {% if permissao.editar == 1 %}
+            <div class="container-menu-tabela">
+                <a href="#" data-nobreak-link>
+                    <button class="botao botao--azul">Editar</button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="modal oculto" data-modal="Projetor">
+    <div id="modal-conteudo" class="modal-conteudo" >
+        <h2 class="texto-grande texto-negrito texto-azul">Projetor</h2>
+        <p class=" texto-azul texto-negrito descricao">Patrimônio: <span class="texto-preto texto-normal" data-projetor-patrimonio></span></p>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
+            <p class=" texto-azul texto-negrito">Marca: <span class="texto-preto texto-normal" data-projetor-marca></span></p>
+            <p class=" texto-azul texto-negrito">Modelo: <span class="texto-preto texto-normal" data-projetor-modelo></span></p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
+            <p class=" texto-azul texto-negrito">Resolução: <span class="texto-preto texto-normal" data-projetor-resolucao></span></p>
+            <p class=" texto-azul texto-negrito">Potência (Watts): <span class="texto-preto texto-normal" data-projetor-watts></span></p>
+            <p class=" texto-azul texto-negrito">Potência (Lumens): <span class="texto-preto texto-normal" data-projetor-lumens></span></p>
+        </div>
+
+        {% if permissao.editar == 1 %}
+            <div class="container-menu-tabela">
+                <a href="#" data-projetor-link>
+                    <button class="botao botao--azul">Editar</button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="modal oculto" data-modal="Switch">
+    <div id="modal-conteudo" class="modal-conteudo" >
+        <h2 class="texto-grande texto-negrito texto-azul">Switch</h2>
+        <p class=" texto-azul texto-negrito descricao">Patrimônio: <span class="texto-preto texto-normal" data-switch-patrimonio></span></p>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
+            <p class=" texto-azul texto-negrito">Marca: <span class="texto-preto texto-normal" data-switch-marca></span></p>
+            <p class=" texto-azul texto-negrito">Modelo: <span class="texto-preto texto-normal" data-switch-modelo></span></p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
+            <p class=" texto-azul texto-negrito">Quantidade de portas RJ-45: <span class="texto-preto texto-normal" data-switch-rj></span></p>
+            <p class=" texto-azul texto-negrito">Quantidade de portas SFP: <span class="texto-preto texto-normal" data-switch-sfp></span></p>
+            <p class=" texto-azul texto-negrito">Fonte integrada: <span class="texto-preto texto-normal" data-switch-fonte></span></p>
+            <p class=" texto-azul texto-negrito">Potência (Watts): <span class="texto-preto texto-normal" data-switch-watts></span></p>
+        </div>
+
+        {% if permissao.editar == 1 %}
+            <div class="container-menu-tabela">
+                <a href="#" data-switch-link>
+                    <button class="botao botao--azul">Editar</button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="modal oculto" data-modal="Ar Condicionado">
+    <div id="modal-conteudo" class="modal-conteudo" >
+        <h2 class="texto-grande texto-negrito texto-azul">Ar Condicionado</h2>
+        <p class=" texto-azul texto-negrito descricao">Patrimônio: <span class="texto-preto texto-normal" data-ar-patrimonio></span></p>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
+            <p class=" texto-azul texto-negrito">Marca: <span class="texto-preto texto-normal" data-ar-marca></span></p>
+            <p class=" texto-azul texto-negrito">Modelo: <span class="texto-preto texto-normal" data-ar-modelo></span></p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
+            <p class=" texto-azul texto-negrito">Capacidade (BTUs): <span class="texto-preto texto-normal" data-ar-capacidade></span></p>
+            <p class=" texto-azul texto-negrito">Cor: <span class="texto-preto texto-normal" data-ar-cor></span></p>
+        </div>
+
+        {% if permissao.editar == 1 %}
+            <div class="container-menu-tabela">
+                <a href="#" data-ac-link>
+                    <button class="botao botao--azul">Editar</button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="modal oculto" data-modal="Fogão">
+    <div id="modal-conteudo" class="modal-conteudo" >
+        <h2 class="texto-grande texto-negrito texto-azul">Fogão</h2>
+        <p class=" texto-azul texto-negrito descricao">Patrimônio: <span class="texto-preto texto-normal" data-fogao-patrimonio=""></span></p>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
+            <p class=" texto-azul texto-negrito">Marca: <span class="texto-preto texto-normal" data-fogao-marca></span></p>
+            <p class=" texto-azul texto-negrito">Modelo: <span class="texto-preto texto-normal" data-fogao-modelo></span></p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
+            <p class=" texto-azul texto-negrito">Capacidade (Litros): <span class="texto-preto texto-normal" data-fogao-capacidade></span></p>
+            <p class=" texto-azul texto-negrito">Cor: <span class="texto-preto texto-normal" data-fogao-cor></span></p>
+            <p class=" texto-azul texto-negrito">Voltagem: <span class="texto-preto texto-normal" data-fogao-voltagem></span></p>
+            <p class=" texto-azul texto-negrito">Industrial: <span class="texto-preto texto-normal" data-fogao-industrial></span></p>
+        </div>
+
+        {% if permissao.editar == 1 %}
+            <div class="container-menu-tabela">
+                <a href="#" data-fogao-link>
+                    <button class="botao botao--azul">Editar</button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="modal oculto" data-modal="Freezer">
+    <div id="modal-conteudo" class="modal-conteudo" >
+        <h2 class="texto-grande texto-negrito texto-azul">Freezer</h2>
+        <p class=" texto-azul texto-negrito descricao">Patrimônio: <span class="texto-preto texto-normal" data-freezer-patrimonio></span></p>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
+            <p class=" texto-azul texto-negrito">Marca: <span class="texto-preto texto-normal" data-freezer-marca></span></p>
+            <p class=" texto-azul texto-negrito">Modelo: <span class="texto-preto texto-normal" data-freezer-modelo></span></p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
+            <p class=" texto-azul texto-negrito">Capacidade (Litros): <span class="texto-preto texto-normal" data-freezer-capacidade></span></p>
+            <p class=" texto-azul texto-negrito">Voltagem: <span class="texto-preto texto-normal" data-freezer-voltagem></span></p>
+            <p class=" texto-azul texto-negrito">Cor: <span class="texto-preto texto-normal" data-freezer-cor></span></p>
+        </div>
+
+        {% if permissao.editar == 1 %}
+            <div class="container-menu-tabela">
+                <a href="#" data-freezer-link>
+                    <button class="botao botao--azul">Editar</button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="modal oculto" data-modal="Geladeira">
+    <div id="modal-conteudo" class="modal-conteudo" >
+        <h2 class="texto-grande texto-negrito texto-azul">Geladeira</h2>
+        <p class=" texto-azul texto-negrito descricao">Patrimônio: <span class="texto-preto texto-normal" data-geladeira-patrimonio></span></p>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
+            <p class=" texto-azul texto-negrito">Marca: <span class="texto-preto texto-normal" data-geladeira-marca></span></p>
+            <p class=" texto-azul texto-negrito">Modelo: <span class="texto-preto texto-normal" data-geladeira-modelo></span></p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
+            <p class=" texto-azul texto-negrito">Capacidade (Litros): <span class="texto-preto texto-normal" data-geladeira-capacidade></span></p>
+            <p class=" texto-azul texto-negrito">Voltagem: <span class="texto-preto texto-normal" data-geladeira-voltagem></span></p>
+            <p class=" texto-azul texto-negrito">Cor: <span class="texto-preto texto-normal" data-geladeira-cor></span></p>
+        </div>
+
+        {% if permissao.editar == 1 %}
+            <div class="container-menu-tabela">
+                <a href="#" data-geladeira-link>
+                    <button class="botao botao--azul">Editar</button>
+                </a>
+            </div>
+        {% endif %}
+
+    </div>
+</div>
+
+<div class="modal oculto" data-modal="Liquidificador">
+    <div id="modal-conteudo" class="modal-conteudo" >
+        <h2 class="texto-grande texto-negrito texto-azul">Liquidificador</h2>
+        <p class=" texto-azul texto-negrito descricao">Patrimônio: <span class="texto-preto texto-normal" data-liquidificador-patrimonio></span></p>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
+            <p class=" texto-azul texto-negrito">Marca: <span class="texto-preto texto-normal" data-liquidificador-marca></span></p>
+            <p class=" texto-azul texto-negrito">Modelo: <span class="texto-preto texto-normal" data-liquidificador-modelo></span></p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
+            <p class=" texto-azul texto-negrito">Capacidade (Litros): <span class="texto-preto texto-normal" data-liquidificador-capacidade></span></p>
+            <p class=" texto-azul texto-negrito">Voltagem: <span class="texto-preto texto-normal" data-liquidificador-voltagem></span></p>
+            <p class=" texto-azul texto-negrito">Potência (Watts): <span class="texto-preto texto-normal" data-liquidificador-watts></span></p>
+            <p class=" texto-azul texto-negrito">Cor: <span class="texto-preto texto-normal" data-liquidificador-cor></span></p>
+        </div>
+
+        {% if permissao.editar == 1 %}
+            <div class="container-menu-tabela">
+                <a href="#" data-liquidificador-link>
+                    <button class="botao botao--azul">Editar</button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="modal oculto" data-modal="Mobília">
+    <div id="modal-conteudo" class="modal-conteudo" >
+        <h2 class="texto-grande texto-negrito texto-azul" data-mobilia></h2>
+        <p class=" texto-azul texto-negrito descricao">Patrimônio: <span class="texto-preto texto-normal" data-mobilia-patrimonio></span></p>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
+            <p class=" texto-azul texto-negrito">Tipo: <span class="texto-preto texto-normal"data-mobilia-tipo></span></p>
+        </div>
+
+        {% if permissao.editar == 1 %}
+            <div class="container-menu-tabela">
+                <a href="#" data-mobilia-link>
+                    <button class="botao botao--azul">Editar</button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="modal oculto" data-modal="Quadro">
+    <div id="modal-conteudo" class="modal-conteudo" >
+        <h2 class="texto-grande texto-negrito texto-azul">Quadro</h2>
+        <p class=" texto-azul texto-negrito descricao">Patrimônio: <span class="texto-preto texto-normal" data-quadro-patrimonio></span></p>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
+            <p class=" texto-azul texto-negrito">Tipo: <span class="texto-preto texto-normal" data-quadro-tipo></span></p>
+            <p class=" texto-azul texto-negrito">Tamanho: <span class="texto-preto texto-normal" data-quadro-tamanho></span></p>
+        </div>
+
+        {% if permissao.editar == 1 %}
+            <div class="container-menu-tabela">
+                <a href="#" data-quadro-link>
+                    <button class="botao botao--azul">Editar</button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>

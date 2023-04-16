@@ -1,0 +1,26 @@
+{% load static %}
+
+<div class="modal oculto" data-modal="servidores">
+    <div  class="modal-conteudo">
+        <h2 class="texto-grande texto-negrito texto-azul">Servidores ({{ qtd_servidores }})</h2>
+
+        <table class="tabela">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Função</th>
+                </tr>
+            </thead>
+
+            <tbody data-tabela-link="{% url 'lotacao:servidor-perfil' %}?id=">
+                {% for servidor in servidores %}
+                    <tr data-tabela-link-chave="{{ servidor.contrato.servidor.id }}">
+                        <td>{{ servidor.contrato.servidor }}</td>
+                        <td>{{ servidor.funcao }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+    </div>
+</div>

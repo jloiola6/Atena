@@ -1,0 +1,30 @@
+<div class="oculto" data-nav-container="complemento_hora">
+    {% if hora_complementar %}
+        <div class="container-cards-simples contrato-lotacoes">
+            {% for hora in hora_complementar %}
+                <div class="card-simples card-carga-horaria">
+                    <div class="card-simples__descricao">
+                        <p class=" texto-azul texto-negrito">Carga Horária: <span class="texto-preto texto-normal">{{ hora.carga_horaria }}H</span></p>
+                        <p class=" texto-azul texto-negrito">Data de início: <span class="texto-preto texto-normal">{{ hora.data_inicio }}</span></p>
+                        <p class=" texto-azul texto-negrito">Data de término: <span class="texto-preto texto-normal">{{ hora.data_termino }}</span></p>
+                        {% if hora.status == 1 %}
+                            <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">Ativo</span></p>
+                        {% else %}
+                            <p class=" texto-azul texto-negrito">Status: <span class="texto-preto texto-normal">Inativo</span></p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <h3 class="texto-medio texto-preto">Sem horas complementares adicionadas.</h3>
+    {% endif %}
+
+    {% if permissao.editar == 1 and id_contrato %}
+        <div class="container-botoes">
+            <a href="{% url 'lotacao:complemento-formulario' %}?id_contrato={{ contrato.id }}">
+                <button class="botao botao--azul">Adicionar</button>
+            </a>
+        </div>
+    {% endif %}
+</div>

@@ -1,0 +1,196 @@
+<div data-dashboard-container="alunos" class="oculto">
+    <div class="container-dividido">
+        <div class="container-surface container-grafico">
+            <h2 class="texto-medio texto-azul">Alunos por sexo</h2>
+
+            <table data-grafico="donut">
+                <thead>
+                    <tr>
+                        <th>Masculino</th>
+                        <th>Feminino</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>{{ alunos_masculino }}</td>
+                        <td>{{ alunos_feminino }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="container-dividido vertical">
+            <div class="container-surface container-grafico">
+                <h2 class="texto-medio texto-azul">Alunos por etapa de ensino</h2>
+
+                <table data-grafico="barra">
+                    <thead>
+                        <tr>
+                            <th>Anos Iniciais</th>
+                            <th>Anos Finais</th>
+                            <th>Médio</th>
+                            <th>AEE</th>
+                            <th>EJA</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>{{ alunos_fundamental_iniciais }}</td>
+                            <td>{{ alunos_fundamental_finais }}</td>
+                            <td>{{ alunos_medio }}</td>
+                            <td>{{ alunos_aee }}</td>
+                            <td>{{ alunos_eja }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="container-dividido">
+                <div class="container-surface container-grafico">
+                    <h2 class="texto-medio texto-azul">Alunos com transporte</h2>
+            
+                    <table data-grafico="donut">
+                        <thead>
+                            <tr>
+                                <th>Possui</th>
+                                <th>Não possui</th>
+                            </tr>
+                        </thead>
+            
+                        <tbody>
+                            <tr>
+                                <td>{{ alunos_com_transporte }}</td>
+                                <td>{{ alunos_sem_transporte }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            
+                <div class="container-surface container-grafico">
+                    <h2 class="texto-medio texto-azul">Alunos com Bolsa Família</h2>
+            
+                    <table data-grafico="donut">
+                        <thead>
+                            <tr>
+                                <th>Recebe</th>
+                                <th>Não recebe</th>
+                            </tr>
+                        </thead>
+            
+                        <tbody>
+                            <tr>
+                                <td>{{ alunos_com_bolsa }}</td>
+                                <td>{{ alunos_sem_bolsa }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="container-surface container-grafico">
+        <h2 class="texto-medio texto-azul">Alunos no Ensino Fundamental</h2>
+
+        <table data-grafico="barra">
+            <thead>
+                <tr>
+                    <th>1º Ano</th>
+                    <th>2º Ano</th>
+                    <th>3º Ano</th>
+                    <th>4º Ano</th>
+                    <th>5º Ano</th>
+                    <th>6º Ano</th>
+                    <th>7º Ano</th>
+                    <th>8º Ano</th>
+                    <th>9º Ano</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>{{alunos_fundamental1}}</td>
+                    <td>{{alunos_fundamental2}}</td>
+                    <td>{{alunos_fundamental3}}</td>
+                    <td>{{alunos_fundamental4}}</td>
+                    <td>{{alunos_fundamental5}}</td>
+                    <td>{{alunos_fundamental6}}</td>
+                    <td>{{alunos_fundamental7}}</td>
+                    <td>{{alunos_fundamental8}}</td>
+                    <td>{{alunos_fundamental9}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container-dividido">
+        <div class="container-surface container-grafico">
+            <h2 class="texto-medio texto-azul">Alunos no Ensino Médio</h2>
+
+            <table data-grafico="barra">
+                <thead>
+                    <tr>
+                        <th>1º Ano</th>
+                        <th>2º Ano</th>
+                        <th>3º Ano</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>{{alunos_medio1}}</td>
+                        <td>{{alunos_medio2}}</td>
+                        <td>{{alunos_medio3}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="container-surface container-grafico">
+            <h2 class="texto-medio texto-azul">Alunos no EJA</h2>
+
+            <table data-grafico="barra">
+                <thead>
+                    <tr>
+                        <th>Módulo I</th>
+                        <th>Módulo III</th>
+                        <th>Módulo V</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>{{alunos_eja1}}</td>
+                        <td>{{alunos_eja3}}</td>
+                        <td>{{alunos_eja5}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="container-surface container-grafico">
+        <h2 class="texto-medio texto-azul">Deficiências mais recorrentes entre os alunos</h2>
+
+        <table data-grafico="barra">
+            <thead>
+                <tr>
+                    {% for deficiencia in deficiencias %}
+                        <th>{{ deficiencia.deficiencia }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    {% for deficiencia in deficiencias %}
+                        <td>{{ deficiencia.deficiencia__count }}</td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

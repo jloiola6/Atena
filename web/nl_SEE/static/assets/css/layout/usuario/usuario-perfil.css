@@ -1,0 +1,36 @@
+.container-surface-usuario{
+    margin-top: 24px;
+}
+
+    .container-usuario-dados{
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 16px;
+    }
+
+.modal-filtro-usuarios{
+    width: min-content;
+}
+
+.botao-editar-permissoes{
+    margin-top: 16px;
+}
+
+.lista-permissoes{
+    margin-top: 24px;
+}
+
+.aplicacao{
+    border-left-color: var(--primary-color);
+    border-left-style: solid;
+}
+
+    .aplicacao:hover{
+        border-left-width: 24px;
+    }
+
+.servico{
+    border-left-color: #66B2FF;
+    border-left-style: solid;
+}

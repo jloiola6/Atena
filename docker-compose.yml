@@ -14,7 +14,7 @@ services:
 
   web:
     build: ./web
-    command: /bin/bash -c "chown root:root /code/nl_SEE/staticfiles/ && cd nl_SEE && python manage.py makemigrations atena administracao core coex dinem fundiaria lotacao lotus tecnologia terceirizacao usuario && python manage.py migrate && gunicorn nl.wsgi:application -c gunicorn_config.py -b 0.0.0.0:8000 --chdir /code/nl_SEE"
+    command: /bin/bash -c "chown root:root /code/nl_SEE/static/ && cd nl_SEE && python manage.py makemigrations atena administracao core coex dinem fundiaria lotacao lotus tecnologia terceirizacao usuario && python manage.py migrate && gunicorn nl.wsgi:application -c gunicorn_config.py -b 0.0.0.0:8000 --chdir /code/nl_SEE"
     volumes:
       - ./web:/code
     ports:
